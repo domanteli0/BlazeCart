@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="BlazeCart.Views.WelcomePage1"
+             NavigationPage.HasNavigationBar="False"
+             Title="WelcomePage1">
+    <ContentPage.Content>
+        <Grid
+            BackgroundColor="{StaticResource PageBackgroundColor}"
+            RowDefinitions="*, Auto, Auto, Auto">
+            <Image
+                Grid.Row="0"
+                Aspect="AspectFit"
+                Source="welcome_page_image.png"
+                HorizontalOptions="EndAndExpand"
+                Margin="20, 0, 0, 0"></Image>
+            <Label
+                Grid.Row="1"
+                HorizontalTextAlignment="Center"
+                Margin="30, 20, 30, 10"
+                Style="{StaticResource WelcomePageHeadingPoppins}"
+                Text="Sudaryk pirkinių krepšelį"
+                TextColor="{StaticResource WelcomePageTextColorPrimary}"></Label>
+            <Label
+                Grid.Row="2"
+                HorizontalTextAlignment="Center"
+                Margin="0, 0, 0, 30"
+                Style="{StaticResource WelcomePageSubHeadingRoboto}"
+                Text="Labai naudingas textas"
+                TextColor="{StaticResource WelcomePageTextColorSecondary}"></Label>
+            
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>
