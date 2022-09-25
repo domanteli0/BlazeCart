@@ -1,1 +1,1 @@
-# CuddlyHappiness
+# BlazeCart .NET MAUI App
