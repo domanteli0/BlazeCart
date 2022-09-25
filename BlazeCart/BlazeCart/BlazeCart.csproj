@@ -48,4 +48,32 @@
 		<MauiAsset Include="Resources\Raw\**" LogicalName="%(RecursiveDir)%(Filename)%(Extension)" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <MauiXaml Remove="CartPage.xaml" />
+	  <MauiXaml Remove="ErrorPage.xaml" />
+	  <MauiXaml Remove="WelcomePage1.xaml" />
+	  <MauiXaml Remove="WelcomePage2.xaml" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <EmbeddedResource Include="CartPage.xaml">
+	    <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+	  </EmbeddedResource>
+	  <EmbeddedResource Include="ErrorPage.xaml">
+	    <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+	  </EmbeddedResource>
+	  <EmbeddedResource Include="WelcomePage1.xaml">
+	    <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+	  </EmbeddedResource>
+	  <EmbeddedResource Include="WelcomePage2.xaml">
+	    <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+	  </EmbeddedResource>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Compile Update="WelcomePage1.xaml.cs">
+	    <DependentUpon>WelcomePage1.xaml</DependentUpon>
+	  </Compile>
+	</ItemGroup>
+
 </Project>
