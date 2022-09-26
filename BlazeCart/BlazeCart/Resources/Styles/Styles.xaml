@@ -9,13 +9,21 @@
     </ResourceDictionary.MergedDictionaries>
 
     <Style x:Key="WelcomePageHeadingPoppins" TargetType="Label">
-        <Setter Property="FontFamily" Value="Poppins-Bold" />
+        <Setter Property="FontFamily" Value="FontAwesome-Regular" />
         <Setter Property="FontSize" Value="{StaticResource WelcomeFontPrimary}" />
         <Setter Property="TextColor" Value="{StaticResource WelcomePageTextColorPrimary}" />
     </Style>
+    
     <Style x:Key="WelcomePageSubHeadingRoboto" TargetType="Label">
         <Setter Property="FontFamily" Value="Roboto-Regular" />
         <Setter Property="FontSize" Value="{StaticResource WelcomeFontSecondary}" />
         <Setter Property="TextColor" Value="{StaticResource WelcomePageTextColorSecondary}" />
+    </Style>
+    
+    <Style x:Key="SkipButton" TargetType="Button">
+        <Setter Property="FontFamily" Value="Poppins-Regular" />
+        <Setter Property="FontSize" Value="{StaticResource WelcomeFontSecondary}" />
+        <Setter Property="TextColor" Value="{StaticResource WelcomePageTextColorSecondary}" />
+        <Setter Property="BackgroundColor" Value="{StaticResource PageBackgroundColor}"/>
     </Style>
 </ResourceDictionary>
