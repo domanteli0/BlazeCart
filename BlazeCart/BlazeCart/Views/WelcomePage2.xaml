@@ -32,6 +32,10 @@
                 Style="{StaticResource SkipButton}"
                 Margin="120, 0, 120, 30"
                 VerticalOptions="End"></Button>
+            <Image
+                Aspect="AspectFit"
+                Source="selection_dots.png"
+                HorizontalOptions="Center"></Image>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

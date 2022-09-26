@@ -8,11 +8,9 @@
         <StackLayout
             BackgroundColor="{StaticResource PageBackgroundColor}">
             <Image
-                
                 Aspect="AspectFit"
                 Source="welcome_page_image.png"
-                HorizontalOptions="Center"
-                
+                HorizontalOptions="Center" 
                 Margin="20, 100, 20, 80"></Image>
             <Label
                
@@ -38,8 +36,11 @@
                 Text="Praleisti pristatymą"
                 Style="{StaticResource SkipButton}"
                 Margin="120, 0, 120, 30"
-                
                 VerticalOptions="End"></Button>
+            <Image
+                Aspect="AspectFit"
+                Source="selection_dots1.png"
+                HorizontalOptions="Center"></Image>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

@@ -9,7 +9,7 @@
     </ResourceDictionary.MergedDictionaries>
 
     <Style x:Key="WelcomePageHeadingPoppins" TargetType="Label">
-        <Setter Property="FontFamily" Value="FontAwesome-Regular" />
+        <Setter Property="FontFamily" Value="Poppins-Bold" />
         <Setter Property="FontSize" Value="{StaticResource WelcomeFontPrimary}" />
         <Setter Property="TextColor" Value="{StaticResource WelcomePageTextColorPrimary}" />
     </Style>
