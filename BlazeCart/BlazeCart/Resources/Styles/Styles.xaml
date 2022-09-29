@@ -11,19 +11,32 @@
     <Style x:Key="WelcomePageHeadingPoppins" TargetType="Label">
         <Setter Property="FontFamily" Value="Poppins-Bold" />
         <Setter Property="FontSize" Value="{StaticResource WelcomeFontPrimary}" />
-        <Setter Property="TextColor" Value="{StaticResource WelcomePageTextColorPrimary}" />
+        <Setter Property="TextColor" Value="{StaticResource TextColorPrimary}" />
     </Style>
     
     <Style x:Key="WelcomePageSubHeadingRoboto" TargetType="Label">
         <Setter Property="FontFamily" Value="Roboto-Regular" />
         <Setter Property="FontSize" Value="{StaticResource WelcomeFontSecondary}" />
-        <Setter Property="TextColor" Value="{StaticResource WelcomePageTextColorSecondary}" />
+        <Setter Property="TextColor" Value="{StaticResource TextColorSecondary}" />
     </Style>
     
     <Style x:Key="SkipButton" TargetType="Button">
         <Setter Property="FontFamily" Value="Poppins-Regular" />
         <Setter Property="FontSize" Value="{StaticResource WelcomeFontSecondary}" />
-        <Setter Property="TextColor" Value="{StaticResource WelcomePageTextColorSecondary}" />
+        <Setter Property="TextColor" Value="{StaticResource TextColorSecondary}" />
         <Setter Property="BackgroundColor" Value="{StaticResource PageBackgroundColor}"/>
     </Style>
+
+    <Style x:Key="GreetingPoppinsRegular" TargetType="Label">
+        <Setter Property="FontFamily" Value="Poppins-Regular" />
+        <Setter Property="FontSize" Value="{StaticResource GreetingFont}" />
+        <Setter Property="TextColor" Value="{StaticResource TextColorPrimary}" />
+    </Style>
+
+    <Style x:Key="NameSurnamePoppinsBold" TargetType="Label">
+        <Setter Property="FontFamily" Value="Poppins-Bold" />
+        <Setter Property="FontSize" Value="{StaticResource GreetingFont}" />
+        <Setter Property="TextColor" Value="{StaticResource TextColorPrimary}" />
+    </Style>
+
 </ResourceDictionary>

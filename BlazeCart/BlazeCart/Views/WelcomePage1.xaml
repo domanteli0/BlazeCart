@@ -18,20 +18,18 @@
                 Margin="30, 10, 30, 10"
                 Style="{StaticResource WelcomePageHeadingPoppins}"
                 Text="Sudaryk pirkinių krepšelį"
-                TextColor="{StaticResource WelcomePageTextColorPrimary}"></Label>
+                TextColor="{StaticResource TextColorPrimary}"></Label>
             <Label
                 
                 HorizontalTextAlignment="Center"
                 Margin="0, 0, 0, 30"
                 Style="{StaticResource WelcomePageSubHeadingRoboto}"
                 Text="Labai naudingas textas"
-                TextColor="{StaticResource WelcomePageTextColorSecondary}"></Label>
-            <Image
+                TextColor="{StaticResource TextColorSecondary}"></Label>
+            <ImageButton
                 Aspect="AspectFit"
                 Source="welcome_button.png"
-                HorizontalOptions="Center">
-            </Image>
-
+                HorizontalOptions="Center"></ImageButton>
             <Button
                 Text="Praleisti pristatymą"
                 Style="{StaticResource SkipButton}"
@@ -41,6 +39,7 @@
                 Aspect="AspectFit"
                 Source="selection_dots1.png"
                 HorizontalOptions="Center"></Image>
+            
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

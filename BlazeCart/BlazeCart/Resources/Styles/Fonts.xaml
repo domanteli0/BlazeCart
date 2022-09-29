@@ -11,4 +11,8 @@
         <On Platform="iOS" Value="14" />
         <On Platform="Android" Value="14" />
     </OnPlatform>
+    <OnPlatform x:Key="GreetingFont" x:TypeArguments="x:Double">
+        <On Platform="iOS" Value="22" />
+        <On Platform="Android" Value="22" />
+    </OnPlatform>
 </ResourceDictionary>

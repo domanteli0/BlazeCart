@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="BlazeCart.Views.HomePage"
+             Title="HomePage"
+             NavigationPage.HasNavigationBar="False">
+    <ContentPage.Content>
+        <StackLayout BackgroundColor="{StaticResource PageBackgroundColor}">
+            <HorizontalStackLayout BackgroundColor="{StaticResource PrimaryColor}" Margin="0, 0, 0, 40">
+                <VerticalStackLayout>
+                    <Label
+                        HorizontalTextAlignment="Start"
+                        Margin="20, 30, 0, 0"
+                        Style="{StaticResource GreetingPoppinsRegular}"
+                        Text="Sveikas,"
+                        TextColor="{StaticResource TextColorPrimary}">
+                    </Label>
+                    <Label
+                        HorizontalTextAlignment="Start"
+                        Margin="20, 0, 25, 20"
+                        Style="{StaticResource NameSurnamePoppinsBold}"
+                        Text="Vardenis Pavardenis"
+                        TextColor="{StaticResource TextColorPrimary}">
+                    </Label>
+                </VerticalStackLayout>
+                <Image
+                    Aspect="AspectFit"
+                    Source="profile_icon.png"
+                    HorizontalOptions="End" 
+                    Margin="20, 0, 0, 0">
+                </Image>
+            </HorizontalStackLayout>
+
+            <ImageButton
+                Aspect="AspectFill"
+                Margin="10, 20, 20, 20"
+                Source="search_items_card.png"
+                HorizontalOptions="Center">
+
+            </ImageButton>
+            <ImageButton
+                Aspect="AspectFit"
+                Margin="10, 0, 20, 20"
+                Source="cart_history_card.png"
+                HorizontalOptions="Center">
+
+            </ImageButton>
+            <ImageButton
+                Aspect="AspectFit"
+                Margin="10, 20, 20, 20"
+                Source="favorite_items_card.png"
+                HorizontalOptions="Center">
+
+            </ImageButton>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
