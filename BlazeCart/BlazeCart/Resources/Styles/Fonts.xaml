@@ -15,4 +15,14 @@
         <On Platform="iOS" Value="22" />
         <On Platform="Android" Value="22" />
     </OnPlatform>
+    <OnPlatform x:Key="LoginRegisterFont" x:TypeArguments="x:Double">
+        <On Platform="iOS" Value="40" />
+        <On Platform="Android" Value="40" />
+    </OnPlatform>
+
+<OnPlatform x:Key="LoginRegisterFieldFont" x:TypeArguments="x:Double">
+        <On Platform="iOS" Value="20" />
+        <On Platform="Android" Value="20" />
+    </OnPlatform>
+    
 </ResourceDictionary>

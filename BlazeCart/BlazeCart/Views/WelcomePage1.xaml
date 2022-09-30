@@ -13,14 +13,12 @@
                 HorizontalOptions="Center" 
                 Margin="20, 100, 20, 80"></Image>
             <Label
-               
                 HorizontalTextAlignment="Center"
                 Margin="30, 10, 30, 10"
                 Style="{StaticResource WelcomePageHeadingPoppins}"
                 Text="Sudaryk pirkinių krepšelį"
                 TextColor="{StaticResource TextColorPrimary}"></Label>
             <Label
-                
                 HorizontalTextAlignment="Center"
                 Margin="0, 0, 0, 30"
                 Style="{StaticResource WelcomePageSubHeadingRoboto}"

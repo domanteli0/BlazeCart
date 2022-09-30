@@ -57,7 +57,7 @@
             </ImageButton>
             <ImageButton
                 Aspect="AspectFit"
-                Margin="10, 20, 20, 20"
+                Margin="10, 0, 20, 20"
                 Source="favorite_items_card.png"
                 HorizontalOptions="Center">
 
