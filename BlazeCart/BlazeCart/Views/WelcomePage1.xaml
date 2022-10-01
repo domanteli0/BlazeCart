@@ -26,11 +26,12 @@
                 TextColor="{StaticResource TextColorSecondary}"></Label>
             <ImageButton
                 Aspect="AspectFit"
+                Command="{Binding NextCommand}"
                 Source="welcome_button.png"
                 HorizontalOptions="Center"></ImageButton>
             <Button
                 Text="Praleisti pristatymą"
-                Style="{StaticResource SkipButton}"
+                Style="{StaticResource SecondaryButton}"
                 Margin="120, 0, 120, 30"
                 VerticalOptions="End"></Button>
             <Image

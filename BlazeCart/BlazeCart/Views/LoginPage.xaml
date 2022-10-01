@@ -4,7 +4,6 @@
              x:Class="BlazeCart.Views.LoginPage"
              NavigationPage.HasNavigationBar="False"
              Title="LoginPage">
-
     <ContentPage.Content>
         <Grid>
             <Image Source="bg.jpeg" VerticalOptions="Fill" Aspect="Fill"/>
