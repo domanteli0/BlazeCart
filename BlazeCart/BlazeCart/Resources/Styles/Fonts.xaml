@@ -24,5 +24,21 @@
         <On Platform="iOS" Value="20" />
         <On Platform="Android" Value="20" />
     </OnPlatform>
-    
+
+
+    <OnPlatform x:Key="CategoryNameFont" x:TypeArguments="x:Double">
+        <On Platform="iOS" Value="30" />
+        <On Platform="Android" Value="30" />
+    </OnPlatform>
+
+    <OnPlatform x:Key="CategoryPriceFont" x:TypeArguments="x:Double">
+        <On Platform="iOS" Value="20" />
+        <On Platform="Android" Value="20" />
+    </OnPlatform>
+
+    <OnPlatform x:Key="ItemNameFont" x:TypeArguments="x:Double">
+        <On Platform="iOS" Value="20" />
+        <On Platform="Android" Value="20" />
+    </OnPlatform>
+
 </ResourceDictionary>
