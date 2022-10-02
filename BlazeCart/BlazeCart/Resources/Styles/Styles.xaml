@@ -58,4 +58,25 @@
         <Setter Property="FontSize" Value="{StaticResource LoginRegisterFont}" />
         <Setter Property="TextColor" Value="{StaticResource TextColorPrimary}" />
     </Style>
+    <Style x:Key="ItemCatalogPoppinsBold" TargetType="Label">
+        <Setter Property="FontFamily" Value="Poppins-Bold" />
+        <Setter Property="FontSize" Value="{StaticResource CategoryNameFont}" />
+        <Setter Property="TextColor" Value="{StaticResource TextColorPrimary}" />
+    </Style>
+    <Style x:Key="ItemNamePoppins" TargetType="Label">
+        <Setter Property="FontFamily" Value="Roboto-Bold" />
+        <Setter Property="FontSize" Value="{StaticResource ItemNameFont}" />
+        <Setter Property="TextColor" Value="{StaticResource TextColorPrimary}" />
+    </Style>
+    <Style x:Key="ItemPricePoppins" TargetType="Label">
+        <Setter Property="FontFamily" Value="Roboto-Regular" />
+        <Setter Property="FontSize" Value="{StaticResource CategoryPriceFont}" />
+        <Setter Property="TextColor" Value="{StaticResource SecondaryTextColor}" />
+    </Style>
+    <Style x:Key="ItemNumberPricePoppins" TargetType="Label">
+        <Setter Property="FontFamily" Value="Roboto-Bold" />
+        <Setter Property="FontSize" Value="{StaticResource CategoryPriceFont}" />
+        <Setter Property="TextColor" Value="{StaticResource TextColorPrimary}" />
+    </Style>
+    
 </ResourceDictionary>
