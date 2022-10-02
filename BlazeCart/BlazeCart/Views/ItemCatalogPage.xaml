@@ -5,18 +5,12 @@
              NavigationPage.HasNavigationBar="False"
              Title="ItemCatalogPage"
              xmlns:model="clir-namespace:BlazeCart.Model"
-             >
-
-
-    <ContentPage.Content
-        BackgroundColor="{StaticResource PageBackgroundColor}">
-        <StackLayout
-            Margin="5"
-            >
+             BackgroundColor="{StaticResource PageBackgroundColor}">
+    <ContentPage.Content>
+        <StackLayout Margin="5">
             <ImageButton
                 Source="back_button"
-                HorizontalOptions="Start" 
-                ></ImageButton>
+                HorizontalOptions="Start"></ImageButton>
 
             <Label
                 HorizontalTextAlignment="Start"
@@ -26,14 +20,12 @@
                 TextColor="{StaticResource PrimaryTextColor}"></Label>
 
             <SearchBar Placeholder="Ieškoti prekės..."
-               CancelButtonColor="{StaticResource TextColorSecondary}"
-               PlaceholderColor="{StaticResource TextColorSecondary}"
-               TextColor="{StaticResource TextColorSecondary}"
-               HorizontalTextAlignment="Start"
-               FontSize="Medium"
-               FontAttributes="Italic" />
-
-
+                       CancelButtonColor="{StaticResource TextColorSecondary}"
+                       PlaceholderColor="{StaticResource TextColorSecondary}"
+                       TextColor="{StaticResource TextColorSecondary}"
+                       HorizontalTextAlignment="Start"
+                       FontSize="Medium"
+                       FontAttributes="Italic"/>
             <Grid x:Name="ItemCard" MaximumHeightRequest="200" >
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="1*"/>
@@ -50,47 +42,42 @@
                     Grid.Row="0"
                     Grid.RowSpan="3"
                     Stroke="{StaticResource PageBackgroundColor}"
-                    StrokeShape="RoundRectangle 50"
-                    
-                    >
+                    StrokeShape="RoundRectangle 50">
 
                     <Image
-                Aspect="AspectFill"
-                Source="banana_img"
-                Margin="20"
-                HorizontalOptions="Start"  
-                VerticalOptions="Start"
-                    />
+                        Aspect="AspectFill"
+                        Source="banana_img"
+                        Margin="20"
+                        HorizontalOptions="Start"  
+                        VerticalOptions="Start"/>
                 </Border>
 
                 <Label
-                Grid.Column="1"
-                Grid.Row="0"
-                HorizontalTextAlignment="Start"
-                Margin="0, 0, 15, 0"
-                Style="{StaticResource ItemNamePoppins}"
-                Text="Name_of_product"
-                TextColor="{StaticResource PrimaryTextColor}"></Label>
-
+                    Grid.Column="1"
+                    Grid.Row="0"
+                    HorizontalTextAlignment="Start"
+                    Margin="0, 0, 15, 0"
+                    Style="{StaticResource ItemNamePoppins}"
+                    Text="Name_of_product"
+                    TextColor="{StaticResource PrimaryTextColor}"></Label>
 
                 <StackLayout
                     Grid.Column="1"
                     Grid.Row="1"
-                    Orientation="Horizontal"
-                    
-                    >
-                    <Label
-                    HorizontalTextAlignment="Start"
-                    Margin="0, 0, 1, 0"
-                    Style="{StaticResource ItemNumberPricePoppins}"
-                    Text="1.10"
-                    TextColor="{StaticResource PrimaryTextColor}"></Label>
+                    Orientation="Horizontal">
 
                     <Label
-                    HorizontalTextAlignment="Start"
-                    Margin="0, 0, 15, 0"
-                    Style="{StaticResource ItemPricePoppins}"
-                    Text=" € / vnt"></Label>
+                        HorizontalTextAlignment="Start"
+                        Margin="0, 0, 1, 0"
+                        Style="{StaticResource ItemNumberPricePoppins}"
+                        Text="1.10"
+                        TextColor="{StaticResource PrimaryTextColor}"></Label>
+
+                    <Label
+                        HorizontalTextAlignment="Start"
+                        Margin="0, 0, 15, 0"
+                        Style="{StaticResource ItemPricePoppins}"
+                        Text=" € / vnt"></Label>
 
                 </StackLayout>
 
@@ -98,29 +85,17 @@
                     Orientation="Horizontal"   
                     Grid.Column="2"
                     Grid.Row="2" 
-                    Margin="0"
-                    >
+                    Margin="0">
+
                     <ImageButton
                         Source="heart_button"
-                        HorizontalOptions="Start" 
-                    ></ImageButton>
+                        HorizontalOptions="Start"></ImageButton>
 
                     <ImageButton
                         Source="cart_button"
-                        HorizontalOptions="Start" 
-                    ></ImageButton>
-
+                        HorizontalOptions="Start"></ImageButton>
                 </StackLayout>
-
-
             </Grid>
-
-
-
-
-
-
         </StackLayout>
     </ContentPage.Content>
-
 </ContentPage>
