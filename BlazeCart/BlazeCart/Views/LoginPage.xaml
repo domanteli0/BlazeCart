@@ -6,7 +6,7 @@
              Title="LoginPage">
     <ContentPage.Content>
         <Grid>
-            <Grid HorizontalOptions="Center" VerticalOptions="Center" Padding="10">
+            <Grid HorizontalOptions="Center" VerticalOptions="Center">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="auto"/>
                     <RowDefinition Height="auto"/>
@@ -56,16 +56,18 @@
                     <VerticalStackLayout
                         Spacing="20">
                         <Button Text="Prisijungti"
+                                TextColor="{StaticResource ButtonTextColor}"
                                 Command="{Binding LoginCommand}"
                                 Style="{StaticResource PrimaryButton}"
                                 HeightRequest="40"
-                                WidthRequest="200"/>
+                                WidthRequest="250"/>
                         <Button
                             Text="Registruotis"
+                            TextColor="{StaticResource PrimaryColor}"
                             Command="{Binding RegisterCommand}"
                             Style="{StaticResource SecondaryButton}"
                             HeightRequest="40"
-                            WidthRequest="200"/>
+                            WidthRequest="250"/>
                     </VerticalStackLayout>
                 </Grid>
             </Grid>
