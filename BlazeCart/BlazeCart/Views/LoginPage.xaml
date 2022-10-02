@@ -6,9 +6,7 @@
              Title="LoginPage">
     <ContentPage.Content>
         <Grid>
-            <Image Source="bg.jpeg" VerticalOptions="Fill" Aspect="Fill"/>
             <Grid HorizontalOptions="Center" VerticalOptions="Center" Padding="10">
-
                 <Grid.RowDefinitions>
                     <RowDefinition Height="auto"/>
                     <RowDefinition Height="auto"/>
@@ -42,6 +40,7 @@
                        Text="Slaptažodis: "
                        Padding="0,20,0,0"
                        Style="{StaticResource LoginRegisterRobotoLight}"/>
+
                 <Frame Grid.Row="4"
                        HeightRequest="50">
                     <Entry

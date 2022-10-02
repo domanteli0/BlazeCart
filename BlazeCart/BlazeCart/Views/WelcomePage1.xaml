@@ -31,6 +31,7 @@
                 HorizontalOptions="Center"></ImageButton>
             <Button
                 Text="Praleisti pristatymą"
+                Command="{Binding SkipCommand}"
                 Style="{StaticResource SecondaryButton}"
                 Margin="120, 0, 120, 30"
                 VerticalOptions="End"></Button>

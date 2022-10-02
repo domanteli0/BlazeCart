@@ -28,13 +28,9 @@
                 Source="welcome_button.png"
                 Command="{Binding NextCommand}"
                 HorizontalOptions="Center"></ImageButton>
-            <Button
-                Text="Praleisti pristatymą"
-                Style="{StaticResource SecondaryButton}"
-                Margin="120, 0, 120, 30"
-                VerticalOptions="End"></Button>
             <Image
                 Aspect="AspectFit"
+                Margin="0, 20, 0, 0"
                 Source="selection_dots.png"
                 HorizontalOptions="Center"></Image>
         </StackLayout>
