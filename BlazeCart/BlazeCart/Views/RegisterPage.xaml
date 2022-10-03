@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="BlazeCart.Views.LoginPage"
-             NavigationPage.HasNavigationBar="False"
-             Title="LoginPage">
+             x:Class="BlazeCart.Views.RegisterPage"
+             Title="RegisterPage">
     <ContentPage.Content>
         <Grid>
             <Grid HorizontalOptions="Center" VerticalOptions="Center">
@@ -14,21 +13,39 @@
                     <RowDefinition Height="auto"/>
                     <RowDefinition Height="auto"/>
                     <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
                 </Grid.RowDefinitions>
                 <Label
-                    Text="Prisijungti"
+                    Text="Registracija"
                     Margin="0, 0, 0, 40"
                     Style="{StaticResource LoginRegisterPoppinsBold}"
-                    Grid.Row="0"></Label>    
+                    Grid.Row="0"></Label>
                 <Label
                     Grid.Row="1"
                     Grid.Column="0"
-                    Text="El. pašto adresas: "
+                    Text="Vardas, Pavarde: "
                     Style="{StaticResource LoginRegisterRobotoLight}"/>
                 <Frame
                     Grid.Row="2"
                     Grid.Column="0"
                     HeightRequest="50">
+                    <Entry
+                        Text="{Binding UserName}"
+                        Style="{StaticResource LoginRegisterFieldRobotoLight}"
+                        BackgroundColor="White"
+                        HeightRequest="48"
+                        WidthRequest="200"/>
+                </Frame>
+                <Label Grid.Row="3"
+                       Text="El. pašto adresas: "
+                       Padding="0,20,0,0"
+                       Style="{StaticResource LoginRegisterRobotoLight}"/>
+
+                <Frame Grid.Row="4"
+                       HeightRequest="50">
                     <Entry
                         Text="{Binding EmailAddress}"
                         Style="{StaticResource LoginRegisterFieldRobotoLight}"
@@ -36,12 +53,27 @@
                         HeightRequest="48"
                         WidthRequest="200"/>
                 </Frame>
-                <Label Grid.Row="3"
+
+                <Label Grid.Row="5"
                        Text="Slaptažodis: "
                        Padding="0,20,0,0"
                        Style="{StaticResource LoginRegisterRobotoLight}"/>
 
-                <Frame Grid.Row="4"
+                <Frame Grid.Row="6"
+                       HeightRequest="50">
+                    <Entry
+                        Text="{Binding Password}"
+                        Style="{StaticResource LoginRegisterFieldRobotoLight}"
+                        IsPassword="True" BackgroundColor="White"
+                        HeightRequest="48"
+                        WidthRequest="200"/>
+                </Frame>
+                <Label Grid.Row="7"
+                       Text="Pakartokite slaptažodį: "
+                       Padding="0,20,0,0"
+                       Style="{StaticResource LoginRegisterRobotoLight}"/>
+
+                <Frame Grid.Row="8"
                        HeightRequest="50">
                     <Entry
                         Text="{Binding Password}"
@@ -51,21 +83,14 @@
                         WidthRequest="200"/>
                 </Frame>
                 <Grid
-                    Grid.Row="5"
+                    Grid.Row="9"
                     Padding="0,40,0,0">
-                    <VerticalStackLayout
-                        Spacing="20">
-                        <Button Text="Prisijungti"
-                                TextColor="{StaticResource ButtonTextColor}"
-                                Command="{Binding LoginCommand}"
-                                Style="{StaticResource PrimaryButton}"
-                                HeightRequest="40"
-                                WidthRequest="250"/>
+                    <VerticalStackLayout>
                         <Button
                             Text="Registruotis"
-                            TextColor="{StaticResource PrimaryColor}"
+                            TextColor="{StaticResource ButtonTextColor}"
                             Command="{Binding RegisterCommand}"
-                            Style="{StaticResource SecondaryButton}"
+                            Style="{StaticResource PrimaryButton}"
                             HeightRequest="40"
                             WidthRequest="250"/>
                     </VerticalStackLayout>

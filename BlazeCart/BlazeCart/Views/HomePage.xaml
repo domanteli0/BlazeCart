@@ -8,8 +8,7 @@
     <ContentPage.Content>
         <StackLayout>
             <Border
-                Margin="0, 0, 0, 0"
-                Padding="20, 5, 25, 20"
+                Padding="40, 5, 15, 20"
                 Background="{StaticResource PrimaryColor}"
                 StrokeThickness="0"
                 HorizontalOptions="Center">
@@ -20,7 +19,7 @@
                         <VerticalStackLayout>
                             <Label
                                 HorizontalTextAlignment="Start"
-                                Margin="20, 30, 0, 0"
+                                Margin="0,30, 0, 0"
                                 Style="{StaticResource GreetingPoppinsRegular}"
                                 Text="Sveikas,"
                                 TextColor="{StaticResource TextColorPrimary}">
@@ -28,7 +27,7 @@
 
                             <Label
                             HorizontalTextAlignment="Start"
-                            Margin="20, 0, 25, 20"
+                            Margin="0, 0, 25, 10"
                             Style="{StaticResource NameSurnamePoppinsBold}"
                             Text="Vardenis Pavardenis"
                             TextColor="{StaticResource TextColorPrimary}">
@@ -38,30 +37,34 @@
                         Aspect="AspectFit"
                         Source="profile_icon.png"
                         HorizontalOptions="End" 
-                        Margin="15, 0, 0, 0">
+                        MaximumHeightRequest="40">
                     </Image>
                 </HorizontalStackLayout>
             </Border>
             <ImageButton
                 Aspect="AspectFill"
+                MaximumHeightRequest="120"
                 Margin="10, 20, 20, 20"
                 Source="search_items_card.png"
-                HorizontalOptions="Center">
-
+                HorizontalOptions="Center"
+                Command="{Binding SearchItemCommand}">
             </ImageButton>
             <ImageButton
                 Aspect="AspectFit"
+                MaximumHeightRequest="120"
                 Margin="10, 0, 20, 20"
                 Source="cart_history_card.png"
-                HorizontalOptions="Center">
-
+                HorizontalOptions="Center"
+                Command="{Binding CartHistoryCommand}">
+                
             </ImageButton>
             <ImageButton
                 Aspect="AspectFit"
+                MaximumHeightRequest="120"
                 Margin="10, 0, 20, 20"
                 Source="favorite_items_card.png"
-                HorizontalOptions="Center">
-
+                HorizontalOptions="Center"
+                Command="{Binding FavoriteItemsCommand}">
             </ImageButton>
         </StackLayout>
     </ContentPage.Content>
