@@ -37,20 +37,19 @@
                     <RowDefinition Height="3*"/>
                 </Grid.RowDefinitions>
 
-                <Border
-                    Grid.Column="0"
-                    Grid.Row="0"
-                    Grid.RowSpan="3"
-                    Stroke="{StaticResource PageBackgroundColor}"
-                    StrokeShape="RoundRectangle 50">
 
-                    <Image
+
+
+
+                <Image
+                        Grid.Column="0"
+                        Grid.Row="0"
+                        Grid.RowSpan="3"
                         Aspect="AspectFill"
                         Source="banana_img"
                         Margin="20"
                         HorizontalOptions="Start"  
                         VerticalOptions="Start"/>
-                </Border>
 
                 <Label
                     Grid.Column="1"
