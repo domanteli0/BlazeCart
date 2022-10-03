@@ -2,16 +2,26 @@ using BlazeCart.Views;
 using System.Windows.Input;
 namespace BlazeCart.ViewModels;
 
-public class WelcomePage1ViewModel : ContentView
+public class WelcomePage1ViewModel
 {
-	public WelcomePage1ViewModel()
-	{
-		Content = new VerticalStackLayout
-		{
-			Children = {
-				new Label { HorizontalOptions = LayoutOptions.Center, VerticalOptions = LayoutOptions.Center, Text = "Welcome to .NET MAUI!"
-				}
-			}
-		};
+    private INavigation _navigation;
+    public ICommand NextCommand { private set; get; }
+
+    public ICommand SkipCommand { private set; get; }
+	public WelcomePage1ViewModel(INavigation navigation)
+    {
+        NextCommand = new Command(OnNextCommand);
+        SkipCommand = new Command(OnSkipCommand);
+		_navigation = navigation;
 	}
+
+    async void OnNextCommand(object obj)
+    {
+        await _navigation.PushModalAsync(new WelcomePage2());
+    }
+
+    async void OnSkipCommand(object obj)
+    {
+        await _navigation.PushModalAsync(new LoginPage());
+    }
 }

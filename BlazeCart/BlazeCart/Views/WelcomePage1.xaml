@@ -3,43 +3,42 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="BlazeCart.Views.WelcomePage1"
              NavigationPage.HasNavigationBar="False"
-             Title="WelcomePage1">
+             Title="WelcomePage1"
+             BackgroundColor="{StaticResource PageBackgroundColor}">
     <ContentPage.Content>
-        <StackLayout
-            BackgroundColor="{StaticResource PageBackgroundColor}">
+        <StackLayout VerticalOptions="Center" HorizontalOptions="Center">
             <Image
-                
                 Aspect="AspectFit"
                 Source="welcome_page_image.png"
-                HorizontalOptions="Center"
-                
-                Margin="20, 100, 20, 80"></Image>
+                HorizontalOptions="Center" 
+                MaximumHeightRequest="300"
+                Margin="20"></Image>
             <Label
-               
                 HorizontalTextAlignment="Center"
-                Margin="30, 10, 30, 10"
+                Margin="5, 0, 5, 10"
                 Style="{StaticResource WelcomePageHeadingPoppins}"
                 Text="Sudaryk pirkinių krepšelį"
-                TextColor="{StaticResource WelcomePageTextColorPrimary}"></Label>
+                TextColor="{StaticResource TextColorPrimary}"></Label>
             <Label
-                
                 HorizontalTextAlignment="Center"
-                Margin="0, 0, 0, 30"
+                Margin="0, 0, 0, 10"
                 Style="{StaticResource WelcomePageSubHeadingRoboto}"
                 Text="Labai naudingas textas"
-                TextColor="{StaticResource WelcomePageTextColorSecondary}"></Label>
-            <Image
+                TextColor="{StaticResource TextColorSecondary}"></Label>
+            <ImageButton
                 Aspect="AspectFit"
+                Command="{Binding NextCommand}"
                 Source="welcome_button.png"
-                HorizontalOptions="Center">
-            </Image>
-
+                HorizontalOptions="Center"></ImageButton>
             <Button
                 Text="Praleisti pristatymą"
-                Style="{StaticResource SkipButton}"
-                Margin="120, 0, 120, 30"
-                
+                Command="{Binding SkipCommand}"
+                Style="{StaticResource SecondaryButton}"
                 VerticalOptions="End"></Button>
+            <Image
+                Aspect="AspectFit"
+                Source="selection_dots1.png"
+                HorizontalOptions="Center"></Image>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

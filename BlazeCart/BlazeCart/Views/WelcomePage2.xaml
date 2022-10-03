@@ -3,35 +3,36 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="BlazeCart.Views.WelcomePage2"
              NavigationPage.HasNavigationBar="False"
-             Title="WelcomePage2">
+             Title="WelcomePage2"
+             BackgroundColor="{StaticResource PageBackgroundColor}">
     <ContentPage.Content>
-        <StackLayout BackgroundColor="{StaticResource PageBackgroundColor}">
+        <StackLayout VerticalOptions="Center" HorizontalOptions="Center">
             <Image
                 Aspect="AspectFit"
                 Source="welcome_page_image_sec.png"
                 HorizontalOptions="Center" 
-                Margin="20, 100, 20, 80"></Image>
+                Margin="20"></Image>
             <Label
                 HorizontalTextAlignment="Center"
-                Margin="30, 10, 30, 10"
+                Margin="5, 0, 5, 10"
                 Style="{StaticResource WelcomePageHeadingPoppins}"
                 Text="Mes rasime pigiausią parduotuvę"
-                TextColor="{StaticResource WelcomePageTextColorPrimary}"></Label>
+                TextColor="{StaticResource TextColorPrimary}"></Label>
             <Label
                 HorizontalTextAlignment="Center"
-                Margin="0, 0, 0, 30"
+                Margin="0, 0, 0, 10"
                 Style="{StaticResource WelcomePageSubHeadingRoboto}"
                 Text="Labai naudingas textas"
-                TextColor="{StaticResource WelcomePageTextColorSecondary}"></Label>
-            <Image
+                TextColor="{StaticResource TextColorSecondary}"></Label>
+            <ImageButton
                 Aspect="AspectFit"
                 Source="welcome_button.png"
+                Command="{Binding NextCommand}"
+                HorizontalOptions="Center"></ImageButton>
+            <Image
+                Aspect="AspectFit"
+                Source="selection_dots.png"
                 HorizontalOptions="Center"></Image>
-            <Button
-                Text="Praleisti pristatymą"
-                Style="{StaticResource SkipButton}"
-                Margin="120, 0, 120, 30"
-                VerticalOptions="End"></Button>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

@@ -7,8 +7,8 @@
     <Color x:Key="PrimaryTextColor">#000000</Color>
     <Color x:Key="SecondaryTextColor">#9586A8</Color>
 
-    <Color x:Key="WelcomePageTextColorPrimary">#1C1B1F</Color>
-    <Color x:Key="WelcomePageTextColorSecondary">#49454F</Color>
+    <Color x:Key="TextColorPrimary">#1C1B1F</Color>
+    <Color x:Key="TextColorSecondary">#49454F</Color>
     
     <Color x:Key="ButtonColor">#FFA500</Color>
     <Color x:Key="ButtonTextColor">#FFFFFF</Color>

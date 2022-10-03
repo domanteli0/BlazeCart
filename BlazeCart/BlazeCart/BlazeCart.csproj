@@ -56,7 +56,43 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Folder Include="Resources\Fonts\" />
+	  <None Remove="Resources\Fonts\Poppins-Bold.ttf" />
+	  <None Remove="Resources\Fonts\Poppins-Light.ttf" />
+	  <None Remove="Resources\Fonts\Poppins-Medium.ttf" />
+	  <None Remove="Resources\Fonts\Poppins-Regular.ttf" />
+	  <None Remove="Resources\Fonts\Poppins-SemiBold.ttf" />
+	  <None Remove="Resources\Fonts\Roboto-Black.ttf" />
+	  <None Remove="Resources\Fonts\Roboto-BlackItalic.ttf" />
+	  <None Remove="Resources\Fonts\Roboto-Bold.ttf" />
+	  <None Remove="Resources\Fonts\Roboto-BoldItalic.ttf" />
+	  <None Remove="Resources\Fonts\Roboto-Italic.ttf" />
+	  <None Remove="Resources\Fonts\Roboto-Light.ttf" />
+	  <None Remove="Resources\Fonts\Roboto-LightItalic.ttf" />
+	  <None Remove="Resources\Fonts\Roboto-Medium.ttf" />
+	  <None Remove="Resources\Fonts\Roboto-MediumItalic.ttf" />
+	  <None Remove="Resources\Fonts\Roboto-Regular.ttf" />
+	  <None Remove="Resources\Fonts\Roboto-Thin.ttf" />
+	  <None Remove="Resources\Fonts\Roboto-ThinItalic.ttf" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <MauiFont Include="Resources\Fonts\Poppins-SemiBold.ttf" />
+	  <MauiFont Include="Resources\Fonts\Roboto-Black.ttf" />
+	  <MauiFont Include="Resources\Fonts\Roboto-BlackItalic.ttf" />
+	  <MauiFont Include="Resources\Fonts\Roboto-Bold.ttf" />
+	  <MauiFont Include="Resources\Fonts\Poppins-Bold.ttf" />
+	  <MauiFont Include="Resources\Fonts\Poppins-Light.ttf" />
+	  <MauiFont Include="Resources\Fonts\Poppins-Medium.ttf" />
+	  <MauiFont Include="Resources\Fonts\Poppins-Regular.ttf" />
+	  <MauiFont Include="Resources\Fonts\Roboto-BoldItalic.ttf" />
+	  <MauiFont Include="Resources\Fonts\Roboto-Italic.ttf" />
+	  <MauiFont Include="Resources\Fonts\Roboto-Light.ttf" />
+	  <MauiFont Include="Resources\Fonts\Roboto-LightItalic.ttf" />
+	  <MauiFont Include="Resources\Fonts\Roboto-Medium.ttf" />
+	  <MauiFont Include="Resources\Fonts\Roboto-MediumItalic.ttf" />
+	  <MauiFont Include="Resources\Fonts\Roboto-Regular.ttf" />
+	  <MauiFont Include="Resources\Fonts\Roboto-Thin.ttf" />
+	  <MauiFont Include="Resources\Fonts\Roboto-ThinItalic.ttf" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -66,6 +102,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <MauiXaml Update="Cells\ItemCard.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Resources\Styles\Colors.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
@@ -81,7 +120,13 @@
 	  <MauiXaml Update="Views\ErrorPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="Views\HomePage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Views\ItemCatalogPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\LoginPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\WelcomePage1.xaml">
@@ -91,5 +136,7 @@
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	</ItemGroup>
+
+	<ProjectExtensions><VisualStudio><UserProperties resources_4raw_4shopitems_1json__JsonSchema="shopItemsSchema.json" resources_4raw_4shopitemsschema_1json__JsonSchema="" /></VisualStudio></ProjectExtensions>
 
 </Project>
