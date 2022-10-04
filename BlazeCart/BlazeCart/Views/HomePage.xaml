@@ -1,12 +1,19 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+<TabbedPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="BlazeCart.Views.HomePage"
              Title="HomePage"
+             xmlns:local="clr-namespace:BlazeCart.Views"
              BackgroundColor="{StaticResource PageBackgroundColor}"
-             NavigationPage.HasNavigationBar="False">
-    <ContentPage.Content>
-        <StackLayout>
+             NavigationPage.HasNavigationBar="False"
+             BarBackground="{StaticResource PageBackgroundColor}"
+             SelectedTabColor="{StaticResource PrimaryColor}"
+             UnselectedTabColor="{StaticResource SecondaryTextColor}"
+             xmlns:android="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.AndroidSpecific;assembly=Microsoft.Maui.Controls"
+             android:TabbedPage.ToolbarPlacement="Bottom">
+    <ContentPage Title="" IconImageSource="home.png">
+        <ScrollView>
+            <StackLayout>
             <Border
                 Padding="60, 15, 56, 30"
                 Background="{StaticResource PrimaryColor}"
@@ -66,5 +73,8 @@
                 Command="{Binding FavoriteItemsCommand}">
             </ImageButton>
         </StackLayout>
-    </ContentPage.Content>
-</ContentPage>
+        </ScrollView>
+    </ContentPage>
+    <local:ErrorPage Title="" IconImageSource="shopping_cart.png"></local:ErrorPage>
+    <local:ItemCatalogPage Title="" IconImageSource="grid.png"></local:ItemCatalogPage>
+</TabbedPage>
