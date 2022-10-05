@@ -15,6 +15,8 @@ In oder to activate the spider follow these steps:
 
 DONE! Now after few(-teen) seconds there should be a file generated in the Python3VirtualEnvironment\BarboraScraper direcrory with the scraped data.
 
+The actual spider code is here: Python3VirtualEnvironment\BarboraScraper\BarboraScraper\spiders\maxima_spider.py
+
 Known problems:
   - The terminal says that command scrapy could not be recognised
     -- POSSIBLE REASON: activate.bat file did not run properly
