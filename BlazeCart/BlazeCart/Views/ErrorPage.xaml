@@ -28,7 +28,7 @@
                 TextColor="{StaticResource TextColorSecondary}"></Label>
             <ImageButton
                 Aspect="AspectFit"
-                Command="{Binding NextCommand}"
+                Command="{Binding ReturnHomeCommand}"
                 Source="error_button.png"
                 HorizontalOptions="Center"></ImageButton>
             
