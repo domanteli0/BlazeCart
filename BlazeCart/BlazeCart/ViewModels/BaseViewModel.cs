@@ -1,22 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
+﻿
 
-
-
+using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace BlazeCart.ViewModels;
 
 
 
-public class BaseViewModel : INotifyPropertyChanged
+public partial class BaseViewModel : ObservableObject
 {
-    public event PropertyChangedEventHandler PropertyChanged;
+    [ObservableProperty]
+    public string name;
 
-    public void OnPropertyChanged([CallerMemberName]string name = null) =>
-        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
+    [ObservableProperty]
+    public bool isBusy;
+
+    
 }

@@ -2,7 +2,7 @@
 
 namespace BlazeCart.Models
 {
-    internal class Item
+    public class Item
     {
         [Key]
 
