@@ -11,6 +11,6 @@ public partial class App : Application
 		InitializeComponent();
 
 		//MainPage = new AppShell();
-		MainPage = new NavigationPage(new ItemCatalogPage());
+		MainPage = new NavigationPage(new CheapestStorePage());
 	}
 }

@@ -10,11 +10,10 @@
              x:DataType="viewmodel:ItemsViewModel"
              >
 
-            
-    <ContentPage.Content>
-        <ScrollView>
-            
-                <StackLayout Margin="5">
+
+        <ContentPage.Content>
+            <ScrollView>
+        <StackLayout Margin="5">
                 <ImageButton
                 Source="back_button"
                 HorizontalOptions="Start"></ImageButton>

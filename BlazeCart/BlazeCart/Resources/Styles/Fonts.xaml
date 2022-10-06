@@ -41,4 +41,29 @@
         <On Platform="Android" Value="20" />
     </OnPlatform>
 
+    <OnPlatform x:Key="CheapestStoreHeaderFont" x:TypeArguments="x:Double">
+        <On Platform="iOS" Value="16" />
+        <On Platform="Android" Value="16" />
+    </OnPlatform>
+
+    <OnPlatform x:Key="CheapestStoreMainHeaderFont" x:TypeArguments="x:Double">
+        <On Platform="iOS" Value="19" />
+        <On Platform="Android" Value="19" />
+    </OnPlatform>
+
+    <OnPlatform x:Key="CheapestStoreNameFont" x:TypeArguments="x:Double">
+        <On Platform="iOS" Value="21" />
+        <On Platform="Android" Value="21" />
+    </OnPlatform>
+
+    <OnPlatform x:Key="CheapestStoreAddressFont" x:TypeArguments="x:Double">
+        <On Platform="iOS" Value="14" />
+        <On Platform="Android" Value="14" />
+    </OnPlatform>
+
+
+
+
+
+
 </ResourceDictionary>

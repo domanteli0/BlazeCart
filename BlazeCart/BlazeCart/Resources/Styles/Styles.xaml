@@ -78,5 +78,36 @@
         <Setter Property="FontSize" Value="{StaticResource CategoryPriceFont}" />
         <Setter Property="TextColor" Value="{StaticResource TextColorPrimary}" />
     </Style>
+
+    <Style x:Key="CheapestStoreHeaderPoppins" TargetType="Label">
+        <Setter Property="FontFamily" Value="Poppins-Bold" />
+        <Setter Property="FontSize" Value="{StaticResource CheapestStoreHeaderFont}" />
+        <Setter Property="TextColor" Value="{StaticResource TextColorPrimary}" />
+    </Style>
+
+    <Style x:Key="CheapestStoreMainHeaderPoppins" TargetType="Label">
+        <Setter Property="FontFamily" Value="Poppins-Bold" />
+        <Setter Property="FontSize" Value="{StaticResource CheapestStoreMainHeaderFont}" />
+        <Setter Property="TextColor" Value="{StaticResource TextColorPrimary}" />
+    </Style>
+
+    <Style x:Key="CheapestStoreNamePoppins" TargetType="Label">
+        <Setter Property="FontFamily" Value="Poppins-Bold" />
+        <Setter Property="FontSize" Value="{StaticResource CheapestStoreNameFont}" />
+        <Setter Property="TextColor" Value="{StaticResource TextColorPrimary}" />
+    </Style>
+
+    <Style x:Key="CheapestStoreAddressPoppins" TargetType="Label">
+        <Setter Property="FontFamily" Value="Roboto-Regular" />
+        <Setter Property="FontAttributes" Value="Italic" />
+        <Setter Property="FontSize" Value="{StaticResource CheapestStoreAddressFont}" />
+        <Setter Property="TextColor" Value="{StaticResource TextColorPrimary}" />
+    </Style>
+
+    
+
+    
+
+    
     
 </ResourceDictionary>
