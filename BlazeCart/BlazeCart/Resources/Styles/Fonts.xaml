@@ -40,6 +40,11 @@
         <On Platform="iOS" Value="20" />
         <On Platform="Android" Value="20" />
     </OnPlatform>
+    <OnPlatform x:Key="PageNameFont" x:TypeArguments="x:Double">
+        <On Platform="iOS" Value="22" />
+        <On Platform="Android" Value="22" />
+    </OnPlatform>
+
 
     <OnPlatform x:Key="CheapestStoreHeaderFont" x:TypeArguments="x:Double">
         <On Platform="iOS" Value="16" />

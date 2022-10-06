@@ -110,4 +110,10 @@
 
     
     
+    <Style x:Key="PageNamePoppins" TargetType="Label">
+        <Setter Property="FontFamily" Value="Poppins-SemiBold" />
+        <Setter Property="TextColor" Value="{StaticResource TextColorPrimary}" />
+        <Setter Property="FontSize" Value="{StaticResource PageNameFont}"/>
+    </Style>
+
 </ResourceDictionary>
