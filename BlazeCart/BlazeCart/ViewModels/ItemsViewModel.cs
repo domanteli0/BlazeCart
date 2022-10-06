@@ -22,13 +22,13 @@ public class ItemsViewModel : BaseViewModel
     public ObservableCollection<Item> Items { get; } = new();
     public Command GetItemsCommand { get;  }
     
-    ItemService itemService;
+    ItemService _itemService;
 
     //Dependency injection
     public ItemsViewModel(ItemService itemService) {
         //Paremtrize the parameters?
         name = "Item finder";
-        this.itemService = itemService;
+        this._itemService = itemService;
         GetItemsCommand = new Command(async () => await GetItemsAsync());
     }
 
@@ -42,7 +42,7 @@ public class ItemsViewModel : BaseViewModel
         {
             isBusy = true;
             //Loading items from service
-            var items = await itemService.GetItems();
+            var items = await _itemService.GetItems();
 
             //Clears the local collection
             if (Items.Count != 0) {

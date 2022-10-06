@@ -7,24 +7,19 @@
              BackgroundColor="{StaticResource PageBackgroundColor}"
              xmlns:model="clr-namespace:BlazeCart.Models"
              xmlns:viewmodel="clr-namespace:BlazeCart.ViewModels"
-             x:DataType="viewmodel:ItemsViewModel"
-             >
-
-            
+             x:DataType="viewmodel:ItemsViewModel">
     <ContentPage.Content>
         <ScrollView>
-            
-                <StackLayout Margin="5">
+            <StackLayout Margin="5">
                 <ImageButton
-                Source="back_button"
-                HorizontalOptions="Start"></ImageButton>
-
+                    Source="back_button"
+                    HorizontalOptions="Start"></ImageButton>
                 <Label
-                HorizontalTextAlignment="Start"
-                Margin="10, 5, 50, 5"
-                Style="{StaticResource ItemCatalogPoppinsBold}"
-                Text="Category_name"
-                TextColor="{StaticResource PrimaryTextColor}"></Label>
+                    HorizontalTextAlignment="Start"
+                    Margin="10, 5, 50, 5"
+                    Style="{StaticResource ItemCatalogPoppinsBold}"
+                    Text="Category_name"
+                    TextColor="{StaticResource PrimaryTextColor}"></Label>
 
                 <SearchBar Placeholder="Ieškoti prekės..."
                        CancelButtonColor="{StaticResource TextColorSecondary}"
@@ -34,45 +29,36 @@
                        FontSize="Medium"
                        FontAttributes="Italic"/>
 
-
                 <CollectionView>
-
                     <CollectionView.ItemsSource>
                         <x:Array Type="{x:Type model:Item}">
                             <model:Item
-                            Name = "Obuoliai JONAGOLD, kg"
-                            Units ="kg"
-                            PricePerUnit ="1.05"
-                            Image="https://cdn.barbora.lt/products/68a76c9c-1e04-44a7-b757-2a7e4a23b2e4_m.png"
-                           />
+                                Name = "Obuoliai JONAGOLD, kg"
+                                Units ="kg"
+                                PricePerUnit ="1.05"
+                                Image="https://cdn.barbora.lt/products/68a76c9c-1e04-44a7-b757-2a7e4a23b2e4_m.png"/>
 
                             <model:Item
-                            Name = "Bananai, kg"
-                            Units ="kg"
-                            PricePerUnit ="1.59"
-                            Image="https://cdn.barbora.lt/products/1d747537-6760-4098-ab24-8c658d1f9491_m.png"
-                            />
+                                Name = "Bananai, kg"
+                                Units ="kg"
+                                PricePerUnit ="1.59"
+                                Image="https://cdn.barbora.lt/products/1d747537-6760-4098-ab24-8c658d1f9491_m.png"/>
                             <model:Item
-                            Name = "Citrinos, 3-4 dydis, kg"
-                            Units ="kg"
-                            PricePerUnit ="3.18"
-                            Image="https://cdn.barbora.lt/products/484760fc-4195-4caf-ac05-6c4e0006a2bb_s.png"
-                            />
+                                Name = "Citrinos, 3-4 dydis, kg"
+                                Units ="kg"
+                                PricePerUnit ="3.18"
+                                Image="https://cdn.barbora.lt/products/484760fc-4195-4caf-ac05-6c4e0006a2bb_s.png"/>
                             <model:Item
-                            Name = "Citrinos, žaliosios (laimas), I klasė, kg"
-                            Units ="kg"
-                            PricePerUnit ="5.84"
-                            Image="https://cdn.barbora.lt/products/04781508-8291-473e-b915-55407d2a0365_s.png"
-                            />
-
+                                Name = "Citrinos, žaliosios (laimas), I klasė, kg"
+                                Units ="kg"
+                                PricePerUnit ="5.84"
+                                Image="https://cdn.barbora.lt/products/04781508-8291-473e-b915-55407d2a0365_s.png"/>
                         </x:Array>
-
                     </CollectionView.ItemsSource>
 
-                    
                     <CollectionView.ItemTemplate>
                         <DataTemplate x:DataType="model:Item">
-                            <Grid x:Name="ItemCard" MaximumHeightRequest="200" >
+                            <Grid x:Name="ItemCard" MaximumHeightRequest="200">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="1*"/>
                                     <ColumnDefinition Width="1*"/>
@@ -83,81 +69,62 @@
                                     <RowDefinition Height="3*"/>
                                 </Grid.RowDefinitions>
 
-
                                 <Image
-                        Grid.Column="0"
-                        Grid.Row="0"
-                        Grid.RowSpan="3"
-                        Aspect="AspectFill"
-                        Source="{Binding Image}"
-                        Margin="20"
-                        HorizontalOptions="Start"  
-                        VerticalOptions="Start"/>
-
+                                    Grid.Column="0"
+                                    Grid.Row="0"
+                                    Grid.RowSpan="3"
+                                    Aspect="AspectFill"
+                                    Source="{Binding Image}"
+                                    Margin="20"
+                                    HorizontalOptions="Start"  
+                                    VerticalOptions="Start"/>
                                 <Label
-                    Grid.Column="1"
-                    Grid.Row="0"
-                    HorizontalTextAlignment="Start"
-                    Margin="0, 0, 15, 0"
-                    Style="{StaticResource ItemNamePoppins}"
-                    Text="{Binding Name}"
-                    TextColor="{StaticResource PrimaryTextColor}"
-                    LineBreakMode="CharacterWrap"
-                    ></Label>
+                                    Grid.Column="1"
+                                    Grid.Row="0"
+                                    HorizontalTextAlignment="Start"
+                                    Margin="0, 0, 15, 0"
+                                    Style="{StaticResource ItemNamePoppins}"
+                                    Text="{Binding Name}"
+                                    TextColor="{StaticResource PrimaryTextColor}"
+                                    LineBreakMode="CharacterWrap"></Label>
 
-                                <StackLayout
-                    Grid.Column="1"
-                    Grid.Row="1"
-                    Orientation="Horizontal">
-
+                                <HorizontalStackLayout
+                                    Grid.Column="1"
+                                    Grid.Row="1">
                                     <Label
-                        HorizontalTextAlignment="Start"
-                        Margin="0, 0, 2, 0"
-                        Style="{StaticResource ItemNumberPricePoppins}"
-                        Text="{Binding PricePerUnit}"
-                        TextColor="{StaticResource PrimaryTextColor}"></Label>
-
+                                        HorizontalTextAlignment="Start"
+                                        Margin="0, 0, 2, 0"
+                                        Style="{StaticResource ItemNumberPricePoppins}"
+                                        Text="{Binding PricePerUnit}"
+                                        TextColor="{StaticResource PrimaryTextColor}"></Label>
                                     <Label
-                        HorizontalTextAlignment="Start"
-                        Margin="0, 0, 15, 0"
-                        Style="{StaticResource ItemPricePoppins}"
-                        Text="€ /">
-                                    </Label>
+                                        HorizontalTextAlignment="Start"
+                                        Margin="0, 0, 15, 0"
+                                        Style="{StaticResource ItemPricePoppins}"
+                                        Text="€ /"></Label>
+                                    <Label
+                                        HorizontalTextAlignment="Start"
+                                        Margin="0, 0, 1, 0"
+                                        Style="{StaticResource ItemPricePoppins}"
+                                        Text="{Binding Units}"></Label>
+                                </HorizontalStackLayout>
 
-                        <Label
-                            HorizontalTextAlignment="Start"
-                            Margin="0, 0, 1, 0"
-                            Style="{StaticResource ItemPricePoppins}"
-                            Text="{Binding Units}">
-                        </Label>
-
-                                </StackLayout>
-
-                                <StackLayout 
-                    Orientation="Horizontal"   
-                    Grid.Column="2"
-                    Grid.Row="2" 
-                    Margin="0">
-
+                                <HorizontalStackLayout
+                                    Grid.Column="2"
+                                    Grid.Row="2" 
+                                    Margin="0">
                                     <ImageButton
-                        Source="heart_button"
-                        HorizontalOptions="Start"></ImageButton>
-
+                                        Source="heart_button"
+                                        HorizontalOptions="Start"></ImageButton>
                                     <ImageButton
-                        Source="cart_button"
-                        HorizontalOptions="Start"></ImageButton>
-                                </StackLayout>
+                                        Source="cart_button"
+                                        HorizontalOptions="Start"></ImageButton>
+                                </HorizontalStackLayout>
                             </Grid>
-
-
-
                         </DataTemplate>
                     </CollectionView.ItemTemplate>
-
                 </CollectionView>
-
             </StackLayout>
-
         </ScrollView>
     </ContentPage.Content>
-    </ContentPage>
+</ContentPage>
