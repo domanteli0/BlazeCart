@@ -1,0 +1,4 @@
+{
+  "cart":[]
+}
+//stores the information about unsaved cart (can be only one cart per user)

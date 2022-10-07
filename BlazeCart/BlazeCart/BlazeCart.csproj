@@ -83,6 +83,8 @@
 	  <None Remove="Resources\Images\place_marker.png" />
 	  <None Remove="Resources\Images\red_arrow.png" />
 	  <None Remove="Resources\Images\show_map_button.png" />
+	  <None Remove="Resources\Raw\cart.json" />
+	  <None Remove="Resources\Raw\cartSchema.json" />
 	</ItemGroup>
 
 	<ItemGroup>
