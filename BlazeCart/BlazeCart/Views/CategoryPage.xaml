@@ -30,9 +30,17 @@
                             Wrap="Wrap"
                             JustifyContent="SpaceAround"
                             Margin="20, 10, 0, 0"
-                            Direction="Row">
+                            Direction="Row"
+                            AlignContent="SpaceEvenly">
 
-                    <AbsoluteLayout>
+                    <Frame
+                        MaximumHeightRequest="200"
+                        MaximumWidthRequest="200"
+                        HeightRequest="200"
+                        WidthRequest="160"
+                        Padding="0,0,0,0"
+                        Margin="5">
+                        <AbsoluteLayout>
                         <BoxView
                             Color ="{StaticResource White}"
                             WidthRequest="160"
@@ -77,25 +85,32 @@
                                 LineBreakMode="CharacterWrap"></Label>
                         </StackLayout>
                     </AbsoluteLayout>
+                        </Frame>
 
 
-                    <AbsoluteLayout>
-                        <BoxView
+                    <Frame
+                        MaximumHeightRequest="200"
+                        MaximumWidthRequest="200"
+                        HeightRequest="200"
+                        WidthRequest="160"
+                        Padding="0,0,0,0">
+                        <AbsoluteLayout>
+                            <BoxView
                             Color ="{StaticResource White}"
                             WidthRequest="160"
                             HeightRequest="200"
                             CornerRadius="12">
-                            <BoxView.Shadow>
-                                <Shadow
+                                <BoxView.Shadow>
+                                    <Shadow
                                     Brush="Black"
                                     Offset="20,20"
                                     Radius="40"
                                     Opacity="0.1"/>
-                            </BoxView.Shadow>
-                        </BoxView>
-                        <StackLayout
+                                </BoxView.Shadow>
+                            </BoxView>
+                            <StackLayout
                             HorizontalOptions="Center">
-                            <Border
+                                <Border
                                 MaximumHeightRequest="150"
                                 MaximumWidthRequest="177"
                                 StrokeThickness="0.001"
@@ -103,45 +118,52 @@
                                 Margin="0"
                                 Background="{StaticResource White}"
                                 StrokeShape="RoundRectangle 5,5,0,0">
-                                <Image Source="https://fandbrecipes.com/wp-content/uploads/2021/01/The-Ultimate-List-of-Citrus-Fruits-and-Vegetables-scaled.jpg"
+                                    <Image Source="https://fandbrecipes.com/wp-content/uploads/2021/01/The-Ultimate-List-of-Citrus-Fruits-and-Vegetables-scaled.jpg"
                                            MaximumHeightRequest="150"
                                            MaximumWidthRequest="160"
                                            AbsoluteLayout.LayoutBounds="0, 0, 0, 0">
-                                </Image>
-                            </Border>
-                            <Label
+                                    </Image>
+                                </Border>
+                                <Label
                                 HorizontalTextAlignment="Start"
                                 Margin="5, 10, 10, 0"
                                 Style="{StaticResource ItemNamePoppins}"
                                 Text="Vaisiai"
                                 TextColor="{StaticResource PrimaryTextColor}"
                                 LineBreakMode="CharacterWrap"></Label>
-                            <Label
+                                <Label
                                 HorizontalTextAlignment="Start"
                                 Margin="5, 10, 10, 0"
                                 Style="{StaticResource CategoryCountRoboto}"
                                 Text="(32)"
                                 LineBreakMode="CharacterWrap"></Label>
-                        </StackLayout>
-                    </AbsoluteLayout>
+                            </StackLayout>
+                        </AbsoluteLayout>
+                    </Frame>
 
-                    <AbsoluteLayout>
-                        <BoxView
+                    <Frame
+                        MaximumHeightRequest="200"
+                        MaximumWidthRequest="200"
+                        HeightRequest="200"
+                        WidthRequest="160"
+                        Padding="0,0,0,0">
+                        <AbsoluteLayout>
+                            <BoxView
                             Color ="{StaticResource White}"
                             WidthRequest="160"
                             HeightRequest="200"
                             CornerRadius="12">
-                            <BoxView.Shadow>
-                                <Shadow
+                                <BoxView.Shadow>
+                                    <Shadow
                                     Brush="Black"
                                     Offset="20,20"
                                     Radius="40"
                                     Opacity="0.1"/>
-                            </BoxView.Shadow>
-                        </BoxView>
-                        <StackLayout
+                                </BoxView.Shadow>
+                            </BoxView>
+                            <StackLayout
                             HorizontalOptions="Center">
-                            <Border
+                                <Border
                                 MaximumHeightRequest="150"
                                 MaximumWidthRequest="177"
                                 StrokeThickness="0.001"
@@ -149,45 +171,52 @@
                                 Margin="0"
                                 Background="{StaticResource White}"
                                 StrokeShape="RoundRectangle 5,5,0,0">
-                                <Image Source="https://fandbrecipes.com/wp-content/uploads/2021/01/The-Ultimate-List-of-Citrus-Fruits-and-Vegetables-scaled.jpg"
+                                    <Image Source="https://fandbrecipes.com/wp-content/uploads/2021/01/The-Ultimate-List-of-Citrus-Fruits-and-Vegetables-scaled.jpg"
                                            MaximumHeightRequest="150"
                                            MaximumWidthRequest="160"
                                            AbsoluteLayout.LayoutBounds="0, 0, 0, 0">
-                                </Image>
-                            </Border>
-                            <Label
+                                    </Image>
+                                </Border>
+                                <Label
                                 HorizontalTextAlignment="Start"
                                 Margin="5, 10, 10, 0"
                                 Style="{StaticResource ItemNamePoppins}"
                                 Text="Vaisiai"
                                 TextColor="{StaticResource PrimaryTextColor}"
                                 LineBreakMode="CharacterWrap"></Label>
-                            <Label
+                                <Label
                                 HorizontalTextAlignment="Start"
                                 Margin="5, 10, 10, 0"
                                 Style="{StaticResource CategoryCountRoboto}"
                                 Text="(32)"
                                 LineBreakMode="CharacterWrap"></Label>
-                        </StackLayout>
-                    </AbsoluteLayout>
+                            </StackLayout>
+                        </AbsoluteLayout>
+                    </Frame>
 
-                    <AbsoluteLayout>
-                        <BoxView
+                    <Frame
+                        MaximumHeightRequest="200"
+                        MaximumWidthRequest="200"
+                        HeightRequest="200"
+                        WidthRequest="160"
+                        Padding="0,0,0,0">
+                        <AbsoluteLayout>
+                            <BoxView
                             Color ="{StaticResource White}"
                             WidthRequest="160"
                             HeightRequest="200"
                             CornerRadius="12">
-                            <BoxView.Shadow>
-                                <Shadow
+                                <BoxView.Shadow>
+                                    <Shadow
                                     Brush="Black"
                                     Offset="20,20"
                                     Radius="40"
                                     Opacity="0.1"/>
-                            </BoxView.Shadow>
-                        </BoxView>
-                        <StackLayout
+                                </BoxView.Shadow>
+                            </BoxView>
+                            <StackLayout
                             HorizontalOptions="Center">
-                            <Border
+                                <Border
                                 MaximumHeightRequest="150"
                                 MaximumWidthRequest="177"
                                 StrokeThickness="0.001"
@@ -195,27 +224,32 @@
                                 Margin="0"
                                 Background="{StaticResource White}"
                                 StrokeShape="RoundRectangle 5,5,0,0">
-                                <Image Source="https://fandbrecipes.com/wp-content/uploads/2021/01/The-Ultimate-List-of-Citrus-Fruits-and-Vegetables-scaled.jpg"
+                                    <Image Source="https://fandbrecipes.com/wp-content/uploads/2021/01/The-Ultimate-List-of-Citrus-Fruits-and-Vegetables-scaled.jpg"
                                            MaximumHeightRequest="150"
                                            MaximumWidthRequest="160"
                                            AbsoluteLayout.LayoutBounds="0, 0, 0, 0">
-                                </Image>
-                            </Border>
-                            <Label
+                                    </Image>
+                                </Border>
+                                <Label
                                 HorizontalTextAlignment="Start"
                                 Margin="5, 10, 10, 0"
                                 Style="{StaticResource ItemNamePoppins}"
                                 Text="Vaisiai"
                                 TextColor="{StaticResource PrimaryTextColor}"
                                 LineBreakMode="CharacterWrap"></Label>
-                            <Label
+                                <Label
                                 HorizontalTextAlignment="Start"
                                 Margin="5, 10, 10, 0"
                                 Style="{StaticResource CategoryCountRoboto}"
                                 Text="(32)"
                                 LineBreakMode="CharacterWrap"></Label>
-                        </StackLayout>
-                    </AbsoluteLayout>
+                            </StackLayout>
+                        </AbsoluteLayout>
+                    </Frame>
+
+
+
+
                 </FlexLayout>
             </StackLayout>
         </ScrollView>
