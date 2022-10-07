@@ -104,16 +104,17 @@
         <Setter Property="TextColor" Value="{StaticResource TextColorPrimary}" />
     </Style>
 
-    
-
-    
-
-    
-    
     <Style x:Key="PageNamePoppins" TargetType="Label">
         <Setter Property="FontFamily" Value="Poppins-SemiBold" />
         <Setter Property="TextColor" Value="{StaticResource TextColorPrimary}" />
         <Setter Property="FontSize" Value="{StaticResource PageNameFont}"/>
     </Style>
+
+    <Style x:Key="CategoryCountRoboto" TargetType="Label">
+        <Setter Property="FontFamily" Value="Roboto-Regular" />
+        <Setter Property="TextColor" Value="{StaticResource SecondaryTextColor}" />
+        <Setter Property="FontSize" Value="{StaticResource CategoryCountFont}"/>
+    </Style>
+
 
 </ResourceDictionary>

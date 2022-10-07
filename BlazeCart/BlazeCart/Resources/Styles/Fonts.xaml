@@ -66,6 +66,11 @@
         <On Platform="Android" Value="14" />
     </OnPlatform>
 
+    <OnPlatform x:Key="CategoryCountFont" x:TypeArguments="x:Double">
+        <On Platform="iOS" Value="12" />
+        <On Platform="Android" Value="12" />
+    </OnPlatform>
+
 
 
 
