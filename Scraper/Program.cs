@@ -11,9 +11,9 @@ namespace Scraper
         {
             var storeList = new List<Store>();
             var productList = new List<Procuct>();
-            var categoryList = new List<Category>();
 
-            // Gets the initial data: store locations, ids, etc.
+            #region initi_data
+            // Gets the initial data JSON
             HttpResponseMessage response;
 
             // IMPORTANT:
@@ -32,9 +32,11 @@ namespace Scraper
 
             StreamReader reader = new StreamReader( response.Content.ReadAsStream() );
             var JSONresponse = JObject.Parse(reader.ReadToEnd());
+            #endregion
 
-            // Gets the list of stores
-            foreach (var cat_ in JSONresponse.GetValue("chains").Last.SelectToken("stores"))
+            #region stores
+            // Gets the list of stores from initial_data JSON
+            foreach (JToken cat_ in JSONresponse.GetValue("chains").Last.SelectToken("stores"))
             {
                 storeList.Add(new Store {
                     Merch = Store.Merchendise.IKI,
@@ -47,14 +49,55 @@ namespace Scraper
                         cat_.SelectToken("location").SelectToken("geopoint").SelectToken("latitude").ToString(),
                     } );
             }
+            // storeList.ForEach(store => Console.WriteLine(store));
+            #endregion
 
-            storeList.ForEach(store => Console.WriteLine(store));
+            #region categories
+            // Gets needed category data from initial_data JSON
+            // All Catagories, including those who have subcategories
+            var catListFull = new List<Category>();
+            // Only Categories which don't have subcategories;
+            var catListDeepestOnly = new List<Category>();
 
+            // toCat is declared and assigned at different points to do recurtion, see:
+            // https://stackoverflow.com/questions/4611549/recursion-with-func
+            Func<JToken, List<Category>> toCat = null!;
+            toCat = jtoken => {
+                var l = new List<Category>();
+
+                foreach(var cat in jtoken)
+                {
+                    var listing = new Category()
+                    {
+                        InternalID = cat.SelectToken("id").ToString(),
+                        NameLT = cat.SelectToken("name").SelectToken("lt").ToString(),
+                        NameEN = cat.SelectToken("name").SelectToken("en").ToString(),
+                    };
+
+                    l.Add(listing);
+                    catListFull.Add(listing);
+
+                    var cat_ = cat.SelectToken("subcategories");
+                    if (cat_.Count() > 0)
+                    {
+                        listing.SubCategories = toCat(cat_);
+                    }
+                    else
+                        catListDeepestOnly.Add(listing);
+                }
+
+                return l;
+            };
+
+            toCat(JSONresponse.GetValue("categories"));
+
+            Console.WriteLine("Full Only: {0}", catListFull.Count);
+            // catListFull.ForEach(cat => Console.WriteLine(cat));
+            Console.WriteLine("Deepest Only: {0}", catListDeepestOnly.Count);
+            // catListDeepestOnly.ForEach(cat => Console.WriteLine(cat));
+            #endregion
 
             // HttpClient client = new HttpClient();
-
-            // // TODO:
-            // // Create proper classes to deserialize requested JSON objects into
 
             // // IMPORTANT:
             // // Genereted with <https://curl.olsh.me/>
@@ -95,10 +138,7 @@ namespace Scraper
             // var a = JSONresponse.GetValue("data");
             // Console.WriteLine(a);
             // // foreach (var a in JSONresponse.GetValue("data"))
-            // // {
-            // //     Console.WriteLine(a);
-            // // }
-            // }
+            // <https://stackoverflow.com/questions/4023462/how-do-i-automatically-display-all-properties-of-a-class-and-their-values-in-a-s>
         }
 
         public class Store
@@ -130,12 +170,25 @@ namespace Scraper
             public string? InternalID { get; set; }
             public string? NameEN { get; set; }
             public string? NameLT { get; set; }
+            public List<Category>? SubCategories { get; set; }
+
+            // <https://stackoverflow.com/questions/4023462/how-do-i-automatically-display-all-properties-of-a-class-and-their-values-in-a-s>
+            public override string ToString()
+            {
+                return GetType().GetProperties()
+                    .Select(info => (info.Name, Value: info.GetValue(this, null) ?? "(null)"))
+                    .Aggregate(
+                        new StringBuilder(),
+                        (sb, pair) => sb.AppendLine($"{pair.Name}: {pair.Value}"),
+                        sb => sb.ToString());
+            }
         }
 
         public class Procuct
         {
             public enum conversionMeasure { VNT, KG, L}
-            public string? Name { get; set; }
+            public string? NameEN { get; set; }
+            public string? NameLT { get; set; }
             public string? Description { get; set; }
             public conversionMeasure ConcM { get; set; }
             public float Ammount { get; set; }
@@ -149,11 +202,18 @@ namespace Scraper
 
             // URIs pointing to an image of that product
             public List<Uri>? Images { get; set; }
+            public List<Category>? Category { get; set; }
 
-            // TODO: Do we even need this?
-            // public Nutrition Nut
-            // public Allergies
-
+            // <https://stackoverflow.com/questions/4023462/how-do-i-automatically-display-all-properties-of-a-class-and-their-values-in-a-s>
+            public override string ToString()
+            {
+                return GetType().GetProperties()
+                    .Select(info => (info.Name, Value: info.GetValue(this, null) ?? "(null)"))
+                    .Aggregate(
+                        new StringBuilder(),
+                        (sb, pair) => sb.AppendLine($"{pair.Name}: {pair.Value}"),
+                        sb => sb.ToString());
+            }
         }
     }
 }
