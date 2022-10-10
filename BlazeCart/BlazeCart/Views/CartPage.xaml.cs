@@ -8,6 +8,6 @@ public partial class CartPage : ContentPage
 	public CartPage()
 	{
 		InitializeComponent();
-        this.BindingContext = new ItemsViewModel(this.Navigation);
+        this.BindingContext = new CartPageViewModel(this.Navigation);
     }
 }
