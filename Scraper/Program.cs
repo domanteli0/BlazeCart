@@ -2,53 +2,64 @@
 using System.Net.Http.Headers;
 using System.Text;
 using Newtonsoft.Json.Linq;
+using System.Diagnostics;
 
 namespace Scraper
 {
     internal class Program
     {
+        // TODO:
+        // * Refactor, currently this is more in a PoC stage
+        //   * Error handling (remove all null-forgiving operators?)
+        // * Back referencing products with `Store` instance
+        //
+        // Fields which are thought (as of when implemented) to always be non-null
+        // are marked with null-forgiving operators (!)
+        // If a field is thought to be able to be null,
+        // then are marked with null-conditional operator (?)
+
         static async Task Main(string[] args)
         {
             var storeList = new List<Store>();
-            var productList = new List<Procuct>();
 
-            #region initi_data
+            #region initial_data
             // Gets the initial data JSON
-            HttpResponseMessage response;
+            HttpResponseMessage responseInit;
 
             // IMPORTANT:
             // Genereted with <https://curl.olsh.me/>, slightly edited
             using (var httpClient = new HttpClient())
             {
-                using (var request = new HttpRequestMessage(new HttpMethod("POST"), "https://eparduotuve.iki.lt/api/initial_data"))
+                using (var requestInit = new HttpRequestMessage(new HttpMethod("POST"), "https://eparduotuve.iki.lt/api/initial_data"))
                 {
-                    request.Headers.TryAddWithoutValidation("accept", "application/json, text/plain, */*");
-                    request.Content = new StringContent("{\"locale\":\"lt\"}");
-                    request.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json");
+                    requestInit.Headers.TryAddWithoutValidation("accept", "application/json, text/plain, */*");
+                    requestInit.Content = new StringContent("{\"locale\":\"lt\"}");
+                    requestInit.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json");
 
-                    response = await httpClient.SendAsync(request);
+                    responseInit = await httpClient.SendAsync(requestInit);
                 }
             }
 
-            StreamReader reader = new StreamReader( response.Content.ReadAsStream() );
-            var JSONresponse = JObject.Parse(reader.ReadToEnd());
+            StreamReader readerInit = new StreamReader( responseInit.Content.ReadAsStream() );
+            var JSONresponseInit = JObject.Parse(readerInit.ReadToEnd());
+
             #endregion
 
             #region stores
             // Gets the list of stores from initial_data JSON
-            foreach (JToken cat_ in JSONresponse.GetValue("chains").Last.SelectToken("stores"))
+            foreach (JToken cat_ in JSONresponseInit["chains"]!.Last!["stores"]!)
             {
                 storeList.Add(new Store {
                     Merch = Store.Merchendise.IKI,
-                    InternalID = cat_.SelectToken("id").ToString(),
-                    Name = cat_.SelectToken("name").ToString(),
-                    Address = cat_.SelectToken("streetAndBuilding").ToString(),
-                    Longitude =
-                        cat_.SelectToken("location").SelectToken("geopoint").SelectToken("longitude").ToString(),
-                    Latitude =
-                        cat_.SelectToken("location").SelectToken("geopoint").SelectToken("latitude").ToString(),
-                    } );
+                    InternalID = cat_["id"]!.ToString(),
+                    Name = cat_["name"]!.ToString(),
+                    Address = cat_["streetAndBuilding"]!.ToString(),
+                    Longitude = cat_["location"]!["geopoint"]!["longitude"]!.ToString(),
+                    Latitude = cat_["location"]!["geopoint"]!["latitude"]!.ToString(),
+                    }
+                );
             }
+            Console.WriteLine("BEFORE: {0}", storeList.Count);
             // storeList.ForEach(store => Console.WriteLine(store));
             #endregion
 
@@ -69,15 +80,29 @@ namespace Scraper
                 {
                     var listing = new Category()
                     {
-                        InternalID = cat.SelectToken("id").ToString(),
-                        NameLT = cat.SelectToken("name").SelectToken("lt").ToString(),
-                        NameEN = cat.SelectToken("name").SelectToken("en").ToString(),
+                        InternalID = cat["id"]!.ToString(),
+                        NameLT = cat["name"]!["lt"]!.ToString(),
+                        NameEN = cat["name"]!["en"]!.ToString(),
                     };
+
+                    // Not all stores are described in chains/stores JSON list
+                    // thus IDs of other stores must be collected at this step
+                    foreach (var storeId in cat["storeIds"]!)
+                    {
+                        String id = storeId.ToString();
+                        if(storeList.Any( s => { return s.InternalID.Equals(id); } ))
+                            storeList.Add(
+                                new Store() {
+                                    Merch = Store.Merchendise.IKI,
+                                    InternalID = id,
+                                }
+                            );
+                    }
 
                     l.Add(listing);
                     catListFull.Add(listing);
 
-                    var cat_ = cat.SelectToken("subcategories");
+                    var cat_ = cat["subcategories"]!;
                     if (cat_.Count() > 0)
                     {
                         listing.SubCategories = toCat(cat_);
@@ -89,7 +114,15 @@ namespace Scraper
                 return l;
             };
 
-            toCat(JSONresponse.GetValue("categories"));
+            // storeList
+
+            foreach(var store in storeList)
+            {
+                Debug.Assert(storeList.FindAll( s => s.InternalID.Equals(store.InternalID)).Count == 1);
+            }
+
+            toCat(JSONresponseInit.GetValue("categories")!);
+            Console.WriteLine("AFTER: {0}", storeList.Count);
 
             Console.WriteLine("Full Only: {0}", catListFull.Count);
             // catListFull.ForEach(cat => Console.WriteLine(cat));
@@ -97,48 +130,89 @@ namespace Scraper
             // catListDeepestOnly.ForEach(cat => Console.WriteLine(cat));
             #endregion
 
-            // HttpClient client = new HttpClient();
+            #region Products
 
-            // // IMPORTANT:
-            // // Genereted with <https://curl.olsh.me/>
+            var productList = new List<Procuct>();
+            // Autogenerated with <https://curl.olsh.me/>, slightly modified
+            // curl 'https://eparduotuve.iki.lt/api/search/view_products' \
+            // -H 'content-type: application/json' \
+            // --data-raw '{"limit":6,"params":{"type":"view_products","isActive":true,"storeIds":["CvKfTzV4TN5U8BTMF1Hl_408"]}}'
+            // In production code, don't destroy the HttpClient through using, but better use IHttpClientFactory factory or at least reuse an existing HttpClient instance
+            // https://docs.microsoft.com/en-us/aspnet/core/fundamentals/http-requests
+            // https://www.aspnetmonsters.com/2016/08/2016-08-27-httpclientwrong/
+            using (var httpClient = new HttpClient())
+            {
+                foreach (var cat in catListDeepestOnly)
+                {
+                    var request = new HttpRequestMessage(
+                        new HttpMethod("POST"),
+                        "https://eparduotuve.iki.lt/api/search/view_products");
+                    request.Content =
+                        new StringContent("{\"limit\":60,\"params\":{\"type\":\"view_products\",\"categoryIds\":[\""
+                        + cat.InternalID +
+                        "\"],\"filter\":{}}}");
+                        // new StringContent("{\"limit\":60,\"params\":{\"type\":\"view_products\",\"categoryIds\":[\""
+                        // + "gaIG5IdjVi36hwBvDkCX" +
+                        // "\"],\"filter\":{}}}");
 
-            // // var response = await client.GetAsync("https://eparduotuve.iki.lt/api/search/view_products");
+                    request.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json");
 
-            // // Console.WriteLine(response);
+                    var response = await httpClient.SendAsync(request);
 
+                    StreamReader reader = new StreamReader( response.Content.ReadAsStream() );
+                    var str = reader.ReadToEnd();
+                    JObject JSONresponseProd;
+                    try {
+                        JSONresponseProd = JObject.Parse(str);
+                    } catch (Newtonsoft.Json.JsonReaderException) {
+                        // TODO: Logging
+                        continue;
+                    }
 
-            // // var handler = new HttpClientHandler();
-            // HttpResponseMessage response;
-            // // If you are using .NET Core 3.0+ you can replace `~DecompressionMethods.None` to `DecompressionMethods.All`
-            // // handler.AutomaticDecompression = ~DecompressionMethods.All;
+                    foreach(var jtoken in JSONresponseProd["data"]!)
+                    {
+                        // Console.WriteLine("---");
+                        // Console.WriteLine(jtoken);
 
-            // // In production code, don't destroy the HttpClient through using, but better use IHttpClientFactory factory or at least reuse an existing HttpClient instance
-            // // https://docs.microsoft.com/en-us/aspnet/core/fundamentals/http-requests
-            // // https://www.aspnetmonsters.com/2016/08/2016-08-27-httpclientwrong/
-            // using (var httpClient = new HttpClient())
-            // {
-            //     using (var request = new HttpRequestMessage(new HttpMethod("POST"), "https://eparduotuve.iki.lt/api/search/view_products"))
-            //     {
-            //         request.Headers.TryAddWithoutValidation("authority", "eparduotuve.iki.lt");
-            //         request.Headers.TryAddWithoutValidation("accept", "application/json, text/plain, */*");
-            //         request.Headers.TryAddWithoutValidation("user-agent", "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36");
+                        // This is done to prevent exesive request and getting blocked
+                        Thread.Sleep(10);
 
-            //         request.Content = new StringContent("{\"limit\":2,\"params\":{\"type\":\"view_products\",\"isActive\":true,\"isApproved\":true,\"storeIds\":[],\"sort\":\"karma\",\"categoryIds\":[],\"hasLoyaltyCard\":false,\"filter\":{},\"isUsingStock\":true}}");
-            //         request.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json");
+                        var newProd = new Procuct() {
+                            InternalID = jtoken["id"]!.ToString(),
+                            NameLT = jtoken["name"]!["lt"]!.ToString(),
+                            NameEN = jtoken["name"]!["en"]!.ToString(),
+                            Description = jtoken["description"]?["lt"]?.ToString(),
+                            Price = (jtoken["prc"]!["p"]!.ToObject<decimal>()),
+                            DiscountPrice = jtoken["prc"]!["s"]?.ToObject<decimal?>(),
+                            LoyaltyPrice = jtoken["prc"]!["l"]?.ToObject<decimal?>(),
+                            // TODO:
+                            // Categories =
+                            // Units of measure and available ammounts
+                        };
 
-            //         response = await httpClient.SendAsync(request);
-            //     }
-            // }
+                        var bar = jtoken["barcodes"]!.ToObject<List<String>>();
+                        if (bar is not null)
+                            newProd.Barcodes = bar;
 
-            // // IMPORTNAT: end of autogenerated code
+                        try {
+                            var photo = jtoken["photoUrl"]?.ToObject<Uri>();
+                            if (photo is not null)
+                                newProd.Images.Add(photo);
+                        } catch (System.UriFormatException) {}
 
-            // StreamReader reader = new StreamReader( response.Content.ReadAsStream() );
-            // var JSONresponse = JObject.Parse(reader.ReadToEnd());
-            // // Console.WriteLine(reader.ReadToEnd());
-            // var a = JSONresponse.GetValue("data");
-            // Console.WriteLine(a);
-            // // foreach (var a in JSONresponse.GetValue("data"))
-            // <https://stackoverflow.com/questions/4023462/how-do-i-automatically-display-all-properties-of-a-class-and-their-values-in-a-s>
+                        try {
+                            var thumb = jtoken["thumbUrl"]?.ToObject<Uri>();
+                            if (thumb is not null)
+                                newProd.Images.Add(thumb);
+                        } catch (System.UriFormatException) {}
+
+                        productList.Add(newProd);
+                    }
+                }
+            }
+
+            productList.ForEach(p => Console.WriteLine(p));
+            #endregion
         }
 
         public class Store
@@ -150,7 +224,7 @@ namespace Scraper
             public string? Latitude { get; set;}
             public string? Longitude { get; set; }
             public Merchendise Merch { get; set; }
-            public string? InternalID { get; set; }
+            public string InternalID { get; set; }
 
             // <https://stackoverflow.com/questions/4023462/how-do-i-automatically-display-all-properties-of-a-class-and-their-values-in-a-s>
             public override string ToString()
@@ -186,23 +260,33 @@ namespace Scraper
 
         public class Procuct
         {
-            public enum conversionMeasure { VNT, KG, L}
+            public enum unitOfMeasure { VNT, KG, L}
+            public string? InternalID {get; set; }
             public string? NameEN { get; set; }
             public string? NameLT { get; set; }
             public string? Description { get; set; }
-            public conversionMeasure ConcM { get; set; }
+            public unitOfMeasure MeasureUnit { get; set; }
             public float Ammount { get; set; }
 
             // Price in cents
-            public int Price { get; set; }
-            public int DiscountPrice { get; set; }
+            public decimal Price { get; set; }
+            public decimal? DiscountPrice { get; set; }
 
             // Price in cents with loyanty card discounts
-            public int LoyaltyPrice { get; set; }
+            public decimal? LoyaltyPrice { get; set; }
 
             // URIs pointing to an image of that product
-            public List<Uri>? Images { get; set; }
-            public List<Category>? Category { get; set; }
+            public List<Uri> Images { get; set; }
+            public List<Category> Categories { get; set; }
+            public List<String> Barcodes {get; set; }
+            public List<Store> AvailableAt {get; set; }
+
+            public Procuct() {
+                Images = new List<Uri>();
+                Categories = new List<Category>();
+                Barcodes = new List<String>();
+                AvailableAt = new List<Store>();
+            }
 
             // <https://stackoverflow.com/questions/4023462/how-do-i-automatically-display-all-properties-of-a-class-and-their-values-in-a-s>
             public override string ToString()
