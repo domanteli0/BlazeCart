@@ -102,37 +102,8 @@
                             </Grid>
                         </DataTemplate>
                     </CollectionView.ItemTemplate>
-
-
-
                 </CollectionView>
-
-                <!--
-                <Button
-                    Text ="PopulateCatalog"
-                    Command="{Binding GetItemsCommand}"/>-->
-
-                
-                <Button
-                    Text ="PopulateCatalog"
-                    Command="{Binding
-                        Path = BindingContext.GetItemsCommand, Source={Reference CollectionOfItems}}"/> 
-
-
-                <Button
-                    Text ="PopulateCatalog"
-                    Command="{Binding
-                        Source = {RelativeSource AncestorType={x:Type viewmodel:ItemsViewModel}},
-                        Path=GetItemsCommand}"/>
-
-
-
-                <ActivityIndicator
-                    IsVisible="{Binding IsBusy}"
-                    IsRunning="{Binding IsBusy}"/>
-
             </StackLayout>
-
         </ScrollView>
     </ContentPage.Content>
 </ContentPage>

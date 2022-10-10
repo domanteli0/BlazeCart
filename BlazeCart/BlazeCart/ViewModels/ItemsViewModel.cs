@@ -35,47 +35,14 @@ public class ItemsViewModel : BaseViewModel
     public ItemsViewModel(INavigation navigation) {
         //Paremtrize the parameters?
         name = "Item finder";
-        Items = new ObservableCollection<Item>()
-        {
-            new Item
-            {
-                Availability = true,
-                Category = "Fruits",
-                Components = "20% vandens",
-                Description = "Skaniausi bananai",
-                Image = "banana_img.png",
-                ItemId = 1,
-                Name = "Bananas",
-                Origin = "Lietuva",
-                PackageAmount = 200,
-                Price = 3.99,
-                PricePerUnit = 3.44,
-                Store="IKI"
-            },
-            new Item
-            {
-                Availability = true,
-                Category = "Fruits",
-                Components = "30% vandens",
-                Description = "Dar vieni bananai",
-                Image = "banana_img.png",
-                ItemId = 1,
-                Name = "Bananas 2",
-                Origin = "Lietuva",
-                PackageAmount = 200,
-                Price = 2.99,
-                PricePerUnit = 3.44,
-                Store="IKI"
-            }
-        };
-
-       // GetItemsCommand = new Command(async () => await GetItemsAsync());
+        Items = new ObservableCollection<Item>();
+        GetItemsAsync();
         CartCommand = new Command<Item>(OnCartCommand);
     }
 
 
 
-    async Task GetItemsAsync() {
+    async void GetItemsAsync() {
 
         if (IsBusy)
         {
@@ -114,7 +81,7 @@ public class ItemsViewModel : BaseViewModel
     {
         this.SelectedItem = item;
        this.CartItems.Add(SelectedItem);
-        //await _cartService.ItemsToCart( this.CartItems, "Vau pavyko"); //error on this method
+       //await _cartService.ItemsToCart( this.CartItems, "Vau pavyko"); //error on this method
         //await Application.Current.MainPage.DisplayAlert("lol", "ok", "nice");
 
     }
