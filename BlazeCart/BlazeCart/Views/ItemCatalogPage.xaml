@@ -35,7 +35,7 @@
 
                     <CollectionView.ItemTemplate>
                         <DataTemplate x:DataType="model:Item">
-                            <Grid x:Name="ItemCard" MaximumHeightRequest="200">
+                            <Grid MaximumHeightRequest="200">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="1*"/>
                                     <ColumnDefinition Width="1*"/>
@@ -87,7 +87,7 @@
                                 </HorizontalStackLayout>
 
                                 <HorizontalStackLayout
-                                    Grid.Column="2"
+                                    Grid.Column="1"
                                     Grid.Row="2" 
                                     Margin="0">
                                     <ImageButton
@@ -95,6 +95,8 @@
                                         HorizontalOptions="Start"></ImageButton>
                                     <ImageButton
                                         Source="cart_button"
+                                        Command="{Binding Source={x:Reference CollectionOfItems}, Path=BindingContext.CartCommand}"
+                                        CommandParameter="{Binding .}"
                                         HorizontalOptions="Start"></ImageButton>
                                 </HorizontalStackLayout>
                             </Grid>

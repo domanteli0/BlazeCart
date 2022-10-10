@@ -27,36 +27,13 @@
                         HorizontalOptions="Center" />
                     <ImageButton
                         Margin="10, 0, 0, 0"
+                        Command="{Binding SaveCommand}"
                         Source="save_button.png"
                         VerticalOptions="Center" />
                 </HorizontalStackLayout>
             </Frame>
-            <CollectionView>
-                <CollectionView.ItemsSource>
-                    <x:Array Type="{x:Type model:Item}">
-                        <model:Item
-                            Name="Obuoliai JONAGOLD, kg"
-                            Units="kg"
-                            PricePerUnit="1.05"
-                            Image="https://cdn.barbora.lt/products/68a76c9c-1e04-44a7-b757-2a7e4a23b2e4_m.png" />
-                        <model:Item
-                            Name="Bananai, kg"
-                            Units="kg"
-                            PricePerUnit="1.59"
-                            Image="https://cdn.barbora.lt/products/1d747537-6760-4098-ab24-8c658d1f9491_m.png" />
-                        <model:Item
-                            Name="Citrinos, 3-4 dydis, kg"
-                            Units="kg"
-                            PricePerUnit="3.18"
-                            Image="https://cdn.barbora.lt/products/484760fc-4195-4caf-ac05-6c4e0006a2bb_s.png" />
-                        <model:Item
-                            Name="Citrinos, žaliosios (laimas), I klasė, kg"
-                            Units="kg"
-                            PricePerUnit="5.84"
-                            Image="https://cdn.barbora.lt/products/04781508-8291-473e-b915-55407d2a0365_s.png" />
-                    </x:Array>
-                </CollectionView.ItemsSource>
-                <CollectionView.ItemTemplate>
+            <CollectionView ItemsSource = "{Binding CartItems}">
+                    <CollectionView.ItemTemplate>
                     <DataTemplate x:DataType="model:Item">
                         <Grid x:Name="ItemCard" MaximumHeightRequest="200">
                             <Grid.ColumnDefinitions>
@@ -125,8 +102,7 @@
 
             <ImageButton Source="cheapest_store_button.png"
                          HorizontalOptions="Center"
-                         Command="{Binding NavigateCommand}"
-                         />
+                         Command="{Binding CheapestStoreCommand}"/>
 
         </StackLayout>
     </ScrollView>

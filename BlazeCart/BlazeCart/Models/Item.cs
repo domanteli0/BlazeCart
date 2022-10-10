@@ -1,7 +1,9 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections;
+using System.ComponentModel.DataAnnotations;
 
 namespace BlazeCart.Models
 {
+    [Serializable]
     public class Item
     {
         [Key]
@@ -21,4 +23,5 @@ namespace BlazeCart.Models
             public bool Availability { get; set; }
 
     }
+    
 }

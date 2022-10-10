@@ -168,6 +168,6 @@
 	  </MauiXaml>
 	</ItemGroup>
 
-	<ProjectExtensions><VisualStudio><UserProperties resources_4raw_4shopitems_1json__JsonSchema="shopItemsSchema.json" resources_4raw_4shopitemsschema_1json__JsonSchema="" /></VisualStudio></ProjectExtensions>
+	<ProjectExtensions><VisualStudio><UserProperties resources_4raw_4cart_1json__JsonSchema="cartSchema.json" resources_4raw_4shopitems_1json__JsonSchema="shopItemsSchema.json" resources_4raw_4shopitemsschema_1json__JsonSchema="" /></VisualStudio></ProjectExtensions>
 
 </Project>

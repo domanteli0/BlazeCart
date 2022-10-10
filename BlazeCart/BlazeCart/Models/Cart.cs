@@ -2,7 +2,8 @@
 
 namespace BlazeCart.Models
 {
-    internal class Cart
+    [Serializable]
+    public class Cart
     {
         public int CartId { get; set; }
         public string Name { get; set; }

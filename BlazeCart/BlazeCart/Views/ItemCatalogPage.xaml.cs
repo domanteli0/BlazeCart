@@ -1,4 +1,3 @@
-
 using BlazeCart.Models;
 using BlazeCart.Services;
 using BlazeCart.ViewModels;
@@ -8,17 +7,9 @@ namespace BlazeCart.Views;
 
 public partial class ItemCatalogPage : ContentPage
 {
-	public ItemCatalogPage(ItemsViewModel itemsViewModel)
+	public ItemCatalogPage()
 	{
 		InitializeComponent();
-        BindingContext = itemsViewModel;
+        this.BindingContext = new ItemsViewModel(this.Navigation);
     }
-
-    public ItemCatalogPage()
-    {
-        InitializeComponent();
-        BindingContext = new ItemsViewModel();
-    }
-
-   
 }
