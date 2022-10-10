@@ -75,6 +75,6 @@
         </StackLayout>
         </ScrollView>
     </ContentPage>
-    <local:ItemCatalogPage Title="" IconImageSource="grid.png"></local:ItemCatalogPage>
+    <local:ItemCatalogPage Title="" IconImageSource="grid.png" ></local:ItemCatalogPage>
     <local:CartPage Title="" IconImageSource="shopping_cart.png"></local:CartPage>
 </TabbedPage>

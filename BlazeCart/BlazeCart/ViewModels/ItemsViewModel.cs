@@ -12,7 +12,6 @@ using Debug = System.Diagnostics.Debug;
 //Inserting service
 
 
-
 namespace BlazeCart.ViewModels;
 
 
@@ -25,12 +24,15 @@ public class ItemsViewModel : BaseViewModel
     ItemService _itemService;
 
     //Dependency injection
-    public ItemsViewModel(ItemService itemService) {
+    public ItemsViewModel() {
         //Paremtrize the parameters?
         name = "Item finder";
-        this._itemService = itemService;
+        ItemService _itemService = new ItemService();
+        this._itemService = _itemService;
         GetItemsCommand = new Command(async () => await GetItemsAsync());
     }
+
+
 
     async Task GetItemsAsync() {
 

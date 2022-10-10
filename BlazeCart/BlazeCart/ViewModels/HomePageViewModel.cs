@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using BlazeCart.Services;
 
 namespace BlazeCart.ViewModels
 {
@@ -24,6 +25,7 @@ namespace BlazeCart.ViewModels
 
         async void OnSearchItemCommand(object obj)
         {
+            
             await _navigation.PushModalAsync(new ItemCatalogPage());
         }
 

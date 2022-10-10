@@ -3,7 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="BlazeCart.Views.LoginPage"
              NavigationPage.HasNavigationBar="False"
-             Title="LoginPage">
+             Title="LoginPage"
+             BackgroundColor="{StaticResource PageBackgroundColor}">
     <ContentPage.Content>
         <Grid>
             <Grid HorizontalOptions="Center" VerticalOptions="Center">

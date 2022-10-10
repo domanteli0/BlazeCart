@@ -122,6 +122,12 @@
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>
+
+            <ImageButton Source="cheapest_store_button.png"
+                         HorizontalOptions="Center"
+                         Command="{Binding NavigateCommand}"
+                         />
+
         </StackLayout>
     </ScrollView>
 </ContentPage>

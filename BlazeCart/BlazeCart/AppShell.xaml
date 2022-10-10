@@ -6,6 +6,5 @@
     xmlns:local="clr-namespace:BlazeCart"
     Shell.FlyoutBehavior="Disabled">
 
-  
 
-</Shell>
+    </Shell>

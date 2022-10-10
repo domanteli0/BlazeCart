@@ -1,4 +1,8 @@
-﻿namespace BlazeCart;
+﻿using BlazeCart.Views;
+using BlazeCart.Services;
+using BlazeCart.ViewModels;
+
+namespace BlazeCart;
 
 public static class MauiProgram
 {
@@ -29,6 +33,9 @@ public static class MauiProgram
 
             });
 
-		return builder.Build();
+        builder.Services.AddTransient<ItemCatalogPage>();
+        builder.Services.AddSingleton<ItemService>();
+        builder.Services.AddTransient<ItemsViewModel>();
+        return builder.Build();
 	}
 }

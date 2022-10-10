@@ -1,6 +1,9 @@
 ﻿using BlazeCart.Models;
+using Newtonsoft.Json.Linq;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Net.Http.Json;
 using System.Text;
@@ -12,24 +15,34 @@ namespace BlazeCart.Services;
 public class ItemService
 {
     //Retrives a whole item list
-    List<Item> itemList = new();
+    ObservableCollection<Item> itemList = new();
 
-    public async Task<List<Item>> GetItems()
+    public async Task<ObservableCollection<Item>> GetItems()
     {
 
         //If list already exists:
         if (itemList.Count > 0) {
             return itemList;
         }
-        
+
         //Else get list
+        /*
         using var stream = await FileSystem.OpenAppPackageFileAsync("shopItems.json");
         using var reader = new StreamReader(stream);
         var contents = await reader.ReadToEndAsync();
         itemList = JsonSerializer.Deserialize<List<Item>>(contents);
-        return itemList;
-        
-  
+        return itemList;*/
+
+        using var stream = await FileSystem.OpenAppPackageFileAsync("shopItems.json");
+        using (StreamReader r = new StreamReader(stream))
+        {
+            string json = r.ReadToEnd();
+            var jobj = JObject.Parse(json);
+            itemList = JsonConvert.DeserializeObject<ObservableCollection<Item>>(jobj["shopItems"].ToString());
+            return itemList;
+        }
+
+
     }
 
         /*DATA GETTING FROM REMOTE SOURCE:

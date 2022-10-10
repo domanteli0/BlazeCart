@@ -18,24 +18,22 @@
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
 
-            <AbsoluteLayout>
-                <BoxView Color="{StaticResource White}"
-                         HeightRequest="150"
-                         HorizontalOptions="CenterAndExpand"
-                         AbsoluteLayout.LayoutBounds="0,0,AutoSize,AutoSize" />
-                <ImageButton
-                    Source="back_button"
-                    HorizontalOptions="Start"
-                    AbsoluteLayout.LayoutBounds="10,15,AutoSize,AutoSize" />
+            <Frame HeightRequest="90" Padding="10">
+                <HorizontalStackLayout HorizontalOptions="Center">
+                    <ImageButton
+                        Margin="0, 0, 10, 0"
+                        Source="back_button.png"
+                        VerticalOptions="Center" />
+                    <Label
+                        Text="Pigiausios parduotuvės"
+                        Style="{StaticResource PageNamePoppins}"
+                        VerticalOptions="Center"
+                        HorizontalOptions="Center" />
+                    
+                </HorizontalStackLayout>
+            </Frame>
 
-                <Label
-                    HorizontalTextAlignment="Start"
-                    Margin="10, 5, 50, 5"
-                    Style="{StaticResource CheapestStoreMainHeaderPoppins}"
-                    Text="Pigiausios parduotuvės"
-                    AbsoluteLayout.LayoutBounds="75,20,AutoSize,AutoSize" />
-            </AbsoluteLayout>
-
+            
             <StackLayout Grid.Row="1">
                 <StackLayout
                     Orientation="Horizontal"
