@@ -116,5 +116,31 @@
         <Setter Property="FontSize" Value="{StaticResource CategoryCountFont}"/>
     </Style>
 
+    <Style x:Key="SingleItemTitle" TargetType="Label">
+        <Setter Property="FontFamily" Value="Poppins-Bold" />
+        <Setter Property="TextColor" Value="{StaticResource PrimaryTextColor}" />
+        <Setter Property="FontAttributes" Value="Bold"/>
+        <Setter Property="FontSize" Value="28"/>
+    </Style>
+
+    <Style x:Key="SingleItemDescription" TargetType="Label">
+        <Setter Property="FontFamily" Value="Roboto" />
+        <Setter Property="TextColor" Value="{StaticResource TextColorSecondary}" />
+        <Setter Property="FontAttributes" Value="Italic"/>
+        <Setter Property="FontSize" Value="15"/>
+    </Style>
+
+    <Style x:Key="SingleItemAdditionalSizing" TargetType="Label">
+        <Setter Property="FontFamily" Value="Poppins" />
+        <Setter Property="TextColor" Value="{StaticResource PrimaryColor}" />
+        <Setter Property="FontSize" Value="18"/>
+    </Style>
+
+    <Style x:Key="SingleItemPriceQuantity" TargetType="Label">
+        <Setter Property="FontFamily" Value="Poppins" />
+        <Setter Property="TextColor" Value="{StaticResource TextColorSecondary}" />
+        <Setter Property="FontSize" Value="25"/>
+    </Style>
+
 
 </ResourceDictionary>

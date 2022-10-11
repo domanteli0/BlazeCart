@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="BlazeCart.Views.ItemPage"
+             Title="ItemPage"
+             NavigationPage.HasNavigationBar="False"
+             BackgroundColor="{StaticResource PageBackgroundColor}">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*" />
+            <RowDefinition Height="1*" />
+            <RowDefinition Height="1*" />
+            <RowDefinition Height="1*" />
+            <RowDefinition Height="1*" />
+            <RowDefinition Height="1*" />
+            <RowDefinition Height="1*" />
+            <RowDefinition Height="1*" />
+            <RowDefinition Height="1*" />
+            <RowDefinition Height="1*" />
+            <RowDefinition Height="1*" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Image
+            Grid.Row="0"
+            Grid.RowSpan="5"
+            Grid.Column="0"
+            Grid.ColumnSpan="6"
+            Source="banana_img.jpg"
+            Aspect="AspectFill"/>
+        <HorizontalStackLayout
+            Grid.Row="0"
+            Grid.Column="0"
+            Spacing="225">
+            <ImageButton
+                Margin="0, 0, 10, 0"
+                Source="back_button.png"
+                VerticalOptions="End"
+                HorizontalOptions="Start"/>
+            <ImageButton
+                Margin="0, 0, 10, 0"
+                Source="shopping_cart_button.png"
+                VerticalOptions="End"
+                HorizontalOptions="End"/>
+        </HorizontalStackLayout>
+        <Frame
+            Grid.Row="4"
+            Grid.RowSpan="7"
+            Grid.Column="0"
+            Grid.ColumnSpan="6"
+            BackgroundColor="{StaticResource PageBackgroundColor}"
+            CornerRadius="20">
+            <VerticalStackLayout>
+                <Label
+                    HorizontalTextAlignment="Start"
+                    Margin="0, 0, 2, 0"
+                    Text="Bananai"
+                    Style="{StaticResource SingleItemTitle}"></Label>
+
+                <HorizontalStackLayout>
+                    <Label
+                        HorizontalTextAlignment="Start"
+                        Margin="0, 0, 2, 0"
+                        Style="{StaticResource ItemNumberPricePoppins}"
+                        TextColor="{StaticResource PrimaryTextColor}"
+                        FontAttributes="Bold"
+                        FontSize="25"
+                        Text="1.10"></Label>
+                    <Label
+                        HorizontalTextAlignment="Start"
+                        Margin="0, 0, 2, 0"
+                        Style="{StaticResource SingleItemPriceQuantity}"
+                        FontSize="25"
+                        FontFamily="Poppins"
+                        Text="€"></Label>
+                    <Label
+                        HorizontalTextAlignment="Start"
+                        Margin="0, 0, 2, 0"
+                        Style="{StaticResource SingleItemPriceQuantity}"
+                        FontSize="25"
+                        FontFamily="Poppins"
+                        Text="/vnt"></Label>
+                </HorizontalStackLayout>
+                <HorizontalStackLayout>
+                    <Label
+                        HorizontalTextAlignment="Start"
+                        Margin="0, 0, 2, 0"
+                        Style="{StaticResource SingleItemAdditionalSizing}"
+                        Text="~"></Label>
+                    <Label
+                        HorizontalTextAlignment="Start"
+                        Margin="0, 0, 2, 0"
+                        Style="{StaticResource SingleItemAdditionalSizing}"
+                        Text="150"></Label>
+                    <Label
+                        HorizontalTextAlignment="Start"
+                        Margin="0, 0, 2, 0"
+                        Style="{StaticResource SingleItemAdditionalSizing}"
+                        Text="g"></Label>
+                    <Label
+                        HorizontalTextAlignment="Start"
+                        Margin="0, 0, 2, 0"
+                        Style="{StaticResource SingleItemAdditionalSizing}"
+                        Text="/"></Label>
+                    <Label
+                        HorizontalTextAlignment="Start"
+                        Margin="0, 0, 2, 0"
+                        Style="{StaticResource SingleItemAdditionalSizing}"
+                        Text="vnt"></Label>
+                </HorizontalStackLayout>
+                <Label
+                    HorizontalTextAlignment="Start"
+                    Margin="0, 0, 2, 0"
+                    Style="{StaticResource SingleItemDescription}"
+                    Text="Labai naudingas textas apie bananus. Kilmė, skonis, kvapas."></Label>
+                <HorizontalStackLayout 
+                    Margin ="0, 220, 0, 0"
+                    VerticalOptions="End"
+                    HorizontalOptions="Center">
+                    <ImageButton
+                        Margin="0, 0, 10, 0"
+                        Source="heart_button.png"
+                        VerticalOptions="End"
+                        HorizontalOptions="Start"/>
+
+                    <ImageButton
+                        Margin="0, 0, 10, 0"
+                        Source="add_to_cart_button.png"
+                        VerticalOptions="End"
+                        HorizontalOptions="Start"/>
+                </HorizontalStackLayout>
+            </VerticalStackLayout>
+        </Frame>
+    </Grid>
+</ContentPage>

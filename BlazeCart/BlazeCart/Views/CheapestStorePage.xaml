@@ -23,7 +23,6 @@
                     <ImageButton
                         Margin="0, 0, 10, 0"
                         Source="back_button.png"
-                        Command="{Binding BackToCartCommand}"
                         VerticalOptions="Center" />
                     <Label
                         Text="Pigiausios parduotuvės"
