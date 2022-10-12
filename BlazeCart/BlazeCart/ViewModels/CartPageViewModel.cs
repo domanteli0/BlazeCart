@@ -3,41 +3,28 @@ using System.Windows.Input;
 using BlazeCart.Models;
 using BlazeCart.Services;
 using BlazeCart.Views;
+using CommunityToolkit.Mvvm.Input;
 
 namespace BlazeCart.ViewModels
 {
-    internal class CartPageViewModel : BaseViewModel
+    public partial class CartPageViewModel : BaseViewModel
     {
-        public ICommand RemoveCommand { get; set; }
-
-
         private CartService _cartService = new CartService();
-
-        public ICommand SaveCommand { get; set; }
-        public ICommand LoadCommand { get; set; }
-
-        public ICommand CheapestStoreCommand { get; set; }
 
         public Cart cart { get; set; }
 
         public ObservableCollection<Item> CartItems { get; set; }
 
-        public CartPageViewModel()
-        {
-            RemoveCommand = new Command(OnRemoveCommand);
-            SaveCommand = new Command(OnSaveCommand);
-            LoadCommand  = new Command(async()=> await OnLoadCommand());
-            CheapestStoreCommand = new Command(OnCheapestStoreCommand);
-        }
-
-        async void OnRemoveCommand(object obj)
+        [RelayCommand]
+        async void Remove(object obj)
         {
             //remove an item from current cart
 
             //and then refresh page
         }
 
-        async void OnSaveCommand(object obj)
+        [RelayCommand]
+        async void Save(object obj)
         {
             //sample cart to save
             Cart _cart = new Cart();
@@ -46,7 +33,8 @@ namespace BlazeCart.ViewModels
 
         }
 
-        async Task OnLoadCommand()
+        [RelayCommand]
+        async Task LoadCommand()
         {
             var carts = await _cartService.GetCarts("cart.json");
             //TO DO: implement matching by user ID
@@ -57,7 +45,8 @@ namespace BlazeCart.ViewModels
             }
         }
 
-        async void OnCheapestStoreCommand(object obj)
+        [RelayCommand]
+        async void CheapestStore(object obj)
         {
             await Shell.Current.GoToAsync(nameof(CheapestStorePage));
         }

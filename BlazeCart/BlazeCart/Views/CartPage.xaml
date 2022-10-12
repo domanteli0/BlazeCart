@@ -16,12 +16,9 @@
         <StackLayout>
             <Frame HeightRequest="90" Padding="10">
                 <HorizontalStackLayout HorizontalOptions="Center">
-                    <ImageButton
-                        Margin="0, 0, 10, 0"
-                        Source="back_button.png"
-                        VerticalOptions="Center" />
                     <Label
-                        Text="Mano krepšelis"
+                        Text="Krepšelis"
+                        Margin="50, 0, 0, 0"
                         Style="{StaticResource PageNamePoppins}"
                         VerticalOptions="Center"
                         HorizontalOptions="Center" />

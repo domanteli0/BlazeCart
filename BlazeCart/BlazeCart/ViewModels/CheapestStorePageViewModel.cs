@@ -1,20 +1,14 @@
 ﻿using BlazeCart.Views;
-using System.Windows.Input;
+using CommunityToolkit.Mvvm.Input;
 
 namespace BlazeCart.ViewModels
 {
-    internal class CheapestStorePageViewModel
+    public partial class CheapestStorePageViewModel
     {
-        public ICommand BackToCartCommand { private set; get; }
-
-        public CheapestStorePageViewModel()
+        [RelayCommand]
+        async void BackToCart(object obj)
         {
-            BackToCartCommand = new Command(OnBackToCartCommand);
-        }
-
-        async void OnBackToCartCommand(object obj)
-        {
-            await Shell.Current.GoToAsync(nameof(CartPage));
+            await Shell.Current.GoToAsync("..");
         }
     }
 }

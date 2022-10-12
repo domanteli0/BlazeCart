@@ -1,13 +1,14 @@
 ﻿using BlazeCart.Models;
 using BlazeCart.Services;
 using System.Collections.ObjectModel;
+using CommunityToolkit.Mvvm.Input;
 using Debug = System.Diagnostics.Debug;
 
 //Inserting service
 namespace BlazeCart.ViewModels;
 
 
-public class ItemsViewModel : BaseViewModel
+public partial class ItemsViewModel : BaseViewModel
 {
     //A collection that notifies when it is changed.
     public ObservableCollection<Item> Items { get; set; } = new();
@@ -18,21 +19,14 @@ public class ItemsViewModel : BaseViewModel
 
     private Cart cart = new Cart();
 
-    public Command<Item> CartCommand { get; set; }
     ItemService _itemService = new();
     CartService _cartService = new();
 
-    //Dependency injection
     public ItemsViewModel()
     {
-        //Paremtrize the parameters?
-        name = "Item finder";
         Items = new ObservableCollection<Item>();
         GetItemsAsync();
-        CartCommand = new Command<Item>(OnCartCommand);
     }
-
-
 
     async void GetItemsAsync()
     {
@@ -72,12 +66,13 @@ public class ItemsViewModel : BaseViewModel
 
     }
 
-    async void OnCartCommand(Item item)
+    [RelayCommand]
+    async void Cart(Item item)
     {
         this.SelectedItem = item;
         this.CartItems.Add(SelectedItem);
         //await _cartService.ItemsToCart( this.CartItems, "Vau pavyko"); //error on this method
-        //await Application.Current.MainPage.DisplayAlert("lol", "ok", "nice");
+        await Application.Current.MainPage.DisplayAlert("Įdėta į krepšelį!", "Prekė sėkmingai įdėta į krepšelį!", "OK");
 
     }
 
