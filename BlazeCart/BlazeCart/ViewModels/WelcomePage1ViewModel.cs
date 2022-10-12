@@ -4,24 +4,22 @@ namespace BlazeCart.ViewModels;
 
 public class WelcomePage1ViewModel
 {
-    private INavigation _navigation;
     public ICommand NextCommand { private set; get; }
 
     public ICommand SkipCommand { private set; get; }
-	public WelcomePage1ViewModel(INavigation navigation)
+    public WelcomePage1ViewModel()
     {
         NextCommand = new Command(OnNextCommand);
         SkipCommand = new Command(OnSkipCommand);
-		_navigation = navigation;
-	}
+    }
 
     async void OnNextCommand(object obj)
     {
-        await _navigation.PushModalAsync(new WelcomePage2());
+        await Shell.Current.GoToAsync(nameof(WelcomePage2));
     }
 
     async void OnSkipCommand(object obj)
     {
-        await _navigation.PushModalAsync(new LoginPage());
+        await Shell.Current.GoToAsync(nameof(LoginPage));
     }
 }

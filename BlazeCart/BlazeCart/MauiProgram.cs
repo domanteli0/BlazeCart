@@ -36,6 +36,30 @@ public static class MauiProgram
         builder.Services.AddTransient<ItemCatalogPage>();
         builder.Services.AddSingleton<ItemService>();
         builder.Services.AddTransient<ItemsViewModel>();
+
+        builder.Services.AddSingleton<RegisterPage>();
+        builder.Services.AddSingleton<RegisterPageViewModel>();
+
+        builder.Services.AddSingleton<CartPage>();
+        builder.Services.AddSingleton<CartPageViewModel>();
+        builder.Services.AddSingleton<CartService>();
+
+        builder.Services.AddSingleton<HomePage>();
+        builder.Services.AddSingleton<HomePageViewModel>();
+
+        builder.Services.AddSingleton<WelcomePage1>();
+        builder.Services.AddSingleton<WelcomePage1ViewModel>();
+
+        builder.Services.AddSingleton<WelcomePage2>();
+        builder.Services.AddSingleton<WelcomePage2ViewModel>();
+
+        builder.Services.AddSingleton<ErrorPage>();
+        builder.Services.AddSingleton<ErrorPageViewModel>();
+
+        builder.Services.AddSingleton<CategoryPage>();
+
+        builder.Services.AddSingleton<CheapestStorePage>();
+        builder.Services.AddSingleton<CheapestStorePageViewModel>();
         return builder.Build();
 	}
 }

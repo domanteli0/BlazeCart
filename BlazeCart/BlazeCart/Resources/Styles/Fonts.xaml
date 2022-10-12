@@ -7,20 +7,23 @@
         <On Platform="iOS" Value="24" />
         <On Platform="Android" Value="24" />
     </OnPlatform>
+
     <OnPlatform x:Key="WelcomeFontSecondary" x:TypeArguments="x:Double">
         <On Platform="iOS" Value="14" />
         <On Platform="Android" Value="14" />
     </OnPlatform>
+
     <OnPlatform x:Key="GreetingFont" x:TypeArguments="x:Double">
         <On Platform="iOS" Value="22" />
         <On Platform="Android" Value="22" />
     </OnPlatform>
+
     <OnPlatform x:Key="LoginRegisterFont" x:TypeArguments="x:Double">
         <On Platform="iOS" Value="40" />
         <On Platform="Android" Value="40" />
     </OnPlatform>
 
-<OnPlatform x:Key="LoginRegisterFieldFont" x:TypeArguments="x:Double">
+    <OnPlatform x:Key="LoginRegisterFieldFont" x:TypeArguments="x:Double">
         <On Platform="iOS" Value="20" />
         <On Platform="Android" Value="20" />
     </OnPlatform>
@@ -44,7 +47,6 @@
         <On Platform="iOS" Value="22" />
         <On Platform="Android" Value="22" />
     </OnPlatform>
-
 
     <OnPlatform x:Key="CheapestStoreHeaderFont" x:TypeArguments="x:Double">
         <On Platform="iOS" Value="16" />
@@ -70,10 +72,4 @@
         <On Platform="iOS" Value="12" />
         <On Platform="Android" Value="12" />
     </OnPlatform>
-
-
-
-
-
-
 </ResourceDictionary>

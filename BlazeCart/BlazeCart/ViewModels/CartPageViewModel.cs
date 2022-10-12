@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.ObjectModel;
 using System.Windows.Input;
 using BlazeCart.Models;
 using BlazeCart.Services;
@@ -15,7 +10,6 @@ namespace BlazeCart.ViewModels
     {
         public ICommand RemoveCommand { get; set; }
 
-        public INavigation _navigation;
 
         private CartService _cartService = new CartService();
 
@@ -28,13 +22,12 @@ namespace BlazeCart.ViewModels
 
         public ObservableCollection<Item> CartItems { get; set; }
 
-        public CartPageViewModel(INavigation navigation)
+        public CartPageViewModel()
         {
             RemoveCommand = new Command(OnRemoveCommand);
             SaveCommand = new Command(OnSaveCommand);
             LoadCommand  = new Command(async()=> await OnLoadCommand());
             CheapestStoreCommand = new Command(OnCheapestStoreCommand);
-            _navigation = navigation;
         }
 
         async void OnRemoveCommand(object obj)
@@ -42,13 +35,14 @@ namespace BlazeCart.ViewModels
             //remove an item from current cart
 
             //and then refresh page
-           await _navigation.PushModalAsync(new CartPage());
         }
 
         async void OnSaveCommand(object obj)
         {
-            string result = await  Application.Current.MainPage.DisplayPromptAsync("Save cart", "Enter cart name: ", "OK", "Cancel");
-            await _cartService.SaveCart(cart);
+            //sample cart to save
+            Cart _cart = new Cart();
+           // string result = await  Application.Current.MainPage.DisplayPromptAsync("Save cart", "Enter cart name: ", "OK", "Cancel");
+            await _cartService.SaveCart(_cart);
 
         }
 
@@ -65,7 +59,7 @@ namespace BlazeCart.ViewModels
 
         async void OnCheapestStoreCommand(object obj)
         {
-            await _navigation.PushModalAsync(new CheapestStorePage());
+            await Shell.Current.GoToAsync(nameof(CheapestStorePage));
         }
     }
 }

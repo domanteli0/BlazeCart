@@ -1,14 +1,6 @@
 ﻿using BlazeCart.Models;
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using BlazeCart.Services;
-using System.Diagnostics;
-using System.Windows.Input;
-using BlazeCart.Views;
+using System.Collections.ObjectModel;
 using Debug = System.Diagnostics.Debug;
 
 //Inserting service
@@ -25,14 +17,14 @@ public class ItemsViewModel : BaseViewModel
     public Item SelectedItem { get; set; }
 
     private Cart cart = new Cart();
-    
+
     public Command<Item> CartCommand { get; set; }
     ItemService _itemService = new();
     CartService _cartService = new();
 
-    private INavigation _navigation;
     //Dependency injection
-    public ItemsViewModel(INavigation navigation) {
+    public ItemsViewModel()
+    {
         //Paremtrize the parameters?
         name = "Item finder";
         Items = new ObservableCollection<Item>();
@@ -42,7 +34,8 @@ public class ItemsViewModel : BaseViewModel
 
 
 
-    async void GetItemsAsync() {
+    async void GetItemsAsync()
+    {
 
         if (IsBusy)
         {
@@ -55,35 +48,37 @@ public class ItemsViewModel : BaseViewModel
             var items = await _itemService.GetItems();
 
             //Clears the local collection
-            if (Items.Count != 0) {
+            if (Items.Count != 0)
+            {
                 Items.Clear();
             }
 
             //Adds items to the local collection
-            foreach( var item in items)
+            foreach (var item in items)
                 Items.Add(item);
         }
 
         catch (Exception ex)
         {
             //Logs error
-            Debug.WriteLine($"Unable to get items: {  ex.Message}");
+            Debug.WriteLine($"Unable to get items: {ex.Message}");
             await Application.Current.MainPage.DisplayAlert("Error!", ex.Message, "OK");
         }
 
-        finally {
+        finally
+        {
             isBusy = false;
         }
 
     }
 
-     async void OnCartCommand(Item item)
+    async void OnCartCommand(Item item)
     {
         this.SelectedItem = item;
-       this.CartItems.Add(SelectedItem);
-       //await _cartService.ItemsToCart( this.CartItems, "Vau pavyko"); //error on this method
+        this.CartItems.Add(SelectedItem);
+        //await _cartService.ItemsToCart( this.CartItems, "Vau pavyko"); //error on this method
         //await Application.Current.MainPage.DisplayAlert("lol", "ok", "nice");
 
     }
-  
+
 }

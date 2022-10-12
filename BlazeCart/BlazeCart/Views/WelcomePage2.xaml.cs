@@ -7,6 +7,6 @@ public partial class WelcomePage2 : ContentPage
 	public WelcomePage2()
 	{
 		InitializeComponent();
-        this.BindingContext = new WelcomePage2ViewModel(this.Navigation);
+        this.BindingContext = new WelcomePage2ViewModel();
     }
 }

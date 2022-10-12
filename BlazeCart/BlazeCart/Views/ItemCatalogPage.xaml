@@ -4,6 +4,7 @@
              x:Class="BlazeCart.Views.ItemCatalogPage"
              NavigationPage.HasNavigationBar="False"
              Title="ItemCatalogPage"
+             Shell.NavBarIsVisible="False"
              BackgroundColor="{StaticResource PageBackgroundColor}"
              xmlns:local ="clr-namespace:BlazeCart"
              xmlns:model="clr-namespace:BlazeCart.Models"

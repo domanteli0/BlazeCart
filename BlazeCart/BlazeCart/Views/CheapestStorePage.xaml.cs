@@ -7,6 +7,6 @@ public partial class CheapestStorePage : ContentPage
 	public CheapestStorePage()
 	{
 		InitializeComponent();
-        this.BindingContext = new CheapestStorePageViewModel(this.Navigation);
+        this.BindingContext = new CheapestStorePageViewModel();
     }
 }

@@ -1,15 +1,7 @@
 ﻿using BlazeCart.Models;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Net.Http.Json;
-using System.Text;
-using System.Text.Json;
-using System.Threading.Tasks;
-
 namespace BlazeCart.Services;
 
 public class ItemService
@@ -25,14 +17,6 @@ public class ItemService
             return itemList;
         }
 
-        //Else get list
-        /*
-        using var stream = await FileSystem.OpenAppPackageFileAsync("shopItems.json");
-        using var reader = new StreamReader(stream);
-        var contents = await reader.ReadToEndAsync();
-        itemList = JsonSerializer.Deserialize<List<Item>>(contents);
-        return itemList;*/
-
         using var stream = await FileSystem.OpenAppPackageFileAsync("shopItems.json");
         using (StreamReader r = new StreamReader(stream))
         {
@@ -41,7 +25,6 @@ public class ItemService
             itemList = JsonConvert.DeserializeObject<ObservableCollection<Item>>(jobj["shopItems"].ToString());
             return itemList;
         }
-
 
     }
 
