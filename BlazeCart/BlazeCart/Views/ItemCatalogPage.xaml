@@ -6,7 +6,6 @@
              Title="ItemCatalogPage"
              Shell.NavBarIsVisible="False"
              BackgroundColor="{StaticResource PageBackgroundColor}"
-             xmlns:local ="clr-namespace:BlazeCart"
              xmlns:model="clr-namespace:BlazeCart.Models"
              xmlns:viewmodel="clr-namespace:BlazeCart.ViewModels"
              x:DataType="viewmodel:ItemsViewModel">

@@ -2,6 +2,8 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="BlazeCart.Views.LoginPage"
+             xmlns:viewmodel="clr-namespace:BlazeCart.ViewModels"
+             x:DataType="viewmodel:LoginPageViewModel"
              Shell.TabBarIsVisible="False"
              Shell.NavBarIsVisible="False"
              Title="LoginPage"
@@ -32,7 +34,7 @@
                     Grid.Column="0"
                     HeightRequest="50">
                     <Entry
-                        Text="{Binding EmailAddress}"
+                        Text="{Binding Email}"
                         Style="{StaticResource LoginRegisterFieldRobotoLight}"
                         BackgroundColor="White"
                         HeightRequest="48"

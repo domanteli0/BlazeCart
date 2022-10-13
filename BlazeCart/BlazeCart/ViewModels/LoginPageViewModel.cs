@@ -1,11 +1,17 @@
 ﻿using BlazeCart.Views;
 using System.Windows.Input;
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 
 namespace BlazeCart.ViewModels
 {
-    partial class LoginPageViewModel
+    public partial class LoginPageViewModel : ObservableObject
     {
+        [ObservableProperty]
+        public string email;
+        [ObservableProperty]
+        public string password;
+
         [RelayCommand]
         async void Login(object obj)
         {

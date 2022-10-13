@@ -4,9 +4,9 @@ namespace BlazeCart.Views;
 
 public partial class WelcomePage2 : ContentPage
 {
-	public WelcomePage2()
+	public WelcomePage2(WelcomePage2ViewModel vm)
 	{
 		InitializeComponent();
-        this.BindingContext = new WelcomePage2ViewModel();
+        BindingContext = vm;
     }
 }

@@ -40,6 +40,9 @@ public static class MauiProgram
         builder.Services.AddSingleton<RegisterPage>();
         builder.Services.AddSingleton<RegisterPageViewModel>();
 
+        builder.Services.AddSingleton<LoginPage>();
+        builder.Services.AddSingleton<LoginPageViewModel>();
+
         builder.Services.AddSingleton<CartPage>();
         builder.Services.AddSingleton<CartPageViewModel>();
         builder.Services.AddSingleton<CartService>();

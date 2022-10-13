@@ -4,9 +4,9 @@ namespace BlazeCart.Views;
 
 public partial class ErrorPage : ContentPage
 {
-	public ErrorPage()
+	public ErrorPage(ErrorPageViewModel vm)
 	{
 		InitializeComponent();
-        this.BindingContext = new ErrorPageViewModel();
+        BindingContext = vm;
     }
 }

@@ -6,8 +6,8 @@
              Shell.TabBarIsVisible="False"
              Shell.NavBarIsVisible="False"
              BackgroundColor="{StaticResource PageBackgroundColor}"
-             xmlns:model="clr-namespace:BlazeCart.Models"
-             x:DataType="model:User">
+             xmlns:viewmodel="clr-namespace:BlazeCart.ViewModels"
+             x:DataType="viewmodel:RegisterPageViewModel">
     <ContentPage.Content>
         <ScrollView>
             <Grid>
@@ -40,13 +40,13 @@
                     Grid.Row="2"
                     Grid.Column="0"
                     HeightRequest="50">
-                    <Entry
+                        <Entry
                         Text="{Binding Name}"
                         Style="{StaticResource LoginRegisterFieldRobotoLight}"
                         BackgroundColor="White"
                         HeightRequest="48"
                         WidthRequest="200"/>
-                </Frame>
+                    </Frame>
                 <Label
                     Grid.Row="3"
                     Grid.Column="0"
@@ -100,7 +100,7 @@
                 <Frame Grid.Row="10"
                        HeightRequest="50">
                     <Entry
-                        Text="{Binding Source={x:Reference RegistrationForm}, Path=BindingContext.ConfirmPassword}"
+                        Text="{Binding ConfirmPassword}"
                         Style="{StaticResource LoginRegisterFieldRobotoLight}"
                         IsPassword="True" BackgroundColor="White"
                         HeightRequest="48"
@@ -113,7 +113,7 @@
                         <Button
                             Text="Registruotis"
                             TextColor="{StaticResource ButtonTextColor}"
-                            Command="{Binding Source={x:Reference RegistrationForm}, Path=BindingContext.RegisterCommand}"
+                            Command="{Binding ValidateEntryFieldsCommand}"
                             Style="{StaticResource PrimaryButton}"
                             HeightRequest="40"
                             WidthRequest="250"/>

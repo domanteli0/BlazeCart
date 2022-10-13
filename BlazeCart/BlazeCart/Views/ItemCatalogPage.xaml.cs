@@ -5,9 +5,9 @@ namespace BlazeCart.Views;
 
 public partial class ItemCatalogPage : ContentPage
 {
-	public ItemCatalogPage()
+	public ItemCatalogPage(ItemsViewModel vm)
 	{
 		InitializeComponent();
-        this.BindingContext = new ItemsViewModel();
+        BindingContext = vm;
     }
 }

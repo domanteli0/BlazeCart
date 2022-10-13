@@ -4,9 +4,9 @@ namespace BlazeCart.Views;
 
 public partial class LoginPage : ContentPage
 {
-	public LoginPage()
+	public LoginPage(LoginPageViewModel vm)
 	{
 		InitializeComponent();
-        this.BindingContext = new LoginPageViewModel();
+        BindingContext = vm;
     }
 }

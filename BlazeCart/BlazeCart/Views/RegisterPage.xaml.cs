@@ -4,9 +4,9 @@ namespace BlazeCart.Views;
 
 public partial class RegisterPage : ContentPage
 {
-	public RegisterPage()
+	public RegisterPage(RegisterPageViewModel vm)
 	{
 		InitializeComponent();
-        this.BindingContext = new RegisterPageViewModel();
+        BindingContext = vm;
     }
 }

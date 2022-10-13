@@ -4,14 +4,11 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="BlazeCart.Views.CartPage"
              Shell.NavBarIsVisible="False"
-
-             Title="ItemCatalogPage"
+             Title="CartPage"
              BackgroundColor="{StaticResource PageBackgroundColor}"
              xmlns:model="clr-namespace:BlazeCart.Models"
              xmlns:viewmodel="clr-namespace:BlazeCart.ViewModels"
              x:DataType="viewmodel:CartPageViewModel">
-
-
     <ScrollView>
         <StackLayout>
             <Frame HeightRequest="90" Padding="10">

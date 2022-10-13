@@ -1,9 +1,10 @@
 ﻿using BlazeCart.Views;
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 
 namespace BlazeCart.ViewModels
 {
-    public partial class HomePageViewModel
+    public partial class HomePageViewModel : ObservableObject
     {
         [RelayCommand]
         async void SearchItem(object obj)
