@@ -23,7 +23,7 @@
                 HorizontalTextAlignment="Center"
                 Margin="0, 0, 0, 10"
                 Style="{StaticResource WelcomePageSubHeadingRoboto}"
-                Text="Labai naudingas textas"
+                Text="Įvertinsime krepšelio kainas įvairiose parduotuvėse"
                 TextColor="{StaticResource TextColorSecondary}"></Label>
             <ImageButton
                 Aspect="AspectFit"
