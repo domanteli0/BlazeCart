@@ -5,7 +5,7 @@
              NavigationPage.HasNavigationBar="False"
              Title="ItemCatalogPage"
              Shell.NavBarIsVisible="False"
-             BackgroundColor="{StaticResource PageBackgroundColor}"
+             BackgroundColor="{StaticResource White}"
              xmlns:model="clr-namespace:BlazeCart.Models"
              xmlns:viewmodel="clr-namespace:BlazeCart.ViewModels"
              x:DataType="viewmodel:ItemsViewModel">
@@ -32,10 +32,11 @@
 
                 <CollectionView ItemsSource="{Binding Items}"
                                 x:Name="CollectionOfItems">
-
                     <CollectionView.ItemTemplate>
                         <DataTemplate x:DataType="model:Item">
-                            <Grid MaximumHeightRequest="200">
+                            <Frame Padding="0">
+                        
+                                <Grid MaximumHeightRequest="200">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="1*"/>
                                     <ColumnDefinition Width="1*"/>
@@ -45,7 +46,6 @@
                                     <RowDefinition Height="2*"/>
                                     <RowDefinition Height="3*"/>
                                 </Grid.RowDefinitions>
-
                                 <Image
                                     Grid.Column="0"
                                     Grid.Row="0"
@@ -54,7 +54,8 @@
                                     Source="{Binding Image}"
                                     Margin="20"
                                     HorizontalOptions="Start"  
-                                    VerticalOptions="Start"/>
+                                    VerticalOptions="Start">
+                                </Image>
                                 <Label
                                     Grid.Column="1"
                                     Grid.Row="0"
@@ -95,11 +96,17 @@
                                         HorizontalOptions="Start"></ImageButton>
                                     <ImageButton
                                         Source="cart_button"
-                                        Command="{Binding Source={x:Reference CollectionOfItems}, Path=BindingContext.CartCommand}"
+                                        Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:ItemsViewModel}}, Path=CartCommand}"
                                         CommandParameter="{Binding .}"
                                         HorizontalOptions="Start"></ImageButton>
                                 </HorizontalStackLayout>
                             </Grid>
+                                <Frame.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:ItemsViewModel}}, Path=TapCommand}"
+                                                          CommandParameter="{Binding .}">
+                                    </TapGestureRecognizer>
+                                </Frame.GestureRecognizers>
+                            </Frame>
                         </DataTemplate>
                     </CollectionView.ItemTemplate>
                 </CollectionView>

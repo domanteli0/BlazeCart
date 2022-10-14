@@ -1,5 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.Text.RegularExpressions;
+﻿using System.Text.RegularExpressions;
 using BlazeCart.Models;
 using BlazeCart.Views;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -9,28 +8,23 @@ namespace BlazeCart.ViewModels
 {
     public partial class RegisterPageViewModel : ObservableObject
     {
-        [field: ObservableProperty]
-        public string Name { get; set; }
+        [ObservableProperty] public string name;
 
-        [field: ObservableProperty]
-        public string Surname { get; set; }
+        [ObservableProperty] public string surname;
 
-        [field: ObservableProperty]
-        public string Email { get; set; }
+        [ObservableProperty] public string email;
 
-        [field: ObservableProperty]
-        public string Password { get; set; }
+        [ObservableProperty] public string password;
 
-        [field: ObservableProperty]
-        public string ConfirmPassword { get; set; }
+        [ObservableProperty] public string confirmPassword;
 
         private User _user = new User();
         async Task Register()
         {
-                this._user.Name = Name;
-                this._user.Surname = Surname;
-                this._user.Email = Email;
-                this._user.Password = Password;
+                this._user.Name = name;
+                this._user.Surname = surname;
+                this._user.Email = email;
+                this._user.Password = password;
                 await Shell.Current.GoToAsync(nameof(HomePage));
         }
 
@@ -74,6 +68,7 @@ namespace BlazeCart.ViewModels
 
         private  Match MatchPattern(string pattern, string field)
         {
+            //lambda?
             return Regex.Match(field, pattern);
         }
 

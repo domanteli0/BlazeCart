@@ -63,6 +63,9 @@ public static class MauiProgram
 
         builder.Services.AddSingleton<CheapestStorePage>();
         builder.Services.AddSingleton<CheapestStorePageViewModel>();
+
+        builder.Services.AddTransient<ItemPage>();
+        builder.Services.AddTransient<ItemPageViewModel>();
         return builder.Build();
 	}
 }

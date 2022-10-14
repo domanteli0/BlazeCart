@@ -1,20 +1,20 @@
 {
     "shopItems": [
-        {
-            "ItemId": 1,
-            "Category": "Fruits",
-            "Name": "Obuoliai JONAGOLD, kg",
-            "Price": 1.05,
-            "PackageAmount": 200,
-            "Units": "kg",
-            "PricePerUnit": 1.05,
-            "Description": "Description",
-            "Origin": "Ekvadoras",
-            "Components": "Components",
-            "Image": "https://lastmile.lt/_next/image?url=https%3A%2F%2Fstorage.googleapis.com%2Fdownload%2Fstorage%2Fv1%2Fb%2Flastmile-ui%2Fo%2Fimages%252Fproducts%252FlXgkZp86R7NOh1iZBwCW.jpg%3Fgeneration%3D1623223951118218%26alt%3Dmedia&w=384&q=75",
-            "Store": "IKI",
-            "Availability": true
-        },
+      {
+        "ItemId": 1,
+        "Category": "Fruits",
+        "Name": "Obuoliai JONAGOLD, kg",
+        "Price": 1.05,
+        "PackageAmount": 200,
+        "Units": "kg",
+        "PricePerUnit": 1.05,
+        "Description": "Skaniausi obuoliai JONAGOLD",
+        "Origin": "Ekvadoras",
+        "Components": "Components",
+        "Image": "https://lastmile.lt/_next/image?url=https%3A%2F%2Fstorage.googleapis.com%2Fdownload%2Fstorage%2Fv1%2Fb%2Flastmile-ui%2Fo%2Fimages%252Fproducts%252FhAEZb6SLcvKz2HOlZZKK%3Fgeneration%3D1582203928067742%26alt%3Dmedia&w=650&q=75",
+        "Store": "IKI",
+        "Availability": true
+      },
 
         {
             "ItemId": 2,
@@ -24,7 +24,7 @@
             "PackageAmount": null,
             "Units": "kg",
             "PricePerUnit": 1.59,
-            "Description": null,
+            "Description": "Bananai iš šiltų kraštų",
             "Origin": "Ekvadoras",
             "Components": null,
             "Image": "https://lastmile.lt/_next/image?url=https%3A%2F%2Fstorage.googleapis.com%2Fdownload%2Fstorage%2Fv1%2Fb%2Flastmile-ui%2Fo%2Fimages%252Fproducts%252F5PvcEHKuPbwdsMxSUoCV.jpg%3Fgeneration%3D1652503925163872%26alt%3Dmedia&w=384&q=75",
@@ -40,7 +40,7 @@
         "PackageAmount": null,
         "Units": "kg",
         "PricePerUnit": 3.18,
-        "Description": "Citrinos",
+        "Description": "Geros rūgščios citrinos",
         "Origin": "Ispanija",
         "Components": null,
         "Image": "https://lastmile.lt/_next/image?url=https%3A%2F%2Fstorage.googleapis.com%2Fdownload%2Fstorage%2Fv1%2Fb%2Flastmile-ui%2Fo%2Fimages%252Fproducts%252FzRBs322qAo0YOHXcebbJ.jpg%3Fgeneration%3D1643356816422081%26alt%3Dmedia&w=650&q=75",
@@ -56,7 +56,7 @@
             "PackageAmount": null,
             "Units": "kg",
             "PricePerUnit": 5.84,
-            "Description": "Citrinos, žaliosios",
+            "Description": "Citrinos, žaliosios, kitaip sakant, laimai",
             "Origin": "Meksika",
             "Components": null,
             "Image": "https://lastmile.lt/_next/image?url=https%3A%2F%2Fstorage.googleapis.com%2Fdownload%2Fstorage%2Fv1%2Fb%2Flastmile-ui%2Fo%2Fimages%252Fproducts%252Fw9iFFC7hzgSmLMsmh4e5.jpg%3Fgeneration%3D1623061171115191%26alt%3Dmedia&w=384&q=75",
