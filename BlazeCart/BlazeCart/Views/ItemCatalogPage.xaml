@@ -19,7 +19,7 @@
                     HorizontalTextAlignment="Start"
                     Margin="10, 5, 50, 5"
                     Style="{StaticResource ItemCatalogPoppinsBold}"
-                    Text="Category_name"
+                    Text="Produktų katalogas"
                     TextColor="{StaticResource PrimaryTextColor}"></Label>
 
                 <SearchBar Placeholder="Ieškoti prekės..."

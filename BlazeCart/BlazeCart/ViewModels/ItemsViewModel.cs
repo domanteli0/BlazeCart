@@ -60,6 +60,12 @@ public partial class ItemsViewModel : BaseViewModel
     }
 
     [RelayCommand]
+    async void Back(object obj)
+    {
+        await Shell.Current.GoToAsync("..");
+    }
+
+    [RelayCommand]
     async void Cart(Item item)
     {
         this.SelectedItem = item;
