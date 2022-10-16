@@ -1,3 +1,4 @@
+using Android.App.AppSearch;
 using BlazeCart.Models;
 using BlazeCart.Services;
 using BlazeCart.ViewModels;
@@ -10,4 +11,6 @@ public partial class ItemCatalogPage : ContentPage
 		InitializeComponent();
         BindingContext = vm;
     }
+
+    
 }

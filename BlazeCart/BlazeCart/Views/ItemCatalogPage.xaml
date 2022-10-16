@@ -22,16 +22,21 @@
                     Text="Produktų katalogas"
                     TextColor="{StaticResource PrimaryTextColor}"></Label>
 
-                <SearchBar Placeholder="Ieškoti prekės..."
+                <SearchBar 
+                        x:Name="searchBar"
+                        Placeholder="Ieškoti prekės..."
                        CancelButtonColor="{StaticResource TextColorSecondary}"
                        PlaceholderColor="{StaticResource TextColorSecondary}"
                        TextColor="{StaticResource TextColorSecondary}"
                        HorizontalTextAlignment="Start"
                        FontSize="Medium"
-                       FontAttributes="Italic"/>
+                       FontAttributes="Italic"
+                       SearchCommand="{Binding PerformSearch}"
+                       SearchCommandParameter="{Binding Text, Source={x:Reference searchBar}}"
+                       />
 
-                <CollectionView ItemsSource="{Binding Items}"
-                                x:Name="CollectionOfItems">
+                <CollectionView x:Name="searchResults"
+                                ItemsSource="{Binding SearchResults}">
                     <CollectionView.ItemTemplate>
                         <DataTemplate x:DataType="model:Item">
                             <Frame Padding="0">
