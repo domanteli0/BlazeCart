@@ -1,10 +1,11 @@
 ﻿using System.Collections;
 using System.ComponentModel.DataAnnotations;
+using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace BlazeCart.Models
 {
     [Serializable]
-    public class Item
+    public class Item : ObservableObject
     {
 
             public int ItemId { get; set; }

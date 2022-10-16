@@ -33,9 +33,9 @@ public static class MauiProgram
 
             });
 
-        builder.Services.AddTransient<ItemCatalogPage>();
+        builder.Services.AddSingleton<ItemCatalogPage>();
         builder.Services.AddSingleton<ItemService>();
-        builder.Services.AddTransient<ItemsViewModel>();
+        builder.Services.AddSingleton<ItemsViewModel>();
 
         builder.Services.AddSingleton<RegisterPage>();
         builder.Services.AddSingleton<RegisterPageViewModel>();

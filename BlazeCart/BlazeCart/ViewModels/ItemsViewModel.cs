@@ -2,6 +2,7 @@
 using BlazeCart.Services;
 using System.Collections.ObjectModel;
 using BlazeCart.Views;
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Debug = System.Diagnostics.Debug;
 
@@ -13,15 +14,22 @@ public partial class ItemsViewModel : BaseViewModel
 {
     public ObservableCollection<Item> Items { get; set; } = new();
 
-    public ObservableCollection<Item> CartItems { get; set; } = new();
+    private CartPageViewModel _vm;
 
-    public Item SelectedItem { get; set; }
+    [ObservableProperty]
+    private ObservableCollection<Item> cartItems = new();
 
-    ItemService _itemService = new();
+    private int cartItemcount;
 
-    public ItemsViewModel()
+    private ItemService _itemService;
+
+
+    private Cart cart;
+
+    public ItemsViewModel(ItemService itemService, CartPageViewModel vm)
     {
-        Items = new ObservableCollection<Item>();
+        _itemService = itemService;
+        _vm = vm;
         GetItemsAsync();
     }
 
@@ -68,11 +76,11 @@ public partial class ItemsViewModel : BaseViewModel
     [RelayCommand]
     async void Cart(Item item)
     {
-        this.SelectedItem = item;
-        this.CartItems.Add(SelectedItem);
+        _vm.CartItems.Add(item);
         await Application.Current.MainPage.DisplayAlert("Įdėta į krepšelį!", "Prekė sėkmingai įdėta į krepšelį!", "OK");
-
     }
+
+
 
     [RelayCommand]
     async Task Tap(Item item)
