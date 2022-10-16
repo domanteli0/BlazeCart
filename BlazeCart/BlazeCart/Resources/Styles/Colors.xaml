@@ -17,4 +17,6 @@
     <Color x:Key="White">#FFFFFF</Color>
     <Color x:Key="Green">#00BD00</Color>
 
+    <Color x:Key="LightGrey">#D9D9D9</Color>
+
 </ResourceDictionary>

@@ -6,6 +6,7 @@
              Title="ItemCatalogPage"
              Shell.NavBarIsVisible="False"
              BackgroundColor="{StaticResource White}"
+             xmlns:sliders="clr-namespace:Syncfusion.Maui.Sliders;assembly=Syncfusion.Maui.Sliders"
              xmlns:model="clr-namespace:BlazeCart.Models"
              xmlns:viewmodel="clr-namespace:BlazeCart.ViewModels"
              x:DataType="viewmodel:ItemsViewModel">
@@ -22,18 +23,90 @@
                     Text="Produktų katalogas"
                     TextColor="{StaticResource PrimaryTextColor}"></Label>
 
-                <SearchBar 
+                <HorizontalStackLayout>
+
+                    <Image
+                        Source="search.png"
+                        Margin="5"
+                        />
+
+                    <SearchBar 
                         x:Name="searchBar"
                         Placeholder="Ieškoti prekės..."
-                       CancelButtonColor="{StaticResource TextColorSecondary}"
-                       PlaceholderColor="{StaticResource TextColorSecondary}"
-                       TextColor="{StaticResource TextColorSecondary}"
+                       CancelButtonColor="{StaticResource LightGrey}"
+                       PlaceholderColor="{StaticResource LightGrey}"
+                       TextColor="{StaticResource LightGrey}"
                        HorizontalTextAlignment="Start"
-                       FontSize="Medium"
+                        FontSize="Medium"
                        FontAttributes="Italic"
                        SearchCommand="{Binding PerformSearch}"
                        SearchCommandParameter="{Binding Text, Source={x:Reference searchBar}}"
-                       />
+                    />
+
+                </HorizontalStackLayout>
+
+                        <Label
+                    HorizontalTextAlignment="Start"
+                    Margin="10, 18, 20, 20"
+                    Style="{StaticResource ItemNamePoppins}"
+                    Text="Filtruoti pagal kainą: "
+                    TextColor="{StaticResource PrimaryTextColor}"
+                    LineBreakMode="CharacterWrap"></Label>
+
+
+                    <sliders:SfRangeSlider
+                        Maximum="100"
+                        Minimum="0"
+                        RangeStart="0"
+                        RangeEnd="100"
+                        Interval="20"
+                        ShowLabels="True"
+                        ShowTicks="True"
+                        NumberFormat="#€">
+
+                        <sliders:SfRangeSlider.TrackStyle>
+                            <sliders:SliderTrackStyle ActiveFill="{StaticResource PrimaryColor}"
+                                                      InactiveFill="{StaticResource LightGrey}"
+                                                      />
+                        </sliders:SfRangeSlider.TrackStyle>
+                        <sliders:SfRangeSlider.ThumbStyle>
+                        <sliders:SliderThumbStyle Fill="{StaticResource PrimaryColor}" />
+                        </sliders:SfRangeSlider.ThumbStyle>
+                        <sliders:SfRangeSlider.ThumbOverlayStyle>
+                        <sliders:SliderThumbOverlayStyle Fill="{StaticResource LightGrey}"/>
+                        </sliders:SfRangeSlider.ThumbOverlayStyle>
+
+                        <sliders:SfRangeSlider.LabelStyle>
+                        <sliders:SliderLabelStyle ActiveTextColor="{StaticResource LightGrey}"
+                                                      InactiveTextColor="{StaticResource LightGrey}"
+                                                      ActiveFontAttributes="Italic"
+                                                      InactiveFontAttributes="Italic"
+                                                      ActiveFontSize="16"
+                                                      InactiveFontSize="16" />
+                        </sliders:SfRangeSlider.LabelStyle>
+
+                        <sliders:SfRangeSlider.Tooltip>
+                            <sliders:SliderTooltip ShowAlways="True"
+                                                   Fill="{StaticResource LightGrey}"
+                                                   TextColor="{StaticResource PrimaryTextColor}"
+                                                   FontSize="14"
+                                                   FontAttributes="Bold"
+                                                   Padding="12,12"/>
+                        </sliders:SfRangeSlider.Tooltip>
+                    </sliders:SfRangeSlider>
+
+
+
+
+                <Label
+                    HorizontalTextAlignment="Start"
+                    Margin="10, 18, 20, 20"
+                    Style="{StaticResource ItemNamePoppins}"
+                    Text="Rūšiuoti: "
+                    TextColor="{StaticResource PrimaryTextColor}"
+                    LineBreakMode="CharacterWrap"></Label>
+
+
 
                 <CollectionView x:Name="searchResults"
                                 ItemsSource="{Binding SearchResults}">
