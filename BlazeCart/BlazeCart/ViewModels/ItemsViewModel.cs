@@ -4,6 +4,10 @@ using System.Collections.ObjectModel;
 using BlazeCart.Views;
 using CommunityToolkit.Mvvm.Input;
 using Debug = System.Diagnostics.Debug;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
+using System.Windows.Input;
+using Android.App.AppSearch;
 
 //Inserting service
 namespace BlazeCart.ViewModels;
@@ -15,14 +19,18 @@ public partial class ItemsViewModel : BaseViewModel
 
     public ObservableCollection<Item> CartItems { get; set; } = new();
 
+    private ObservableCollection<Item> _searchResults;
+
     public Item SelectedItem { get; set; }
 
     ItemService _itemService = new();
+    
 
     public ItemsViewModel()
     {
         Items = new ObservableCollection<Item>();
         GetItemsAsync();
+        _searchResults = Items;
     }
 
     async void GetItemsAsync()
@@ -57,6 +65,32 @@ public partial class ItemsViewModel : BaseViewModel
             isBusy = false;
         }
 
+    }
+
+
+    public event PropertyChangedEventHandler PropertyChanged;
+    protected virtual void NotifyPropertyChanged([CallerMemberName] string propertyName = "")
+    {
+        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+    }
+    public ICommand PerformSearch => new Command<string>((string query) =>
+    {
+        ItemSearchBarService _searchBarService = new(Items);
+        SearchResults = _searchBarService.GetSearchResults(query);
+        //Items = SearchResults;
+    });
+
+    
+    
+    
+    public ObservableCollection<Item> SearchResults
+    {
+        get => _searchResults;
+        set
+        {
+            _searchResults = value;
+            NotifyPropertyChanged();
+        }
     }
 
     [RelayCommand]
