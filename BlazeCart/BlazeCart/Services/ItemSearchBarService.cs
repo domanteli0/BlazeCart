@@ -8,11 +8,10 @@ public class ItemSearchBarService
 {
     private ObservableCollection<Item> FetchedItems { get; set; } = new();
 
-    public ItemSearchBarService(ObservableCollection<Item> Items)
+    public void FetchItems(ObservableCollection<Item> items)
     {
-        FetchedItems = Items;
+        FetchedItems = items;
     }
-
 
     internal ObservableCollection<Item> GetSearchResults(string text)
     {

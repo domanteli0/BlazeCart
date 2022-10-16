@@ -10,7 +10,8 @@
              xmlns:viewmodel="clr-namespace:BlazeCart.ViewModels"
              x:DataType="viewmodel:ItemsViewModel">
     <ContentPage.Content>
-        <ScrollView>
+        <RefreshView IsRefreshing="{Binding IsRefreshing}" Command="{Binding RefreshCommand}">
+            <ScrollView>
             <StackLayout Margin="5">
                 <ImageButton
                     Source="back_button"
@@ -30,8 +31,8 @@
                        TextColor="{StaticResource TextColorSecondary}"
                        HorizontalTextAlignment="Start"
                        FontSize="Medium"
-                       FontAttributes="Italic"
-                       SearchCommand="{Binding PerformSearch}"
+                        FontAttributes="Italic"
+                       SearchCommand="{Binding PerformSearchCommand}"
                        SearchCommandParameter="{Binding Text, Source={x:Reference searchBar}}"
                        />
 
@@ -117,5 +118,6 @@
                 </CollectionView>
             </StackLayout>
         </ScrollView>
+            </RefreshView>
     </ContentPage.Content>
 </ContentPage>

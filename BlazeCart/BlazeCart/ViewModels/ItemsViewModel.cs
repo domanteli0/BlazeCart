@@ -8,7 +8,6 @@ using Debug = System.Diagnostics.Debug;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
-using Android.App.AppSearch;
 
 //Inserting service
 namespace BlazeCart.ViewModels;
@@ -16,6 +15,8 @@ namespace BlazeCart.ViewModels;
 
 public partial class ItemsViewModel : BaseViewModel
 {
+    [ObservableProperty]
+    public bool isRefreshing;
     public ObservableCollection<Item> Items { get; set; } = new();
 
     private CartPageViewModel _vm;
@@ -24,24 +25,22 @@ public partial class ItemsViewModel : BaseViewModel
     private ObservableCollection<Item> cartItems = new();
 
     private int cartItemcount;
-    private ObservableCollection<Item> _searchResults;
 
-    public Item SelectedItem { get; set; }
-
-    ItemService _itemService = new();
-    
 
     private ItemService _itemService;
+    private ItemSearchBarService _itemSearchBarService;
 
-
+    [ObservableProperty]
+    public ObservableCollection<Item> searchResults = new();
     private Cart cart;
 
-    public ItemsViewModel(ItemService itemService, CartPageViewModel vm)
+    public ItemsViewModel(ItemService itemService, CartPageViewModel vm, ItemSearchBarService itemSearchBarService)
     {
         _itemService = itemService;
+        _itemSearchBarService = itemSearchBarService;
         _vm = vm;
         GetItemsAsync();
-        _searchResults = Items;
+        SearchResults = Items;
     }
 
     async void GetItemsAsync()
@@ -79,30 +78,16 @@ public partial class ItemsViewModel : BaseViewModel
     }
 
 
-    public event PropertyChangedEventHandler PropertyChanged;
-    protected virtual void NotifyPropertyChanged([CallerMemberName] string propertyName = "")
+    [RelayCommand]
+    void PerformSearch(string query)
     {
-        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-    }
-    public ICommand PerformSearch => new Command<string>((string query) =>
-    {
-        ItemSearchBarService _searchBarService = new(Items);
-        SearchResults = _searchBarService.GetSearchResults(query);
+        _itemSearchBarService.FetchItems(Items);
+        if (query == null)
+            SearchResults = Items;
+        SearchResults = _itemSearchBarService.GetSearchResults(query);
         //Items = SearchResults;
-    });
-
-    
-    
-    
-    public ObservableCollection<Item> SearchResults
-    {
-        get => _searchResults;
-        set
-        {
-            _searchResults = value;
-            NotifyPropertyChanged();
-        }
     }
+
 
     [RelayCommand]
     async void Back(object obj)
@@ -116,8 +101,6 @@ public partial class ItemsViewModel : BaseViewModel
         _vm.CartItems.Add(item);
         await Application.Current.MainPage.DisplayAlert("Įdėta į krepšelį!", "Prekė sėkmingai įdėta į krepšelį!", "OK");
     }
-
-
 
     [RelayCommand]
     async Task Tap(Item item)
@@ -141,5 +124,10 @@ public partial class ItemsViewModel : BaseViewModel
         }
     }
 
-
+    [RelayCommand]
+    void Refresh()
+    {
+        SearchResults = Items;
+        IsRefreshing = false;
+    }
 }

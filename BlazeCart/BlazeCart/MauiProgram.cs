@@ -66,6 +66,8 @@ public static class MauiProgram
 
         builder.Services.AddTransient<ItemPage>();
         builder.Services.AddTransient<ItemPageViewModel>();
+
+        builder.Services.AddSingleton<ItemSearchBarService>();
         return builder.Build();
 	}
 }

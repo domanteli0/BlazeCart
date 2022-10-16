@@ -1,6 +1,3 @@
-using Android.App.AppSearch;
-using BlazeCart.Models;
-using BlazeCart.Services;
 using BlazeCart.ViewModels;
 namespace BlazeCart.Views;
 
