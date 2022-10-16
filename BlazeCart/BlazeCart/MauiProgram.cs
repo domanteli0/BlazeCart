@@ -1,6 +1,7 @@
 ﻿using BlazeCart.Views;
 using BlazeCart.Services;
 using BlazeCart.ViewModels;
+using Syncfusion.Maui.Core.Hosting;
 
 namespace BlazeCart;
 
@@ -11,7 +12,8 @@ public static class MauiProgram
 		var builder = MauiApp.CreateBuilder();
 		builder
 			.UseMauiApp<App>()
-			.ConfigureFonts(fonts =>
+            .ConfigureSyncfusionCore()
+            .ConfigureFonts(fonts =>
 			{
                 fonts.AddFont("Poppins-Bold.ttf", "Poppins-Bold");
                 fonts.AddFont("Poppins-Light.ttf", "Poppins-Light");
