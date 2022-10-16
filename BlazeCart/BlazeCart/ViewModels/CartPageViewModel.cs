@@ -9,12 +9,16 @@ namespace BlazeCart.ViewModels
 {
     public partial class CartPageViewModel : BaseViewModel
     {
-        private CartService _cartService = new CartService();
+        private CartService _cartService;
 
         public Cart cart { get; set; }
 
-        public ObservableCollection<Item> CartItems { get; set; }
+        public ObservableCollection<Item> CartItems { get; set; } = new();
 
+        public CartPageViewModel(CartService cartService)
+        {
+            _cartService = cartService;
+        }
         [RelayCommand]
         async void Remove(object obj)
         {
