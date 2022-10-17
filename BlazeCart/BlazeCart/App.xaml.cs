@@ -1,8 +1,4 @@
 ﻿namespace BlazeCart;
-using BlazeCart.Views;
-using BlazeCart.Resources;
-using System.Reflection;
-
 
 public partial class App : Application
 {
@@ -10,7 +6,7 @@ public partial class App : Application
 	{
 		InitializeComponent();
 
-		//MainPage = new AppShell();
-		MainPage = new NavigationPage(new ItemCatalogPage());
+		MainPage = new AppShell();
+		//MainPage = new NavigationPage(new RegisterPage());
 	}
 }

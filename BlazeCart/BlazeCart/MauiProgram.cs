@@ -1,4 +1,9 @@
-﻿namespace BlazeCart;
+﻿using BlazeCart.Views;
+using BlazeCart.Services;
+using BlazeCart.ViewModels;
+using Syncfusion.Maui.Core.Hosting;
+
+namespace BlazeCart;
 
 public static class MauiProgram
 {
@@ -7,7 +12,8 @@ public static class MauiProgram
 		var builder = MauiApp.CreateBuilder();
 		builder
 			.UseMauiApp<App>()
-			.ConfigureFonts(fonts =>
+            .ConfigureSyncfusionCore()
+            .ConfigureFonts(fonts =>
 			{
                 fonts.AddFont("Poppins-Bold.ttf", "Poppins-Bold");
                 fonts.AddFont("Poppins-Light.ttf", "Poppins-Light");
@@ -29,6 +35,41 @@ public static class MauiProgram
 
             });
 
-		return builder.Build();
+        builder.Services.AddSingleton<ItemCatalogPage>();
+        builder.Services.AddSingleton<ItemService>();
+        builder.Services.AddSingleton<ItemsViewModel>();
+
+        builder.Services.AddSingleton<RegisterPage>();
+        builder.Services.AddSingleton<RegisterPageViewModel>();
+
+        builder.Services.AddSingleton<LoginPage>();
+        builder.Services.AddSingleton<LoginPageViewModel>();
+
+        builder.Services.AddSingleton<CartPage>();
+        builder.Services.AddSingleton<CartPageViewModel>();
+        builder.Services.AddSingleton<CartService>();
+
+        builder.Services.AddSingleton<HomePage>();
+        builder.Services.AddSingleton<HomePageViewModel>();
+
+        builder.Services.AddSingleton<WelcomePage1>();
+        builder.Services.AddSingleton<WelcomePage1ViewModel>();
+
+        builder.Services.AddSingleton<WelcomePage2>();
+        builder.Services.AddSingleton<WelcomePage2ViewModel>();
+
+        builder.Services.AddSingleton<ErrorPage>();
+        builder.Services.AddSingleton<ErrorPageViewModel>();
+
+        builder.Services.AddSingleton<CategoryPage>();
+
+        builder.Services.AddSingleton<CheapestStorePage>();
+        builder.Services.AddSingleton<CheapestStorePageViewModel>();
+
+        builder.Services.AddTransient<ItemPage>();
+        builder.Services.AddTransient<ItemPageViewModel>();
+
+        builder.Services.AddSingleton<ItemSearchBarService>();
+        return builder.Build();
 	}
 }

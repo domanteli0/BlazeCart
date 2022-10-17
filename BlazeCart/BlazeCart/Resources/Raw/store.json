@@ -1,0 +1,36 @@
+{
+"Store": [
+
+    {
+        "Id": 1,
+        "Name": "IKI",
+        "Address": "Didlaukio g. 80a, Vilnius",
+        "kmAway": 0.5,
+        "GeoCoordinates": [54.7288375, 25.2692499],
+        "Image": "https://lh5.googleusercontent.com/p/AF1QipPyKB3Q62-ZtF3-zKWafGGXWdwv6gyzsN7xRML7=w500-h500-k-no"
+        
+    },
+
+    {
+        "Id": 2,
+        "Name": "MAXIMA",
+        "Address": "Didlaukio g. 1, Vilnius 08316",
+        "kmAway": 0.75,
+        "GeoCoordinates": [54.7280368, 25.2784323],
+        "Image": "http://nuotraukos.vilnius21.lt/namai/83/didlaukio1-91318311.jpg"
+        
+    },
+
+    {
+        "Id": 3,
+        "Name": "RIMI",
+        "Address": "Jeruzalės g. 4, Vilnius 08420",
+        "kmAway": 1.5,
+        "GeoCoordinates": [54.7401129, 25.274689],
+        "Image": "https://prc.lt/wp-content/uploads/2018/11/PRC_jeruzales4_vilnius_2.jpg"
+        
+    }
+
+]
+
+}

@@ -73,6 +73,19 @@
 	  <None Remove="Resources\Fonts\Roboto-Regular.ttf" />
 	  <None Remove="Resources\Fonts\Roboto-Thin.ttf" />
 	  <None Remove="Resources\Fonts\Roboto-ThinItalic.ttf" />
+	  <None Remove="Resources\Images\card_base.png" />
+	  <None Remove="Resources\Images\cart_option_logo.png" />
+	  <None Remove="Resources\Images\category_card.png" />
+	  <None Remove="Resources\Images\error_button.png" />
+	  <None Remove="Resources\Images\error_vector.png" />
+	  <None Remove="Resources\Images\green_arrow.png" />
+	  <None Remove="Resources\Images\green_border.png" />
+	  <None Remove="Resources\Images\green_check.png" />
+	  <None Remove="Resources\Images\place_marker.png" />
+	  <None Remove="Resources\Images\red_arrow.png" />
+	  <None Remove="Resources\Images\show_map_button.png" />
+	  <None Remove="Resources\Raw\cart.json" />
+	  <None Remove="Resources\Raw\cartSchema.json" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -93,6 +106,13 @@
 	  <MauiFont Include="Resources\Fonts\Roboto-Regular.ttf" />
 	  <MauiFont Include="Resources\Fonts\Roboto-Thin.ttf" />
 	  <MauiFont Include="Resources\Fonts\Roboto-ThinItalic.ttf" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <PackageReference Include="CommunityToolkit.Mvvm" Version="8.0.0" />
+	  <PackageReference Include="Microsoft.Toolkit.Mvvm" Version="7.1.2" />
+	  <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+	  <PackageReference Include="Syncfusion.Maui.Sliders" Version="20.3.49" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -117,6 +137,12 @@
 	  <MauiXaml Update="Views\CartPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="Views\CategoryPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\CheapestStorePage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Views\ErrorPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
@@ -126,7 +152,16 @@
 	  <MauiXaml Update="Views\ItemCatalogPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="Views\ItemPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Views\LoginPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\NewPage1.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\RegisterPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\WelcomePage1.xaml">
@@ -137,6 +172,6 @@
 	  </MauiXaml>
 	</ItemGroup>
 
-	<ProjectExtensions><VisualStudio><UserProperties resources_4raw_4shopitems_1json__JsonSchema="shopItemsSchema.json" resources_4raw_4shopitemsschema_1json__JsonSchema="" /></VisualStudio></ProjectExtensions>
+	<ProjectExtensions><VisualStudio><UserProperties resources_4raw_4cart_1json__JsonSchema="cartSchema.json" resources_4raw_4shopitems_1json__JsonSchema="shopItemsSchema.json" resources_4raw_4shopitemsschema_1json__JsonSchema="" /></VisualStudio></ProjectExtensions>
 
 </Project>

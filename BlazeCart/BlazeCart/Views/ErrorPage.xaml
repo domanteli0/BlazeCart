@@ -1,7 +1,40 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodel="clr-namespace:BlazeCart.ViewModels"
+             x:DataType="viewmodel:ErrorPageViewModel"
              x:Class="BlazeCart.Views.ErrorPage"
+             Shell.NavBarIsVisible="False"
+             BackgroundColor="{StaticResource PageBackgroundColor}"
              Title="ErrorPage">
-   
+
+    <ContentPage.Content>
+        <StackLayout VerticalOptions="Center" HorizontalOptions="Center">
+            <Image
+                Aspect="AspectFit"
+                Source="error_vector.png"
+                HorizontalOptions="Center" 
+                MaximumHeightRequest="300"
+                Margin="20"></Image>
+            <Label
+                HorizontalTextAlignment="Center"
+                Margin="5, 0, 5, 10"
+                Style="{StaticResource WelcomePageHeadingPoppins}"
+                Text="Klaida!"
+                TextColor="{StaticResource TextColorPrimary}"></Label>
+            <Label
+                HorizontalTextAlignment="Center"
+                Margin="0, 0, 0, 40"
+                Style="{StaticResource WelcomePageSubHeadingRoboto}"
+                Text="Puslapis nerastas"
+                TextColor="{StaticResource TextColorSecondary}"></Label>
+            <ImageButton
+                Aspect="AspectFit"
+                Command="{Binding ReturnHomeCommand}"
+                Source="error_button.png"
+                HorizontalOptions="Center"></ImageButton>
+            
+        </StackLayout>
+    </ContentPage.Content>
+
 </ContentPage>

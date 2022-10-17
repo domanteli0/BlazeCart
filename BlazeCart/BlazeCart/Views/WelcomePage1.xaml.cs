@@ -4,9 +4,9 @@ namespace BlazeCart.Views;
 
 public partial class WelcomePage1 : ContentPage
 {
-	public WelcomePage1()
+	public WelcomePage1(WelcomePage1ViewModel vm)
 	{
 		InitializeComponent();
-        this.BindingContext = new WelcomePage1ViewModel(this.Navigation);
+        BindingContext = vm;
     }
 }

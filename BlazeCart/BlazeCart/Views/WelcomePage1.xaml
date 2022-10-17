@@ -2,7 +2,10 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="BlazeCart.Views.WelcomePage1"
-             NavigationPage.HasNavigationBar="False"
+             xmlns:viewmodel="clr-namespace:BlazeCart.ViewModels"
+             x:DataType="viewmodel:WelcomePage1ViewModel"
+             Shell.NavBarIsVisible="False"
+             Shell.TabBarIsVisible="False"
              Title="WelcomePage1"
              BackgroundColor="{StaticResource PageBackgroundColor}">
     <ContentPage.Content>
@@ -23,7 +26,7 @@
                 HorizontalTextAlignment="Center"
                 Margin="0, 0, 0, 10"
                 Style="{StaticResource WelcomePageSubHeadingRoboto}"
-                Text="Labai naudingas textas"
+                Text="Pasirink norimas prekes iš prekių katalogo"
                 TextColor="{StaticResource TextColorSecondary}"></Label>
             <ImageButton
                 Aspect="AspectFit"

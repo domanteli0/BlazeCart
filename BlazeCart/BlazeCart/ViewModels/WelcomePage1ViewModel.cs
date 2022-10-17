@@ -1,27 +1,22 @@
 using BlazeCart.Views;
 using System.Windows.Input;
+using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
+
 namespace BlazeCart.ViewModels;
 
-public class WelcomePage1ViewModel
+public partial class WelcomePage1ViewModel : ObservableObject
 {
-    private INavigation _navigation;
-    public ICommand NextCommand { private set; get; }
 
-    public ICommand SkipCommand { private set; get; }
-	public WelcomePage1ViewModel(INavigation navigation)
+    [RelayCommand]
+    async void Next(object obj)
     {
-        NextCommand = new Command(OnNextCommand);
-        SkipCommand = new Command(OnSkipCommand);
-		_navigation = navigation;
-	}
-
-    async void OnNextCommand(object obj)
-    {
-        await _navigation.PushModalAsync(new WelcomePage2());
+        await Shell.Current.GoToAsync(nameof(WelcomePage2));
     }
 
-    async void OnSkipCommand(object obj)
+    [RelayCommand]
+    async void Skip(object obj)
     {
-        await _navigation.PushModalAsync(new LoginPage());
+        await Shell.Current.GoToAsync(nameof(LoginPage));
     }
 }

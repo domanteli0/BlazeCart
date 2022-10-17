@@ -1,35 +1,28 @@
 ﻿using BlazeCart.Views;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
+using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 
 namespace BlazeCart.ViewModels
 {
-    internal class LoginPageViewModel
+    public partial class LoginPageViewModel : ObservableObject
     {
-        private INavigation _navigation;
-        public ICommand LoginCommand { private set; get; }
-        public ICommand RegisterCommand { private set; get; }
+        [ObservableProperty]
+        public string email;
+        [ObservableProperty]
+        public string password;
 
-        public LoginPageViewModel(INavigation navigation)
+        [RelayCommand]
+        async void Login(object obj)
         {
-            LoginCommand = new Command(OnLoginCommand);
-            RegisterCommand = new Command(OnRegisterCommand);
-            _navigation = navigation;
+            await Shell.Current.GoToAsync(nameof(HomePage));
         }
 
-        async void OnLoginCommand(object obj)
-        {
-            await _navigation.PushModalAsync(new HomePage());
-        }
-
-        async void OnRegisterCommand(object obj)
+        [RelayCommand]
+        async void Register(object obj)
         {
             //here should be register page, but temporary home page
-            await _navigation.PushModalAsync(new HomePage());
+            await Shell.Current.GoToAsync(nameof(RegisterPage));
         }
     }
 }

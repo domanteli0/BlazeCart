@@ -1,18 +1,21 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodel="clr-namespace:BlazeCart.ViewModels"
+             x:DataType="viewmodel:HomePageViewModel"
              x:Class="BlazeCart.Views.HomePage"
              Title="HomePage"
              BackgroundColor="{StaticResource PageBackgroundColor}"
-             NavigationPage.HasNavigationBar="False">
-    <ContentPage.Content>
-        <StackLayout>
+             Shell.NavBarIsVisible="False"
+             xmlns:android="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.AndroidSpecific;assembly=Microsoft.Maui.Controls"
+             android:TabbedPage.ToolbarPlacement="Bottom">
+    <ScrollView>
+            <StackLayout>
             <Border
-                Margin="0, 0, 0, 0"
-                Padding="20, 5, 25, 20"
+                Padding="60, 15, 56, 30"
                 Background="{StaticResource PrimaryColor}"
                 StrokeThickness="0"
-                HorizontalOptions="Center">
+                HorizontalOptions="Start">
                 <Border.StrokeShape>
                     <RoundRectangle CornerRadius="0, 0, 40, 40"/>
                 </Border.StrokeShape>
@@ -20,49 +23,52 @@
                         <VerticalStackLayout>
                             <Label
                                 HorizontalTextAlignment="Start"
-                                Margin="20, 30, 0, 0"
+                                Padding="0, 20, 10, 0"
                                 Style="{StaticResource GreetingPoppinsRegular}"
                                 Text="Sveikas,"
                                 TextColor="{StaticResource TextColorPrimary}">
                             </Label>
 
                             <Label
-                            HorizontalTextAlignment="Start"
-                            Margin="20, 0, 25, 20"
-                            Style="{StaticResource NameSurnamePoppinsBold}"
-                            Text="Vardenis Pavardenis"
-                            TextColor="{StaticResource TextColorPrimary}">
+                                HorizontalTextAlignment="Start"
+                                Style="{StaticResource NameSurnamePoppinsBold}"
+                                Text="Vardenis Pavardenis"
+                                TextColor="{StaticResource TextColorPrimary}">
                             </Label>
                         </VerticalStackLayout>
                     <Image
                         Aspect="AspectFit"
                         Source="profile_icon.png"
-                        HorizontalOptions="End" 
-                        Margin="15, 0, 0, 0">
+                        HorizontalOptions="End"
+                        MaximumHeightRequest="40">
                     </Image>
                 </HorizontalStackLayout>
             </Border>
             <ImageButton
-                Aspect="AspectFill"
+                Aspect="AspectFit"
+                MaximumHeightRequest="120"
                 Margin="10, 20, 20, 20"
                 Source="search_items_card.png"
-                HorizontalOptions="Center">
-
+                HorizontalOptions="Center"
+                Command="{Binding SearchItemCommand}">
             </ImageButton>
             <ImageButton
                 Aspect="AspectFit"
+                MaximumHeightRequest="120"
                 Margin="10, 0, 20, 20"
                 Source="cart_history_card.png"
-                HorizontalOptions="Center">
-
+                HorizontalOptions="Center"
+                Command="{Binding CartHistoryCommand}">
+                
             </ImageButton>
             <ImageButton
                 Aspect="AspectFit"
+                MaximumHeightRequest="120"
                 Margin="10, 0, 20, 20"
                 Source="favorite_items_card.png"
-                HorizontalOptions="Center">
-
+                HorizontalOptions="Center"
+                Command="{Binding FavoriteItemsCommand}">
             </ImageButton>
         </StackLayout>
-    </ContentPage.Content>
+        </ScrollView>
 </ContentPage>

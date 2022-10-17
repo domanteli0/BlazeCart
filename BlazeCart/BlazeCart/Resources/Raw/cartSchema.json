@@ -1,0 +1,27 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema",
+  "title": "JSON Schema for my JSON file format",
+
+  "type": "object",
+
+  "properties": {
+    "CartId": {
+      "description": "Unique cart identifier",
+      "type": "integer",
+      "minimum": 1
+    },
+    "UserId":{
+      "description": "Unique user identifier",
+      "type":"integer",
+      "minimum": 1
+    },
+    "Name": {
+      "description": "Cart name",
+      "type": "string"
+    },
+    "CartItems": {
+      "description": "List of items stored in cart",
+      "type": "array"
+    }
+  }
+}

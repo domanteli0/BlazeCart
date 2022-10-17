@@ -1,26 +1,16 @@
 ﻿using BlazeCart.Views;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Input;
+using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 
 namespace BlazeCart.ViewModels
 {
-    internal class WelcomePage2ViewModel
+    public partial class WelcomePage2ViewModel : ObservableObject
     {
-        private INavigation _navigation;
-        public ICommand NextCommand { private set; get; }
-        public WelcomePage2ViewModel(INavigation navigation)
-        {
-            NextCommand = new Command(OnNextCommand);
-            _navigation = navigation;
-        }
 
-        async void OnNextCommand(object obj)
+        [RelayCommand]
+        async void Next(object obj)
         {
-            await _navigation.PushModalAsync(new LoginPage());
+            await Shell.Current.GoToAsync(nameof(LoginPage));
         }
     }
 }
