@@ -24,12 +24,6 @@
                     Text="Produktų katalogas"
                     TextColor="{StaticResource PrimaryTextColor}"></Label>
 
-                <HorizontalStackLayout>
-
-                    <Image
-                        Source="search.png"
-                        Margin="5"
-                        />
 
                     <SearchBar 
                         x:Name="searchBar"
@@ -43,8 +37,6 @@
                        SearchCommand="{Binding PerformSearchCommand}"
                        SearchCommandParameter="{Binding Text, Source={x:Reference searchBar}}"
                     />
-
-                </HorizontalStackLayout>
 
                         <Label
                     HorizontalTextAlignment="Start"
@@ -116,9 +108,13 @@
                                 ItemsSource="{Binding SearchResults}">
                     <CollectionView.ItemTemplate>
                         <DataTemplate x:DataType="model:Item">
-                            <Frame Padding="0">
+                            <Frame Padding="0"
+                                   BackgroundColor="{StaticResource White}"
+                                   CornerRadius="20"
+                                   Margin ="10 0 10 0"
+                                   >
                         
-                                <Grid MaximumHeightRequest="200">
+                                <Grid MaximumHeightRequest="300">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="1*"/>
                                     <ColumnDefinition Width="1*"/>
@@ -148,15 +144,15 @@
                                     TextColor="{StaticResource PrimaryTextColor}"
                                     LineBreakMode="CharacterWrap"></Label>
 
-                                <HorizontalStackLayout
+
+                                                <HorizontalStackLayout
                                     Grid.Column="1"
                                     Grid.Row="1">
                                     <Label
                                         HorizontalTextAlignment="Start"
                                         Margin="0, 0, 2, 0"
-                                        Style="{StaticResource ItemNumberPricePoppins}"
-                                        Text="{Binding PricePerUnit}"
-                                        TextColor="{StaticResource PrimaryTextColor}"></Label>
+                                        Style="{StaticResource ItemPricePoppins}"
+                                        Text="{Binding PricePerUnit}"></Label>
                                     <Label
                                         HorizontalTextAlignment="Start"
                                         Margin="0, 0, 15, 0"
@@ -169,7 +165,30 @@
                                         Text="{Binding Units}"></Label>
                                 </HorizontalStackLayout>
 
-                                <HorizontalStackLayout
+                                    <HorizontalStackLayout
+                                        Grid.Column="1"
+                                        Grid.Row="0">
+                                        <Label
+                                            HorizontalTextAlignment="Start"
+                                            Margin="0, 105 ,2, 0"
+                                            Style="{StaticResource ItemNumberPricePoppins}"
+                                            Text="Kaina:"
+                                            TextColor="{StaticResource PrimaryTextColor}"></Label>
+                                        <Label
+                                            HorizontalTextAlignment="Start"
+                                            Margin="0, 105 ,2, 0"
+                                            Style="{StaticResource ItemNumberPricePoppins}"
+                                            Text="{Binding Price}"
+                                            TextColor="{StaticResource PrimaryTextColor}"></Label>
+                                        <Label
+                                            HorizontalTextAlignment="Start"
+                                            Margin="0, 105 ,2, 0"
+                                            Style="{StaticResource ItemNumberPricePoppins}"
+                                            Text="€"
+                                            TextColor="{StaticResource PrimaryTextColor}"></Label>
+                                        </HorizontalStackLayout>
+
+                                        <HorizontalStackLayout
                                     Grid.Column="1"
                                     Grid.Row="2" 
                                     Margin="0">
