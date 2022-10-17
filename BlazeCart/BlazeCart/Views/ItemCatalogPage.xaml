@@ -11,8 +11,8 @@
              xmlns:viewmodel="clr-namespace:BlazeCart.ViewModels"
              x:DataType="viewmodel:ItemsViewModel">
     <ContentPage.Content>
+        <ScrollView>
         <RefreshView IsRefreshing="{Binding IsRefreshing}" Command="{Binding RefreshCommand}">
-            <ScrollView>
             <StackLayout Margin="5">
                 <ImageButton
                     Source="back_button"
@@ -56,14 +56,17 @@
 
 
                     <sliders:SfRangeSlider
-                        Maximum="100"
-                        Minimum="0"
-                        RangeStart="0"
-                        RangeEnd="100"
-                        Interval="20"
+                        Maximum="{Binding Maximum}"
+                        Minimum="{Binding Minimum}"
+                        RangeStart="{Binding RangeStart}"
+                        RangeEnd="{Binding RangeEnd}"
                         ShowLabels="True"
                         ShowTicks="True"
-                        NumberFormat="#€">
+                        Interval ="1"
+                        NumberFormat="#€"
+                        IsVisible="{Binding IsVisible}"
+                        DragCompletedCommand="{Binding DragCompletedCommand}"
+                        >
 
                         <sliders:SfRangeSlider.TrackStyle>
                             <sliders:SliderTrackStyle ActiveFill="{StaticResource PrimaryColor}"
@@ -190,7 +193,7 @@
                     </CollectionView.ItemTemplate>
                 </CollectionView>
             </StackLayout>
+        </RefreshView>
         </ScrollView>
-            </RefreshView>
     </ContentPage.Content>
 </ContentPage>

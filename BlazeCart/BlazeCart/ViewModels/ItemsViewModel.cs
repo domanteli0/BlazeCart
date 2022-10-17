@@ -5,9 +5,7 @@ using BlazeCart.Views;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Debug = System.Diagnostics.Debug;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
-using System.Windows.Input;
+
 
 //Inserting service
 namespace BlazeCart.ViewModels;
@@ -26,21 +24,34 @@ public partial class ItemsViewModel : BaseViewModel
 
     private int cartItemcount;
 
+    //Properties of slider:
+    [ObservableProperty]  double maximum;
+    [ObservableProperty]  double minimum;
+    [ObservableProperty]  double interval;
+    [ObservableProperty]  bool isVisible;
+
+    [ObservableProperty]  double rangeStart;
+    [ObservableProperty] double rangeEnd;
+
+
 
     private ItemService _itemService;
     private ItemSearchBarService _itemSearchBarService;
+    private SliderService _sliderService;
 
     [ObservableProperty]
     public ObservableCollection<Item> searchResults = new();
     private Cart cart;
 
-    public ItemsViewModel(ItemService itemService, CartPageViewModel vm, ItemSearchBarService itemSearchBarService)
+    public ItemsViewModel(ItemService itemService, CartPageViewModel vm, ItemSearchBarService itemSearchBarService, SliderService sliderService)
     {
         _itemService = itemService;
         _itemSearchBarService = itemSearchBarService;
+        _sliderService = sliderService;
         _vm = vm;
         GetItemsAsync();
         SearchResults = Items;
+        LoadSlider();
     }
 
     async void GetItemsAsync()
@@ -77,15 +88,94 @@ public partial class ItemsViewModel : BaseViewModel
 
     }
 
+    //Commands for slider
+
+    [RelayCommand]
+    async void LoadSlider()
+    {
+        if (IsBusy)
+        {
+            return;
+        }
+        try
+        {
+            isBusy = true;
+            if (SearchResults.Count <= 1)
+            {
+                IsVisible = false;
+            }
+
+            else
+            {
+                IsVisible = true;
+                Maximum = _sliderService.GetMaximum(SearchResults);
+                Minimum = _sliderService.GetMinimum(SearchResults);
+                RangeStart = Minimum;
+                RangeEnd = Maximum;
+            }
+        }
+        catch (Exception ex)
+        {
+            Debug.WriteLine($"Unable to update the slider: {ex.Message}");
+            await Application.Current.MainPage.DisplayAlert("Error!", ex.Message, "OK");
+        }
+        finally
+        {
+            isBusy = false;
+        }
+    }
+
+    [RelayCommand]
+     async void DragCompleted()
+     {
+         if (IsBusy)
+         {
+             return;
+         }
+         try
+         {
+             isBusy = true;
+             if (double.IsNaN(rangeStart) || double.IsNaN(rangeEnd))
+             {
+                 Debug.WriteLine($"Range selected is incorrect");
+                 isBusy = false;
+                 return;
+             }
+            _sliderService.FetchItems(Items);
+            SearchResults = _sliderService.GetSearchResults(rangeStart,rangeEnd);
+            LoadSlider();
+         }
+         catch (Exception ex)
+         {
+            Debug.WriteLine($"Slider error: {ex.Message}");
+            await Application.Current.MainPage.DisplayAlert("Error!", ex.Message, "OK");
+         }
+         finally
+         {
+             isBusy = false;
+         }
+     }
+
+    
 
     [RelayCommand]
     void PerformSearch(string query)
     {
         _itemSearchBarService.FetchItems(Items);
         if (query == null)
+        {
             SearchResults = Items;
-        SearchResults = _itemSearchBarService.GetSearchResults(query);
-        //Items = SearchResults;
+            _sliderService.GetSearchResults(rangeStart, rangeEnd);
+            LoadSlider();
+        }
+        else
+        {
+            SearchResults = _itemSearchBarService.GetSearchResults(query);
+            _sliderService.GetSearchResults(rangeStart, rangeEnd);
+            LoadSlider();
+
+        }
+
     }
 
 
@@ -129,5 +219,6 @@ public partial class ItemsViewModel : BaseViewModel
     {
         SearchResults = Items;
         IsRefreshing = false;
+        LoadSlider();
     }
 }

@@ -19,11 +19,6 @@ public class ItemSearchBarService
             where I.Name.Contains(text)
             select I;
 
-        foreach( Item r in searchResults) {
-            Console.WriteLine(r.Name);
-        }
-
-        //Var search results to object
         ObservableCollection<Item> itemSearchResult = new ObservableCollection<Item>(searchResults.ToList());
         return itemSearchResult;
     }

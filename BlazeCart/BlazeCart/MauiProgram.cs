@@ -3,6 +3,7 @@ using BlazeCart.Services;
 using BlazeCart.ViewModels;
 using Syncfusion.Maui.Core.Hosting;
 
+
 namespace BlazeCart;
 
 public static class MauiProgram
@@ -70,6 +71,7 @@ public static class MauiProgram
         builder.Services.AddTransient<ItemPageViewModel>();
 
         builder.Services.AddSingleton<ItemSearchBarService>();
+        builder.Services.AddSingleton<SliderService>();
         return builder.Build();
 	}
 }

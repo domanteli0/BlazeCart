@@ -12,13 +12,4 @@ public partial class ItemCatalogPage : ContentPage
     }
 
 
-    private void OnValueChangeEnd(object sender, EventArgs e)
-    {
-        throw new NotImplementedException();
-    }
-
-    private void OnLabelCreated(object sender, SliderLabelCreatedEventArgs e)
-    {
-        throw new NotImplementedException();
-    }
 }
