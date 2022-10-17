@@ -99,7 +99,7 @@ public partial class ItemsViewModel : BaseViewModel
     async void Cart(Item item)
     {
         _vm.CartItems.Add(item);
-        await Application.Current.MainPage.DisplayAlert("Įdėta į krepšelį!", "Prekė sėkmingai įdėta į krepšelį!", "OK");
+        await Shell.Current.DisplayAlert("Įdėta į krepšelį!", "Prekė sėkmingai įdėta į krepšelį!", "OK");
     }
 
     [RelayCommand]

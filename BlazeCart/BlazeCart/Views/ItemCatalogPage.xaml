@@ -11,8 +11,8 @@
              xmlns:viewmodel="clr-namespace:BlazeCart.ViewModels"
              x:DataType="viewmodel:ItemsViewModel">
     <ContentPage.Content>
-        <RefreshView IsRefreshing="{Binding IsRefreshing}" Command="{Binding RefreshCommand}">
-            <ScrollView>
+        <ScrollView>
+            <RefreshView IsRefreshing="{Binding IsRefreshing}" Command="{Binding RefreshCommand}">
             <StackLayout Margin="5">
                 <ImageButton
                     Source="back_button"
@@ -190,7 +190,7 @@
                     </CollectionView.ItemTemplate>
                 </CollectionView>
             </StackLayout>
-        </ScrollView>
             </RefreshView>
+       </ScrollView>
     </ContentPage.Content>
 </ContentPage>
