@@ -29,18 +29,27 @@ namespace BlazeCart.ViewModels
         [RelayCommand]
         async void Save(object obj)
         {
-            string cartName = await Shell.Current.DisplayPromptAsync("Išsaugoti krepšelį", "Įveskite krepšelio pavadinimą: ", "OK",
-                "Cancel", "Įveskite pavadinimą...");
-            Cart cart = new(1,  CartItems, cartName);
-            await _cartService.SaveCart(cart);
-
+            Cart cart;
+            if(CartItems.Count > 0)
+            {
+                string cartName = await Shell.Current.DisplayPromptAsync("Išsaugoti krepšelį", "Įveskite krepšelio pavadinimą: ", "OK",
+               "Cancel", "Įveskite pavadinimą...");
+                if (string.IsNullOrEmpty(cartName))
+                {
+                    cart = new(cartId: 1, cartItems: CartItems);
+                }
+                else
+                {
+                    cart = new(cartId: 1, cartItems: CartItems, name: cartName);
+                }
+                await _cartService.SaveCart(cart);
+            }
+            else
+            {
+                await Shell.Current.DisplayAlert("Klaida!", "Krepšelis tuščias!", "OK");
+            }
         }
 
-        [RelayCommand]
-        async Task LoadCommand()
-        {
-            
-        }
 
         [RelayCommand]
         async void CheapestStore(object obj)

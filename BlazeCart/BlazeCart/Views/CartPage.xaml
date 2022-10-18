@@ -30,7 +30,7 @@
                          Command="{Binding CheapestStoreCommand}"
                          HorizontalOptions="Center"
                          Margin="10"/>
-             <CollectionView ItemsSource = "{Binding CartItems}">
+            <CollectionView ItemsSource = "{Binding CartItems}">
                     <CollectionView.ItemTemplate>
                     <DataTemplate x:DataType="model:Item">
                         <Grid x:Name="ItemCard" MaximumHeightRequest="200">
