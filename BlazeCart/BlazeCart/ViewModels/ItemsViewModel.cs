@@ -29,29 +29,42 @@ public partial class ItemsViewModel : BaseViewModel
     [ObservableProperty]  double minimum;
     [ObservableProperty]  double interval;
     [ObservableProperty]  bool isVisible;
-
     [ObservableProperty]  double rangeStart;
     [ObservableProperty] double rangeEnd;
 
+    //ComboBox
+    public ObservableCollection<String> ComboBoxCommands { get; set; }
+    [ObservableProperty] string selectedCommand;
 
-
+    //Services
     private ItemService _itemService;
     private ItemSearchBarService _itemSearchBarService;
     private SliderService _sliderService;
+    private ItemFilterService _itemFilterService;
 
     [ObservableProperty]
     public ObservableCollection<Item> searchResults = new();
     private Cart cart;
 
-    public ItemsViewModel(ItemService itemService, CartPageViewModel vm, ItemSearchBarService itemSearchBarService, SliderService sliderService)
+    public ItemsViewModel(ItemService itemService, CartPageViewModel vm, ItemSearchBarService itemSearchBarService, SliderService sliderService, ItemFilterService itemFilterService)
     {
+        this.ComboBoxCommands = new ObservableCollection<string>();
+        this.ComboBoxCommands.Add("Abėcėlę (A-Ž)");
+        this.ComboBoxCommands.Add("Abėcėlę (Ž-A)");
+        this.ComboBoxCommands.Add("Kainą nuo mažiausios");
+        this.ComboBoxCommands.Add("Kainą nuo didžiausios");
+        this.ComboBoxCommands.Add("Kainą nuo maž. (už mato vnt.)");
+        this.ComboBoxCommands.Add("Kainą nuo didž. (už mato vnt.)");
+
         _itemService = itemService;
         _itemSearchBarService = itemSearchBarService;
         _sliderService = sliderService;
+        _itemFilterService = itemFilterService;
         _vm = vm;
         GetItemsAsync();
         SearchResults = Items;
         LoadSlider();
+        _itemFilterService = itemFilterService;
     }
 
     async void GetItemsAsync()
@@ -88,8 +101,16 @@ public partial class ItemsViewModel : BaseViewModel
 
     }
 
-    //Commands for slider
 
+    [RelayCommand]
+    void SelectionChanged()
+    {
+
+    }
+
+    //Implement command that invokes ItemFilter service according to a string
+
+    //Commands for slider
     [RelayCommand]
     async void LoadSlider()
     {

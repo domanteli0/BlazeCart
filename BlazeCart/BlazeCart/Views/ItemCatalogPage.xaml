@@ -7,9 +7,12 @@
              Shell.NavBarIsVisible="False"
              BackgroundColor="{StaticResource White}"
              xmlns:sliders="clr-namespace:Syncfusion.Maui.Sliders;assembly=Syncfusion.Maui.Sliders"
+             xmlns:editors="clr-namespace:Syncfusion.Maui.Inputs;assembly=Syncfusion.Maui.Inputs"
              xmlns:model="clr-namespace:BlazeCart.Models"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              xmlns:viewmodel="clr-namespace:BlazeCart.ViewModels"
-             x:DataType="viewmodel:ItemsViewModel">
+             x:DataType="viewmodel:ItemsViewModel"
+             >
     <ContentPage.Content>
         <ScrollView>
         <RefreshView IsRefreshing="{Binding IsRefreshing}" Command="{Binding RefreshCommand}">
@@ -91,8 +94,7 @@
                         </sliders:SfRangeSlider.Tooltip>
                     </sliders:SfRangeSlider>
 
-
-
+                    
 
                 <Label
                     HorizontalTextAlignment="Start"
@@ -102,16 +104,26 @@
                     TextColor="{StaticResource PrimaryTextColor}"
                     LineBreakMode="CharacterWrap"></Label>
 
+                    <editors:SfComboBox x:Name="comboBox"
+                                        Margin="0, 0, 0, 20"
+                                        WidthRequest= "250"
+                                        ItemsSource="{Binding ComboBoxCommands}"
+                                        IsEditable="false"
+                                        Placeholder="Rūšiuoti pagal:"
+                                        DropDownIconColor="{StaticResource PrimaryColor}"
+                                        BorderColor="{StaticResource PrimaryColor}"
+                                        TextMemberPath="{Binding SelectedCommand}"
+                                        />
+            
 
-
-                <CollectionView x:Name="searchResults"
-                                ItemsSource="{Binding SearchResults}">
+                    <CollectionView x:Name="searchResults"
+                                    ItemsSource="{Binding SearchResults}">
                     <CollectionView.ItemTemplate>
                         <DataTemplate x:DataType="model:Item">
                             <Frame Padding="0"
                                    BackgroundColor="{StaticResource White}"
                                    CornerRadius="20"
-                                   Margin ="10 0 10 0"
+                                   Margin ="10, 0, 10, 0"
                                    >
                         
                                 <Grid MaximumHeightRequest="300">
