@@ -41,13 +41,13 @@ public partial class ItemsViewModel : BaseViewModel
 
     public ItemsViewModel(ItemService itemService, CartPageViewModel vm, ItemSearchBarService itemSearchBarService, SliderService sliderService, ItemFilterService itemFilterService)
     {
-        this.ComboBoxCommands = new ObservableCollection<string>();
-        this.ComboBoxCommands.Add("Abėcėlę (A-Ž)");
-        this.ComboBoxCommands.Add("Abėcėlę (Ž-A)");
-        this.ComboBoxCommands.Add("Kainą nuo mažiausios");
-        this.ComboBoxCommands.Add("Kainą nuo didžiausios");
-        this.ComboBoxCommands.Add("Kainą nuo maž. (už mato vnt.)");
-        this.ComboBoxCommands.Add("Kainą nuo didž. (už mato vnt.)");
+        ComboBoxCommands = new ObservableCollection<string>();
+        ComboBoxCommands.Add("Abėcėlę (A-Ž)");
+        ComboBoxCommands.Add("Abėcėlę (Ž-A)");
+        ComboBoxCommands.Add("Kainą nuo mažiausios");
+        ComboBoxCommands.Add("Kainą nuo didžiausios");
+        ComboBoxCommands.Add("Kainą nuo maž. (už mato vnt.)");
+        ComboBoxCommands.Add("Kainą nuo didž. (už mato vnt.)");
 
         _itemService = itemService;
         _itemSearchBarService = itemSearchBarService;

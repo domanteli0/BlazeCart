@@ -11,10 +11,9 @@
              xmlns:model="clr-namespace:BlazeCart.Models"
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              xmlns:viewmodel="clr-namespace:BlazeCart.ViewModels"
-             x:DataType="viewmodel:ItemsViewModel"
-             >
+             x:DataType="viewmodel:ItemsViewModel">
     <ContentPage.Content>
-        <ScrollView>
+        <ScrollView Margin="7">
         <RefreshView IsRefreshing="{Binding IsRefreshing}" Command="{Binding RefreshCommand}">
             <StackLayout Margin="5">
                 <ImageButton
@@ -28,18 +27,18 @@
                     TextColor="{StaticResource PrimaryTextColor}"></Label>
 
                 <SearchBar 
-                        x:Name="searchBar"
-                        Placeholder="Ieškoti prekės..."
-                       CancelButtonColor="{StaticResource LightGrey}"
-                       PlaceholderColor="{StaticResource LightGrey}"
-                       TextColor="{StaticResource LightGrey}"
-                       HorizontalTextAlignment="Start"
-                       FontSize="Medium"
-                        FontAttributes="Italic"
-                       SearchCommand="{Binding PerformSearchCommand}"
-                       SearchCommandParameter="{Binding Text, Source={x:Reference searchBar}}"/>
+                    x:Name="searchBar"
+                    Placeholder="Ieškoti prekės..."
+                    CancelButtonColor="{StaticResource LightGrey}"
+                    PlaceholderColor="{StaticResource LightGrey}"
+                    TextColor="{StaticResource LightGrey}"
+                    HorizontalTextAlignment="Start"
+                    FontSize="Medium"
+                    FontAttributes="Italic"
+                    SearchCommand="{Binding PerformSearchCommand}"
+                    SearchCommandParameter="{Binding Text, Source={x:Reference searchBar}}"/>
 
-                    <Label
+                <Label
                     HorizontalTextAlignment="Start"
                     Margin="10, 18, 20, 20"
                     Style="{StaticResource ItemNamePoppins}"
@@ -47,24 +46,22 @@
                     TextColor="{StaticResource PrimaryTextColor}"
                     LineBreakMode="CharacterWrap"></Label>
 
+                <sliders:SfRangeSlider
+                    Maximum="{Binding Maximum}"
+                    Minimum="{Binding Minimum}"
+                    RangeStart="{Binding RangeStart}"
+                    RangeEnd="{Binding RangeEnd}"
+                    ShowLabels="True"
+                    ShowTicks="True"
+                    Interval ="1"
+                    NumberFormat="#€"
+                    IsVisible="{Binding IsVisible}"
+                    DragCompletedCommand="{Binding DragCompletedCommand}">
 
-                    <sliders:SfRangeSlider
-                        Maximum="{Binding Maximum}"
-                        Minimum="{Binding Minimum}"
-                        RangeStart="{Binding RangeStart}"
-                        RangeEnd="{Binding RangeEnd}"
-                        ShowLabels="True"
-                        ShowTicks="True"
-                        Interval ="1"
-                        NumberFormat="#€"
-                        IsVisible="{Binding IsVisible}"
-                        DragCompletedCommand="{Binding DragCompletedCommand}"
-                        >
-
-                        <sliders:SfRangeSlider.TrackStyle>
-                            <sliders:SliderTrackStyle ActiveFill="{StaticResource PrimaryColor}"
-                                                      InactiveFill="{StaticResource LightGrey}"
-                                                      />
+                    <sliders:SfRangeSlider.TrackStyle>
+                        <sliders:SliderTrackStyle
+                                ActiveFill="{StaticResource PrimaryColor}"
+                                InactiveFill="{StaticResource LightGrey}"/>
                         </sliders:SfRangeSlider.TrackStyle>
                         <sliders:SfRangeSlider.ThumbStyle>
                         <sliders:SliderThumbStyle Fill="{StaticResource PrimaryColor}" />
@@ -74,25 +71,25 @@
                         </sliders:SfRangeSlider.ThumbOverlayStyle>
 
                         <sliders:SfRangeSlider.LabelStyle>
-                        <sliders:SliderLabelStyle ActiveTextColor="{StaticResource LightGrey}"
-                                                      InactiveTextColor="{StaticResource LightGrey}"
-                                                      ActiveFontAttributes="Italic"
-                                                      InactiveFontAttributes="Italic"
-                                                      ActiveFontSize="16"
-                                                      InactiveFontSize="16" />
+                        <sliders:SliderLabelStyle
+                            ActiveTextColor="{StaticResource LightGrey}"
+                            InactiveTextColor="{StaticResource LightGrey}"
+                            ActiveFontAttributes="Italic"
+                            InactiveFontAttributes="Italic"
+                            ActiveFontSize="16"
+                            InactiveFontSize="16" />
                         </sliders:SfRangeSlider.LabelStyle>
 
                         <sliders:SfRangeSlider.Tooltip>
-                            <sliders:SliderTooltip ShowAlways="True"
-                                                   Fill="{StaticResource LightGrey}"
-                                                   TextColor="{StaticResource PrimaryTextColor}"
-                                                   FontSize="14"
-                                                   FontAttributes="Bold"
-                                                   Padding="12,12"/>
+                            <sliders:SliderTooltip
+                                ShowAlways="True"
+                                Fill="{StaticResource LightGrey}"
+                                TextColor="{StaticResource PrimaryTextColor}"
+                                FontSize="14"
+                                FontAttributes="Bold"
+                                Padding="12,12"/>
                         </sliders:SfRangeSlider.Tooltip>
                     </sliders:SfRangeSlider>
-
-                    
 
                 <Label
                     HorizontalTextAlignment="Start"
@@ -102,27 +99,24 @@
                     TextColor="{StaticResource PrimaryTextColor}"
                     LineBreakMode="CharacterWrap"></Label>
 
-                    <editors:SfComboBox x:Name="comboBox"
-                                        Margin="0, 0, 0, 20"
-                                        WidthRequest= "250"
-                                        ItemsSource="{Binding ComboBoxCommands}"
-                                        IsEditable="false"
-                                        Placeholder="Rūšiuoti pagal:"
-                                        DropDownIconColor="{StaticResource PrimaryColor}"
-                                        BorderColor="{StaticResource PrimaryColor}"
-                                        TextMemberPath="{Binding SelectedCommand}"
-                                        />
-            
-
-                    <CollectionView x:Name="searchResults"
-                                    ItemsSource="{Binding SearchResults}">
+                <editors:SfComboBox
+                    x:Name="comboBox"
+                    Margin="0, 0, 0, 20"
+                    WidthRequest= "250"
+                    ItemsSource="{Binding ComboBoxCommands}"
+                    IsEditable="false"
+                    Placeholder="Rūšiuoti pagal:"
+                    DropDownIconColor="{StaticResource PrimaryColor}"
+                    BorderColor="{StaticResource PrimaryColor}"
+                    TextMemberPath="{Binding SelectedCommand}"/>
+                <CollectionView x:Name="searchResults"
+                                ItemsSource="{Binding SearchResults}">
                     <CollectionView.ItemTemplate>
                         <DataTemplate x:DataType="model:Item">
                             <Frame Padding="0"
                                    BackgroundColor="{StaticResource White}"
                                    CornerRadius="20"
-                                   Margin ="10, 0, 10, 0"
-                                   >
+                                   Margin ="10, 5, 10, 5">
                         
                                 <Grid MaximumHeightRequest="300">
                                 <Grid.ColumnDefinitions>
@@ -153,11 +147,10 @@
                                     Text="{Binding Name}"
                                     TextColor="{StaticResource PrimaryTextColor}"
                                     LineBreakMode="CharacterWrap"></Label>
-
-
-                                                <HorizontalStackLayout
-                                    Grid.Column="1"
-                                    Grid.Row="1">
+                                    
+                                    <HorizontalStackLayout
+                                        Grid.Column="1"
+                                        Grid.Row="1">
                                     <Label
                                         HorizontalTextAlignment="Start"
                                         Margin="0, 0, 2, 0"
@@ -174,7 +167,7 @@
                                         Style="{StaticResource ItemPricePoppins}"
                                         Text="{Binding Units}"></Label>
                                 </HorizontalStackLayout>
-
+                                    
                                     <HorizontalStackLayout
                                         Grid.Column="1"
                                         Grid.Row="0">
@@ -197,21 +190,17 @@
                                             Text="€"
                                             TextColor="{StaticResource PrimaryTextColor}"></Label>
                                         </HorizontalStackLayout>
-
-                                        <HorizontalStackLayout
-                                    Grid.Column="1"
-                                    Grid.Row="2" 
-                                    Margin="0">
-                                    <ImageButton
-                                        Source="heart_button"
-                                        HorizontalOptions="Start"></ImageButton>
-                                    <ImageButton
+                                    <HorizontalStackLayout Grid.Column="1" Grid.Row="2"  Margin="0">
+                                        <ImageButton
+                                            Source="heart_button"
+                                            HorizontalOptions="Start"></ImageButton>
+                                        <ImageButton
                                         Source="cart_button"
                                         Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:ItemsViewModel}}, Path=CartCommand}"
                                         CommandParameter="{Binding .}"
                                         HorizontalOptions="Start"></ImageButton>
-                                </HorizontalStackLayout>
-                            </Grid>
+                                    </HorizontalStackLayout>
+                                </Grid>
                                 <Frame.GestureRecognizers>
                                     <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:ItemsViewModel}}, Path=TapCommand}"
                                                           CommandParameter="{Binding .}">
