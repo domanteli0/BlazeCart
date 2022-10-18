@@ -1,0 +1,22 @@
+﻿
+using System.Collections.ObjectModel;
+using BlazeCart.Models;
+using BlazeCart.Services;
+using CommunityToolkit.Mvvm.ComponentModel;
+
+namespace BlazeCart.ViewModels
+{
+    public partial class CartHistoryPageViewModel : ObservableObject
+    {
+        public ObservableCollection<Cart> Carts { get; set; } = new();
+
+        private CartService _cartService;
+
+        public CartHistoryPageViewModel(CartService cartService)
+        {
+            _cartService = cartService;
+            Carts = _cartService.GetCarts();
+        }
+
+    }
+}

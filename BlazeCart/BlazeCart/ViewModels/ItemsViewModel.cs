@@ -6,8 +6,6 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Debug = System.Diagnostics.Debug;
 
-
-//Inserting service
 namespace BlazeCart.ViewModels;
 
 
@@ -17,14 +15,12 @@ public partial class ItemsViewModel : BaseViewModel
     public bool isRefreshing;
     public ObservableCollection<Item> Items { get; set; } = new();
 
-    private CartPageViewModel _vm;
+    private readonly CartPageViewModel _vm;
 
     [ObservableProperty]
     private ObservableCollection<Item> cartItems = new();
 
-    private int cartItemcount;
 
-    //Properties of slider:
     [ObservableProperty]  double maximum;
     [ObservableProperty]  double minimum;
     [ObservableProperty]  double interval;
@@ -32,11 +28,9 @@ public partial class ItemsViewModel : BaseViewModel
     [ObservableProperty]  double rangeStart;
     [ObservableProperty] double rangeEnd;
 
-    //ComboBox
     public ObservableCollection<String> ComboBoxCommands { get; set; }
     [ObservableProperty] string selectedCommand;
 
-    //Services
     private ItemService _itemService;
     private ItemSearchBarService _itemSearchBarService;
     private SliderService _sliderService;
@@ -44,7 +38,6 @@ public partial class ItemsViewModel : BaseViewModel
 
     [ObservableProperty]
     public ObservableCollection<Item> searchResults = new();
-    private Cart cart;
 
     public ItemsViewModel(ItemService itemService, CartPageViewModel vm, ItemSearchBarService itemSearchBarService, SliderService sliderService, ItemFilterService itemFilterService)
     {
@@ -108,9 +101,6 @@ public partial class ItemsViewModel : BaseViewModel
 
     }
 
-    //Implement command that invokes ItemFilter service according to a string
-
-    //Commands for slider
     [RelayCommand]
     async void LoadSlider()
     {
@@ -201,7 +191,7 @@ public partial class ItemsViewModel : BaseViewModel
 
 
     [RelayCommand]
-    async void Back(object obj)
+    static async void Back(object obj)
     {
         await Shell.Current.GoToAsync("..");
     }

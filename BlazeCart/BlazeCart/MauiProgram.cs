@@ -77,6 +77,9 @@ public static class MauiProgram
         builder.Services.AddSingleton<ItemSearchBarService>();
         builder.Services.AddSingleton<SliderService>();
         builder.Services.AddSingleton<ItemFilterService>();
+
+        builder.Services.AddSingleton<CartHistoryPage>();
+        builder.Services.AddSingleton<CartHistoryPageViewModel>();
         return builder.Build();
 	}
 }

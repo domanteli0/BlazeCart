@@ -27,8 +27,7 @@
                     Text="Produktų katalogas"
                     TextColor="{StaticResource PrimaryTextColor}"></Label>
 
-
-                    <SearchBar 
+                <SearchBar 
                         x:Name="searchBar"
                         Placeholder="Ieškoti prekės..."
                        CancelButtonColor="{StaticResource LightGrey}"
@@ -38,10 +37,9 @@
                        FontSize="Medium"
                         FontAttributes="Italic"
                        SearchCommand="{Binding PerformSearchCommand}"
-                       SearchCommandParameter="{Binding Text, Source={x:Reference searchBar}}"
-                    />
+                       SearchCommandParameter="{Binding Text, Source={x:Reference searchBar}}"/>
 
-                        <Label
+                    <Label
                     HorizontalTextAlignment="Start"
                     Margin="10, 18, 20, 20"
                     Style="{StaticResource ItemNamePoppins}"

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="BlazeCart.Views.CartHistoryPage"
+             xmlns:viewmodel="clr-namespace:BlazeCart.ViewModels"
+             xmlns:models="clr-namespace:BlazeCart.Models"
+             Shell.NavBarIsVisible="False"
+             x:DataType="viewmodel:CartHistoryPageViewModel"
+             Title="CartHistoryPage">
+    
+    <ScrollView>
+        <StackLayout>
+            <Frame HeightRequest="90" Padding="10">
+                <HorizontalStackLayout HorizontalOptions="Center">
+                    <ImageButton
+                        Source="back_button.png"
+                        VerticalOptions="Start"/>
+                    <Label
+                        Text="Krepšelių istorija"
+                        Style="{StaticResource PageNamePoppins}"
+                        VerticalOptions="Center"
+                        HorizontalOptions="Center" />
+                </HorizontalStackLayout>
+            </Frame>
+            <CollectionView ItemsSource="{Binding Carts}">
+                <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="models:Cart">
+                    <Frame Padding="0">
+
+                        <Grid MaximumHeightRequest="200">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="1*"/>
+                                <ColumnDefinition Width="1*"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="2*"/>
+                                <RowDefinition Height="3*"/>
+                            </Grid.RowDefinitions>
+                            <Image
+                                    Grid.Column="0"
+                                    Grid.Row="0"
+                                    Grid.RowSpan="3"
+                                    Aspect="AspectFill"
+                                    Source="{Binding Image}"
+                                    Margin="20"
+                                    HorizontalOptions="Start"  
+                                    VerticalOptions="Start">
+                            </Image>
+                            <Label
+                                    Grid.Column="1"
+                                    Grid.Row="0"
+                                    HorizontalTextAlignment="Start"
+                                    Margin="0, 0, 15, 0"
+                                    Style="{StaticResource ItemNamePoppins}"
+                                    Text="{Binding Name}"
+                                    TextColor="{StaticResource PrimaryTextColor}"
+                                    LineBreakMode="CharacterWrap"></Label>
+                        </Grid>
+                    </Frame>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+            </StackLayout>
+    </ScrollView>
+</ContentPage>

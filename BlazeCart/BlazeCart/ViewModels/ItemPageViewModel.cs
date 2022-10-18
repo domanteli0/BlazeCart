@@ -15,7 +15,7 @@ namespace BlazeCart.ViewModels
         [ObservableProperty]
         public Item item;
         [ObservableProperty]
-        public string name;
+        public new string name;
 
         [ObservableProperty]
         public double price;

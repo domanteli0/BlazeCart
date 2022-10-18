@@ -9,9 +9,9 @@ namespace BlazeCart.ViewModels
 {
     public partial class CartPageViewModel : BaseViewModel
     {
-        private CartService _cartService;
+        private readonly CartService _cartService;
 
-        public Cart cart { get; set; }
+        public Cart Cart { get; set; }
 
         public ObservableCollection<Item> CartItems { get; set; } = new();
 
@@ -19,34 +19,27 @@ namespace BlazeCart.ViewModels
         {
             _cartService = cartService;
         }
-        [RelayCommand]
-        async void Remove(object obj)
-        {
-            //remove an item from current cart
 
-            //and then refresh page
+        [RelayCommand]
+        void Remove(Item item)
+        {
+            CartItems.Remove(item);
         }
 
         [RelayCommand]
         async void Save(object obj)
         {
-            //sample cart to save
-            Cart _cart = new Cart();
-           // string result = await  Application.Current.MainPage.DisplayPromptAsync("Save cart", "Enter cart name: ", "OK", "Cancel");
-            await _cartService.SaveCart(_cart);
+            string cartName = await Shell.Current.DisplayPromptAsync("Išsaugoti krepšelį", "Įveskite krepšelio pavadinimą: ", "OK",
+                "Cancel", "Įveskite pavadinimą...");
+            Cart cart = new(1,  CartItems, cartName);
+            await _cartService.SaveCart(cart);
 
         }
 
         [RelayCommand]
         async Task LoadCommand()
         {
-            var carts = await _cartService.GetCarts("cart.json");
-            //TO DO: implement matching by user ID
-            foreach (var cart in carts)
-            {
-                //TO DO: match user ID
-                cart.CartItems = CartItems;
-            }
+            
         }
 
         [RelayCommand]
