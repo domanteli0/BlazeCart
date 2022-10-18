@@ -9,8 +9,8 @@ namespace BlazeCart.Models
 
             public int? ItemId { get; set; }
             public string? Category { get; set; }
-            public string? Name { get; set; }
-            public double? Price { get; set; }
+            public string Name { get; set; }
+            public double Price { get; set; }
             public string? Units { get; set; }
             public double? PackageAmount { get; set; }
             public double? PricePerUnit { get; set; }
