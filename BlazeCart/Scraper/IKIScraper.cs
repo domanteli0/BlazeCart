@@ -17,7 +17,7 @@ namespace Scraper
 
         private void reset()
         {
-            this.Products = new List<Product>();
+            this.Items = new List<Item>();
         }
 
         private void hardReset()
@@ -159,7 +159,7 @@ namespace Scraper
                     // This is done to prevent exesive requests and getting blocked
                     Thread.Sleep(requestDelay);
 
-                    var newProd = new Product()
+                    var newProd = new Item()
                     {
                         InternalID = jtoken["id"]!.ToString(),
                         NameLT = jtoken["name"]!["lt"]!.ToString(),
@@ -197,7 +197,7 @@ namespace Scraper
                     }
                     catch (System.UriFormatException) { }
 
-                    Products.AddAsSetByProperty(newProd, "InternalID");
+                    Items.AddAsSetByProperty(newProd, "InternalID");
                     //Products.Add(newProd);
                 }
             }

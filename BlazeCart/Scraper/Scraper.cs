@@ -9,7 +9,7 @@ namespace Scraper
         // Only categories, which don't have any subcategories
         public List<Category> Categories { get; private protected set; } = new List<Category>();
         public List<Store> Stores { get; private protected set; } = new List<Store>();
-        public List<Product> Products { get; private protected set; } = new List<Product>();
+        public List<Item> Items { get; private protected set; } = new List<Item>();
 
         protected HttpClient httpClient = new HttpClient();
 

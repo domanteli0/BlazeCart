@@ -19,7 +19,7 @@ public class UnitTest1
             Assert.AreEqual(IkiScraper.Categories.FindAll(s => s.InternalID.Equals(cat.InternalID)).Count, 1, "Duplicate found in Categories");
         foreach (var cat in IkiScraper.AllCategories)
             Assert.AreEqual(IkiScraper.AllCategories.FindAll(s => s.InternalID.Equals(cat.InternalID)).Count, 1, "Duplicate found in AllCategories");
-        foreach (var prod in IkiScraper.Products)
-            Assert.AreEqual(IkiScraper.Products.FindAll(s => s.InternalID.Equals(prod.InternalID)).Count, 1, "Duplicate found in Products");
+        foreach (var item in IkiScraper.Items)
+            Assert.AreEqual(IkiScraper.Items.FindAll(s => s.InternalID.Equals(item.InternalID)).Count, 1, "Duplicate found in Products");
     }
 }

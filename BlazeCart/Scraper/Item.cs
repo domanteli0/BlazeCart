@@ -3,7 +3,7 @@ using System.Text;
 
 namespace Scraper
 {
-    public class Product
+    public class Item
     {
         public enum unitOfMeasure { VNT, KG, L }
         public string InternalID { get; set; }
@@ -26,7 +26,7 @@ namespace Scraper
         public List<String> Barcodes { get; set; }
         public List<Store> AvailableAt { get; set; }
 
-        public Product()
+        public Item()
         {
             Images = new List<Uri>();
             Categories = new List<Category>();
