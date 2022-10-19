@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="BlazeCart.Views.LoginPage"
+             xmlns:viewmodel="clr-namespace:BlazeCart.ViewModels"
+             x:DataType="viewmodel:LoginPageViewModel"
+             Shell.TabBarIsVisible="False"
+             Shell.NavBarIsVisible="False"
+             Title="LoginPage"
+             BackgroundColor="{StaticResource PageBackgroundColor}">
+    <ContentPage.Content>
+        <Grid>
+            <Grid HorizontalOptions="Center" VerticalOptions="Center">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                </Grid.RowDefinitions>
+                <Label
+                    Text="Prisijungti"
+                    Margin="0, 0, 0, 40"
+                    Style="{StaticResource LoginRegisterPoppinsBold}"
+                    Grid.Row="0"></Label>    
+                <Label
+                    Grid.Row="1"
+                    Grid.Column="0"
+                    Text="El. pašto adresas: "
+                    Style="{StaticResource LoginRegisterRobotoLight}"/>
+                <Frame
+                    Grid.Row="2"
+                    Grid.Column="0"
+                    HeightRequest="50">
+                    <Entry
+                        Text="{Binding Email}"
+                        Style="{StaticResource LoginRegisterFieldRobotoLight}"
+                        BackgroundColor="White"
+                        HeightRequest="48"
+                        WidthRequest="200"/>
+                </Frame>
+                <Label Grid.Row="3"
+                       Text="Slaptažodis: "
+                       Padding="0,20,0,0"
+                       Style="{StaticResource LoginRegisterRobotoLight}"/>
+
+                <Frame Grid.Row="4"
+                       HeightRequest="50">
+                    <Entry
+                        Text="{Binding Password}"
+                        Style="{StaticResource LoginRegisterFieldRobotoLight}"
+                        IsPassword="True" BackgroundColor="White"
+                        HeightRequest="48"
+                        WidthRequest="200"/>
+                </Frame>
+                <Grid
+                    Grid.Row="5"
+                    Padding="0,40,0,0">
+                    <VerticalStackLayout
+                        Spacing="20">
+                        <Button Text="Prisijungti"
+                                TextColor="{StaticResource ButtonTextColor}"
+                                Command="{Binding LoginCommand}"
+                                Style="{StaticResource PrimaryButton}"
+                                HeightRequest="40"
+                                WidthRequest="250"/>
+                        <Button
+                            Text="Registruotis"
+                            TextColor="{StaticResource PrimaryColor}"
+                            Command="{Binding RegisterCommand}"
+                            Style="{StaticResource SecondaryButton}"
+                            HeightRequest="40"
+                            WidthRequest="250"/>
+                    </VerticalStackLayout>
+                </Grid>
+            </Grid>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

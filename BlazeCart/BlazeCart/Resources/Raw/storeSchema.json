@@ -1,0 +1,49 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema",
+    "title": "Store",
+    "description":"Information about store in BlazeCart Store database",
+    "type": "object",
+
+    "properties": {
+
+        "Id": {
+            "description": "Unique integer to identify store",
+            "type": "integer",
+            "minimum" : 0
+        },
+
+        "Name": {
+            "description": "Type of store",
+            "enum": ["IKI", "RIMI", "MAXIMA"]
+        },
+
+        "Address": {
+            "description": "Store address",
+            "type": "string"
+        },
+
+        "kmAway": {
+            "description": "Store address",
+            "type": "number"
+        },
+
+        "GeoCoordinates": {
+            "description": "An array of two doubles: Latitude and Longitude",
+            "type": "array",
+            "items": {
+                "type": "integer"
+            },
+            "minItems": 2
+        },
+        
+        "Image": {
+            "description": "A string containing URI of image of store",
+            "type": "string",
+            "format":"uri"
+        }
+
+    },
+    "required": [ "Id", "Name", "Address"]
+
+
+}

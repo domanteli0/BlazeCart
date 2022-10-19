@@ -1,0 +1,45 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema",
+    "title": "Category",
+    "description":"Information about all available categories in BlazeCart Store database",
+    "type": "object",
+
+    "properties": {
+
+        "id": {
+            "description": "Unique integer to identify category",
+            "type": "integer",
+            "minimum" : 0
+        },
+        
+        "name": {
+            "description": "Type of category",
+            "enum": ["Daržovės", "Vaisiai", "Pieno gaminiai", "Kiaušiniai", "Mėsa, žuvis", "Bakalėja", "Šaldytas maistas", "Gėrimai"]
+        },
+
+        "numberOfItems" :{
+            "description": "Amount of items in the cart",
+            "type": "integer",
+            "minimum": 0
+        },
+
+        "items" : {
+            "description": "An array of item ID's that exist in the category",
+            "type": "array",
+            "items": {
+                "type": "integer",
+                "minimum": 1
+            },
+            "minItems": 0
+        },
+        
+        "picture" : {
+            "description": "A string containing URI of image of store",
+            "type": "string",
+            "format":"uri"
+        }
+    },
+
+    "required": ["id", "name", "items", "picture"]
+
+}

@@ -1,17 +1,22 @@
 using BlazeCart.Views;
 using System.Windows.Input;
+using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
+
 namespace BlazeCart.ViewModels;
 
-public class WelcomePage1ViewModel : ContentView
+public partial class WelcomePage1ViewModel : ObservableObject
 {
-	public WelcomePage1ViewModel()
-	{
-		Content = new VerticalStackLayout
-		{
-			Children = {
-				new Label { HorizontalOptions = LayoutOptions.Center, VerticalOptions = LayoutOptions.Center, Text = "Welcome to .NET MAUI!"
-				}
-			}
-		};
-	}
+
+    [RelayCommand]
+    async void Next(object obj)
+    {
+        await Shell.Current.GoToAsync(nameof(WelcomePage2));
+    }
+
+    [RelayCommand]
+    async void Skip(object obj)
+    {
+        await Shell.Current.GoToAsync(nameof(LoginPage));
+    }
 }

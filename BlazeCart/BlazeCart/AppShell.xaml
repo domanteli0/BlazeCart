@@ -4,8 +4,24 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:BlazeCart"
+    xmlns:views="clr-namespace:BlazeCart.Views"
     Shell.FlyoutBehavior="Disabled">
 
-  
-
-</Shell>
+    <TabBar Shell.TabBarTitleColor="{StaticResource PrimaryColor}" Shell.TabBarUnselectedColor="{StaticResource SecondaryTextColor}">
+        <Tab Title="" Icon="home.png"> 
+            <ShellContent
+                ContentTemplate="{DataTemplate views:WelcomePage1}"
+                Route="MainPage"/>
+        </Tab>
+        <Tab Title="" Icon="grid.png">
+            <ShellContent
+                ContentTemplate="{DataTemplate views:ItemCatalogPage}"
+                Route="MainPage"/>
+        </Tab>
+        <Tab Title="" Icon="shopping_cart.png">
+            <ShellContent
+                ContentTemplate="{DataTemplate views:CartPage}"
+                Route="MainPage"/>
+        </Tab>
+    </TabBar>
+    </Shell>

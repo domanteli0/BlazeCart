@@ -1,0 +1,80 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema",
+    "title": "Item",
+    "description":"A product available to compare in BlazeCart",
+    "type": "object",
+
+    "properties": {
+
+        "ItemId": {
+            "description":"Unique item identifier",
+            "type": "integer",
+            "minimum": 1
+        },
+
+        "Category":{
+            "description": "Name of category",
+            "type":"string"
+        },
+
+        "Name": {
+            "description": "Product name",
+            "type": "string"
+        },
+       
+        "Price": {
+            "description": "Item price",
+            "type": "number",
+            "minimum": 0.01
+        },
+
+        "Units": {
+            "description": "Units in which the object is measured in.",
+            "enum": ["kg","l","vnt"]
+        },
+
+        "PackageAmount":{
+            "description": "Item amount in units",
+            "type": "number"
+        },
+
+        "PricePerUnit": {
+            "description": "Price of one whole unit",
+            "type": "number",
+            "minimum": 0.01
+        },
+
+        "Description": {
+            "description": "Product description",
+            "type": "string"
+        },
+
+        "Origin":{
+            "description": "Country of origin for product",
+            "type": "string"
+        },
+        
+        "Image":{
+            "description": "Link to product image",
+            "type":"string",
+            "format":"uri"
+        },
+
+        "Components":{
+            "description": "Product components",
+            "type":"string"
+        },
+
+        "Store":{
+            "description": "Store in which an item can be found",
+            "enum": ["IKI","RIMI","MAXIMA"]
+        },
+
+        "Availability": {
+            "description": "State of item's availability",
+            "type": "boolean"
+        }
+
+    }   
+
+}

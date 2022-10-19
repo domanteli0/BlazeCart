@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodel="clr-namespace:BlazeCart.ViewModels"
+             x:DataType="viewmodel:HomePageViewModel"
+             x:Class="BlazeCart.Views.HomePage"
+             Title="HomePage"
+             BackgroundColor="{StaticResource PageBackgroundColor}"
+             Shell.NavBarIsVisible="False"
+             xmlns:android="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.AndroidSpecific;assembly=Microsoft.Maui.Controls"
+             android:TabbedPage.ToolbarPlacement="Bottom">
+    <ScrollView>
+            <StackLayout>
+            <Border
+                Padding="60, 15, 56, 30"
+                Background="{StaticResource PrimaryColor}"
+                StrokeThickness="0"
+                HorizontalOptions="Start">
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="0, 0, 40, 40"/>
+                </Border.StrokeShape>
+                    <HorizontalStackLayout>
+                        <VerticalStackLayout>
+                            <Label
+                                HorizontalTextAlignment="Start"
+                                Padding="0, 20, 10, 0"
+                                Style="{StaticResource GreetingPoppinsRegular}"
+                                Text="Sveikas,"
+                                TextColor="{StaticResource TextColorPrimary}">
+                            </Label>
+
+                            <Label
+                                HorizontalTextAlignment="Start"
+                                Style="{StaticResource NameSurnamePoppinsBold}"
+                                Text="Vardenis Pavardenis"
+                                TextColor="{StaticResource TextColorPrimary}">
+                            </Label>
+                        </VerticalStackLayout>
+                    <Image
+                        Aspect="AspectFit"
+                        Source="profile_icon.png"
+                        HorizontalOptions="End"
+                        MaximumHeightRequest="40">
+                    </Image>
+                </HorizontalStackLayout>
+            </Border>
+            <ImageButton
+                Aspect="AspectFit"
+                MaximumHeightRequest="120"
+                Margin="10, 20, 20, 20"
+                Source="search_items_card.png"
+                HorizontalOptions="Center"
+                Command="{Binding SearchItemCommand}">
+            </ImageButton>
+            <ImageButton
+                Aspect="AspectFit"
+                MaximumHeightRequest="120"
+                Margin="10, 0, 20, 20"
+                Source="cart_history_card.png"
+                HorizontalOptions="Center"
+                Command="{Binding CartHistoryCommand}">
+                
+            </ImageButton>
+            <ImageButton
+                Aspect="AspectFit"
+                MaximumHeightRequest="120"
+                Margin="10, 0, 20, 20"
+                Source="favorite_items_card.png"
+                HorizontalOptions="Center"
+                Command="{Binding FavoriteItemsCommand}">
+            </ImageButton>
+        </StackLayout>
+        </ScrollView>
+</ContentPage>
