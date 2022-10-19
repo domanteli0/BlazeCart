@@ -15,7 +15,19 @@ namespace Scraper
 
         public Scraper() { }
 
-        // re-fetches all data
+        private protected void reset()
+        {
+            this.Items = new List<Item>();
+        }
+
+        private protected void hardReset()
+        {
+            reset();
+            this.AllCategories = new List<Category>();
+            this.Categories = new List<Category>();
+            this.Stores = new List<Store>();
+        }
+
         abstract public void scrape();
     }
 }

@@ -2,16 +2,17 @@
 {
     internal class Program
     {
-        // TODO:
-        // * Refactor, currently this is more in a PoC stage
-        //   * Error handling (remove all null-forgiving operators?)
-        // * Back referencing products with `Store` instance
-
         static void Main(string[] args)
         {
+            // This is just for demonstration purposes
+            var b = new BarboraScraperWrapper();
+            b.scrape();
+
             var a = new IKIScraper();
             a.init();
             a.Stores.ForEach(Console.WriteLine);
+            a.UpdateAllItems(1);
+            a.Items.ForEach(Console.WriteLine);
         }
     }
 }
