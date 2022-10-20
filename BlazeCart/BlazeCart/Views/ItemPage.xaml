@@ -124,6 +124,7 @@
                         <ImageButton
                         Margin="0, 0, 10, 0"
                         Source="add_to_cart_button.png"
+                        Command ="{Binding CartCommand}"
                         HeightRequest="50"
                         WidthRequest="250"
                         VerticalOptions="End"

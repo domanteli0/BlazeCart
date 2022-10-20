@@ -5,11 +5,7 @@ using BlazeCart.Views;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Debug = System.Diagnostics.Debug;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
-using System.Windows.Input;
 
-//Inserting service
 namespace BlazeCart.ViewModels;
 
 
@@ -19,28 +15,49 @@ public partial class ItemsViewModel : BaseViewModel
     public bool isRefreshing;
     public ObservableCollection<Item> Items { get; set; } = new();
 
-    private CartPageViewModel _vm;
+    private readonly CartPageViewModel _vm;
 
     [ObservableProperty]
     private ObservableCollection<Item> cartItems = new();
 
-    private int cartItemcount;
 
+    [ObservableProperty]  double maximum;
+    [ObservableProperty]  double minimum;
+    [ObservableProperty]  double interval;
+    [ObservableProperty]  bool isVisible;
+    [ObservableProperty]  double rangeStart;
+    [ObservableProperty] double rangeEnd;
+
+    public ObservableCollection<String> ComboBoxCommands { get; set; }
+    [ObservableProperty] string selectedCommand;
 
     private ItemService _itemService;
     private ItemSearchBarService _itemSearchBarService;
+    private SliderService _sliderService;
+    private ItemFilterService _itemFilterService;
 
     [ObservableProperty]
     public ObservableCollection<Item> searchResults = new();
-    private Cart cart;
 
-    public ItemsViewModel(ItemService itemService, CartPageViewModel vm, ItemSearchBarService itemSearchBarService)
+    public ItemsViewModel(ItemService itemService, CartPageViewModel vm, ItemSearchBarService itemSearchBarService, SliderService sliderService, ItemFilterService itemFilterService)
     {
+        ComboBoxCommands = new ObservableCollection<string>();
+        ComboBoxCommands.Add("Abėcėlę (A-Ž)");
+        ComboBoxCommands.Add("Abėcėlę (Ž-A)");
+        ComboBoxCommands.Add("Kainą nuo mažiausios");
+        ComboBoxCommands.Add("Kainą nuo didžiausios");
+        ComboBoxCommands.Add("Kainą nuo maž. (už mato vnt.)");
+        ComboBoxCommands.Add("Kainą nuo didž. (už mato vnt.)");
+
         _itemService = itemService;
         _itemSearchBarService = itemSearchBarService;
+        _sliderService = sliderService;
+        _itemFilterService = itemFilterService;
         _vm = vm;
         GetItemsAsync();
         SearchResults = Items;
+        LoadSlider();
+        _itemFilterService = itemFilterService;
     }
 
     async void GetItemsAsync()
@@ -79,18 +96,102 @@ public partial class ItemsViewModel : BaseViewModel
 
 
     [RelayCommand]
+    void SelectionChanged()
+    {
+
+    }
+
+    [RelayCommand]
+    async void LoadSlider()
+    {
+        if (IsBusy)
+        {
+            return;
+        }
+        try
+        {
+            isBusy = true;
+            if (SearchResults.Count <= 1)
+            {
+                IsVisible = false;
+            }
+
+            else
+            {
+                IsVisible = true;
+                Maximum = _sliderService.GetMaximum(SearchResults);
+                Minimum = _sliderService.GetMinimum(SearchResults);
+                RangeStart = Minimum;
+                RangeEnd = Maximum;
+            }
+        }
+        catch (Exception ex)
+        {
+            Debug.WriteLine($"Unable to update the slider: {ex.Message}");
+            await Application.Current.MainPage.DisplayAlert("Error!", ex.Message, "OK");
+        }
+        finally
+        {
+            isBusy = false;
+        }
+    }
+
+    [RelayCommand]
+     async void DragCompleted()
+     {
+         if (IsBusy)
+         {
+             return;
+         }
+         try
+         {
+             isBusy = true;
+             if (double.IsNaN(rangeStart) || double.IsNaN(rangeEnd))
+             {
+                 Debug.WriteLine($"Range selected is incorrect");
+                 isBusy = false;
+                 return;
+             }
+            _sliderService.FetchItems(Items);
+            SearchResults = _sliderService.GetSearchResults(rangeStart,rangeEnd);
+            LoadSlider();
+         }
+         catch (Exception ex)
+         {
+            Debug.WriteLine($"Slider error: {ex.Message}");
+            await Application.Current.MainPage.DisplayAlert("Error!", ex.Message, "OK");
+         }
+         finally
+         {
+             isBusy = false;
+         }
+     }
+
+    
+
+    [RelayCommand]
     void PerformSearch(string query)
     {
         _itemSearchBarService.FetchItems(Items);
         if (query == null)
+        {
             SearchResults = Items;
-        SearchResults = _itemSearchBarService.GetSearchResults(query);
-        //Items = SearchResults;
+            _sliderService.GetSearchResults(rangeStart, rangeEnd);
+            LoadSlider();
+        }
+        else
+        {
+            SearchResults = _itemSearchBarService.GetSearchResults(query);
+            _sliderService.GetSearchResults(rangeStart, rangeEnd);
+            LoadSlider();
+
+        }
+
     }
 
 
     [RelayCommand]
-    async void Back(object obj)
+    static async void Back(object obj)
     {
         await Shell.Current.GoToAsync("..");
     }
@@ -129,5 +230,6 @@ public partial class ItemsViewModel : BaseViewModel
     {
         SearchResults = Items;
         IsRefreshing = false;
+        LoadSlider();
     }
 }

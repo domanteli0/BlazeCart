@@ -14,7 +14,7 @@ namespace BlazeCart.ViewModels
         [RelayCommand]
         async void CartHistory(object obj)
         {
-            await Shell.Current.GoToAsync(nameof(ErrorPage));
+            await Shell.Current.GoToAsync(nameof(CartHistoryPage));
         }
         [RelayCommand]
         async void FavoriteItems(object obj)

@@ -29,6 +29,7 @@
                         VerticalOptions="Center" />
                     <Label
                         Text="Pigiausios parduotuvės"
+                        FontSize="20"
                         Style="{StaticResource PageNamePoppins}"
                         VerticalOptions="Center"
                         HorizontalOptions="Center" />
@@ -198,8 +199,8 @@
                         TextColor="{StaticResource PrimaryTextColor}"
                         AbsoluteLayout.LayoutBounds="75,20,AutoSize,AutoSize"
                         VerticalOptions="Center" />
-
                 </StackLayout>
+
                 <AbsoluteLayout>
                     <Image
                         Aspect="AspectFit"

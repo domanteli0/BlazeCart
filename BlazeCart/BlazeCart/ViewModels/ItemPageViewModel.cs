@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using BlazeCart.Models;
+using CommunityToolkit.Mvvm.Input;
 
 namespace BlazeCart.ViewModels
 {
@@ -15,7 +16,7 @@ namespace BlazeCart.ViewModels
         [ObservableProperty]
         public Item item;
         [ObservableProperty]
-        public string name;
+        public new string name;
 
         [ObservableProperty]
         public double price;
@@ -26,7 +27,19 @@ namespace BlazeCart.ViewModels
         [ObservableProperty]
         public string description;
 
+        private CartPageViewModel _vm;
 
+        public ItemPageViewModel(CartPageViewModel vm)
+        {
+            _vm = vm;
+        }
+
+        [RelayCommand]
+        async void Cart(object obj)
+        {
+            _vm.CartItems.Add(item);
+            await Shell.Current.DisplayAlert("Įdėta į krepšelį!", "Prekė sėkmingai įdėta į krepšelį!", "OK");
+        }
        
     }
 }
