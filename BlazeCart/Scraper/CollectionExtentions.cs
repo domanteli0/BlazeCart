@@ -13,9 +13,7 @@ namespace Scraper
         public static void AddAsSetByProperty<T>(this ICollection<T> col, T elem, string property)
         {
             if (!col.Any(e => {
-                return e.GetType().GetProperty(property)!.GetValue(e)!.Equals(
-                    elem.GetType().GetProperty(property)!.GetValue(elem)
-                    );
+                return e.EqualPropertyValue(elem!, property);
             })
             )
                 col.Add(elem);
@@ -30,8 +28,7 @@ namespace Scraper
         {
             var temp = col.Find(e =>
             {
-                return e.GetType().GetProperty(property)!.GetValue(e)!.Equals(
-                    elem.GetType().GetProperty(property)!.GetValue(elem));
+                return e.EqualPropertyValue(elem!, property);
             });
 
             if (temp is not null)
@@ -40,6 +37,13 @@ namespace Scraper
             }
 
             col.Add(elem);
+        }
+
+        private static bool EqualPropertyValue(this object left, object right, string property)
+        {
+            return left.GetType().GetProperty(property)!.GetValue(left)!.Equals(
+                    right.GetType().GetProperty(property)!.GetValue(right)
+                );
         }
     }
 }

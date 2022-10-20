@@ -23,7 +23,7 @@ namespace Scraper
         public override void scrape()
         {
             init();
-            UpdateAllItems();
+            RefetchAllItems();
         }
 
         /// <summary>
@@ -46,108 +46,51 @@ namespace Scraper
 
                 responseInit = httpClient.Send(requestInit);
             }
-
             StreamReader readerInit = new StreamReader(responseInit.Content.ReadAsStream());
             var JSONresponseInit = JObject.Parse(readerInit.ReadToEnd());
 
-            // Gets the list of stores from initial_data JSON
-            foreach (JToken cat_ in JSONresponseInit["chains"]!.Last!["stores"]!)
-            {
-                var temp = new Store
-                {
-                    Merch = Store.Merchendise.IKI,
-                    InternalID = cat_["id"]!.ToString(),
-                    Name = cat_["name"]!.ToString(),
-                    Address = cat_["streetAndBuilding"]!.ToString(),
-                    Longitude = cat_["location"]!["geopoint"]!["longitude"]!.ToString(),
-                    Latitude = cat_["location"]!["geopoint"]!["latitude"]!.ToString(),
-                };
-                Stores.Add(temp);
-            }
-
-
-            // Gets needed category data from initial_data JSON
-            // toCat is declared and assigned at different points to do recurtion, see:
-            // https://stackoverflow.com/questions/4611549/recursion-with-func
-            Func<JToken, List<Category>> toCat = null!;
-            toCat = jtoken =>
-            {
-                var l = new List<Category>();
-
-                foreach (var cat in jtoken)
-                {
-                    var listing = new Category()
-                    {
-                        InternalID = cat["id"]!.ToString(),
-                        NameLT = cat["name"]!["lt"]!.ToString(),
-                        NameEN = cat["name"]!["en"]!.ToString(),
-                    };
-
-                    // Not all stores are described in chains/stores JSON list
-                    // thus IDs of other stores must be collected at this step
-                    foreach (var storeId in cat["storeIds"]!)
-                    {
-                        String id = storeId.ToString();
-                        Stores.AddAsSetByProperty(new Store()
-                        {
-                            Merch = Store.Merchendise.IKI,
-                            InternalID = id,
-                        }, "InternalID");
-                    }
-
-                    l.Add(listing);
-                    AllCategories.Add(listing);
-
-                    var cat_ = cat["subcategories"]!;
-                    if (cat_.Count() > 0)
-                    {
-                        listing.SubCategories = toCat(cat_);
-                    }
-                    else
-                        Categories.Add(listing);
-                }
-
-                return l;
-            };
-
-            toCat(JSONresponseInit.GetValue("categories")!);
+            Stores = ParseStoresJSON(JSONresponseInit).ToList();
+            Categories = new List<Category>();
+            AllCategories = ParseCategoriesJSON(JSONresponseInit.GetValue("categories")!).ToList();
         }
 
         /// <summary>
-        /// Updates all items
+        /// Refetches all item data
         /// 
-        /// WARNING: init() must be executed at least once before calling storeData()
+        /// WARNING: init() must be executed at least once before calling RefetchAllItems()
+        /// NOTE: This method rebuilds Items list
         /// </summary>
+        /// <param name="requestDelay">Specifies reqests</param>
         // TODO: ensure programatically that init() is called at least once
-        // TODO?: Instead of checking for changes, rebuild all data, might be faster
-        public void UpdateAllItems(int requestDelay = 10)
+        public void RefetchAllItems(int requestDelay = 10)
         {
+            Items = new List<Item>();
             foreach (var cat in Categories)
             {
-                try
+                Thread.Sleep(requestDelay);
+                foreach (var i in GetItemsBy(categoryID: cat.InternalID))
                 {
-                    FetchItems(categoryID: cat.InternalID).ForEach( e =>
+                    try
                     {
-                        Items.UpdateOrAddByProperty(e, "InternalID");
-                    });
-                } catch (Newtonsoft.Json.JsonReaderException)
-                {
-                    // TODO: Proper logging
-                    Console.WriteLine("ERROR");
-                    continue;
+                        Items.AddAsSetByProperty(i, "InternalID");
+                    }
+                    catch (Newtonsoft.Json.JsonReaderException)
+                    {
+                        // TODO: Proper logging
+                        Console.WriteLine("ERROR");
+                    }
                 }
             }
         }
 
         // TODO: Convert to Task for async?
-        // TODO?: Turn into IEnumerable
         /// <summary>
         /// Performs a reqest for specified categoryID or storeID
         /// </summary>
         /// <returns></returns>
         /// <exception cref="NotImplementedException">Currently only scraping by categoryID is supported</exception>
         /// <exception cref="ArgumentException">Gets thrown if both categoryId and storeID are null</exception>
-        private List<Item> FetchItems(string categoryID = null, string storeID = null, int requestDelay = 10)
+        public IEnumerable<Item> GetItemsBy(string categoryID = null, string storeID = null)
         {
             var request = new HttpRequestMessage(
                     new HttpMethod("POST"),
@@ -174,15 +117,69 @@ namespace Scraper
             var response = this.httpClient.Send(request);
 
             StreamReader reader = new StreamReader(response.Content.ReadAsStream());
-            JObject JSONresponse = JObject.Parse(reader.ReadToEnd());
+            JObject JSONresponse = JObject.Parse(reader.ReadToEnd());            
 
-            var itemList = new List<Item>();
+            return ParseItemsJSON(JSONresponse);
+        }
 
-            foreach (var jtoken in JSONresponse["data"]!)
+        // Note: this method mutates Categories, Stores properties
+        private IEnumerable<Category> ParseCategoriesJSON(JToken data)
+        {
+            foreach (var cat in data)
             {
-                // This is done to prevent exesive requests and getting blocked
-                Thread.Sleep(requestDelay);
+                var listing = new Category()
+                {
+                    InternalID = cat["id"]!.ToString(),
+                    NameLT = cat["name"]!["lt"]!.ToString(),
+                    NameEN = cat["name"]!["en"]!.ToString(),
+                };
 
+                var cat_ = cat["subcategories"]!;
+                if (cat_.Count() > 0)
+                {
+                    listing.SubCategories = ParseCategoriesJSON(cat_).ToList();
+                }
+                else
+                    Categories.Add(listing);
+
+
+                // Not all stores are described in chains/stores JSON list
+                // thus IDs of other stores must be collected at this step
+                foreach (var storeId in cat["storeIds"]!)
+                {
+                    String id = storeId.ToString();
+                    Stores.AddAsSetByProperty(new Store()
+                    {
+                        Merch = Store.Merchendise.IKI,
+                        InternalID = id,
+                    }, "InternalID");
+                }
+
+                yield return listing;
+            }
+        }
+
+        private IEnumerable<Store> ParseStoresJSON(JObject data)
+        {
+            foreach (JToken cat_ in data["chains"]!.Last!["stores"]!)
+            {
+                var newStore = new Store
+                {
+                    Merch = Store.Merchendise.IKI,
+                    InternalID = cat_["id"]!.ToString(),
+                    Name = cat_["name"]!.ToString(),
+                    Address = cat_["streetAndBuilding"]!.ToString(),
+                    Longitude = cat_["location"]!["geopoint"]!["longitude"]!.ToString(),
+                    Latitude = cat_["location"]!["geopoint"]!["latitude"]!.ToString(),
+                };
+                yield return newStore;
+            }
+        }
+
+        private IEnumerable<Item> ParseItemsJSON(JObject data)
+        {
+            foreach (var jtoken in data["data"]!)
+            {
                 var newItem = new Item()
                 {
                     InternalID = jtoken["id"]!.ToString(),
@@ -196,14 +193,11 @@ namespace Scraper
                     Price = ((int)jtoken["prc"]!["p"]!.ToObject<float>() * 100),
                     DiscountPrice = (int?)jtoken["prc"]!["s"]?.ToObject<float?>() * 100,
                     LoyaltyPrice = (int?)jtoken["prc"]!["l"]?.ToObject<decimal?>() * 100,
+                    Barcodes = jtoken["barcodes"]!.ToObject<List<String>>(),
                     // TODO:
                     // * Referencing items with `Store`, `Category` instances and vice versa (Back-referencing)
-                    // Units of measure and available ammounts
+                    // Units of measurement and available ammounts
                 };
-
-                var bar = jtoken["barcodes"]!.ToObject<List<String>>();
-                if (bar is not null)
-                    newItem.Barcodes = bar;
 
                 try
                 {
@@ -221,12 +215,9 @@ namespace Scraper
                 }
                 catch (System.UriFormatException) { }
 
-                itemList.AddAsSetByProperty(newItem, "InternalID");
+                yield return newItem;
             }
-
-            return itemList;
         }
-
     }
 }
 

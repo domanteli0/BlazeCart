@@ -23,14 +23,13 @@ namespace Scraper
         // URIs pointing to an image of that product
         public List<Uri> Images { get; set; }
         public List<Category> Categories { get; set; }
-        public List<String> Barcodes { get; set; }
+        public List<String>? Barcodes { get; set; }
         public List<Store> AvailableAt { get; set; }
 
         public Item()
         {
             Images = new List<Uri>();
             Categories = new List<Category>();
-            Barcodes = new List<String>();
             AvailableAt = new List<Store>();
         }
 
