@@ -14,20 +14,6 @@ namespace Scraper
         protected HttpClient httpClient = new HttpClient();
 
         public Scraper() { }
-
-        private protected void reset()
-        {
-            this.Items = new List<Item>();
-        }
-
-        private protected void hardReset()
-        {
-            reset();
-            this.AllCategories = new List<Category>();
-            this.Categories = new List<Category>();
-            this.Stores = new List<Store>();
-        }
-
         abstract public void scrape();
     }
 }

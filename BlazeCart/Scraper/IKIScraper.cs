@@ -33,8 +33,6 @@ namespace Scraper
         /// </summary>
         public void init()
         {
-            hardReset();
-
             // Gets the initial data JSON
             HttpResponseMessage responseInit;
 
@@ -71,7 +69,7 @@ namespace Scraper
                 foreach (var i in GetItemsBy(categoryID: cat.InternalID))
                 {
                     try
-                    {
+                    {   
                         Items.AddAsSetByProperty(i, "InternalID");
                     }
                     catch (Newtonsoft.Json.JsonReaderException)
@@ -83,6 +81,13 @@ namespace Scraper
             }
         }
 
+        public void UpdateItemsBy(string categoryID = null, string storeID = null)
+        {
+            foreach (var item in GetItemsBy(categoryID, storeID))
+                Items.UpdateOrAddByProperty(item, "InternalID");
+
+        }
+
         // TODO: Convert to Task for async?
         /// <summary>
         /// Performs a reqest for specified categoryID or storeID
@@ -90,7 +95,7 @@ namespace Scraper
         /// <returns></returns>
         /// <exception cref="NotImplementedException">Currently only scraping by categoryID is supported</exception>
         /// <exception cref="ArgumentException">Gets thrown if both categoryId and storeID are null</exception>
-        public IEnumerable<Item> GetItemsBy(string categoryID = null, string storeID = null)
+        private IEnumerable<Item> GetItemsBy(string categoryID = null, string storeID = null)
         {
             var request = new HttpRequestMessage(
                     new HttpMethod("POST"),

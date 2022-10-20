@@ -15,7 +15,7 @@ namespace Scraper
         {
             ProcessStartInfo startInfo = new ProcessStartInfo()
             {
-                WorkingDirectory = "../../../BarboraScraper/BarboraScraper/",
+                WorkingDirectory = "BarboraScraper/BarboraScraper/",
                 FileName = "scrapy",
                 Arguments = "crawl barbora -o test.json",
             };
