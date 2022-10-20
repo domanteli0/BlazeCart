@@ -2,9 +2,7 @@
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json;
 using System.Collections.ObjectModel;
-using System.Reflection;
-using System.Runtime.Serialization.Json;
-using Microsoft.Maui.Controls.Platform;
+
 
 namespace BlazeCart.Services;
 

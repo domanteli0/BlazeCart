@@ -6,6 +6,7 @@
              xmlns:models="clr-namespace:BlazeCart.Models"
              Shell.NavBarIsVisible="False"
              x:DataType="viewmodel:CartHistoryPageViewModel"
+             BackgroundColor="{StaticResource PageBackgroundColor}"
              Title="CartHistoryPage">
     
     <ScrollView>
@@ -22,45 +23,98 @@
                         HorizontalOptions="Center" />
                 </HorizontalStackLayout>
             </Frame>
+
+            <StackLayout
+                Orientation="Horizontal"
+                HorizontalOptions="Center"
+                Spacing="0"
+                Margin="0,15,0,0">
+                <Image
+                    Aspect="AspectFill"
+                    Margin="5"
+                    HorizontalOptions="Start"
+                    VerticalOptions="Center"
+                    Source="cart_option_logo.png" />
+                <Label
+                    HorizontalTextAlignment="Center"
+                    Margin="0, 5, 2, 5"
+                    Style="{StaticResource CheapestStoreHeaderPoppins}"
+                    Text="Visi krepšeliai"
+                    TextColor="{StaticResource PrimaryTextColor}"
+                    VerticalOptions="Center" />
+            </StackLayout>
+
+
             <CollectionView ItemsSource="{Binding Carts}">
                 <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="models:Cart">
-                    <Frame Padding="0">
+                    <Frame Padding="5"
+                           MaximumHeightRequest="120"
+                           HeightRequest="120"
+                           Margin="15">
 
-                        <Grid MaximumHeightRequest="200">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="1*"/>
-                                <ColumnDefinition Width="1*"/>
-                            </Grid.ColumnDefinitions>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="auto"/>
-                                <RowDefinition Height="2*"/>
-                                <RowDefinition Height="3*"/>
-                            </Grid.RowDefinitions>
-                            <Image
-                                    Grid.Column="0"
-                                    Grid.Row="0"
-                                    Grid.RowSpan="3"
-                                    Aspect="AspectFill"
-                                    Source="{Binding Image}"
-                                    Margin="20"
-                                    HorizontalOptions="Start"  
-                                    VerticalOptions="Start">
-                            </Image>
-                            <Label
-                                    Grid.Column="1"
-                                    Grid.Row="0"
-                                    HorizontalTextAlignment="Start"
-                                    Margin="0, 0, 15, 0"
+                            <VerticalStackLayout>
+                                <HorizontalStackLayout>
+                                    <Label
+                                        HorizontalTextAlignment="Start"
+                                    Margin="10, 15, 2, 0"
                                     Style="{StaticResource ItemNamePoppins}"
                                     Text="{Binding Name}"
                                     TextColor="{StaticResource PrimaryTextColor}"
                                     LineBreakMode="CharacterWrap"></Label>
-                        </Grid>
+                                    <Label
+                                        HorizontalTextAlignment="Start"
+                                        Margin="0, 15, 0, 0"
+                                        Padding="0"
+                                        Style="{StaticResource ItemNamePoppins}"
+                                        Text="("
+                                        TextColor="{StaticResource PrimaryTextColor}"
+                                        LineBreakMode="CharacterWrap"></Label>
+                                    <Label
+                                        HorizontalTextAlignment="Start"
+                                        Margin="0, 15, 0, 0"
+                                        Style="{StaticResource ItemNamePoppins}"
+                                        Text="{Binding ItemCount}"
+                                        TextColor="{StaticResource PrimaryTextColor}"
+                                        LineBreakMode="CharacterWrap"></Label>
+                                    <Label
+                                        HorizontalTextAlignment="Start"
+                                        Margin="0, 15, 0, 0"
+                                        Style="{StaticResource ItemNamePoppins}"
+                                        Text=")"
+                                        TextColor="{StaticResource PrimaryTextColor}"
+                                        LineBreakMode="CharacterWrap"></Label>
+                                </HorizontalStackLayout>
+
+                                <HorizontalStackLayout
+                                    Spacing="0">
+                                    <Label
+                                        HorizontalTextAlignment="Start"
+                                        Margin="10, 15, 0, 0"
+                                        Style="{StaticResource ItemNamePoppins}"
+                                        Text="{Binding TotalPrice}"
+                                        TextColor="{StaticResource PrimaryTextColor}"
+                                        LineBreakMode="CharacterWrap"></Label>
+
+                                    <Label
+                                        HorizontalTextAlignment="Start"
+                                        Margin="0, 15, 15, 0"
+                                        Style="{StaticResource ItemNamePoppins}"
+                                        Text="€"
+                                        TextColor="{StaticResource PrimaryTextColor}"></Label>
+                                </HorizontalStackLayout>
+
+                                <ImageButton
+                                        HeightRequest="14.34"
+                                        WidthRequest="20.99"
+                                        Source="additional_cart_info.png"
+                                        HorizontalOptions="Center"/>
+
+                            </VerticalStackLayout>
                     </Frame>
                 </DataTemplate>
             </CollectionView.ItemTemplate>
-        </CollectionView>
+         </CollectionView>
             </StackLayout>
     </ScrollView>
 </ContentPage>
