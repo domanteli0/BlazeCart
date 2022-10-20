@@ -18,14 +18,14 @@ namespace BlazeCart.ViewModels
 
         [ObservableProperty] public string confirmPassword;
 
-        private User _user = new User();
+        private readonly User _user = new();
 
         async Task Register()
         {
-            this._user.Name = name;
-            this._user.Surname = surname;
-            this._user.Email = email;
-            this._user.Password = password;
+            _user.Name = name;
+            _user.Surname = surname;
+            _user.Email = email;
+            _user.Password = password;
             await Shell.Current.GoToAsync(nameof(HomePage));
         }
 
@@ -72,7 +72,7 @@ namespace BlazeCart.ViewModels
                    string.IsNullOrEmpty(Password) || string.IsNullOrEmpty(ConfirmPassword);
         }
 
-        Func<string, string, Match> _matchPattern = (pattern, field) => Regex.Match(pattern, field);
+        readonly Func<string, string, Match> _matchPattern = (pattern, field) => Regex.Match(pattern, field);
 
     }
 }

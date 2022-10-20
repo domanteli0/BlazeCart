@@ -2,6 +2,9 @@
 using BlazeCart.Services;
 using BlazeCart.ViewModels;
 using Syncfusion.Maui.Core.Hosting;
+using Syncfusion.Maui.ListView.Hosting;
+using CommunityToolkit.Maui;
+
 
 namespace BlazeCart;
 
@@ -10,9 +13,11 @@ public static class MauiProgram
 	public static MauiApp CreateMauiApp()
 	{
 		var builder = MauiApp.CreateBuilder();
-		builder
+        builder.UseMauiApp<App>().UseMauiCommunityToolkit();
+        builder
 			.UseMauiApp<App>()
             .ConfigureSyncfusionCore()
+            .ConfigureSyncfusionListView()
             .ConfigureFonts(fonts =>
 			{
                 fonts.AddFont("Poppins-Bold.ttf", "Poppins-Bold");
@@ -70,6 +75,11 @@ public static class MauiProgram
         builder.Services.AddTransient<ItemPageViewModel>();
 
         builder.Services.AddSingleton<ItemSearchBarService>();
+        builder.Services.AddSingleton<SliderService>();
+        builder.Services.AddSingleton<ItemFilterService>();
+
+        builder.Services.AddSingleton<CartHistoryPage>();
+        builder.Services.AddSingleton<CartHistoryPageViewModel>();
         return builder.Build();
 	}
 }
