@@ -1,9 +1,8 @@
-﻿
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using BlazeCart.Models;
 using BlazeCart.Services;
 using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Input;
+
 
 namespace BlazeCart.ViewModels
 {

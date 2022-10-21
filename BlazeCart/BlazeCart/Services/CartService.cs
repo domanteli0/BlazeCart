@@ -1,6 +1,4 @@
 ﻿using BlazeCart.Models;
-using Newtonsoft.Json.Linq;
-using Newtonsoft.Json;
 using System.Collections.ObjectModel;
 
 namespace BlazeCart.Services

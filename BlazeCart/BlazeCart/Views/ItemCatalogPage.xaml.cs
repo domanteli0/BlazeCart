@@ -1,6 +1,4 @@
 using BlazeCart.ViewModels;
-using Syncfusion.Maui.Sliders;
-using SelectionChangedEventArgs = Syncfusion.Maui.Inputs.SelectionChangedEventArgs;
 
 namespace BlazeCart.Views;
 

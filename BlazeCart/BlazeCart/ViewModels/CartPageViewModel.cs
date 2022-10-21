@@ -1,5 +1,4 @@
 ﻿using System.Collections.ObjectModel;
-using System.Windows.Input;
 using BlazeCart.Models;
 using BlazeCart.Services;
 using BlazeCart.Views;

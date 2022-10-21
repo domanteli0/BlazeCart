@@ -1,4 +1,3 @@
-
 using BlazeCart.ViewModels;
 
 namespace BlazeCart.Views;

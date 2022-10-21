@@ -1,7 +1,4 @@
-﻿
-using System.ComponentModel.DataAnnotations;
-
-namespace BlazeCart.Models
+﻿namespace BlazeCart.Models
 {
     public class User
     {
