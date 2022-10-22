@@ -28,9 +28,113 @@
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</SupportedOSPlatformVersion>
 		<TargetPlatformMinVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</TargetPlatformMinVersion>
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'tizen'">6.5</SupportedOSPlatformVersion>
-		<Platforms>AnyCPU;x86</Platforms>
+		<Platforms>AnyCPU</Platforms>
+		<ProjectGuid>{51ABB9CD-18AF-4BB5-BF3C-595437700555}</ProjectGuid>
+		<Configurations>Debug;Release</Configurations>
 	</PropertyGroup>
 
+	<PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+	  <IntermediateOutputPath></IntermediateOutputPath>
+	  <DebugSymbols></DebugSymbols>
+	  <DebugType></DebugType>
+	  <Optimize></Optimize>
+	  <OutputPath></OutputPath>
+	  <DefineConstants></DefineConstants>
+	  <WarningLevel></WarningLevel>
+	  <TreatWarningsAsErrors></TreatWarningsAsErrors>
+	  <DocumentationFile></DocumentationFile>
+	  <ConsolePause>true</ConsolePause>
+	  <ExternalConsole>false</ExternalConsole>
+	  <Commandlineparameters></Commandlineparameters>
+	  <RunWithWarnings>true</RunWithWarnings>
+	  <AssemblyName></AssemblyName>
+	  <SignAssembly></SignAssembly>
+	  <DelaySign>false</DelaySign>
+	  <PublicSign>false</PublicSign>
+	  <AssemblyOriginatorKeyFile></AssemblyOriginatorKeyFile>
+	  <NoWarn></NoWarn>
+	  <AllowUnsafeBlocks></AllowUnsafeBlocks>
+	  <CheckForOverflowUnderflow></CheckForOverflowUnderflow>
+	  <LangVersion>Default</LangVersion>
+	  <NoStdLib></NoStdLib>
+	  <PlatformTarget>anycpu</PlatformTarget>
+	  <WarningsNotAsErrors></WarningsNotAsErrors>
+	  <Nullable></Nullable>
+	</PropertyGroup>
+	<PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+	  <IntermediateOutputPath></IntermediateOutputPath>
+	  <DebugSymbols></DebugSymbols>
+	  <DebugType></DebugType>
+	  <Optimize></Optimize>
+	  <OutputPath></OutputPath>
+	  <DefineConstants></DefineConstants>
+	  <WarningLevel></WarningLevel>
+	  <TreatWarningsAsErrors></TreatWarningsAsErrors>
+	  <DocumentationFile></DocumentationFile>
+	  <ConsolePause>true</ConsolePause>
+	  <ExternalConsole>false</ExternalConsole>
+	  <Commandlineparameters></Commandlineparameters>
+	  <RunWithWarnings>true</RunWithWarnings>
+	  <NoWarn></NoWarn>
+	  <AllowUnsafeBlocks></AllowUnsafeBlocks>
+	  <CheckForOverflowUnderflow></CheckForOverflowUnderflow>
+	  <LangVersion>Default</LangVersion>
+	  <NoStdLib></NoStdLib>
+	  <PlatformTarget>anycpu</PlatformTarget>
+	  <WarningsNotAsErrors></WarningsNotAsErrors>
+	  <Nullable></Nullable>
+	</PropertyGroup>
+	<PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+	  <IntermediateOutputPath></IntermediateOutputPath>
+	  <DebugSymbols></DebugSymbols>
+	  <DebugType></DebugType>
+	  <Optimize></Optimize>
+	  <OutputPath></OutputPath>
+	  <DefineConstants></DefineConstants>
+	  <WarningLevel></WarningLevel>
+	  <TreatWarningsAsErrors></TreatWarningsAsErrors>
+	  <DocumentationFile></DocumentationFile>
+	  <ConsolePause>true</ConsolePause>
+	  <ExternalConsole>false</ExternalConsole>
+	  <Commandlineparameters></Commandlineparameters>
+	  <RunWithWarnings>true</RunWithWarnings>
+	  <AssemblyName></AssemblyName>
+	  <SignAssembly></SignAssembly>
+	  <DelaySign>false</DelaySign>
+	  <PublicSign>false</PublicSign>
+	  <AssemblyOriginatorKeyFile></AssemblyOriginatorKeyFile>
+	  <NoWarn></NoWarn>
+	  <AllowUnsafeBlocks></AllowUnsafeBlocks>
+	  <CheckForOverflowUnderflow></CheckForOverflowUnderflow>
+	  <LangVersion>Default</LangVersion>
+	  <NoStdLib></NoStdLib>
+	  <PlatformTarget>anycpu</PlatformTarget>
+	  <WarningsNotAsErrors></WarningsNotAsErrors>
+	  <Nullable></Nullable>
+	</PropertyGroup>
+	<PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+	  <IntermediateOutputPath></IntermediateOutputPath>
+	  <DebugSymbols></DebugSymbols>
+	  <DebugType></DebugType>
+	  <Optimize></Optimize>
+	  <OutputPath></OutputPath>
+	  <DefineConstants></DefineConstants>
+	  <WarningLevel></WarningLevel>
+	  <TreatWarningsAsErrors></TreatWarningsAsErrors>
+	  <DocumentationFile></DocumentationFile>
+	  <ConsolePause>true</ConsolePause>
+	  <ExternalConsole>false</ExternalConsole>
+	  <Commandlineparameters></Commandlineparameters>
+	  <RunWithWarnings>true</RunWithWarnings>
+	  <NoWarn></NoWarn>
+	  <AllowUnsafeBlocks></AllowUnsafeBlocks>
+	  <CheckForOverflowUnderflow></CheckForOverflowUnderflow>
+	  <LangVersion>Default</LangVersion>
+	  <NoStdLib></NoStdLib>
+	  <PlatformTarget>anycpu</PlatformTarget>
+	  <WarningsNotAsErrors></WarningsNotAsErrors>
+	  <Nullable></Nullable>
+	</PropertyGroup>
 	<ItemGroup>
 		<!-- App Icon -->
 		<MauiIcon Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg" Color="#512BD4" />
