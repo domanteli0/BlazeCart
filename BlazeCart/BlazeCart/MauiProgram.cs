@@ -1,4 +1,5 @@
-﻿using BlazeCart.Views;
+﻿using BlazeCart.Data;
+using BlazeCart.Views;
 using BlazeCart.Services;
 using BlazeCart.ViewModels;
 using Syncfusion.Maui.Core.Hosting;
@@ -80,6 +81,8 @@ public static class MauiProgram
 
         builder.Services.AddSingleton<CartHistoryPage>();
         builder.Services.AddSingleton<CartHistoryPageViewModel>();
+
+        builder.Services.AddSingleton(s => ActivatorUtilities.CreateInstance<ItemRepository>(s, ItemRepository.DbPath));
         return builder.Build();
 	}
 }
