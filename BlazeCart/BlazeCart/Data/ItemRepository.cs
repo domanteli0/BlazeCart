@@ -10,7 +10,7 @@ namespace BlazeCart.Data
         private readonly SQLiteConnection _database;
 
         //TODO: Change database name in method DbPath 
-        const string database_name = "example.db";
+        const string database_name = "BlazeCart.db";
 
         public static string DbPath { get; } = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), database_name);
 
