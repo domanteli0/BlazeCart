@@ -1,10 +1,12 @@
 ﻿using System.Collections.ObjectModel;
+using SQLite;
 
 namespace BlazeCart.Models
 {
-    [Serializable]
+    [Serializable, Table("Carts")]
     public class Cart
     {
+        [AutoIncrement, PrimaryKey]
         public int CartId { get; set; }
         public string  Name { get; set; }
         public ObservableCollection<Item>  CartItems { get; set; }

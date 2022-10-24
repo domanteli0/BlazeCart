@@ -1,6 +1,7 @@
 ﻿using BlazeCart.Models;
 using BlazeCart.Services;
 using System.Collections.ObjectModel;
+using BlazeCart.Data;
 using BlazeCart.Views;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -36,6 +37,9 @@ public partial class ItemsViewModel : BaseViewModel
     private SliderService _sliderService;
     private ItemFilterService _itemFilterService;
 
+    private ItemRepository _itemRepository = new ItemRepository();
+    
+
     [ObservableProperty]
     public ObservableCollection<Item> searchResults = new();
 
@@ -55,9 +59,21 @@ public partial class ItemsViewModel : BaseViewModel
         _itemFilterService = itemFilterService;
         _vm = vm;
         GetItemsAsync();
+        //TODO: remove items getAsync()
+        //Instead of getItemsAync gets items from a remote repository
+        //GetItemsFromRepository();
         SearchResults = Items;
         LoadSlider();
         _itemFilterService = itemFilterService;
+    }
+
+
+    void GetItemsFromRepository()
+    {
+        foreach (var item in _itemRepository.List())
+        {
+            Items.Add(item);
+        }
     }
 
     async void GetItemsAsync()
@@ -98,7 +114,7 @@ public partial class ItemsViewModel : BaseViewModel
     [RelayCommand]
     void SelectionChanged()
     {
-
+        throw new NotSupportedException();
     }
 
     [RelayCommand]

@@ -114,6 +114,7 @@
 	  <PackageReference Include="CommunityToolkit.Mvvm" Version="8.0.0" />
 	  <PackageReference Include="Microsoft.Toolkit.Mvvm" Version="7.1.2" />
 	  <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+	  <PackageReference Include="sqlite-net-pcl" Version="1.8.116" />
 	  <PackageReference Include="Syncfusion.Maui.Inputs" Version="20.3.49" />
 	  <PackageReference Include="Syncfusion.Maui.Core" Version="20.3.49" />
 	  <PackageReference Include="Syncfusion.Maui.Sliders" Version="20.3.49" />
@@ -177,6 +178,10 @@
 	  <MauiXaml Update="Views\WelcomePage2.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Folder Include="Databases\" />
 	</ItemGroup>
 
 	<ProjectExtensions><VisualStudio><UserProperties resources_4raw_4cart_1json__JsonSchema="cartSchema.json" resources_4raw_4shopitems_1json__JsonSchema="shopItemsSchema.json" resources_4raw_4shopitemsschema_1json__JsonSchema="" /></VisualStudio></ProjectExtensions>

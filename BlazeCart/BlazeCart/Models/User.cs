@@ -1,7 +1,11 @@
-﻿namespace BlazeCart.Models
+﻿using SQLite;
+
+namespace BlazeCart.Models
 {
+    [Table("Users")]
     public class User
     {
+        [AutoIncrement, PrimaryKey]
         public int Id { get; set; }
         public string Name { get; set; }
         public string Surname { get; set; }
