@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Text.RegularExpressions;
+
 namespace Scraper
 {
     static public class CollectionExtentions
@@ -13,7 +15,7 @@ namespace Scraper
         public static void AddAsSetByProperty<T>(this ICollection<T> col, T elem, string property)
         {
             if (!col.Any(e => {
-                return e.EqualPropertyValue(elem!, property);
+                return e!.EqualPropertyValue(elem!, property);
             })
             )
                 col.Add(elem);
@@ -37,6 +39,11 @@ namespace Scraper
             }
 
             col.Add(elem);
+        }
+
+        public static string FindFirstRegexMatch(this string str, string pattern)
+        {
+            return (new Regex(pattern)).Matches(str).First().ToString();
         }
 
         private static bool EqualPropertyValue(this object left, object right, string property)
