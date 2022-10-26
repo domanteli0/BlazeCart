@@ -16,8 +16,8 @@ class BarboraSpider(scrapy.Spider):
             category_url = response.urljoin(category_url)
             increment += 1
             page = {
+                'page-index': increment,      #an index for the order in which the page items were first initialized. Scrapy is asynchronous, so indexes are not sorted in the final list
                 'category': category.css('a::text').get(),
-                #'page-index': increment,      #an index for the order in which the page items were first initialized. Scrapy is asynchronous, so indexes are not sorted in the final list
                 'categoryUrl': category_url,   #a page for a certain item type 
                 'responseUrl': response.url, #a url from where this page came from
             }
