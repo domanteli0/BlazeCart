@@ -20,9 +20,9 @@ namespace Scraper
         ///
         /// NOTE: Deletes previously collected data
         /// </summary>
-        public override void scrape()
+        public override void Scrape()
         {
-            init();
+            Init();
             RefetchAllItems();
         }
 
@@ -31,7 +31,7 @@ namespace Scraper
         ///
         /// NOTE: Deletes previously collected data
         /// </summary>
-        public void init()
+        public void Init()
         {
             // Gets the initial data JSON
             HttpResponseMessage responseInit;

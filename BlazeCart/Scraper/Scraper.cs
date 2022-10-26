@@ -1,4 +1,5 @@
 ﻿using System;
+//using Models;
 
 namespace Scraper
 {
@@ -14,6 +15,6 @@ namespace Scraper
         protected HttpClient httpClient = new HttpClient();
 
         public Scraper() { }
-        abstract public void scrape();
+        abstract public void Scrape();
     }
 }
