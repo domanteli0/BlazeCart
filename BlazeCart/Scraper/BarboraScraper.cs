@@ -1,7 +1,7 @@
-﻿using System;
-using HtmlAgilityPack;
+﻿using HtmlAgilityPack;
 using Newtonsoft.Json.Linq;
 using ScrapySharp.Extensions;
+using System.Diagnostics;
 using Models;
 
 namespace Scraper
@@ -24,14 +24,16 @@ namespace Scraper
             doc_.LoadHtml(reader.ReadToEnd());
             var doc = doc_.DocumentNode;
 
-            var catList = new List<CategoryPath>();
-
+            // Category loop
             foreach(var catHtml in doc.CssSelect("li.b-categories-root-category"))
             {
                 var url = "https://barbora.lt" + catHtml.CssSelect("a").First().GetAttributeValue("href");
                 Console.WriteLine(url);
-                
-                //Console.WriteLine(catHtml.CssSelect("a").First().InnerText); // <- Category name
+
+                var cat = new Category(
+                    internalID: catHtml.GetAttributeValue("data-b-cat-id"),
+                    nameLT: catHtml.CssSelect("a").First().InnerText.Trim()
+                    );
 
                 using (var request = new HttpRequestMessage(new HttpMethod("GET"), url))
                 {
@@ -44,22 +46,27 @@ namespace Scraper
                 catDoc_.LoadHtml(reader.ReadToEnd());
                 var catDoc = catDoc_.DocumentNode;
 
-                var cat = new CategoryPath() { NameLT = catHtml.CssSelect("a").First().InnerText.Trim() };
-
+                // Category child loop
                 foreach(var i in catDoc.CssSelect("div.b-single-category--box"))
                 {
+                    Category catChild = new Category(
+                        nameLT: i.CssSelect("a.b-single-category--child").First().InnerText.Trim(),
+                        parent: cat
+                        );
+                    cat.SubCategories.Add(catChild);
 
                     // TODO: Check if there are multiple pages and scrape them if there are
+                    // Category grandchild loop
                     foreach(var ii in i.CssSelect("a.b-single-category--grandchild"))
                     {
-
-                        cat.Childern.Add(
-                                new CategoryPath() { NameLT = ii.InnerText.Trim() }
+                        var catGrandChild = new Category(
+                            nameLT: ii.InnerText.Trim(),
+                            parent: catChild
                             );
-                        //Console.WriteLine(ii.InnerText); // <- Granchild Category Name
+
+                        catChild.SubCategories.Add(catGrandChild);
 
                         url = "https://barbora.lt" + ii.GetAttributeValue("href");
-                        Console.WriteLine(url);
                         using (var request = new HttpRequestMessage(new HttpMethod("GET"), url))
                         {
                             response = httpClient.Send(request);
@@ -71,30 +78,28 @@ namespace Scraper
                         itemDoc_.LoadHtml(reader_.ReadToEnd());
                         var itemDoc = itemDoc_.DocumentNode;
 
-
                         var iii = itemDoc.SelectNodes("/html/body/div[1]/div/div[3]/div/div[3]/div[2]/script").First();
 
+                        // Item looop
                         foreach (var itemJSON in JArray.Parse(
-                                iii.InnerText.FindFirstRegexMatch("(?<=var products = ).*(?=;)"))
-                            )
+                                iii.InnerText.FindFirstRegexMatch("(?<=var products = ).*(?=;)")))
                         {
-                            var item = new Item()
-                            {
-                                InternalID = itemJSON["id"]!.ToString(),
-                                NameLT = itemJSON["title"]!.ToString(),
-                                Price = (int)(itemJSON["price"]!.ToObject<float>() * 100),
-                                PricePerUnitOfMeasure =
-                                    (int)(itemJSON["comparative_unit_price"]!.ToObject<float>() * 100),
-
-                            };
-
-                            item.Images.Add(itemJSON["big_image"]!.ToObject<Uri>()!);
+                            Item item = new Item(
+                                internalID: itemJSON["id"]!.ToString(),
+                                nameLT: itemJSON["title"]!.ToString(),
+                                price: (int)(itemJSON["price"]!.ToObject<float>() * 100),
+                                image: itemJSON["big_image"]!.ToObject<Uri>()!,
+                                measureUnit: itemJSON["comparative_unit"]!.ToString(),
+                                pricePerUnitOfMeasure:
+                                    (int)(itemJSON["comparative_unit_price"]!.ToObject<float>() * 100)
+                            );
 
                             Items.Add(item);
                         }
                     }
                 }
-                catList.Add(cat);
+
+                Categories.Add(cat);
             }
         }
     }

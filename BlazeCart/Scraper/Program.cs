@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using Models;
 
 namespace Scraper
 {
@@ -7,23 +8,17 @@ namespace Scraper
         static void Main(string[] args)
         {
             // This is just for demonstration purposes
-            //var b = new BarboraScraperWrapper();
-            //b.Scrape();
+
+            var a = new IKIScraper();
+            a.Scrape();
+            a.Stores.GetRange(0, 10).ForEach( s => { Console.WriteLine(s); });
+            Console.WriteLine(a.AllCategories[1].CategoryTree());
+            a.Items.GetRange(0, 10).ForEach(Console.WriteLine);
 
             var b = new BarboraScraper();
             b.Scrape();
-            b.Items.ForEach(Console.WriteLine);
-
-            //var a = new IKIScraper();
-            //a.Init();
-            //a.Stores.ForEach(e => { Console.WriteLine(e); } );
-            //a.Categories.ForEach(e => { Console.WriteLine(e); } );
-            //a.RefetchAllItems(1);
-            //a.Items.ForEach(Console.WriteLine);
-
-            //Console.WriteLine("Store count: {0}", a.Stores.Count);
-            //Console.WriteLine("Category count: {0}", a.Categories.Count);
-            //Console.WriteLine("Item count: {0}", a.Items.Count);
+            Console.WriteLine(b.Categories[0].CategoryTree());
+            b.Items.GetRange(0, 10).ForEach(Console.WriteLine);
         }
     }
 }

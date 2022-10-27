@@ -30,7 +30,7 @@ namespace Scraper
         {
             var temp = col.Find(e =>
             {
-                return e.EqualPropertyValue(elem!, property);
+                return e!.EqualPropertyValue(elem!, property);
             });
 
             if (temp is not null)
@@ -41,6 +41,9 @@ namespace Scraper
             col.Add(elem);
         }
 
+        /// <summary>
+        /// Returns first match based on a specified pattern.
+        /// </summary>
         public static string FindFirstRegexMatch(this string str, string pattern)
         {
             return (new Regex(pattern)).Matches(str).First().ToString();

@@ -1,8 +1,7 @@
-﻿using System;
-using Newtonsoft.Json.Linq;
+﻿using Newtonsoft.Json.Linq;
 using System.Net.Http.Headers;
-using static System.Formats.Asn1.AsnWriter;
-using System.Xml.Linq;
+using Models;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace Scraper
 {
@@ -81,7 +80,7 @@ namespace Scraper
             }
         }
 
-        public void UpdateItemsBy(string categoryID = null, string storeID = null)
+        public void UpdateItemsBy(string? categoryID = null, string? storeID = null)
         {
             foreach (var item in GetItemsBy(categoryID, storeID))
                 Items.UpdateOrAddByProperty(item, "InternalID");
@@ -95,7 +94,7 @@ namespace Scraper
         /// <returns></returns>
         /// <exception cref="NotImplementedException">Currently only scraping by categoryID is supported</exception>
         /// <exception cref="ArgumentException">Gets thrown if both categoryId and storeID are null</exception>
-        private IEnumerable<Item> GetItemsBy(string categoryID = null, string storeID = null)
+        private IEnumerable<Item> GetItemsBy(string? categoryID = null, string? storeID = null)
         {
             var request = new HttpRequestMessage(
                     new HttpMethod("POST"),
@@ -128,21 +127,22 @@ namespace Scraper
         }
 
         // Note: this method mutates Categories, Stores properties
-        private IEnumerable<Category> ParseCategoriesJSON(JToken data)
+        private IEnumerable<Category> ParseCategoriesJSON(JToken data, Category? parent = null)
         {
             foreach (var cat in data)
             {
-                var listing = new Category()
-                {
-                    InternalID = cat["id"]!.ToString(),
-                    NameLT = cat["name"]!["lt"]!.ToString(),
-                    NameEN = cat["name"]!["en"]!.ToString(),
-                };
+
+                var listing = new Category(
+                    internalID: cat["id"]!.ToString(),
+                    nameEN: cat["name"]!["en"]!.ToString(),
+                    nameLT: cat["name"]!["lt"]!.ToString(),
+                    parent: parent
+                );
 
                 var cat_ = cat["subcategories"]!;
                 if (cat_.Count() > 0)
                 {
-                    listing.SubCategories = ParseCategoriesJSON(cat_).ToList();
+                    listing.SubCategories = ParseCategoriesJSON(cat_, listing).ToList();
                 }
                 else
                     Categories.Add(listing);
@@ -152,12 +152,13 @@ namespace Scraper
                 // thus IDs of other stores must be collected at this step
                 foreach (var storeId in cat["storeIds"]!)
                 {
-                    String id = storeId.ToString();
-                    Stores.AddAsSetByProperty(new Store()
-                    {
-                        Merch = Store.Merchendise.IKI,
-                        InternalID = id,
-                    }, "InternalID");
+                    Stores.AddAsSetByProperty(
+                        new Store(
+                            merch: Store.Merchendise.IKI,
+                            internalID: storeId.ToString()
+                        )
+                        , "InternalID"
+                    );
                 }
 
                 yield return listing;
@@ -168,15 +169,14 @@ namespace Scraper
         {
             foreach (JToken cat_ in data["chains"]!.Last!["stores"]!)
             {
-                var newStore = new Store
-                {
-                    Merch = Store.Merchendise.IKI,
-                    InternalID = cat_["id"]!.ToString(),
-                    Name = cat_["name"]!.ToString(),
-                    Address = cat_["streetAndBuilding"]!.ToString(),
-                    Longitude = cat_["location"]!["geopoint"]!["longitude"]!.ToString(),
-                    Latitude = cat_["location"]!["geopoint"]!["latitude"]!.ToString(),
-                };
+                var newStore = new Store(
+                    merch: Store.Merchendise.IKI,
+                    internalID: cat_["id"]!.ToString(),
+                    name: cat_["name"]!.ToString(),
+                    address: cat_["streetAndBuilding"]!.ToString(),
+                    longitude: cat_["location"]!["geopoint"]!["longitude"]!.ToString(),
+                    latitude: cat_["location"]!["geopoint"]!["latitude"]!.ToString()
+                    );
                 yield return newStore;
             }
         }
@@ -185,40 +185,45 @@ namespace Scraper
         {
             foreach (var jtoken in data["data"]!)
             {
-                var newItem = new Item()
-                {
-                    InternalID = jtoken["id"]!.ToString(),
-                    NameLT = jtoken["name"]!["lt"]!.ToString(),
-                    NameEN = jtoken["name"]!["en"]!.ToString(),
-                    Description = jtoken["description"]?["lt"]?.ToString(),
-                    // TODO: Sometimes there are duplicate products.
-                    // However some of them a price of 0,
-                    // therefore if a duplicate with a price of non-zero is found
-                    // the price should be updated
-                    Price = ((int)jtoken["prc"]!["p"]!.ToObject<float>() * 100),
-                    DiscountPrice = (int?)jtoken["prc"]!["s"]?.ToObject<float?>() * 100,
-                    LoyaltyPrice = (int?)jtoken["prc"]!["l"]?.ToObject<decimal?>() * 100,
-                    Barcodes = jtoken["barcodes"]!.ToObject<List<String>>(),
-                    // TODO:
-                    // * Referencing items with `Store`, `Category` instances and vice versa (Back-referencing)
-                    // Units of measurement and available ammounts
-                };
-
+                Uri? photo = null;
                 try
                 {
-                    var photo = jtoken["photoUrl"]?.ToObject<Uri>();
-                    if (photo is not null)
-                        newItem.Images.Add(photo);
+                    photo = jtoken["photoUrl"]?.ToObject<Uri>();
                 }
                 catch (System.UriFormatException) { }
 
-                try
+                if (photo is null)
                 {
-                    var thumb = jtoken["thumbUrl"]?.ToObject<Uri>();
-                    if (thumb is not null)
-                        newItem.Images.Add(thumb);
+                    try
+                    {
+                        photo = jtoken["thumbUrl"]?.ToObject<Uri>();
+                    }
+                    catch (System.UriFormatException) { }
                 }
-                catch (System.UriFormatException) { }
+
+                // TODO: Sometimes there are duplicate products.
+                // However some of them a price of 0,
+                // therefore if a duplicate with a price of non-zero is found
+                // the price should be updated
+                // TODO:
+                // * Referencing items with `Store`, `Category` instances and vice versa (Back-referencing)
+                // Units of measurement and available ammounts
+                var newItem = new Item(
+                    internalID: jtoken["id"]!.ToString(),
+                    nameLT: jtoken["name"]!["lt"]!.ToString(),
+                    price: (int)(jtoken["prc"]!["p"]!.ToObject<float>() * 100),
+                    image: photo,
+                    measureUnit: jtoken["conversionMeasure"]!.ToString(),
+                    pricePerUnitOfMeasure: null,
+                    nameEN: jtoken["name"]!["en"]!.ToString(),
+                    description: jtoken["description"]?["lt"]?.ToString(),
+                    discountPrice: (int?)(jtoken["prc"]!["s"]?.ToObject<float?>() * 100),
+                    loyaltyPrice: (int?)(jtoken["prc"]!["l"]?.ToObject<decimal?>() * 100),
+                    ammount: jtoken["conversionValue"]!.ToObject<float>(),
+                    barcodes: jtoken["barcodes"]!.ToObject<List<String>>()
+                );
+
+                newItem.FillPerUnitOfMeasureByAmmount();
 
                 yield return newItem;
             }
