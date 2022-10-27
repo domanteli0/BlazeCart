@@ -32,7 +32,7 @@ namespace BlazeCart.ViewModels
         [RelayCommand]
         async Task ValidateEntryFields(object obj)
         {
-            string emailPattern = @"^((\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*)\s*[;]{0,1}\s*)+$";
+            string emailPattern = @"^([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$";
             string passwordPattern = @"^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,}$";
 
 
@@ -43,17 +43,19 @@ namespace BlazeCart.ViewModels
                 return;
             }
 
-            if (_matchPattern(emailPattern, Email).Success)
-            {
-                await Shell.Current.DisplayAlert("Klaida!", "Įveskite egzistuojantį el. pašto adresą.", "OK");
-                return;
-            }
+          
 
-            if (_matchPattern(passwordPattern, Password).Success)
+            if (_matchPattern(passwordPattern, Password))
             {
                 await Shell.Current.DisplayAlert("Klaida!",
                     "Slaptažodis turi turėti bent 8 simbolius, viena didžiąją raidę, viena mažąją ir viena skaitmenį.",
                     "OK");
+                return;
+            }
+
+            if (_matchPattern(emailPattern, Email))
+            {
+                await Shell.Current.DisplayAlert("Klaida!", "Įveskite egzistuojantį el. pašto adresą.", "OK");
                 return;
             }
 
@@ -72,7 +74,7 @@ namespace BlazeCart.ViewModels
                    string.IsNullOrEmpty(Password) || string.IsNullOrEmpty(ConfirmPassword);
         }
 
-        readonly Func<string, string, Match> _matchPattern = (pattern, field) => Regex.Match(pattern, field);
+        Func<string, string, bool> _matchPattern = (pattern, field) => Regex.IsMatch(pattern, field);
 
     }
 }
