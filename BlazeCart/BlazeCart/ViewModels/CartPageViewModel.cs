@@ -12,10 +12,14 @@ namespace BlazeCart.ViewModels
 
         public Cart Cart { get; set; }
 
+        public int ItemCount { get; set; }
+
+        public CartHistoryPageViewModel _vm;
         public ObservableCollection<Item> CartItems { get; set; } = new();
 
-        public CartPageViewModel(CartService cartService)
+        public CartPageViewModel(CartService cartService, CartHistoryPageViewModel vm)
         {
+            _vm = vm;
             _cartService = cartService;
         }
 
@@ -33,15 +37,9 @@ namespace BlazeCart.ViewModels
             {
                 string cartName = await Shell.Current.DisplayPromptAsync("Išsaugoti krepšelį", "Įveskite krepšelio pavadinimą: ", "OK",
                "Cancel", "Įveskite pavadinimą...");
-                if (string.IsNullOrEmpty(cartName))
-                {
-                    cart = new(cartId: 1, cartItems: CartItems);
-                }
-                else
-                {
-                    cart = new(cartId: 1, cartItems: CartItems, name: cartName);
-                }
-                await _cartService.SaveCart(cart);
+                
+                await _cartService.AddCartToDb(cartName, CartItems, CartItems.Count, GetCartPrice(CartItems));
+                await _vm.Refresh();
             }
             else
             {
@@ -54,6 +52,16 @@ namespace BlazeCart.ViewModels
         async void CheapestStore(object obj)
         {
             await Shell.Current.GoToAsync(nameof(CheapestStorePage));
+        }
+
+        private Double GetCartPrice(ObservableCollection<Item> cartItems)
+        {
+            Double TotalPrice = 0;
+            foreach (Item I in cartItems)
+            {
+                TotalPrice += I.Price;
+            }
+            return TotalPrice;
         }
     }
 }

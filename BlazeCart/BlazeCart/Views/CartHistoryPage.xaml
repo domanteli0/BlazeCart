@@ -8,7 +8,6 @@
              x:DataType="viewmodel:CartHistoryPageViewModel"
              BackgroundColor="{StaticResource PageBackgroundColor}"
              Title="CartHistoryPage">
-    
     <ScrollView>
         <StackLayout>
             <Frame HeightRequest="90" Padding="10">
@@ -48,11 +47,18 @@
             <CollectionView ItemsSource="{Binding Carts}">
                 <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="models:Cart">
-                    <Frame Padding="5"
-                           MaximumHeightRequest="120"
-                           HeightRequest="120"
-                           Margin="15">
+                    <SwipeView>
+                        <SwipeView.RightItems>
+                            <SwipeItems>
+                                    <SwipeItem IconImageSource="trash.png" BackgroundColor="{StaticResource BinColor}" Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:CartHistoryPageViewModel}}, Path=RemoveCommand}" CommandParameter="{Binding .}"></SwipeItem>
+                            </SwipeItems>
 
+                        </SwipeView.RightItems>
+                        <Frame Padding="10"
+                               MaximumHeightRequest="120"
+                               HeightRequest="120"
+                               Margin="15">
+                            
                             <VerticalStackLayout>
                                 <HorizontalStackLayout>
                                     <Label
@@ -74,7 +80,7 @@
                                         HorizontalTextAlignment="Start"
                                         Margin="0, 15, 0, 0"
                                         Style="{StaticResource ItemNamePoppins}"
-                                        Text="{Binding ItemCount}"
+                                        Text="{Binding ItemsCount}"
                                         TextColor="{StaticResource PrimaryTextColor}"
                                         LineBreakMode="CharacterWrap"></Label>
                                     <Label
@@ -112,6 +118,7 @@
 
                             </VerticalStackLayout>
                     </Frame>
+                    </SwipeView>
                 </DataTemplate>
             </CollectionView.ItemTemplate>
          </CollectionView>
