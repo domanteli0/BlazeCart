@@ -7,7 +7,6 @@ namespace BlazeCart.Services
     public class CartService
     {
         static SQLiteAsyncConnection db;
-        private ObservableCollection<Cart> _cartList = new();
         static async Task Init()
         {
             if (db != null)
@@ -50,11 +49,6 @@ namespace BlazeCart.Services
            var cart = await db.Table<Cart>().ToListAsync();
             return cart;
         }
-      
-    
-        public ObservableCollection<Cart> GetCarts()
-        {
-            return _cartList;
-        }
+        
     }
 }
