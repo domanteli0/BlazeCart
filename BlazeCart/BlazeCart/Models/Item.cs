@@ -1,13 +1,19 @@
 ﻿#nullable enable
 using CommunityToolkit.Mvvm.ComponentModel;
+using SQLite;
+using SQLiteNetExtensions.Attributes;
 
 namespace BlazeCart.Models
 {
     [Serializable]
     public class Item : ObservableObject
     {
-
+            [PrimaryKey]
             public int? ItemId { get; set; }
+            [ForeignKey(typeof(Cart))]
+            public int CartId { get; set; }
+            [ManyToOne]
+            public Cart cart { get; set; }
             public string? Category { get; set; }
             public string Name { get; set; }
             public double Price { get; set; }
