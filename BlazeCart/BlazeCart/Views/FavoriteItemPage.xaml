@@ -4,9 +4,9 @@
              x:Class="BlazeCart.Views.FavoriteItemPage"
              Title="FavoriteItemPage"
              xmlns:viewmodel="clr-namespace:BlazeCart.ViewModels"
-             x:DataType="viewmodel:HomePageViewModel"
+             x:DataType="viewmodel:FavoriteItemViewModel"
              BackgroundColor="{StaticResource PageBackgroundColor}"
-             Shell.NavBarIsVisible="True"
+             Shell.NavBarIsVisible="False"
              NavigationPage.HasNavigationBar="False"
              xmlns:android="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.AndroidSpecific;assembly=Microsoft.Maui.Controls"
              android:TabbedPage.ToolbarPlacement="Bottom">
@@ -26,7 +26,8 @@
 
                     <ImageButton
                         Source ="reverse_colored_back_button.png"
-                        VerticalOptions="Center">
+                        VerticalOptions="Center"
+                        Command="{Binding BackCommand}">
                         
                     </ImageButton>
 
@@ -149,19 +150,10 @@
                                 </HorizontalStackLayout>
 
                             </VerticalStackLayout>
-
-
                         </Grid>
-
                     </Frame>
-
-
                 </VerticalStackLayout>
             </Border>
-
-
-
-
 
         </StackLayout>
         </ScrollView>

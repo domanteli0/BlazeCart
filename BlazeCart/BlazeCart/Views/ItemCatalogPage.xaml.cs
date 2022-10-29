@@ -10,6 +10,7 @@ public partial class ItemCatalogPage : ContentPage
 	{
 		InitializeComponent();
 
+        /*
         //TODO: insert database address
         const String databasePlace = "BlazeCart.Databases.data_base_name.db";
 
@@ -25,7 +26,7 @@ public partial class ItemCatalogPage : ContentPage
 
                 File.WriteAllBytes(ItemRepository.DbPath, memoryStream.ToArray());
             }
-        }
+        }*/
 
         BindingContext = vm;
     }

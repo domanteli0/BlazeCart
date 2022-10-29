@@ -20,7 +20,7 @@ namespace BlazeCart.ViewModels
         [RelayCommand]
         async void FavoriteItems(object obj)
         {
-            await Shell.Current.GoToAsync(nameof(ErrorPage));
+            await Shell.Current.GoToAsync(nameof(FavoriteItemPage));
         }
 
         
