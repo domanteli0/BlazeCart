@@ -80,6 +80,11 @@ public static class MauiProgram
 
         builder.Services.AddSingleton<CartHistoryPage>();
         builder.Services.AddSingleton<CartHistoryPageViewModel>();
+
+        builder.Services.AddSingleton<FavoriteItemPage>();
+        builder.Services.AddSingleton<FavoriteItemViewModel>();
+
+        builder.Services.AddSingleton(s => ActivatorUtilities.CreateInstance<ItemRepository>(s, ItemRepository.DbPath));
         return builder.Build();
 	}
 }
