@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="BlazeCart.Views.FavoriteItemPage"
+             Title="FavoriteItemPage"
+             xmlns:viewmodel="clr-namespace:BlazeCart.ViewModels"
+             x:DataType="viewmodel:HomePageViewModel"
+             BackgroundColor="{StaticResource PageBackgroundColor}"
+             Shell.NavBarIsVisible="True"
+             NavigationPage.HasNavigationBar="False"
+             xmlns:android="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.AndroidSpecific;assembly=Microsoft.Maui.Controls"
+             android:TabbedPage.ToolbarPlacement="Bottom">
+        <ScrollView>
+            <StackLayout>
+                <Border
+                Padding="10, 10, 58, 20"
+                Background="{StaticResource PrimaryColor}"
+                StrokeThickness="0"
+                HorizontalOptions="Start">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="0, 0, 0, 0"/>
+                    </Border.StrokeShape>
+
+                    <HorizontalStackLayout
+                        Margin="0, 5, 0, 0">
+
+                    <ImageButton
+                        Source ="reverse_colored_back_button.png"
+                        VerticalOptions="Center">
+                        
+                    </ImageButton>
+
+                    <Label
+                        HorizontalTextAlignment="Start"
+                        VerticalTextAlignment="Start"
+                        Margin="0, 0, 0, 0"
+                        Style="{StaticResource CheapestStoreNamePoppins}"
+                        Text="Mėgstamiausios prekės"
+                        FontSize="18"
+                        TextColor="{StaticResource PrimaryTextColor}"
+                        VerticalOptions="Center" />
+
+
+                </HorizontalStackLayout>
+                </Border>
+
+            <Border
+                BackgroundColor="{StaticResource PageBackgroundColor}"
+                StrokeThickness="1"
+                Margin="0, 10, 0, 0">
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="40, 40, 40, 40"/>
+                </Border.StrokeShape>
+
+                <VerticalStackLayout>
+
+                    <HorizontalStackLayout
+                    Margin="10, 5, 0 ,0"
+                    Spacing="10">
+                    <Border
+                        Stroke="{StaticResource LightGrey}"
+                    StrokeThickness="1"
+                    StrokeShape="RoundRectangle 40, 40, 40,40"
+                    Background="{StaticResource White}"
+                    Padding="0,0"
+                    HorizontalOptions="Center">
+                        <SearchBar 
+                            x:Name="searchBar"
+                        Placeholder="Ieškoti prekės..."
+                        CancelButtonColor="{StaticResource LightGrey}"
+                        PlaceholderColor="{StaticResource LightGrey}"
+                        TextColor="{StaticResource LightGrey}"
+                        HorizontalTextAlignment="Start"
+                        FontSize="Medium"
+                        FontAttributes="Italic"
+                            WidthRequest="275"/>
+                    </Border>
+
+                    <ImageButton
+                        Source="filter_button.png">
+                    </ImageButton>
+                </HorizontalStackLayout>
+
+                    <Frame
+                        HeightRequest="160"
+                        WidthRequest="350"
+                        Margin="0, 10, 0, 10"
+                        CornerRadius="10">
+                        <Frame.Shadow>
+                            <Shadow Brush="Black"
+                                    Offset="10,20"
+                                    Radius="40"
+                                    Opacity="1" />
+                        </Frame.Shadow>
+
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*" />
+                                <RowDefinition Height="*" />
+                                <RowDefinition Height="*" />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="3*" />
+                                <ColumnDefinition Width="4*" />
+                                <ColumnDefinition Width="2*" />
+                            </Grid.ColumnDefinitions>
+
+                            <Image
+                                Source="image_placeholder.png"
+                                Grid.RowSpan="3"
+                                >
+                                </Image>
+
+                            <VerticalStackLayout
+                                Grid.Column="1"
+                                Grid.ColumnSpan="2"
+                                Grid.RowSpan="3">
+
+                                <Label
+                                    HorizontalTextAlignment="Start"
+                                    VerticalTextAlignment="Start"
+                                    Margin="5, 3, 0, 0"
+                                    Style="{StaticResource CheapestStoreNamePoppins}"
+                                    FontSize="18"
+                                    Text="Rokiškio pienas"
+                                    TextColor="{StaticResource PrimaryTextColor}"
+                                    VerticalOptions="Center" />
+
+                                <Label
+                                    HorizontalTextAlignment="Start"
+                                    VerticalTextAlignment="Start"
+                                    Margin="5, 3, 0, 0"
+                                    FontSize="18"
+                                    Text="IKI"
+                                    Style="{StaticResource FavoriteItemStore}"
+                                    VerticalOptions="Center" />
+
+                                <HorizontalStackLayout
+                                    Spacing="100">
+                                    <ImageButton
+                                        HorizontalOptions="Start"
+                                        Source="heartbutton_pressed.png"
+                                        Margin="5, 5, 0, 0"></ImageButton>
+
+                                    <ImageButton
+                                        HorizontalOptions="End"
+                                        Source="cart_button_square.png"
+                                        Margin="5, 5, 0, 0"></ImageButton>
+                                </HorizontalStackLayout>
+
+                            </VerticalStackLayout>
+
+
+                        </Grid>
+
+                    </Frame>
+
+
+                </VerticalStackLayout>
+            </Border>
+
+
+
+
+
+        </StackLayout>
+        </ScrollView>
+    </ContentPage>
