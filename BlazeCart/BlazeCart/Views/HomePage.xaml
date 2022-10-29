@@ -29,12 +29,12 @@
                                 TextColor="{StaticResource TextColorPrimary}">
                             </Label>
 
-                            <Label
-                                HorizontalTextAlignment="Start"
-                                Style="{StaticResource NameSurnamePoppinsBold}"
-                                Text="Vardenis Pavardenis"
-                                TextColor="{StaticResource TextColorPrimary}">
-                            </Label>
+                                <Label
+                                    x:Name="DisplayName"
+                                    Text ="Placeholder"
+                                    HorizontalTextAlignment="Start"
+                                    Style="{StaticResource NameSurnamePoppinsBold}"
+                                    TextColor="{StaticResource TextColorPrimary}"/>
                         </VerticalStackLayout>
                     <Image
                         Aspect="AspectFit"

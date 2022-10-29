@@ -84,6 +84,7 @@
 	  <None Remove="Resources\Images\green_check.png" />
 	  <None Remove="Resources\Images\place_marker.png" />
 	  <None Remove="Resources\Images\red_arrow.png" />
+	  <None Remove="Resources\Images\reverse_colored_back_button.png" />
 	  <None Remove="Resources\Images\show_map_button.png" />
 	  <None Remove="Resources\Raw\cart.json" />
 	  <None Remove="Resources\Raw\cartSchema.json" />
@@ -112,12 +113,20 @@
 	<ItemGroup>
 	  <PackageReference Include="CommunityToolkit.Maui" Version="1.3.0" />
 	  <PackageReference Include="CommunityToolkit.Mvvm" Version="8.0.0" />
+	  <PackageReference Include="FirebaseAuthentication.net" Version="3.7.2" />
+	  <PackageReference Include="Google.Apis.Auth" Version="1.58.0-beta01" />
 	  <PackageReference Include="Microsoft.Toolkit.Mvvm" Version="7.1.2" />
-	  <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+	  <PackageReference Include="Newtonsoft.Json" Version="13.0.2-beta2" />
 	  <PackageReference Include="sqlite-net-pcl" Version="1.8.116" />
-	  <PackageReference Include="Syncfusion.Maui.Inputs" Version="20.3.49" />
-	  <PackageReference Include="Syncfusion.Maui.Core" Version="20.3.49" />
-	  <PackageReference Include="Syncfusion.Maui.Sliders" Version="20.3.49" />
+	  <PackageReference Include="SQLite.Net.Async-PCL" Version="3.1.1" />
+	  <PackageReference Include="SQLiteNetExtensions" Version="2.1.0" />
+	  <PackageReference Include="SQLiteNetExtensions.Async" Version="2.1.0" />
+	  <PackageReference Include="SQLitePCLRaw.bundle_green" Version="2.1.2" />
+	  <PackageReference Include="SQLitePCLRaw.core" Version="2.1.2" />
+	  <PackageReference Include="SQLitePCLRaw.provider.dynamic_cdecl" Version="2.1.2" />
+	  <PackageReference Include="Syncfusion.Maui.Inputs" Version="20.3.52" />
+	  <PackageReference Include="Syncfusion.Maui.Core" Version="20.3.52" />
+	  <PackageReference Include="Syncfusion.Maui.Sliders" Version="20.3.52" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -152,6 +161,9 @@
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\ErrorPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\FavoriteItemPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\HomePage.xaml">
