@@ -7,7 +7,7 @@ namespace Models
     {
         public enum UnitOfMeasure { UNKNOWN, VNT, KG, L }
 
-        public string InternalID { get; private set; }
+        public string InternalID { get; }
         private string _nameLT;
         private string? _nameEN;
         private string? _description;
@@ -68,8 +68,6 @@ namespace Models
                 _measureUnit = ParseUnitOfMeasurement(measureUnit);
         }
 
-
-
         public void FillPerUnitOfMeasureByPrice()
         {
 
@@ -93,7 +91,6 @@ namespace Models
             return ret;
         }
 
-        // <https://stackoverflow.com/questions/4023462/how-do-i-automatically-display-all-properties-of-a-class-and-their-values-in-a-s>
         public override string ToString()
         {
             return _nameLT + " [" + InternalID + "]";

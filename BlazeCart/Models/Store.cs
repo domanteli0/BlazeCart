@@ -3,7 +3,7 @@
     public struct Store
     {
         public enum Merchendise { IKI, MAXIMA }
-        public string InternalID { get; private set; }
+        public string InternalID { get;  }
         private string? _name;
         private string? _address;
         private string? _latitude;

@@ -12,6 +12,14 @@ namespace Scraper
         // If a field is thought to be able to be null,
         // then are marked with null-conditional operator (?)
 
+        // TODO: Sometimes there are duplicate products.
+        // However some of them a price of 0,
+        // therefore if a duplicate with a price of non-zero is found
+        // the price should be updated
+        // TODO:
+        // * Referencing items with `Store`, `Category` instances and vice versa (Back-referencing)
+        // Units of measurement and available ammounts
+
         public IKIScraper() : base() { }
 
         /// <summary>
@@ -19,10 +27,10 @@ namespace Scraper
         ///
         /// NOTE: Deletes previously collected data
         /// </summary>
-        public override void Scrape()
+        public override async Task Scrape()
         {
-            Init();
-            RefetchAllItems();
+            await Init();
+            await RefetchAllItems();
         }
 
         /// <summary>
@@ -30,7 +38,7 @@ namespace Scraper
         ///
         /// NOTE: Deletes previously collected data
         /// </summary>
-        public void Init()
+        public async Task Init()
         {
             // Gets the initial data JSON
             HttpResponseMessage responseInit;
@@ -41,14 +49,14 @@ namespace Scraper
                 requestInit.Content = new StringContent("{\"locale\":\"lt\"}");
                 requestInit.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json");
 
-                responseInit = httpClient.Send(requestInit);
+                responseInit = await httpClient.SendAsync(requestInit);
             }
             StreamReader readerInit = new StreamReader(responseInit.Content.ReadAsStream());
             var JSONresponseInit = JObject.Parse(readerInit.ReadToEnd());
+  
 
             Stores = ParseStoresJSON(JSONresponseInit).ToList();
-            Categories = new List<Category>();
-            AllCategories = ParseCategoriesJSON(JSONresponseInit.GetValue("categories")!).ToList();
+            Categories = ParseCategoriesJSON(JSONresponseInit.GetValue("categories")!).ToList();
         }
 
         /// <summary>
@@ -57,48 +65,39 @@ namespace Scraper
         /// WARNING: init() must be executed at least once before calling RefetchAllItems()
         /// NOTE: This method rebuilds Items list
         /// </summary>
-        /// <param name="requestDelay">Specifies reqests</param>
-        // TODO: ensure programatically that init() is called at least once
-        public void RefetchAllItems(int requestDelay = 10)
+        private async Task RefetchAllItems()
         {
             Items = new List<Item>();
-            foreach (var cat in Categories)
+            foreach (var cat in Categories.GetWithoutChildren())
             {
-                Thread.Sleep(requestDelay);
-                foreach (var i in GetItemsBy(categoryID: cat.InternalID))
+                foreach (var i in await GetItemsBy(categoryID: cat.InternalID))
                 {
-                    try
-                    {   
-                        Items.AddAsSetByProperty(i, "InternalID");
-                    }
-                    catch (Newtonsoft.Json.JsonReaderException)
-                    {
-                        // TODO: Proper logging
-                        Console.WriteLine("ERROR");
-                    }
+                    Items.AddAsSetByProperty(i, "InternalID");
                 }
             }
         }
 
-        public void UpdateItemsBy(string? categoryID = null, string? storeID = null)
+        private async Task UpdateItemsBy(string? categoryID = null, string? storeID = null)
         {
-            foreach (var item in GetItemsBy(categoryID, storeID))
+            foreach (var item in await GetItemsBy(categoryID, storeID))
                 Items.UpdateOrAddByProperty(item, "InternalID");
 
         }
 
-        // TODO: Convert to Task for async?
         /// <summary>
         /// Performs a reqest for specified categoryID or storeID
         /// </summary>
         /// <returns></returns>
         /// <exception cref="NotImplementedException">Currently only scraping by categoryID is supported</exception>
         /// <exception cref="ArgumentException">Gets thrown if both categoryId and storeID are null</exception>
-        private IEnumerable<Item> GetItemsBy(string? categoryID = null, string? storeID = null)
+        private async Task<IEnumerable<Item>> GetItemsBy(string? categoryID = null, string? storeID = null)
         {
             var request = new HttpRequestMessage(
-                    new HttpMethod("POST"),
-                    "https://eparduotuve.iki.lt/api/search/view_products");
+                new HttpMethod("POST"),
+                "https://eparduotuve.iki.lt/api/search/view_products"
+            );
+            request.Headers.TryAddWithoutValidation("Accept", "application/json, text/plain, */*");
+            request.Headers.TryAddWithoutValidation("Host", "eparduotuve.iki.lt");
 
             if (categoryID is not null)
             {
@@ -117,35 +116,31 @@ namespace Scraper
                 throw new ArgumentException("Either categoryID or storeID must be not null");
 
             request.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json");
-
-            var response = this.httpClient.Send(request);
+            var response = await httpClient.SendAsync(request);
 
             StreamReader reader = new StreamReader(response.Content.ReadAsStream());
-            JObject JSONresponse = JObject.Parse(reader.ReadToEnd());            
+            JObject JSONresponse = JObject.Parse(reader.ReadToEnd());
 
             return ParseItemsJSON(JSONresponse);
         }
 
-        // Note: this method mutates Categories, Stores properties
+        /// <summary>
+        /// Note: this method mutates Stores property
+        /// </summary>
         private IEnumerable<Category> ParseCategoriesJSON(JToken data, Category? parent = null)
         {
             foreach (var cat in data)
             {
-
                 var listing = new Category(
-                    internalID: cat["id"]!.ToString(),
                     nameEN: cat["name"]!["en"]!.ToString(),
+                    internalID: cat["id"]!.ToString(),
                     nameLT: cat["name"]!["lt"]!.ToString(),
                     parent: parent
                 );
 
                 var cat_ = cat["subcategories"]!;
                 if (cat_.Count() > 0)
-                {
                     listing.SubCategories = ParseCategoriesJSON(cat_, listing).ToList();
-                }
-                else
-                    Categories.Add(listing);
 
 
                 // Not all stores are described in chains/stores JSON list
@@ -156,8 +151,8 @@ namespace Scraper
                         new Store(
                             merch: Store.Merchendise.IKI,
                             internalID: storeId.ToString()
-                        )
-                        , "InternalID"
+                        ),
+                        "InternalID"
                     );
                 }
 
@@ -201,20 +196,12 @@ namespace Scraper
                     catch (System.UriFormatException) { }
                 }
 
-                // TODO: Sometimes there are duplicate products.
-                // However some of them a price of 0,
-                // therefore if a duplicate with a price of non-zero is found
-                // the price should be updated
-                // TODO:
-                // * Referencing items with `Store`, `Category` instances and vice versa (Back-referencing)
-                // Units of measurement and available ammounts
                 var newItem = new Item(
                     internalID: jtoken["id"]!.ToString(),
                     nameLT: jtoken["name"]!["lt"]!.ToString(),
                     price: (int)(jtoken["prc"]!["p"]!.ToObject<float>() * 100),
                     image: photo,
-                    measureUnit: jtoken["conversionMeasure"]!.ToString(),
-                    pricePerUnitOfMeasure: null,
+                    measureUnit: jtoken["conversionMeasure"]!.ToString(),   
                     nameEN: jtoken["name"]!["en"]!.ToString(),
                     description: jtoken["description"]?["lt"]?.ToString(),
                     discountPrice: (int?)(jtoken["prc"]!["s"]?.ToObject<float?>() * 100),

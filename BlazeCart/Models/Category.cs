@@ -2,33 +2,40 @@
 {
     public class Category
     {
-        public string? InternalID { private set; get; }
+        public string? InternalID { get; }
+        public Uri? Uri { get;  }
         private string? _nameEN;
         private string? _nameLT;
         private Category? _parent;
         public List<Category> SubCategories { set; get; }
 
-        public Category(string? internalID = null, string? nameLT = null, string? nameEN = null, Category? parent = null)
+        public Category(string? internalID = null, string? nameLT = null, string? nameEN = null, Category? parent = null, Uri? uri = null)
         {
             SubCategories = new List<Category>();
             InternalID = internalID;
             _nameLT = nameLT;
             _nameEN = nameEN;
             _parent = parent;
+            Uri = uri;
         }
 
-        public string CategoryTree()
+        public string Tree()
         {
-            return categoryTree();
+            return tree(0);
         }
 
-        private string categoryTree(int level = 0)
+        private string tree(int level)
         {
-            var str = "\t".Times(level) + "Name: " + _nameLT + " [" + InternalID + "]\n";
+            var str = "\t".Times(level) + ToString() + "\n";
             foreach (var sub in SubCategories!)
-                str += sub.categoryTree(level + 1);
+                str += sub.tree(level + 1);
 
             return str;
+        }
+
+        public override string ToString()
+        {
+            return "Name: '" + _nameLT + "' [" + InternalID + "] (" + Uri + ")";
         }
     }
 
