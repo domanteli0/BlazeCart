@@ -9,7 +9,6 @@
              xmlns:sliders="clr-namespace:Syncfusion.Maui.Sliders;assembly=Syncfusion.Maui.Sliders"
              xmlns:editors="clr-namespace:Syncfusion.Maui.Inputs;assembly=Syncfusion.Maui.Inputs"
              xmlns:model="clr-namespace:BlazeCart.Models"
-             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              xmlns:viewmodel="clr-namespace:BlazeCart.ViewModels"
              x:DataType="viewmodel:ItemsViewModel">
     <ContentPage.Content>
@@ -193,7 +192,9 @@
                                     <HorizontalStackLayout Grid.Column="1" Grid.Row="2"  Margin="0">
                                         <ImageButton
                                             Source="heart_button"
-                                            HorizontalOptions="Start"></ImageButton>
+                                            HorizontalOptions="Start"
+                                            Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:ItemsViewModel}}, Path=AddItemToFavoritesCommand}"
+                                            CommandParameter="{Binding .}"></ImageButton>
                                         <ImageButton
                                         Source="cart_button"
                                         Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:ItemsViewModel}}, Path=CartCommand}"

@@ -4,7 +4,7 @@ using System.Collections.ObjectModel;
 
 namespace BlazeCart.Services
 {
-    public class CartService
+    public class DataService
     {
         static SQLiteAsyncConnection db;
         static async Task Init()
@@ -15,6 +15,7 @@ namespace BlazeCart.Services
             var databasePath = Path.Combine(FileSystem.AppDataDirectory, "MyData.db");
             db = new SQLiteAsyncConnection(databasePath);
             await db.CreateTableAsync<Cart>();
+            await db.CreateTableAsync<Item>();
 
         }
 
@@ -49,6 +50,39 @@ namespace BlazeCart.Services
            var cart = await db.Table<Cart>().ToListAsync();
             return cart;
         }
+
         
+        public async Task AddFavoriteItemToDb(Item favoriteItem)
+        {
+            await Init();
+
+            //Check if favorite item already exist in db
+            var query = db.Table<Item>().Where(x => x.ItemId == favoriteItem.ItemId);
+            var result = await query.ToListAsync();
+            if (result.Count == 0)
+            {
+                await db.InsertAsync(favoriteItem);
+            }
+        }
+
+        public async Task DeleteFavoriteItemFromDb(int itemId)
+        {
+            await Init();
+            await db.DeleteAsync<Item>(itemId);
+        }
+
+        public async Task GetFavoriteItemFromDb(int itemId)
+        {
+            await Init();
+            throw new NotImplementedException();
+        }
+
+        public async Task<IEnumerable<Item>> GetFavoriteItemsFromDb()
+        {
+            await Init();
+            var favoriteItems = await db.Table<Item>().ToListAsync();
+            return favoriteItems;
+        }
+
     }
 }

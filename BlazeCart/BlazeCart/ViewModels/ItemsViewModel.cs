@@ -35,11 +35,12 @@ public partial class ItemsViewModel : BaseViewModel
     private ItemSearchBarService _itemSearchBarService;
     private SliderService _sliderService;
     private ItemFilterService _itemFilterService;
+    private DataService _dataService;
 
     [ObservableProperty]
     public ObservableCollection<Item> searchResults = new();
 
-    public ItemsViewModel(ItemService itemService, CartPageViewModel vm, ItemSearchBarService itemSearchBarService, SliderService sliderService, ItemFilterService itemFilterService)
+    public ItemsViewModel(ItemService itemService, CartPageViewModel vm, ItemSearchBarService itemSearchBarService, SliderService sliderService, ItemFilterService itemFilterService, DataService dataService)
     {
         ComboBoxCommands = new ObservableCollection<string>();
         ComboBoxCommands.Add("Abėcėlę (A-Ž)");
@@ -53,6 +54,7 @@ public partial class ItemsViewModel : BaseViewModel
         _itemSearchBarService = itemSearchBarService;
         _sliderService = sliderService;
         _itemFilterService = itemFilterService;
+        _dataService = dataService;
         _vm = vm;
         GetItemsAsync();
         SearchResults = Items;
@@ -98,7 +100,15 @@ public partial class ItemsViewModel : BaseViewModel
     [RelayCommand]
     void SelectionChanged()
     {
+        throw new NotImplementedException();
+    }
 
+    [RelayCommand]
+    async void AddItemToFavorites(Item item)
+    {
+        await App.Current.MainPage.DisplayAlert("Prekės pridėjimas sėkmingas", "Sėkmingai pažymėjote prekę kaip mėgstamiausią", "OK");
+        await _dataService.AddFavoriteItemToDb(item);
+        Refresh();
     }
 
     [RelayCommand]

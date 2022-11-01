@@ -8,7 +8,7 @@ namespace BlazeCart.ViewModels
 {
     public partial class CartPageViewModel : BaseViewModel
     {
-        private readonly CartService _cartService;
+        private readonly DataService _cartService;
 
         public Cart Cart { get; set; }
 
@@ -17,7 +17,7 @@ namespace BlazeCart.ViewModels
         public CartHistoryPageViewModel _vm;
         public ObservableCollection<Item> CartItems { get; set; } = new();
 
-        public CartPageViewModel(CartService cartService, CartHistoryPageViewModel vm)
+        public CartPageViewModel(DataService cartService, CartHistoryPageViewModel vm)
         {
             _vm = vm;
             _cartService = cartService;

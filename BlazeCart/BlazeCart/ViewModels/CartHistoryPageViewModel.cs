@@ -11,14 +11,14 @@ namespace BlazeCart.ViewModels
     {
         public ObservableCollection<Cart> Carts { get; set; }
 
-        private CartService _cartService;
+        private DataService _dataService;
 
         [ObservableProperty] int cartTotalPrice;
 
-        public  CartHistoryPageViewModel(CartService cartService)
+        public  CartHistoryPageViewModel(DataService dataService)
         {
             Carts = new ObservableCollection<Cart>();
-            _cartService = cartService;
+            _dataService = dataService;
             Task.Run(() => this.Refresh()).Wait();
         }
 
@@ -30,7 +30,7 @@ namespace BlazeCart.ViewModels
 
             Carts.Clear();
 
-            var carts = await _cartService.GetCartsFromDb();
+            var carts = await _dataService.GetCartsFromDb();
 
             foreach (var cart in carts)
             {
@@ -43,7 +43,7 @@ namespace BlazeCart.ViewModels
         [RelayCommand]
         async Task Remove(Cart cart)
         {
-            await _cartService.RemoveCartFromDb(cart.Id);
+            await _dataService.RemoveCartFromDb(cart.Id);
             await Refresh();
         }
     }

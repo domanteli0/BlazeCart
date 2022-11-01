@@ -52,7 +52,7 @@ public static class MauiProgram
 
         builder.Services.AddSingleton<CartPage>();
         builder.Services.AddSingleton<CartPageViewModel>();
-        builder.Services.AddSingleton<CartService>();
+        builder.Services.AddSingleton<DataService>();
 
         builder.Services.AddSingleton<HomePage>();
         builder.Services.AddSingleton<HomePageViewModel>();
@@ -84,7 +84,7 @@ public static class MauiProgram
         builder.Services.AddSingleton<FavoriteItemPage>();
         builder.Services.AddSingleton<FavoriteItemViewModel>();
 
-        builder.Services.AddSingleton(s => ActivatorUtilities.CreateInstance<ItemRepository>(s, ItemRepository.DbPath));
+        
         return builder.Build();
 	}
 }
