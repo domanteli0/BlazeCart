@@ -32,7 +32,6 @@ namespace BlazeCart.ViewModels
         [RelayCommand]
         async void Save(object obj)
         {
-            Cart cart;
             if(CartItems.Count > 0)
             {
                 string cartName = await Shell.Current.DisplayPromptAsync("Išsaugoti krepšelį", "Įveskite krepšelio pavadinimą: ", "OK",

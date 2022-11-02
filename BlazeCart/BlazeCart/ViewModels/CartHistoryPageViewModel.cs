@@ -37,7 +37,7 @@ namespace BlazeCart.ViewModels
                 
                 Carts.Add(cart);
             }
-            isBusy = false;
+            IsBusy = false;
         }
 
         [RelayCommand]

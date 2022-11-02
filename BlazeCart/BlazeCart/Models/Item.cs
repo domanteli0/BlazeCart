@@ -13,9 +13,9 @@ namespace BlazeCart.Models
             [ForeignKey(typeof(Cart))]
             public int CartId { get; set; }
             [ManyToOne]
-            public Cart cart { get; set; }
+            public Cart? Cart { get; set; }
             public string? Category { get; set; }
-            public string Name { get; set; }
+            public string? Name { get; set; }
             public double Price { get; set; }
             public string? Units { get; set; }
             public double? PackageAmount { get; set; }

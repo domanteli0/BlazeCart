@@ -16,7 +16,7 @@ public partial class ItemsViewModel : BaseViewModel
     public ObservableCollection<Item> Items { get; set; } = new();
 
     private readonly CartPageViewModel _vm;
-
+    private readonly FavoriteItemViewModel _vmFavoriteItemViewModel;
     [ObservableProperty]
     private ObservableCollection<Item> cartItems = new();
 
@@ -40,7 +40,7 @@ public partial class ItemsViewModel : BaseViewModel
     [ObservableProperty]
     public ObservableCollection<Item> searchResults = new();
 
-    public ItemsViewModel(ItemService itemService, CartPageViewModel vm, ItemSearchBarService itemSearchBarService, SliderService sliderService, ItemFilterService itemFilterService, DataService dataService)
+    public ItemsViewModel(ItemService itemService, CartPageViewModel vm, ItemSearchBarService itemSearchBarService, SliderService sliderService, ItemFilterService itemFilterService, DataService dataService, FavoriteItemViewModel vmF)
     {
         ComboBoxCommands = new ObservableCollection<string>();
         ComboBoxCommands.Add("Abėcėlę (A-Ž)");
@@ -60,6 +60,7 @@ public partial class ItemsViewModel : BaseViewModel
         SearchResults = Items;
         LoadSlider();
         _itemFilterService = itemFilterService;
+        _vmFavoriteItemViewModel = vmF;
     }
 
     async void GetItemsAsync()
@@ -106,9 +107,9 @@ public partial class ItemsViewModel : BaseViewModel
     [RelayCommand]
     async void AddItemToFavorites(Item item)
     {
-        await App.Current.MainPage.DisplayAlert("Prekės pridėjimas sėkmingas", "Sėkmingai pažymėjote prekę kaip mėgstamiausią", "OK");
+        await Shell.Current.DisplayAlert("Prekės pridėjimas sėkmingas", "Sėkmingai pažymėjote prekę kaip mėgstamiausią", "OK");
         await _dataService.AddFavoriteItemToDb(item);
-        Refresh();
+        await _vmFavoriteItemViewModel.Refresh();
     }
 
     [RelayCommand]

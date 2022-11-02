@@ -10,7 +10,7 @@ namespace BlazeCart.ViewModels;
 public partial class FavoriteItemViewModel : ObservableObject
 
 {
-    public ObservableCollection<Item> FavoriteItems { get; set; } = new();
+    public ObservableCollection<Item> FavoriteItems { get; set; }
     public bool IsRefresh { get; set; }
     public bool IsBusy { get; set; }
     private readonly DataService _dataService;
@@ -18,28 +18,14 @@ public partial class FavoriteItemViewModel : ObservableObject
     public FavoriteItemViewModel(DataService dataService)
     {
         _dataService = dataService;
-        GetItemsFromDb();
+        FavoriteItems = new ObservableCollection<Item>();
+        Task.Run(() => this.Refresh()).Wait();
     }
 
-    private async void GetItemsFromDb()
+
+    public async Task Refresh()
     {
         IsBusy = true;
-
-        if (this.FavoriteItems.Count > 0)
-        {
-            FavoriteItems.Clear();
-        }
-
-        var favItems = await _dataService.GetFavoriteItemsFromDb();
-        FavoriteItems = new ObservableCollection<Item>(favItems.ToList());
-        IsBusy = false;
-    }
-
-
-    [RelayCommand]
-    async void Refresh()
-    {
-        IsRefresh = true;
 
         if (FavoriteItems.Count > 0)
         {
@@ -47,8 +33,12 @@ public partial class FavoriteItemViewModel : ObservableObject
         }
 
         var favItems = await _dataService.GetFavoriteItemsFromDb();
-        FavoriteItems = new ObservableCollection<Item>(favItems.ToList());
-        IsRefresh = false;
+        foreach (var item in favItems)
+        {
+
+            FavoriteItems.Add(item);
+        }
+        IsBusy = false;
 
     }
 

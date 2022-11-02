@@ -13,6 +13,7 @@
             <StackLayout>
             <Border
                 Padding="60, 15, 56, 30"
+                WidthRequest="395"
                 Background="{StaticResource PrimaryColor}"
                 StrokeThickness="0"
                 HorizontalOptions="Start">
@@ -29,12 +30,13 @@
                                 TextColor="{StaticResource TextColorPrimary}">
                             </Label>
 
-                                <Label
-                                    x:Name="DisplayName"
-                                    Text ="Placeholder"
-                                    HorizontalTextAlignment="Start"
-                                    Style="{StaticResource NameSurnamePoppinsBold}"
-                                    TextColor="{StaticResource TextColorPrimary}"/>
+                            <Label
+                                x:Name="DisplayName"
+                                Padding="0, 10, 100, 10"
+                                Text ="Placeholder"
+                                HorizontalTextAlignment="Start"
+                                Style="{StaticResource NameSurnamePoppinsBold}"
+                                TextColor="{StaticResource TextColorPrimary}"/>
                         </VerticalStackLayout>
                     <Image
                         Aspect="AspectFit"
