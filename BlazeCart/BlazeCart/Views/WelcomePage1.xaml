@@ -7,15 +7,20 @@
              Shell.NavBarIsVisible="False"
              Shell.TabBarIsVisible="False"
              Title="WelcomePage1"
+             xmlns:skia="clr-namespace:SkiaSharp.Extended.UI.Controls;assembly=SkiaSharp.Extended.UI"
              BackgroundColor="{StaticResource PageBackgroundColor}">
     <ContentPage.Content>
         <StackLayout VerticalOptions="Center" HorizontalOptions="Center">
-            <Image
-                Aspect="AspectFit"
-                Source="welcome_page_image.png"
+           
+            <skia:SKLottieView
+                Source="animation1.json"
                 HorizontalOptions="Center" 
+                RepeatCount="-1"
+	            RepeatMode="Restart"
+                HeightRequest="275"
+                WidthRequest="275"
                 MaximumHeightRequest="300"
-                Margin="20"></Image>
+                Margin="20"/>
             <Label
                 HorizontalTextAlignment="Center"
                 Margin="5, 0, 5, 10"

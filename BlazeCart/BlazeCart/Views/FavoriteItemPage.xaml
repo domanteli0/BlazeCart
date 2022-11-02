@@ -65,7 +65,7 @@
                                     ItemsSource="{Binding FavoriteItems}">
                         <CollectionView.ItemTemplate>
                             <DataTemplate x:DataType="models:Item">
-                                <Frame HeightRequest="160"
+                                <Frame HeightRequest="200"
                                        WidthRequest="350"
                                        Margin="0, 10, 0, 10"
                                        CornerRadius="10">
@@ -108,7 +108,8 @@
                                                    Text="{Binding Store}"
                                                    Style="{StaticResource FavoriteItemStore}"
                                                    VerticalOptions="Center" />
-                                            <HorizontalStackLayout Spacing="100">
+                                            <HorizontalStackLayout Spacing="100"
+                                                                   Margin="0, 10, 0, 0">
                                                 <ImageButton HorizontalOptions="Start"
                                                              Source="heartbutton_pressed.png"
                                                              Margin="5, 5, 0, 0" />

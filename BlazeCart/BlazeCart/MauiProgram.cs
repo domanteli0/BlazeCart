@@ -4,7 +4,7 @@ using BlazeCart.ViewModels;
 using Syncfusion.Maui.Core.Hosting;
 using Syncfusion.Maui.ListView.Hosting;
 using CommunityToolkit.Maui;
-
+using SkiaSharp.Views.Maui.Controls.Hosting;
 
 namespace BlazeCart;
 
@@ -16,6 +16,7 @@ public static class MauiProgram
         builder.UseMauiApp<App>().UseMauiCommunityToolkit();
         builder
 			.UseMauiApp<App>()
+            .UseSkiaSharp()
             .ConfigureSyncfusionCore()
             .ConfigureSyncfusionListView()
             .ConfigureFonts(fonts =>

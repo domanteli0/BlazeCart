@@ -88,6 +88,8 @@
 	  <None Remove="Resources\Images\show_map_button.png" />
 	  <None Remove="Resources\Raw\cart.json" />
 	  <None Remove="Resources\Raw\cartSchema.json" />
+	  <None Remove="Resources\Raw\introductionAnimation1.json" />
+	  <None Remove="Resources\Raw\introductionAnimation2.json" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -117,6 +119,7 @@
 	  <PackageReference Include="Google.Apis.Auth" Version="1.58.0-beta01" />
 	  <PackageReference Include="Microsoft.Toolkit.Mvvm" Version="7.1.2" />
 	  <PackageReference Include="Newtonsoft.Json" Version="13.0.2-beta2" />
+	  <PackageReference Include="SkiaSharp.Extended.UI.Maui" Version="2.0.0-preview.61" />
 	  <PackageReference Include="sqlite-net-pcl" Version="1.8.116" />
 	  <PackageReference Include="SQLiteNetExtensions" Version="2.1.0" />
 	  <PackageReference Include="SQLiteNetExtensions.Async" Version="2.1.0" />
