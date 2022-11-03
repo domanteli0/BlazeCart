@@ -65,7 +65,7 @@ namespace BlazeCart.Services
             }
         }
 
-        public async Task DeleteFavoriteItemFromDb(int itemId)
+        public async Task RemoveFavoriteItemFromDb(int itemId)
         {
             await Init();
             await db.DeleteAsync<Item>(itemId);

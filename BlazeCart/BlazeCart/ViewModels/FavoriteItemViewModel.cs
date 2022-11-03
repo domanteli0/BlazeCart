@@ -48,5 +48,11 @@ public partial class FavoriteItemViewModel : ObservableObject
     {
         await Shell.Current.GoToAsync(nameof(HomePage));
     }
+    [RelayCommand]
+    async Task Remove(Item item)
+    {
+        await _dataService.RemoveFavoriteItemFromDb(item.ItemId);
+        await Refresh();
+    }
 }
 

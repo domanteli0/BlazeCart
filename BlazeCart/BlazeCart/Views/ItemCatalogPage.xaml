@@ -162,10 +162,12 @@
                                                                Grid.Row="2"
                                                                Margin="0">
                                             <ImageButton Source="heart_button"
+                                                         WidthRequest="70"
                                                          HorizontalOptions="Start"
                                                          Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:ItemsViewModel}}, Path=AddItemToFavoritesCommand}"
                                                          CommandParameter="{Binding .}" />
                                             <ImageButton Source="cart_button"
+                                                         WidthRequest="70"
                                                          Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:ItemsViewModel}}, Path=CartCommand}"
                                                          CommandParameter="{Binding .}"
                                                          HorizontalOptions="Start" />
