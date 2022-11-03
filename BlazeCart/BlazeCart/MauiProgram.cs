@@ -5,6 +5,7 @@ using Syncfusion.Maui.Core.Hosting;
 using Syncfusion.Maui.ListView.Hosting;
 using CommunityToolkit.Maui;
 using SkiaSharp.Views.Maui.Controls.Hosting;
+using StateButton;
 
 namespace BlazeCart;
 
@@ -14,6 +15,7 @@ public static class MauiProgram
 	{
 		var builder = MauiApp.CreateBuilder();
         builder.UseMauiApp<App>().UseMauiCommunityToolkit();
+        builder.ConfigureStateButton();
         builder
 			.UseMauiApp<App>()
             .UseSkiaSharp()
@@ -38,7 +40,10 @@ public static class MauiProgram
                 fonts.AddFont("Roboto-Regular.ttf", "Roboto-Regular");
                 fonts.AddFont("Roboto-Thin.ttf", "Roboto-Thin");
                 fonts.AddFont("Roboto-ThinItalic.ttf", "Roboto-ThinItalic");
-
+                fonts.AddFont("fa-brands-400.ttf", "fa-brands");
+                fonts.AddFont("fa-regular-400.ttf", "fa-regular");
+                fonts.AddFont("fa-solid-900.ttf", "FASolid900");
+                fonts.AddFont("fa-v4compatibility.ttf", "fa-v4");
             });
 
         builder.Services.AddSingleton<ItemCatalogPage>();

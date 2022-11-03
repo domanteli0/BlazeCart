@@ -157,6 +157,16 @@
         <Setter Property="FontSize" Value="{StaticResource FavoriteItemStoreFont}"/>
     </Style>
 
+    <Style x:Key="FaSolidStyle" TargetType="Label">
+        <Setter Property="FontFamily" Value="fa-solid"/>
+    </Style>
 
+    <Style x:Key="FaBrandsStyle" TargetType="Label">
+        <Setter Property="FontFamily" Value="fa-brands"/>
+    </Style>
+
+    <Style x:Key="FaRegularStyle" TargetType="Label">
+        <Setter Property="FontFamily" Value="fa-regular"/>
+    </Style>
 
 </ResourceDictionary>

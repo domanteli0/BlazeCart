@@ -11,7 +11,6 @@ public partial class HomePage : ContentPage
         GetProfileInfo();
         InitializeComponent();
         
-
     }
 
     private void GetProfileInfo()

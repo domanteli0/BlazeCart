@@ -10,6 +10,7 @@
              NavigationPage.HasNavigationBar="False"
              xmlns:android="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.AndroidSpecific;assembly=Microsoft.Maui.Controls"
              xmlns:models="clr-namespace:BlazeCart.Models"
+             xmlns:stateButton="clr-namespace:StateButton;assembly=StateButton"
              android:TabbedPage.ToolbarPlacement="Bottom">
     <ScrollView>
         <StackLayout>
@@ -110,9 +111,49 @@
                                                    VerticalOptions="Center" />
                                             <HorizontalStackLayout Spacing="100"
                                                                    Margin="0, 10, 0, 0">
-                                                <ImageButton HorizontalOptions="Start"
-                                                             Source="heartbutton_pressed.png"
-                                                             Margin="5, 5, 0, 0" />
+                                                
+                                                <stateButton:StateButton
+                                                     Margin="0,0,0,0"
+                                                     BackgroundColor="#F84994"
+                                                     HeightRequest="50"
+                                                     Stroke="#F84994"
+                                                     StrokeThickness="4"
+                                                     WidthRequest="50">
+
+                                                    <stateButton:StateButton.Shadow>
+                                                        <Shadow Brush="#313131"
+                                                            Opacity="0.2"
+                                                            Radius="40"
+                                                            Offset="10,10" />
+                                                    </stateButton:StateButton.Shadow>
+                                                    <stateButton:StateButton.StrokeShape>
+                                                        <RoundRectangle CornerRadius="50" />
+                                                    </stateButton:StateButton.StrokeShape>
+                                                    <stateButton:StateButton.Triggers>
+                                                        <Trigger TargetType="stateButton:StateButton" Property="State" Value="Pressed">
+                                                            <Setter Property="BackgroundColor" Value="White" />
+                                                            <Setter Property="Stroke" Value="#F84994" />
+                                                        </Trigger>
+                                                    </stateButton:StateButton.Triggers>
+                                                    <Label 
+                                                       FontSize="10"
+                                                       HorizontalTextAlignment="Center"
+                                                       FontFamily="FASolid900"
+                                                       Text="{x:Static models:FaFonts.Heart}"
+                                                       TextColor="White"
+                                                       VerticalTextAlignment="Center">
+                                                        <Label.Triggers>
+                                                            <DataTrigger Binding="{Binding Source={RelativeSource AncestorType={x:Type stateButton:StateButton}}, Path=State}"
+                                                                 TargetType="Label"
+                                                                 Value="Pressed">
+                                                                <Setter Property="TextColor" Value="{StaticResource White}" />
+                                                            </DataTrigger>
+                                                        </Label.Triggers>
+                                                    </Label>
+                                                </stateButton:StateButton>
+                                                <ImageButton x:Name="heartButton"
+                                                             HorizontalOptions="End"
+                                                             Margin="5, 5, 0, 0"/>
                                                 <ImageButton HorizontalOptions="End"
                                                              Source="cart_button_square.png"
                                                              Margin="5, 5, 0, 0" />

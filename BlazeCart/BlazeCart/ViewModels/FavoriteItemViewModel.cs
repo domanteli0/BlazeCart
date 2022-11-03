@@ -15,6 +15,7 @@ public partial class FavoriteItemViewModel : ObservableObject
     public bool IsBusy { get; set; }
     private readonly DataService _dataService;
 
+
     public FavoriteItemViewModel(DataService dataService)
     {
         _dataService = dataService;
