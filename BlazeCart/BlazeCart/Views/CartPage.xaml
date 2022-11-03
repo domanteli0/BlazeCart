@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="BlazeCart.Views.CartPage"
@@ -11,91 +10,91 @@
              x:DataType="viewmodel:CartPageViewModel">
     <ScrollView>
         <StackLayout>
-            <Frame HeightRequest="90" Padding="10">
+            <Frame HeightRequest="90"
+                   Padding="10">
                 <HorizontalStackLayout HorizontalOptions="Center">
-                    <Label
-                        Text="Krepšelis"
-                        Margin="50, 0, 0, 0"
-                        Style="{StaticResource PageNamePoppins}"
-                        VerticalOptions="Center"
-                        HorizontalOptions="Center" />
-                    <ImageButton
-                        Margin="10, 0, 0, 0"
-                        Source="save_button.png"
-                        Command="{Binding SaveCommand}"
-                        VerticalOptions="Center" />
+                    <Label Text="Krepšelis"
+                           Margin="50, 0, 0, 0"
+                           Style="{StaticResource PageNamePoppins}"
+                           VerticalOptions="Center"
+                           HorizontalOptions="Center" />
+                    <ImageButton Margin="10, 0, 0, 0"
+                                 Source="save_button.png"
+                                 Command="{Binding SaveCommand}"
+                                 VerticalOptions="Center" />
                 </HorizontalStackLayout>
             </Frame>
             <ImageButton Source="cheapest_store_button.png"
                          Command="{Binding CheapestStoreCommand}"
                          HorizontalOptions="Center"
-                         Margin="10"/>
-            <CollectionView ItemsSource = "{Binding CartItems}">
-                    <CollectionView.ItemTemplate>
+                         Margin="10" />
+            <CollectionView ItemsSource="{Binding CartItems}">
+                <CollectionView.ItemTemplate>
                     <DataTemplate x:DataType="model:Item">
-                        <Grid x:Name="ItemCard" MaximumHeightRequest="200">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="1*" />
-                                <ColumnDefinition Width="1*" />
-                            </Grid.ColumnDefinitions>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="auto" />
-                                <RowDefinition Height="2*" />
-                                <RowDefinition Height="3*" />
-                            </Grid.RowDefinitions>
-                            <Image
-                                Grid.Column="0"
-                                Grid.Row="0"
-                                Grid.RowSpan="3"
-                                Aspect="AspectFill"
-                                Source="{Binding Image}"
-                                Margin="20"
-                                HorizontalOptions="Start"
-                                VerticalOptions="Start" />
-                            <Label
-                                Grid.Column="1"
-                                Grid.Row="0"
-                                HorizontalTextAlignment="Start"
-                                Margin="0, 0, 15, 0"
-                                Style="{StaticResource ItemNamePoppins}"
-                                Text="{Binding Name}"
-                                TextColor="{StaticResource PrimaryTextColor}"
-                                LineBreakMode="CharacterWrap" />
-
-                            <HorizontalStackLayout
-                                Grid.Column="1"
-                                Grid.Row="1">
-                                <Label
-                                    HorizontalTextAlignment="Start"
-                                    Margin="0, 0, 2, 0"
-                                    Style="{StaticResource ItemNumberPricePoppins}"
-                                    Text="{Binding PricePerUnit}"
-                                    TextColor="{StaticResource PrimaryTextColor}" />
-                                <Label
-                                    HorizontalTextAlignment="Start"
-                                    Margin="0, 0, 15, 0"
-                                    Style="{StaticResource ItemPricePoppins}"
-                                    Text="€ /" />
-                                <Label
-                                    HorizontalTextAlignment="Start"
-                                    Margin="0, 0, 1, 0"
-                                    Style="{StaticResource ItemPricePoppins}"
-                                    Text="{Binding Units}" />
-                            </HorizontalStackLayout>
-                            <HorizontalStackLayout
-                                Grid.Column="1"
-                                Grid.Row="2"
-                                Margin="0">
-                                <ImageButton
-                                    Source="heart_button"
-                                    HorizontalOptions="Start" />
-                                <ImageButton
-                                    Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:CartPageViewModel}}, Path=RemoveCommand}"
-                                    CommandParameter="{Binding .}"
-                                    Source="bin_button"
-                                    HorizontalOptions="Start" />
-                            </HorizontalStackLayout>
-                        </Grid>
+                        <SwipeView>
+                            <SwipeView.RightItems>
+                                <SwipeItems>
+                                    <SwipeItem IconImageSource="trash.png"
+                                               BackgroundColor="{StaticResource BinColor}"
+                                               Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:CartPageViewModel}}, Path=RemoveCommand}"
+                                               CommandParameter="{Binding .}" />
+                                </SwipeItems>
+                            </SwipeView.RightItems>
+                            <Grid x:Name="ItemCard"
+                                  MaximumHeightRequest="200">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="1*" />
+                                    <ColumnDefinition Width="1*" />
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="auto" />
+                                    <RowDefinition Height="2*" />
+                                    <RowDefinition Height="3*" />
+                                </Grid.RowDefinitions>
+                                <Image Grid.Column="0"
+                                       Grid.Row="0"
+                                       Grid.RowSpan="3"
+                                       Aspect="AspectFill"
+                                       Source="{Binding Image}"
+                                       Margin="20"
+                                       HorizontalOptions="Start"
+                                       VerticalOptions="Start" />
+                                <Label Grid.Column="1"
+                                       Grid.Row="0"
+                                       HorizontalTextAlignment="Start"
+                                       Margin="0, 0, 15, 0"
+                                       Style="{StaticResource ItemNamePoppins}"
+                                       Text="{Binding Name}"
+                                       TextColor="{StaticResource PrimaryTextColor}"
+                                       LineBreakMode="CharacterWrap" />
+                                <HorizontalStackLayout Grid.Column="1"
+                                                       Grid.Row="1">
+                                    <Label HorizontalTextAlignment="Start"
+                                           Margin="0, 0, 2, 0"
+                                           Style="{StaticResource ItemNumberPricePoppins}"
+                                           Text="{Binding PricePerUnit}"
+                                           TextColor="{StaticResource PrimaryTextColor}" />
+                                    <Label HorizontalTextAlignment="Start"
+                                           Margin="0, 0, 15, 0"
+                                           Style="{StaticResource ItemPricePoppins}"
+                                           Text="€ /" />
+                                    <Label HorizontalTextAlignment="Start"
+                                           Margin="0, 0, 1, 0"
+                                           Style="{StaticResource ItemPricePoppins}"
+                                           Text="{Binding Units}" />
+                                </HorizontalStackLayout>
+                                <HorizontalStackLayout Grid.Column="1"
+                                                       Grid.Row="2"
+                                                       Margin="0">
+                                    <ImageButton Source="heart_button"
+                                                 HorizontalOptions="Start" />
+                                    <ImageButton Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:CartPageViewModel}}, Path=RemoveCommand}"
+                                                 CommandParameter="{Binding .}"
+                                                 Source="bin_button"
+                                                 HorizontalOptions="Start" />
+                                </HorizontalStackLayout>
+                            </Grid>
+                        </SwipeView>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>

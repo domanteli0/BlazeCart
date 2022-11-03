@@ -9,7 +9,7 @@ namespace BlazeCart.Models
     public class Item : ObservableObject
     {
             [PrimaryKey]
-            public int? ItemId { get; set; }
+            public int ItemId { get; set; }
             [ForeignKey(typeof(Cart))]
             public int CartId { get; set; }
             [ManyToOne]
