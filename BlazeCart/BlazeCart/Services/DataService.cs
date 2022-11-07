@@ -1,6 +1,7 @@
 ﻿using BlazeCart.Models;
 using SQLite;
 using System.Collections.ObjectModel;
+using SQLiteNetExtensionsAsync.Extensions;
 
 namespace BlazeCart.Services
 {
@@ -35,7 +36,7 @@ namespace BlazeCart.Services
                 TotalPrice = cartTotalPrice
 
             };
-            await db.InsertAsync(cart);
+            await db.InsertWithChildrenAsync(cart);
             await Shell.Current.DisplayAlert("Išsaugota!", "Krepšelis sėkmingai išsaugotas!", "OK");
         }
 
@@ -48,7 +49,7 @@ namespace BlazeCart.Services
         public async Task<IEnumerable<Cart>> GetCartsFromDb()
         {
             await Init();
-           var cart = await db.Table<Cart>().ToListAsync();
+            var cart = await db.GetAllWithChildrenAsync<Cart>();
             return cart;
         }
 
@@ -58,6 +59,7 @@ namespace BlazeCart.Services
             await Init();
 
             //Check if favorite item already exist in db
+            //TODO:Fix bug with adding to favorites (because of ItemId)
             var query = db.Table<Item>().Where(x => x.ItemId == favoriteItem.ItemId);
             var result = await query.ToListAsync();
             if (result.Count == 0)

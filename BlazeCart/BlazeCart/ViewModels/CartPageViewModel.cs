@@ -20,7 +20,17 @@ namespace BlazeCart.ViewModels
         public CartPageViewModel(DataService cartService, CartHistoryPageViewModel vm)
         {
             _vm = vm;
+            _vm.CartUsed += CartUsedEventHandler;
             _cartService = cartService;
+        }
+
+        private void CartUsedEventHandler(object sender, EventArgs e)
+        {
+            CartItems.Clear();
+            foreach (var item in _vm.CartItems)
+            {
+                CartItems.Add(item);
+            }
         }
 
         [RelayCommand]

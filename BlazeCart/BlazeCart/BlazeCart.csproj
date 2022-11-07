@@ -117,7 +117,6 @@
 	  <PackageReference Include="CommunityToolkit.Mvvm" Version="8.0.0" />
 	  <PackageReference Include="FirebaseAuthentication.net" Version="3.7.2" />
 	  <PackageReference Include="Google.Apis.Auth" Version="1.58.0-beta01" />
-	  <PackageReference Include="IeuanWalker.Maui.StateButton" Version="1.0.0-Preview.2" />
 	  <PackageReference Include="Microsoft.Toolkit.Mvvm" Version="7.1.2" />
 	  <PackageReference Include="Newtonsoft.Json" Version="13.0.2-beta2" />
 	  <PackageReference Include="SkiaSharp.Extended.UI.Maui" Version="2.0.0-preview.61" />

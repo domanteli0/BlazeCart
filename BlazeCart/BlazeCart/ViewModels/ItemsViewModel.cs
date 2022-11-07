@@ -216,10 +216,6 @@ public partial class ItemsViewModel : BaseViewModel
         await Shell.Current.DisplayAlert("Įdėta į krepšelį!", "Prekė sėkmingai įdėta į krepšelį!", "OK");
     }
 
-    public void UseCart(ObservableCollection<Item> useCartItems)
-    {
-        _vm.CartItems = useCartItems;
-    }
     [RelayCommand]
     async Task Tap(Item item)
     {

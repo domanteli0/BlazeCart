@@ -5,7 +5,6 @@ using Syncfusion.Maui.Core.Hosting;
 using Syncfusion.Maui.ListView.Hosting;
 using CommunityToolkit.Maui;
 using SkiaSharp.Views.Maui.Controls.Hosting;
-using StateButton;
 
 namespace BlazeCart;
 
@@ -15,7 +14,6 @@ public static class MauiProgram
 	{
 		var builder = MauiApp.CreateBuilder();
         builder.UseMauiApp<App>().UseMauiCommunityToolkit();
-        builder.ConfigureStateButton();
         builder
 			.UseMauiApp<App>()
             .UseSkiaSharp()

@@ -86,7 +86,8 @@
                                                 Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:CartHistoryPageViewModel}}, Path=UseCartCommand}"
                                                 CommandParameter="{Binding .}"
                                                 Text="Taikyti"
-                                                VerticalOptions="End">
+                                                Margin="90, 0, 0,0"
+                                                VerticalOptions="Center">
                                         </Button>
                                     </HorizontalStackLayout>
                                     <HorizontalStackLayout Spacing="0">

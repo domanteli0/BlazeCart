@@ -8,11 +8,11 @@ namespace BlazeCart.Models
     [Serializable]
     public class Item : ObservableObject
     {
-            [PrimaryKey]
+            [PrimaryKey, AutoIncrement]
             public int ItemId { get; set; }
             [ForeignKey(typeof(Cart))]
             public int CartId { get; set; }
-            [ManyToOne]
+            [ManyToOne]   
             public Cart? Cart { get; set; }
             public string? Category { get; set; }
             public string? Name { get; set; }
