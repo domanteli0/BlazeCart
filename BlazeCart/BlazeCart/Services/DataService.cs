@@ -7,6 +7,7 @@ namespace BlazeCart.Services
     public class DataService
     {
         static SQLiteAsyncConnection db;
+
         static async Task Init()
         {
             if (db != null)
@@ -71,11 +72,6 @@ namespace BlazeCart.Services
             await db.DeleteAsync<Item>(itemId);
         }
 
-        public async Task GetFavoriteItemFromDb(int itemId)
-        {
-            await Init();
-            throw new NotImplementedException();
-        }
 
         public async Task<IEnumerable<Item>> GetFavoriteItemsFromDb()
         {

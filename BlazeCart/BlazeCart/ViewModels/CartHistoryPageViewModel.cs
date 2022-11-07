@@ -15,6 +15,7 @@ namespace BlazeCart.ViewModels
 
         [ObservableProperty] int cartTotalPrice;
 
+
         public  CartHistoryPageViewModel(DataService dataService)
         {
             Carts = new ObservableCollection<Cart>();
@@ -40,6 +41,11 @@ namespace BlazeCart.ViewModels
             IsBusy = false;
         }
 
+        [RelayCommand]
+        async Task UseCart(Cart cart)
+        {
+            await Refresh();
+        }
         [RelayCommand]
         async Task Remove(Cart cart)
         {

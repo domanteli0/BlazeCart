@@ -80,6 +80,14 @@
                                                Text=")"
                                                TextColor="{StaticResource PrimaryTextColor}"
                                                LineBreakMode="CharacterWrap" />
+                                        <Button x:Name="UseButton"
+                                                BackgroundColor="{StaticResource PrimaryColor}"
+                                                TextColor="{StaticResource White}"
+                                                Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:CartHistoryPageViewModel}}, Path=UseCartCommand}"
+                                                CommandParameter="{Binding .}"
+                                                Text="Taikyti"
+                                                VerticalOptions="End">
+                                        </Button>
                                     </HorizontalStackLayout>
                                     <HorizontalStackLayout Spacing="0">
                                         <Label HorizontalTextAlignment="Start"

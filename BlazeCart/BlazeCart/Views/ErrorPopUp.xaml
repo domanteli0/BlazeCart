@@ -9,8 +9,7 @@
                     HorizontalOptions="End"
                     VerticalOptions="Start"
                      HeightRequest="7"
-                     WidthRequest="11"
-                     />
+                     WidthRequest="11"/>
         <Image
                 Aspect="AspectFit"
                 Source="error_symbol.png"

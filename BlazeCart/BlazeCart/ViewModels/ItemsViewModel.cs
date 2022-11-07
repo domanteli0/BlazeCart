@@ -31,8 +31,8 @@ public partial class ItemsViewModel : BaseViewModel
     public ObservableCollection<String> ComboBoxCommands { get; set; }
     [ObservableProperty] string selectedCommand;
 
-    private ItemService _itemService;
-    private ItemSearchBarService _itemSearchBarService;
+    private readonly ItemService _itemService;
+    private readonly ItemSearchBarService _itemSearchBarService;
     private SliderService _sliderService;
     private ItemFilterService _itemFilterService;
     private DataService _dataService;
@@ -42,13 +42,15 @@ public partial class ItemsViewModel : BaseViewModel
 
     public ItemsViewModel(ItemService itemService, CartPageViewModel vm, ItemSearchBarService itemSearchBarService, SliderService sliderService, ItemFilterService itemFilterService, DataService dataService, FavoriteItemViewModel vmF)
     {
-        ComboBoxCommands = new ObservableCollection<string>();
-        ComboBoxCommands.Add("Abėcėlę (A-Ž)");
-        ComboBoxCommands.Add("Abėcėlę (Ž-A)");
-        ComboBoxCommands.Add("Kainą nuo mažiausios");
-        ComboBoxCommands.Add("Kainą nuo didžiausios");
-        ComboBoxCommands.Add("Kainą nuo maž. (už mato vnt.)");
-        ComboBoxCommands.Add("Kainą nuo didž. (už mato vnt.)");
+        ComboBoxCommands = new ObservableCollection<string>
+        {
+            "Abėcėlę (A-Ž)",
+            "Abėcėlę (Ž-A)",
+            "Kainą nuo mažiausios",
+            "Kainą nuo didžiausios",
+            "Kainą nuo maž. (už mato vnt.)",
+            "Kainą nuo didž. (už mato vnt.)"
+        };
 
         _itemService = itemService;
         _itemSearchBarService = itemSearchBarService;
@@ -214,6 +216,10 @@ public partial class ItemsViewModel : BaseViewModel
         await Shell.Current.DisplayAlert("Įdėta į krepšelį!", "Prekė sėkmingai įdėta į krepšelį!", "OK");
     }
 
+    public void UseCart(ObservableCollection<Item> useCartItems)
+    {
+        _vm.CartItems = useCartItems;
+    }
     [RelayCommand]
     async Task Tap(Item item)
     {

@@ -46,7 +46,7 @@ public partial class FavoriteItemViewModel : ObservableObject
     [RelayCommand]
     async void Back(object obj)
     {
-        await Shell.Current.GoToAsync(nameof(HomePage));
+        await Shell.Current.GoToAsync("..");
     }
     [RelayCommand]
     async Task Remove(Item item)
