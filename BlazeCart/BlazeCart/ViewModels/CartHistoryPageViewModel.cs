@@ -51,7 +51,7 @@ namespace BlazeCart.ViewModels
         async Task UseCart(Cart cart)
         {
             OnCartUsed(new CartUsedEventArgs(cart.CartItems));
-            Shell.Current.DisplayAlert("Pritaikyta!", "Krepšelis sėkmingai pritaikytas!", "OK");
+            await Shell.Current.DisplayAlert("Pritaikyta!", "Krepšelis sėkmingai pritaikytas!", "OK");
         }
 
         [RelayCommand]

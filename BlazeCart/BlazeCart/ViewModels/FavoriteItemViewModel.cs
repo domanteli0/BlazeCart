@@ -8,7 +8,6 @@ using CommunityToolkit.Mvvm.Input;
 namespace BlazeCart.ViewModels;
 
 public partial class FavoriteItemViewModel : ObservableObject
-
 {
     public ObservableCollection<Item> FavoriteItems { get; set; }
     public bool IsBusy { get; set; }

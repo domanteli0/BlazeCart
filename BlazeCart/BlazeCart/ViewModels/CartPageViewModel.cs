@@ -8,7 +8,7 @@ namespace BlazeCart.ViewModels
 {
     public partial class CartPageViewModel : BaseViewModel
     {
-        private readonly DataService _cartService;
+        private readonly DataService _dataService;
 
         public Cart Cart { get; set; }
 
@@ -17,17 +17,17 @@ namespace BlazeCart.ViewModels
         public CartHistoryPageViewModel _vm;
         public ObservableCollection<Item> CartItems { get; set; } = new();
 
-        public CartPageViewModel(DataService cartService, CartHistoryPageViewModel vm)
+        public CartPageViewModel(DataService dataService, CartHistoryPageViewModel vm)
         {
             _vm = vm;
             _vm.CartUsed += CartUsedEventHandler;
-            _cartService = cartService;
+            _dataService = dataService;
         }
 
         private void CartUsedEventHandler(object sender, CartUsedEventArgs e)
         {
             CartItems.Clear();
-            foreach (var item in e._items)
+            foreach (var item in e.Items)
             {
                 CartItems.Add(item);
             }
@@ -50,7 +50,7 @@ namespace BlazeCart.ViewModels
                 {
                     item.IsFavorite = false;
                 }
-                await _cartService.AddCartToDb(cartName, CartItems, GetCartItemsCount(CartItems), GetCartPrice(CartItems));
+                await _dataService.AddCartToDb(cartName, CartItems, GetCartItemsCount(CartItems), GetCartPrice(CartItems));
                 await _vm.Refresh();
             }
             else
@@ -66,7 +66,7 @@ namespace BlazeCart.ViewModels
             await Shell.Current.GoToAsync(nameof(CheapestStorePage));
         }
 
-        private double GetCartPrice(ObservableCollection<Item> cartItems)
+        private static double GetCartPrice(ObservableCollection<Item> cartItems)
         {
             double totalPrice = 0;
             foreach (Item I in cartItems)
@@ -89,12 +89,12 @@ namespace BlazeCart.ViewModels
         }
 
         [RelayCommand]
-        void AddQuantity(Item item)
+        private void AddQuantity(Item item)
         {
             item.Quantity++;
         }
         [RelayCommand]
-        void RemoveQuantity(Item item)
+        private void RemoveQuantity(Item item)
         {
             item.Quantity--;
         }

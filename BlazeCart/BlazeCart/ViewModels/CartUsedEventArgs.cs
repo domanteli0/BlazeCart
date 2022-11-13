@@ -5,10 +5,10 @@ namespace BlazeCart.ViewModels
 {
     public class CartUsedEventArgs : EventArgs
     {
-        public ObservableCollection<Item> _items { get; }
+        public ObservableCollection<Item> Items { get; }
         public CartUsedEventArgs(ObservableCollection<Item> items)
         {
-            _items = items;
+            Items = items;
         }
     }
 }
