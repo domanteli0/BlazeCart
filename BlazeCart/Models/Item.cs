@@ -1,86 +1,63 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
 namespace Models
 {
-    public class Item
+    [Table("Item")]
+    public class Item : Entity
     {
         public enum UnitOfMeasure { UNKNOWN, VNT, KG, L }
 
-        public string InternalID { get; }
-        private string _nameLT;
-        private string? _nameEN;
-        private string? _description;
-        private UnitOfMeasure? _measureUnit;
+        public string InternalID { get; set; }
+        public string NameLT { get; set; }
+        public string? NameEN { get; set; }
+        public string? Description { get; set; }
+        public UnitOfMeasure? MeasureUnit { get; set; }
         // Ammount of item sold measured by `MeasureUnit`
-        private float? _ammount;
+        public float? Ammount { get; set; }
 
         // Price in cents for sold unit
-        private int _price;
-        private int? _discountPrice;
+        public int Price { get; set; }
+        public int? DiscountPrice { get; set; }
         // Price in cents with loyanty card discounts
-        private int? _loyaltyPrice;
+        public int? LoyaltyPrice { get; set; }
 
         // Price of one unit of measurement
         // For example: a store might sell half a kilo of tomatoes for is 1.00 eu
         // Then Price would be 1.00, whilst PricePerUnitOfMeasure would be 2.00
         // ditto for `DiscountPricePerUnitOfMeasure` and `LoyaltyPricePerUnitOfMeasure`
-        private int? _pricePerUnitOfMeasure;
-        private int? _discountPricePerUnitOfMeasure;
-        private int? _loyaltyPricePerUnitOfMeasure;
+        public int? PricePerUnitOfMeasure { get; set; }
+        public int? DiscountPricePerUnitOfMeasure { get; set; }
+        public int? LoyaltyPricePerUnitOfMeasure { get; set; }
 
         // URIs pointing to an image of that product
-        private Uri? _image;
+        public Uri? Image { get; set; }
         //private List<Category> _categories;
-        private List<String>? _barcodes;
+        //private List<String>? _barcodes;
 
         public Item(
-            string internalID,
-            string nameLT,
-            int price,
-            Uri? image,
-            string measureUnit,
-
-            int? pricePerUnitOfMeasure = null,
-
-            string? nameEN = null,
-            string? description = null,
-            int? discountPrice = null,
-            int? loyaltyPrice = null,
-            float? ammount = null,
-            List<String>? barcodes = null
+            string internalID
         )
         {
             InternalID = internalID;
-            _nameLT = nameLT;
-            _price = price;
-            _image = image;
-            _pricePerUnitOfMeasure = pricePerUnitOfMeasure;
-            _nameEN = nameEN;
-            _description = description;
-            _discountPrice = discountPrice;
-            _loyaltyPrice = loyaltyPrice;
-            _ammount = ammount;
-            _barcodes = barcodes;
-
-
-            if (measureUnit is not null)
-                _measureUnit = ParseUnitOfMeasurement(measureUnit);
         }
+
+        public Item() { }
 
         public void FillPerUnitOfMeasureByPrice()
         {
-
+            throw new NotImplementedException();
         }
 
         public void FillPerUnitOfMeasureByAmmount()
         {
-            _pricePerUnitOfMeasure = (int) (_price /  _ammount!);
-            _discountPricePerUnitOfMeasure = (int?) (_discountPrice / _ammount!);
-            _loyaltyPricePerUnitOfMeasure = (int?) (_loyaltyPrice / _ammount!);
+            PricePerUnitOfMeasure = (int)(Price / Ammount!);
+            DiscountPricePerUnitOfMeasure = (int?)(DiscountPrice / Ammount!);
+            LoyaltyPricePerUnitOfMeasure = (int?)(LoyaltyPrice / Ammount!);
         }
 
-        private UnitOfMeasure? ParseUnitOfMeasurement(string str)
+        public static UnitOfMeasure? ParseUnitOfMeasurement(string str)
         {
             UnitOfMeasure? ret = null;
             try
@@ -93,7 +70,7 @@ namespace Models
 
         public override string ToString()
         {
-            return _nameLT + " [" + InternalID + "]";
+            return NameLT + " [" + InternalID + "]";
         }
     }
 }

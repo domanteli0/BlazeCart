@@ -7,6 +7,11 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols></DebugSymbols>
+    <DebugType></DebugType>
+    <Optimize></Optimize>
+  </PropertyGroup>
   <ItemGroup>
     <None Remove="Newtonsoft.Json" />
   </ItemGroup>

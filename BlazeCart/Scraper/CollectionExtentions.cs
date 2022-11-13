@@ -21,6 +21,8 @@ namespace Scraper
                 col.Add(elem);
         }
 
+        // Iterate on collections with collections
+
         /// <summary>
         /// Finds the first element with matching property (Determined by Equals() method)
         /// and replaces it with elem.

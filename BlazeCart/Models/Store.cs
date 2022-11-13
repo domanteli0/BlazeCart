@@ -1,6 +1,6 @@
 ﻿namespace Models
 {
-    public struct Store
+    public class Store : Entity
     {
         public enum Merchendise { IKI, MAXIMA }
         public string InternalID { get;  }

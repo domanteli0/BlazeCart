@@ -196,19 +196,19 @@ namespace Scraper
                     catch (System.UriFormatException) { }
                 }
 
-                var newItem = new Item(
-                    internalID: jtoken["id"]!.ToString(),
-                    nameLT: jtoken["name"]!["lt"]!.ToString(),
-                    price: (int)(jtoken["prc"]!["p"]!.ToObject<float>() * 100),
-                    image: photo,
-                    measureUnit: jtoken["conversionMeasure"]!.ToString(),   
-                    nameEN: jtoken["name"]!["en"]!.ToString(),
-                    description: jtoken["description"]?["lt"]?.ToString(),
-                    discountPrice: (int?)(jtoken["prc"]!["s"]?.ToObject<float?>() * 100),
-                    loyaltyPrice: (int?)(jtoken["prc"]!["l"]?.ToObject<decimal?>() * 100),
-                    ammount: jtoken["conversionValue"]!.ToObject<float>(),
-                    barcodes: jtoken["barcodes"]!.ToObject<List<String>>()
-                );
+                var newItem = new Item(internalID: jtoken["id"]!.ToString())
+                {
+                    NameLT = jtoken["name"]!["lt"]!.ToString(),
+                    Price = (int)(jtoken["prc"]!["p"]!.ToObject<float>() * 100),
+                    Image = photo,
+                    MeasureUnit = Item.ParseUnitOfMeasurement(jtoken["conversionMeasure"]!.ToString()),   
+                    NameEN = jtoken["name"]!["en"]!.ToString(),
+                    Description = jtoken["description"]?["lt"]?.ToString(),
+                    DiscountPrice = (int?)(jtoken["prc"]!["s"]?.ToObject<float?>() * 100),
+                    LoyaltyPrice = (int?)(jtoken["prc"]!["l"]?.ToObject<decimal?>() * 100),
+                    Ammount = jtoken["conversionValue"]!.ToObject<float>()
+                    //barcodes: jtoken["barcodes"]!.ToObject<List<String>>()
+                };
 
                 newItem.FillPerUnitOfMeasureByAmmount();
 

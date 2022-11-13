@@ -1,9 +1,9 @@
 ﻿namespace Models
 {
-    public class Category
+    public class Category : Entity
     {
-        public string? InternalID { get; }
-        public Uri? Uri { get;  }
+        public string? InternalID { get; set; }
+        public Uri? Uri { get; set; }
         private string? _nameEN;
         private string? _nameLT;
         private Category? _parent;

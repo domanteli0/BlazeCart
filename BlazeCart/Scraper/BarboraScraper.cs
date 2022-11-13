@@ -170,15 +170,15 @@ namespace Scraper
         {
             foreach (var itemJSON in JArray.Parse(json))
             {
-                Item item = new Item(
-                    internalID: itemJSON["id"]!.ToString(),
-                    nameLT: itemJSON["title"]!.ToString(),
-                    price: (int)(itemJSON["price"]!.ToObject<float>() * 100),
-                    image: itemJSON["big_image"]!.ToObject<Uri>()!,
-                    measureUnit: itemJSON["comparative_unit"]!.ToString(),
-                    pricePerUnitOfMeasure:
+                Item item = new Item(internalID: itemJSON["id"]!.ToString())
+                {
+                    NameLT = itemJSON["title"]!.ToString(),
+                    Price = (int)(itemJSON["price"]!.ToObject<float>() * 100),
+                    Image = itemJSON["big_image"]!.ToObject<Uri>()!,
+                    MeasureUnit = Item.ParseUnitOfMeasurement(itemJSON["comparative_unit"]!.ToString()),
+                    PricePerUnitOfMeasure =
                         (int)(itemJSON["comparative_unit_price"]!.ToObject<float>() * 100)
-                );
+                };
 
                 yield return item;
             }
