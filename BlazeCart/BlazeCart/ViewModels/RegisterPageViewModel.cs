@@ -20,7 +20,7 @@ namespace BlazeCart.ViewModels
 
         private readonly User _user = new();
 
-        async Task Register()
+        private async Task Register()
         {
             _user.Name = name;
             _user.Surname = surname;
@@ -34,8 +34,6 @@ namespace BlazeCart.ViewModels
         {
             string emailPattern = @"^((\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*)\s*[;]{0,1}\s*)+$";
             string passwordPattern = @"^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,}$";
-
-
 
             if (IsEmptyField())
             {

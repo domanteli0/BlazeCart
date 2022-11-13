@@ -6,7 +6,6 @@ namespace BlazeCart.ViewModels
 {
     public partial class WelcomePage2ViewModel : ObservableObject
     {
-
         [RelayCommand]
         async void Next(object obj)
         {

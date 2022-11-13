@@ -16,7 +16,7 @@ public partial class ItemsViewModel : BaseViewModel
     public ObservableCollection<Item> Items { get; set; } = new();
 
     private readonly CartPageViewModel _vm;
-
+    private readonly FavoriteItemViewModel _vmFavoriteItemViewModel;
     [ObservableProperty]
     private ObservableCollection<Item> cartItems = new();
 
@@ -31,33 +31,38 @@ public partial class ItemsViewModel : BaseViewModel
     public ObservableCollection<String> ComboBoxCommands { get; set; }
     [ObservableProperty] string selectedCommand;
 
-    private ItemService _itemService;
-    private ItemSearchBarService _itemSearchBarService;
+    private readonly ItemService _itemService;
+    private readonly ItemSearchBarService _itemSearchBarService;
     private SliderService _sliderService;
     private ItemFilterService _itemFilterService;
+    private DataService _dataService;
 
     [ObservableProperty]
     public ObservableCollection<Item> searchResults = new();
 
-    public ItemsViewModel(ItemService itemService, CartPageViewModel vm, ItemSearchBarService itemSearchBarService, SliderService sliderService, ItemFilterService itemFilterService)
+    public ItemsViewModel(ItemService itemService, CartPageViewModel vm, ItemSearchBarService itemSearchBarService, SliderService sliderService, ItemFilterService itemFilterService, DataService dataService, FavoriteItemViewModel vmF)
     {
-        ComboBoxCommands = new ObservableCollection<string>();
-        ComboBoxCommands.Add("Abėcėlę (A-Ž)");
-        ComboBoxCommands.Add("Abėcėlę (Ž-A)");
-        ComboBoxCommands.Add("Kainą nuo mažiausios");
-        ComboBoxCommands.Add("Kainą nuo didžiausios");
-        ComboBoxCommands.Add("Kainą nuo maž. (už mato vnt.)");
-        ComboBoxCommands.Add("Kainą nuo didž. (už mato vnt.)");
+        ComboBoxCommands = new ObservableCollection<string>
+        {
+            "Abėcėlę (A-Ž)",
+            "Abėcėlę (Ž-A)",
+            "Kainą nuo mažiausios",
+            "Kainą nuo didžiausios",
+            "Kainą nuo maž. (už mato vnt.)",
+            "Kainą nuo didž. (už mato vnt.)"
+        };
 
         _itemService = itemService;
         _itemSearchBarService = itemSearchBarService;
         _sliderService = sliderService;
         _itemFilterService = itemFilterService;
+        _dataService = dataService;
         _vm = vm;
         GetItemsAsync();
         SearchResults = Items;
         LoadSlider();
         _itemFilterService = itemFilterService;
+        _vmFavoriteItemViewModel = vmF;
     }
 
     async void GetItemsAsync()
@@ -84,7 +89,7 @@ public partial class ItemsViewModel : BaseViewModel
         catch (Exception ex)
         {
             Debug.WriteLine($"Unable to get items: {ex.Message}");
-            await Application.Current.MainPage.DisplayAlert("Error!", ex.Message, "OK");
+            await Shell.Current.DisplayAlert("Error!", ex.Message, "OK");
         }
 
         finally
@@ -98,7 +103,16 @@ public partial class ItemsViewModel : BaseViewModel
     [RelayCommand]
     void SelectionChanged()
     {
+        throw new NotImplementedException();
+    }
 
+    [RelayCommand]
+    async void AddItemToFavorites(Item item)
+    {
+        item.IsFavorite = true;
+        await Shell.Current.DisplayAlert("Prekės pridėjimas sėkmingas", "Sėkmingai pažymėjote prekę kaip mėgstamiausią", "OK");
+        await _dataService.AddFavoriteItemToDb(item);
+        await _vmFavoriteItemViewModel.Refresh();
     }
 
     [RelayCommand]
@@ -128,7 +142,7 @@ public partial class ItemsViewModel : BaseViewModel
         catch (Exception ex)
         {
             Debug.WriteLine($"Unable to update the slider: {ex.Message}");
-            await Application.Current.MainPage.DisplayAlert("Error!", ex.Message, "OK");
+            await Shell.Current.DisplayAlert("Error!", ex.Message, "OK");
         }
         finally
         {
@@ -199,7 +213,20 @@ public partial class ItemsViewModel : BaseViewModel
     [RelayCommand]
     async void Cart(Item item)
     {
-        _vm.CartItems.Add(item);
+        var query = _vm.CartItems.Where(x => x.Name == item.Name && x.Store == item.Store);
+        var result = query.ToList();
+        if (result.Count == 0)
+        {
+            _vm.CartItems.Add(item);
+        }
+        else
+        {
+            foreach (var _item in _vm.CartItems)
+            {
+                if (result.Contains(_item))
+                    _item.Quantity++;
+            }
+        }
         await Shell.Current.DisplayAlert("Įdėta į krepšelį!", "Prekė sėkmingai įdėta į krepšelį!", "OK");
     }
 

@@ -8,7 +8,7 @@ namespace BlazeCart.ViewModels
 {
     public partial class CartPageViewModel : BaseViewModel
     {
-        private readonly CartService _cartService;
+        private readonly DataService _dataService;
 
         public Cart Cart { get; set; }
 
@@ -17,10 +17,20 @@ namespace BlazeCart.ViewModels
         public CartHistoryPageViewModel _vm;
         public ObservableCollection<Item> CartItems { get; set; } = new();
 
-        public CartPageViewModel(CartService cartService, CartHistoryPageViewModel vm)
+        public CartPageViewModel(DataService dataService, CartHistoryPageViewModel vm)
         {
             _vm = vm;
-            _cartService = cartService;
+            _vm.CartUsed += CartUsedEventHandler;
+            _dataService = dataService;
+        }
+
+        private void CartUsedEventHandler(object sender, CartUsedEventArgs e)
+        {
+            CartItems.Clear();
+            foreach (var item in e.Items)
+            {
+                CartItems.Add(item);
+            }
         }
 
         [RelayCommand]
@@ -32,13 +42,15 @@ namespace BlazeCart.ViewModels
         [RelayCommand]
         async void Save(object obj)
         {
-            Cart cart;
-            if(CartItems.Count > 0)
+            if (CartItems.Count > 0)
             {
                 string cartName = await Shell.Current.DisplayPromptAsync("Išsaugoti krepšelį", "Įveskite krepšelio pavadinimą: ", "OK",
                "Cancel", "Įveskite pavadinimą...");
-                
-                await _cartService.AddCartToDb(cartName, CartItems, CartItems.Count, GetCartPrice(CartItems));
+                foreach (var item in CartItems)
+                {
+                    item.IsFavorite = false;
+                }
+                await _dataService.AddCartToDb(cartName, CartItems, GetCartItemsCount(CartItems), GetCartPrice(CartItems));
                 await _vm.Refresh();
             }
             else
@@ -54,14 +66,38 @@ namespace BlazeCart.ViewModels
             await Shell.Current.GoToAsync(nameof(CheapestStorePage));
         }
 
-        private Double GetCartPrice(ObservableCollection<Item> cartItems)
+        private static double GetCartPrice(ObservableCollection<Item> cartItems)
         {
-            Double TotalPrice = 0;
+            double totalPrice = 0;
             foreach (Item I in cartItems)
             {
-                TotalPrice += I.Price;
+                totalPrice += I.Price * (double)I.Quantity;
             }
-            return TotalPrice;
+
+            return totalPrice;
         }
+
+        private int GetCartItemsCount(ObservableCollection<Item> cartItems)
+        {
+            int quantity = 0;
+            foreach (var item in cartItems)
+            {
+                quantity += item.Quantity;
+            }
+
+            return quantity;
+        }
+
+        [RelayCommand]
+        private void AddQuantity(Item item)
+        {
+            item.Quantity++;
+        }
+        [RelayCommand]
+        private void RemoveQuantity(Item item)
+        {
+            item.Quantity--;
+        }
+
     }
 }

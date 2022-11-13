@@ -5,7 +5,8 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:BlazeCart"
     xmlns:views="clr-namespace:BlazeCart.Views"
-    Shell.FlyoutBehavior="Disabled">
+    Shell.FlyoutBehavior="Disabled"
+    BackgroundColor="{StaticResource PageBackgroundColor}">
 
     <TabBar Shell.TabBarTitleColor="{StaticResource PrimaryColor}" Shell.TabBarUnselectedColor="{StaticResource SecondaryTextColor}">
         <Tab Title="" Icon="home.png"> 

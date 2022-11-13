@@ -4,7 +4,7 @@ using BlazeCart.ViewModels;
 using Syncfusion.Maui.Core.Hosting;
 using Syncfusion.Maui.ListView.Hosting;
 using CommunityToolkit.Maui;
-
+using SkiaSharp.Views.Maui.Controls.Hosting;
 
 namespace BlazeCart;
 
@@ -16,6 +16,7 @@ public static class MauiProgram
         builder.UseMauiApp<App>().UseMauiCommunityToolkit();
         builder
 			.UseMauiApp<App>()
+            .UseSkiaSharp()
             .ConfigureSyncfusionCore()
             .ConfigureSyncfusionListView()
             .ConfigureFonts(fonts =>
@@ -37,7 +38,10 @@ public static class MauiProgram
                 fonts.AddFont("Roboto-Regular.ttf", "Roboto-Regular");
                 fonts.AddFont("Roboto-Thin.ttf", "Roboto-Thin");
                 fonts.AddFont("Roboto-ThinItalic.ttf", "Roboto-ThinItalic");
-
+                fonts.AddFont("fa-brands-400.ttf", "fa-brands");
+                fonts.AddFont("fa-regular-400.ttf", "fa-regular");
+                fonts.AddFont("fa-solid-900.ttf", "FASolid900");
+                fonts.AddFont("fa-v4compatibility.ttf", "fa-v4");
             });
 
         builder.Services.AddSingleton<ItemCatalogPage>();
@@ -52,7 +56,7 @@ public static class MauiProgram
 
         builder.Services.AddSingleton<CartPage>();
         builder.Services.AddSingleton<CartPageViewModel>();
-        builder.Services.AddSingleton<CartService>();
+        builder.Services.AddSingleton<DataService>();
 
         builder.Services.AddSingleton<HomePage>();
         builder.Services.AddSingleton<HomePageViewModel>();
@@ -80,6 +84,11 @@ public static class MauiProgram
 
         builder.Services.AddSingleton<CartHistoryPage>();
         builder.Services.AddSingleton<CartHistoryPageViewModel>();
+
+        builder.Services.AddSingleton<FavoriteItemPage>();
+        builder.Services.AddSingleton<FavoriteItemViewModel>();
+
+        
         return builder.Build();
 	}
 }
