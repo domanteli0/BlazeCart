@@ -24,10 +24,10 @@ namespace BlazeCart.ViewModels
             _cartService = cartService;
         }
 
-        private void CartUsedEventHandler(object sender, EventArgs e)
+        private void CartUsedEventHandler(object sender, CartUsedEventArgs e)
         {
             CartItems.Clear();
-            foreach (var item in _vm.CartItems)
+            foreach (var item in e._items)
             {
                 CartItems.Add(item);
             }
