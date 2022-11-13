@@ -11,11 +11,10 @@ public partial class FavoriteItemViewModel : ObservableObject
 
 {
     public ObservableCollection<Item> FavoriteItems { get; set; }
-    public bool IsRefresh { get; set; }
     public bool IsBusy { get; set; }
     private readonly DataService _dataService;
 
-    private CartPageViewModel _vm;
+    private readonly CartPageViewModel _vm;
 
     public FavoriteItemViewModel(DataService dataService, CartPageViewModel vm)
     {
@@ -29,6 +28,8 @@ public partial class FavoriteItemViewModel : ObservableObject
     public async Task Refresh()
     {
         IsBusy = true;
+
+        await Task.Delay(100);
 
         if (FavoriteItems.Count > 0)
         {
@@ -48,7 +49,20 @@ public partial class FavoriteItemViewModel : ObservableObject
     [RelayCommand]
     async void Cart(Item item)
     {
-        _vm.CartItems.Add(item);
+        var query = _vm.CartItems.Where(x => x.Name == item.Name && x.Store == item.Store);
+        var result = query.ToList();
+        if (result.Count == 0)
+        {
+            _vm.CartItems.Add(item);
+        }
+        else
+        {
+            foreach (var _item in _vm.CartItems)
+            {
+                if (result.Contains(_item))
+                    _item.Quantity++;
+            }
+        }
         await Shell.Current.DisplayAlert("Įdėta į krepšelį!", "Prekė sėkmingai įdėta į krepšelį!", "OK");
 
     }

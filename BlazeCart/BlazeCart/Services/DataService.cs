@@ -7,17 +7,17 @@ namespace BlazeCart.Services
 {
     public class DataService
     {
-        static SQLiteAsyncConnection db;
+        static SQLiteAsyncConnection _db;
 
         static async Task Init()
         {
-            if (db != null)
+            if (_db != null)
                 return;
 
             var databasePath = Path.Combine(FileSystem.AppDataDirectory, "MyData.db");
-            db = new SQLiteAsyncConnection(databasePath);
-            await db.CreateTableAsync<Cart>();
-            await db.CreateTableAsync<Item>();
+            _db = new SQLiteAsyncConnection(databasePath);
+            await _db.CreateTableAsync<Cart>();
+            await _db.CreateTableAsync<Item>();
 
         }
 
@@ -36,20 +36,21 @@ namespace BlazeCart.Services
                 TotalPrice = cartTotalPrice
 
             };
-            await db.InsertWithChildrenAsync(cart);
+            await _db.InsertWithChildrenAsync(cart);
             await Shell.Current.DisplayAlert("Išsaugota!", "Krepšelis sėkmingai išsaugotas!", "OK");
         }
 
         public async Task RemoveCartFromDb(int  id)
         {
-            await db.DeleteAsync<Cart>(id);
+            await _db.DeleteAsync<Cart>(id);
             await Init();
         }
 
         public async Task<IEnumerable<Cart>> GetCartsFromDb()
         {
             await Init();
-            var cart = await db.GetAllWithChildrenAsync<Cart>();
+            var cart = await _db.GetAllWithChildrenAsync<Cart>();
+
             return cart;
         }
 
@@ -58,27 +59,32 @@ namespace BlazeCart.Services
         {
             await Init();
 
-            //Check if favorite item already exist in db
-            //TODO:Fix bug with adding to favorites (because of ItemId)
-            var query = db.Table<Item>().Where(x => x.ItemId == favoriteItem.ItemId);
-            var result = await query.ToListAsync();
-            if (result.Count == 0)
+            Item item = await _db.Table<Item>().Where(x => x.Name == favoriteItem.Name && x.Store == favoriteItem.Store).FirstOrDefaultAsync();
+            if (item != null)
             {
-                await db.InsertAsync(favoriteItem);
+                item.IsFavorite = true;
+                await _db.UpdateAsync(item);
             }
+            else{
+                await _db.InsertAsync(favoriteItem);
+            }
+
         }
 
         public async Task RemoveFavoriteItemFromDb(int itemId)
         {
             await Init();
-            await db.DeleteAsync<Item>(itemId);
+            await _db.DeleteAsync<Item>(itemId);
         }
 
 
         public async Task<IEnumerable<Item>> GetFavoriteItemsFromDb()
         {
             await Init();
-            var favoriteItems = await db.Table<Item>().ToListAsync();
+            var favIt = await _db.GetAllWithChildrenAsync<Item>();
+
+            var favoriteItems =  favIt.Where(item => item.IsFavorite == true);
+            
             return favoriteItems;
         }
 

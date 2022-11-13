@@ -94,7 +94,7 @@
                                         <Label HorizontalTextAlignment="Start"
                                                Margin="10, 15, 0, 0"
                                                Style="{StaticResource ItemNamePoppins}"
-                                               Text="{Binding TotalPrice}"
+                                               Text="{Binding TotalPrice, StringFormat='{0:F2}'}"
                                                TextColor="{StaticResource PrimaryTextColor}"
                                                LineBreakMode="CharacterWrap" />
                                         <Label HorizontalTextAlignment="Start"
