@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using DB;
 using Microsoft.AspNetCore.Mvc;
 using Models;
 using Scraper;
@@ -13,6 +14,12 @@ namespace Api.Controllers
     [Route("api/items")]
     public class ItemController : Controller
     {
+        private ScraperDbContext _dbContext;
+
+        public ItemController(ScraperDbContext dbContext)
+        {
+            _dbContext = dbContext;
+        }
         // GET: api/values
         [HttpGet(Name = "api/items")]
         public IEnumerable<Item> Get()
