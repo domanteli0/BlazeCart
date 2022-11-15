@@ -18,6 +18,8 @@
                 <StackLayout Margin="5">
                     <ImageButton Source="back_button"
                                  HorizontalOptions="Start" />
+                    <Switch Toggled="Switch_OnToggled">
+                    </Switch>
                     <Label HorizontalTextAlignment="Start"
                            Margin="10, 5, 50, 5"
                            Style="{StaticResource ItemCatalogPoppinsBold}"

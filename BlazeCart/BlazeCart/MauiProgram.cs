@@ -4,6 +4,7 @@ using BlazeCart.ViewModels;
 using Syncfusion.Maui.Core.Hosting;
 using Syncfusion.Maui.ListView.Hosting;
 using CommunityToolkit.Maui;
+using MetroLog.Maui;
 using MetroLog.MicrosoftExtensions;
 using SkiaSharp.Views.Maui.Controls.Hosting;
 
@@ -96,8 +97,8 @@ public static class MauiProgram
                 options.FolderPath = Path.Combine(
                     FileSystem.CacheDirectory, "MetroLogs");
             })
-            .AddTraceLogger(_ => { });
-
+            .AddTraceLogger(_ => { })
+            .AddInMemoryLogger(_ => { });
         return builder.Build();
 	}
 }
