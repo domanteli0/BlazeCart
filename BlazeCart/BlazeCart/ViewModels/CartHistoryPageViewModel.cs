@@ -13,20 +13,29 @@ namespace BlazeCart.ViewModels
 
         private DataService _dataService;
 
+        private ItemService _itemService;
+
         public event EventHandler<CartUsedEventArgs> CartUsed;
 
         [ObservableProperty] int cartTotalPrice;
 
-        public  CartHistoryPageViewModel(DataService dataService)
+        public  CartHistoryPageViewModel(DataService dataService, ItemService itemService)
         {
             Carts = new ObservableCollection<Cart>();
             _dataService = dataService;
+            _itemService = itemService;
+            _itemService.CartTbUpdated += CartTbUpdatedEventHandler;
+            Task.Run(() => this.Refresh()).Wait();
+        }
+
+        private void CartTbUpdatedEventHandler(object sender, EventArgs e)
+        {
             Task.Run(() => this.Refresh()).Wait();
         }
 
         public virtual void OnCartUsed(CartUsedEventArgs e)
         {
-            if (CartUsed != null) CartUsed(this, e); //Raise the event
+            if (CartUsed != null) CartUsed(this, e);
         }
 
         public async Task Refresh()
@@ -50,7 +59,7 @@ namespace BlazeCart.ViewModels
         [RelayCommand]
         async Task UseCart(Cart cart)
         {
-            OnCartUsed(new CartUsedEventArgs(cart.CartItems));
+            _itemService.PutItems(cart.CartItems);
             await Shell.Current.DisplayAlert("Pritaikyta!", "Krepšelis sėkmingai pritaikytas!", "OK");
         }
 

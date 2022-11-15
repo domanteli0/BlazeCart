@@ -10,21 +10,22 @@ namespace BlazeCart.ViewModels
     {
         private readonly DataService _dataService;
 
+        private ItemService _itemService;
+
         public Cart Cart { get; set; }
 
         public int ItemCount { get; set; }
 
-        public CartHistoryPageViewModel _vm;
         public ObservableCollection<Item> CartItems { get; set; } = new();
 
-        public CartPageViewModel(DataService dataService, CartHistoryPageViewModel vm)
+        public CartPageViewModel(DataService dataService, ItemService itemService)
         {
-            _vm = vm;
-            _vm.CartUsed += CartUsedEventHandler;
+            _itemService = itemService;
+            _itemService.CartChanged += CartChangedEventHandler;
             _dataService = dataService;
         }
 
-        private void CartUsedEventHandler(object sender, CartUsedEventArgs e)
+        private void CartChangedEventHandler(object sender, CartUsedEventArgs e)
         {
             CartItems.Clear();
             foreach (var item in e.Items)
@@ -37,6 +38,7 @@ namespace BlazeCart.ViewModels
         void Remove(Item item)
         {
             CartItems.Remove(item);
+            _itemService.RemoveFromCart(item);
         }
 
         [RelayCommand]
@@ -51,7 +53,8 @@ namespace BlazeCart.ViewModels
                     item.IsFavorite = false;
                 }
                 await _dataService.AddCartToDb(cartName, CartItems, GetCartItemsCount(CartItems), GetCartPrice(CartItems));
-                await _vm.Refresh();
+           
+                _itemService.OnCartTbUpdated(EventArgs.Empty);
             }
             else
             {

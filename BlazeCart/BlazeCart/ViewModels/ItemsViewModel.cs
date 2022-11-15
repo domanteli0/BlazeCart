@@ -15,11 +15,8 @@ public partial class ItemsViewModel : BaseViewModel
     public bool isRefreshing;
     public ObservableCollection<Item> Items { get; set; } = new();
 
-    private readonly CartPageViewModel _vm;
-    private readonly FavoriteItemViewModel _vmFavoriteItemViewModel;
     [ObservableProperty]
     private ObservableCollection<Item> cartItems = new();
-
 
     [ObservableProperty]  double maximum;
     [ObservableProperty]  double minimum;
@@ -33,14 +30,14 @@ public partial class ItemsViewModel : BaseViewModel
 
     private readonly ItemService _itemService;
     private readonly ItemSearchBarService _itemSearchBarService;
-    private SliderService _sliderService;
+    private readonly SliderService _sliderService;
     private ItemFilterService _itemFilterService;
-    private DataService _dataService;
+    private readonly DataService _dataService;
 
     [ObservableProperty]
     public ObservableCollection<Item> searchResults = new();
 
-    public ItemsViewModel(ItemService itemService, CartPageViewModel vm, ItemSearchBarService itemSearchBarService, SliderService sliderService, ItemFilterService itemFilterService, DataService dataService, FavoriteItemViewModel vmF)
+    public ItemsViewModel(ItemService itemService, ItemSearchBarService itemSearchBarService, SliderService sliderService, ItemFilterService itemFilterService, DataService dataService)
     {
         ComboBoxCommands = new ObservableCollection<string>
         {
@@ -57,12 +54,11 @@ public partial class ItemsViewModel : BaseViewModel
         _sliderService = sliderService;
         _itemFilterService = itemFilterService;
         _dataService = dataService;
-        _vm = vm;
         GetItemsAsync();
         SearchResults = Items;
         LoadSlider();
         _itemFilterService = itemFilterService;
-        _vmFavoriteItemViewModel = vmF;
+    
     }
 
     async void GetItemsAsync()
@@ -89,7 +85,7 @@ public partial class ItemsViewModel : BaseViewModel
         catch (Exception ex)
         {
             Debug.WriteLine($"Unable to get items: {ex.Message}");
-            await Shell.Current.DisplayAlert("Error!", ex.Message, "OK");
+            await Shell.Current.DisplayAlert("Klaida!", ex.Message, "OK");
         }
 
         finally
@@ -98,7 +94,6 @@ public partial class ItemsViewModel : BaseViewModel
         }
 
     }
-
 
     [RelayCommand]
     void SelectionChanged()
@@ -109,10 +104,18 @@ public partial class ItemsViewModel : BaseViewModel
     [RelayCommand]
     async void AddItemToFavorites(Item item)
     {
-        item.IsFavorite = true;
-        await Shell.Current.DisplayAlert("Prekės pridėjimas sėkmingas", "Sėkmingai pažymėjote prekę kaip mėgstamiausią", "OK");
-        await _dataService.AddFavoriteItemToDb(item);
-        await _vmFavoriteItemViewModel.Refresh();
+        try
+        {
+            item.IsFavorite = true;
+            await Shell.Current.DisplayAlert("Prekės pridėjimas sėkmingas", "Sėkmingai pažymėjote prekę kaip mėgstamiausią", "OK");
+            await _dataService.AddFavoriteItemToDb(item);
+            _itemService.OnFavTbUpdated(EventArgs.Empty);
+        }
+        catch (Exception ex)
+        {
+            await Shell.Current.DisplayAlert("Klaida!", ex.Message, "OK");
+        }
+       
     }
 
     [RelayCommand]
@@ -173,7 +176,7 @@ public partial class ItemsViewModel : BaseViewModel
          catch (Exception ex)
          {
             Debug.WriteLine($"Slider error: {ex.Message}");
-            await Application.Current.MainPage.DisplayAlert("Error!", ex.Message, "OK");
+            await Shell.Current.DisplayAlert("Error!", ex.Message, "OK");
          }
          finally
          {
@@ -213,20 +216,7 @@ public partial class ItemsViewModel : BaseViewModel
     [RelayCommand]
     async void Cart(Item item)
     {
-        var query = _vm.CartItems.Where(x => x.Name == item.Name && x.Store == item.Store);
-        var result = query.ToList();
-        if (result.Count == 0)
-        {
-            _vm.CartItems.Add(item);
-        }
-        else
-        {
-            foreach (var _item in _vm.CartItems)
-            {
-                if (result.Contains(_item))
-                    _item.Quantity++;
-            }
-        }
+        _itemService.AddToCart(item);
         await Shell.Current.DisplayAlert("Įdėta į krepšelį!", "Prekė sėkmingai įdėta į krepšelį!", "OK");
     }
 

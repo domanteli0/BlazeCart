@@ -13,17 +13,21 @@ public partial class FavoriteItemViewModel : ObservableObject
     public bool IsBusy { get; set; }
     private readonly DataService _dataService;
 
-    private readonly CartPageViewModel _vm;
+    private readonly ItemService _itemService;
 
-    public FavoriteItemViewModel(DataService dataService, CartPageViewModel vm)
+    public FavoriteItemViewModel(DataService dataService, ItemService itemService)
     {
         _dataService = dataService;
-        _vm = vm; 
+        _itemService = itemService;
+        _itemService.FavTbUpdated += FavTbUpdatedEventHandler;
         FavoriteItems = new ObservableCollection<Item>();
         Task.Run(() => this.Refresh()).Wait();
     }
 
-
+    private void FavTbUpdatedEventHandler(object sender, EventArgs e)
+    {
+        Task.Run(() => this.Refresh()).Wait();
+    }
     public async Task Refresh()
     {
         IsBusy = true;
@@ -48,20 +52,7 @@ public partial class FavoriteItemViewModel : ObservableObject
     [RelayCommand]
     async void Cart(Item item)
     {
-        var query = _vm.CartItems.Where(x => x.Name == item.Name && x.Store == item.Store);
-        var result = query.ToList();
-        if (result.Count == 0)
-        {
-            _vm.CartItems.Add(item);
-        }
-        else
-        {
-            foreach (var _item in _vm.CartItems)
-            {
-                if (result.Contains(_item))
-                    _item.Quantity++;
-            }
-        }
+        _itemService.AddToCart(item);
         await Shell.Current.DisplayAlert("Įdėta į krepšelį!", "Prekė sėkmingai įdėta į krepšelį!", "OK");
 
     }

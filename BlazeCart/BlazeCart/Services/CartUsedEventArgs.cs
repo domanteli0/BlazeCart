@@ -1,7 +1,7 @@
 ﻿using System.Collections.ObjectModel;
 using BlazeCart.Models;
 
-namespace BlazeCart.ViewModels
+namespace BlazeCart.Services
 {
     public class CartUsedEventArgs : EventArgs
     {
