@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using BlazeCart.Views;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Microsoft.Extensions.Logging;
 using Debug = System.Diagnostics.Debug;
 
 namespace BlazeCart.ViewModels;
@@ -11,12 +12,10 @@ namespace BlazeCart.ViewModels;
 
 public partial class ItemsViewModel : BaseViewModel
 {
-    [ObservableProperty]
-    public bool isRefreshing;
+    [ObservableProperty] public bool isRefreshing;
     public ObservableCollection<Item> Items { get; set; } = new();
 
-    [ObservableProperty]
-    private ObservableCollection<Item> cartItems = new();
+    [ObservableProperty] private ObservableCollection<Item> cartItems = new();
 
     [ObservableProperty]  double maximum;
     [ObservableProperty]  double minimum;
@@ -34,10 +33,10 @@ public partial class ItemsViewModel : BaseViewModel
     private ItemFilterService _itemFilterService;
     private readonly DataService _dataService;
 
-    [ObservableProperty]
-    public ObservableCollection<Item> searchResults = new();
+    [ObservableProperty] public ObservableCollection<Item> searchResults = new();
 
-    public ItemsViewModel(ItemService itemService, ItemSearchBarService itemSearchBarService, SliderService sliderService, ItemFilterService itemFilterService, DataService dataService)
+    private readonly ILogger<ItemsViewModel> _logger;
+    public ItemsViewModel(ItemService itemService, ItemSearchBarService itemSearchBarService, SliderService sliderService, ItemFilterService itemFilterService, DataService dataService, ILogger<ItemsViewModel> logger)
     {
         ComboBoxCommands = new ObservableCollection<string>
         {
@@ -53,12 +52,12 @@ public partial class ItemsViewModel : BaseViewModel
         _itemSearchBarService = itemSearchBarService;
         _sliderService = sliderService;
         _itemFilterService = itemFilterService;
+        _logger = logger;
         _dataService = dataService;
         GetItemsAsync();
         SearchResults = Items;
         LoadSlider();
-        _itemFilterService = itemFilterService;
-    
+
     }
 
     async void GetItemsAsync()
@@ -80,12 +79,14 @@ public partial class ItemsViewModel : BaseViewModel
 
             foreach (var item in items)
                 Items.Add(item);
+            _logger.LogInformation("Successfully retrieved items from .json");
         }
 
         catch (Exception ex)
         {
-            Debug.WriteLine($"Unable to get items: {ex.Message}");
+            _logger.LogError(ex, $"Unable to get items: {ex.Message}");
             await Shell.Current.DisplayAlert("Klaida!", ex.Message, "OK");
+            throw;
         }
 
         finally
@@ -110,9 +111,11 @@ public partial class ItemsViewModel : BaseViewModel
             await Shell.Current.DisplayAlert("Prekės pridėjimas sėkmingas", "Sėkmingai pažymėjote prekę kaip mėgstamiausią", "OK");
             await _dataService.AddFavoriteItemToDb(item);
             _itemService.OnFavTbUpdated(EventArgs.Empty);
+            _logger.LogInformation($"Item {item.Name} added to favorites");
         }
         catch (Exception ex)
         {
+            _logger.LogError(ex, "Error on adding favorite item to DB");
             await Shell.Current.DisplayAlert("Klaida!", ex.Message, "OK");
         }
        
@@ -144,7 +147,7 @@ public partial class ItemsViewModel : BaseViewModel
         }
         catch (Exception ex)
         {
-            Debug.WriteLine($"Unable to update the slider: {ex.Message}");
+            _logger.LogError($"Unable to update the slider: {ex.Message}");
             await Shell.Current.DisplayAlert("Error!", ex.Message, "OK");
         }
         finally
@@ -175,8 +178,8 @@ public partial class ItemsViewModel : BaseViewModel
          }
          catch (Exception ex)
          {
-            Debug.WriteLine($"Slider error: {ex.Message}");
-            await Shell.Current.DisplayAlert("Error!", ex.Message, "OK");
+             _logger.LogError($"Slider error: {ex.Message}");
+             await Shell.Current.DisplayAlert("Error!", ex.Message, "OK");
          }
          finally
          {
@@ -216,14 +219,22 @@ public partial class ItemsViewModel : BaseViewModel
     [RelayCommand]
     async void Cart(Item item)
     {
-        _itemService.AddToCart(item);
-        await Shell.Current.DisplayAlert("Įdėta į krepšelį!", "Prekė sėkmingai įdėta į krepšelį!", "OK");
+        try
+        {
+            _itemService.AddToCart(item);
+            _logger.LogInformation($"Item {item.Name} added to cart");
+            await Shell.Current.DisplayAlert("Įdėta į krepšelį!", "Prekė sėkmingai įdėta į krepšelį!", "OK");
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError($"Adding item to cart error: {ex.Message}");
+        }
     }
 
     [RelayCommand]
     async Task Tap(Item item)
     {
-        if(item!=null)
+        if(item != null)
         {
             await Shell.Current.GoToAsync(
                   $"{nameof(ItemPage)}", new Dictionary<string, object>
@@ -238,6 +249,7 @@ public partial class ItemsViewModel : BaseViewModel
         }
         else
         {
+            _logger.LogError($"Failed to load item page with data");
            await Shell.Current.DisplayAlert("Klaida!", "Nepavyko atidaryti prekės informaciją!", "OK");
         }
     }
