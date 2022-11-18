@@ -117,6 +117,7 @@ public partial class ItemsViewModel : BaseViewModel
         {
             _logger.LogError(ex, "Error on adding favorite item to DB");
             await Shell.Current.DisplayAlert("Klaida!", ex.Message, "OK");
+            throw;
         }
        
     }
@@ -149,6 +150,7 @@ public partial class ItemsViewModel : BaseViewModel
         {
             _logger.LogError($"Unable to update the slider: {ex.Message}");
             await Shell.Current.DisplayAlert("Error!", ex.Message, "OK");
+            throw;
         }
         finally
         {
@@ -169,6 +171,7 @@ public partial class ItemsViewModel : BaseViewModel
              if (double.IsNaN(rangeStart) || double.IsNaN(rangeEnd))
              {
                  Debug.WriteLine($"Range selected is incorrect");
+                 _logger.LogInformation("Range selected is incorrect");
                  isBusy = false;
                  return;
              }
@@ -180,6 +183,7 @@ public partial class ItemsViewModel : BaseViewModel
          {
              _logger.LogError($"Slider error: {ex.Message}");
              await Shell.Current.DisplayAlert("Error!", ex.Message, "OK");
+             throw;
          }
          finally
          {
@@ -198,6 +202,7 @@ public partial class ItemsViewModel : BaseViewModel
             SearchResults = Items;
             _sliderService.GetSearchResults(rangeStart, rangeEnd);
             LoadSlider();
+            _logger.LogInformation($"Search performed");
         }
         else
         {
@@ -228,6 +233,7 @@ public partial class ItemsViewModel : BaseViewModel
         catch (Exception ex)
         {
             _logger.LogError($"Adding item to cart error: {ex.Message}");
+            throw;
         }
     }
 
@@ -236,6 +242,7 @@ public partial class ItemsViewModel : BaseViewModel
     {
         if(item != null)
         {
+            _logger.LogInformation($"Performed navigation to item page of {item}");
             await Shell.Current.GoToAsync(
                   $"{nameof(ItemPage)}", new Dictionary<string, object>
                   { 
@@ -260,5 +267,6 @@ public partial class ItemsViewModel : BaseViewModel
         SearchResults = Items;
         IsRefreshing = false;
         LoadSlider();
+        _logger.LogInformation("Refreshed page");
     }
 }

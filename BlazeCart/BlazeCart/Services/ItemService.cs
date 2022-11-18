@@ -10,7 +10,7 @@ public class ItemService
     ObservableCollection<Item> _itemList = new();
     public ObservableCollection<Item> CartItems { get; set; } = new();
 
-    public event EventHandler<CartUsedEventArgs> CartChanged;
+    public event EventHandler<CartUsedEventArgs> CartUsed;
 
     public event EventHandler<EventArgs> CartTbUpdated;
 
@@ -64,7 +64,7 @@ public class ItemService
     }
     public virtual void OnCartChanged(CartUsedEventArgs e)
     {
-        if (CartChanged != null) CartChanged(this, e);
+        if (CartUsed != null) CartUsed(this, e);
     }
 
     public virtual void OnCartTbUpdated(EventArgs e)

@@ -3,6 +3,7 @@ using BlazeCart.Models;
 using BlazeCart.Services;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Microsoft.Extensions.Logging;
 
 
 namespace BlazeCart.ViewModels
@@ -15,59 +16,78 @@ namespace BlazeCart.ViewModels
 
         private ItemService _itemService;
 
-        public event EventHandler<CartUsedEventArgs> CartUsed;
-
         [ObservableProperty] int cartTotalPrice;
 
-        public  CartHistoryPageViewModel(DataService dataService, ItemService itemService)
+        private readonly ILogger<CartHistoryPageViewModel> _logger;
+
+        public  CartHistoryPageViewModel(DataService dataService, ItemService itemService, ILogger<CartHistoryPageViewModel> logger)
         {
             Carts = new ObservableCollection<Cart>();
             _dataService = dataService;
             _itemService = itemService;
             _itemService.CartTbUpdated += CartTbUpdatedEventHandler;
+            _logger = logger;
             Task.Run(() => this.Refresh()).Wait();
         }
 
         private void CartTbUpdatedEventHandler(object sender, EventArgs e)
         {
             Task.Run(() => this.Refresh()).Wait();
+            _logger.LogInformation("Handled event CartTbUpdated");
         }
-
-        public virtual void OnCartUsed(CartUsedEventArgs e)
-        {
-            if (CartUsed != null) CartUsed(this, e);
-        }
-
         public async Task Refresh()
         {
             IsBusy = true;
 
-            await Task.Delay(100);
-
-            Carts.Clear();
-
-            var carts = await _dataService.GetCartsFromDb();
-
-            foreach (var cart in carts)
+            try
             {
-                
-                Carts.Add(cart);
+                await Task.Delay(100);
+                Carts.Clear();
+                var carts = await _dataService.GetCartsFromDb();
+                foreach (var cart in carts)
+                {
+
+                    Carts.Add(cart);
+                }
             }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Unable get carts from DB, {ex.Message}");
+                throw;
+            }
+
             IsBusy = false;
         }
 
         [RelayCommand]
         async Task UseCart(Cart cart)
         {
-            _itemService.PutItems(cart.CartItems);
-            await Shell.Current.DisplayAlert("Pritaikyta!", "Krepšelis sėkmingai pritaikytas!", "OK");
+            try
+            {
+                _itemService.PutItems(cart.CartItems);
+                _logger.LogInformation($"Successfully used {cart.Id}, {cart.Name}");
+                await Shell.Current.DisplayAlert("Pritaikyta!", "Krepšelis sėkmingai pritaikytas!", "OK");
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Unable to use {cart.Id}, {cart.Name}, error: {ex.Message}");
+                throw;
+            }
         }
 
         [RelayCommand]
         async Task Remove(Cart cart)
         {
-            await _dataService.RemoveCartFromDb(cart.Id);
-            await Refresh();
+            try
+            {
+                await _dataService.RemoveCartFromDb(cart.Id);
+                await Refresh();
+            }
+            catch(Exception ex)
+            {
+                _logger.LogError($"Failed to remove {cart.Id},{cart.Name} from DB, error: {ex.Message}");
+            }
+            
         }
     }
 }

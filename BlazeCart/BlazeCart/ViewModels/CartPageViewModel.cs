@@ -21,11 +21,11 @@ namespace BlazeCart.ViewModels
         public CartPageViewModel(DataService dataService, ItemService itemService)
         {
             _itemService = itemService;
-            _itemService.CartChanged += CartChangedEventHandler;
+            _itemService.CartUsed += CartUsedEventHandler;
             _dataService = dataService;
         }
 
-        private void CartChangedEventHandler(object sender, CartUsedEventArgs e)
+        private void CartUsedEventHandler(object sender, CartUsedEventArgs e)
         {
             CartItems.Clear();
             foreach (var item in e.Items)
