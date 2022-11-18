@@ -2,7 +2,7 @@
 using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Host;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Logging.Abstractions;
+//using Microsoft.Extensions.Logging.Abstractions;
 
 using Models;
 using Scraper;
@@ -15,53 +15,48 @@ namespace ScraperFunction
 {
     public class ScraperFunction
     {
+        public readonly ScraperDbContext DbCtx;
+
+        public ScraperFunction(ScraperDbContext dbCtx)
+        {
+            DbCtx = dbCtx;
+        }
+
         [FunctionName("ScraperFunction")]
         public async Task Run(
-            [TimerTrigger("0 0 * * * *", RunOnStartup = true)]TimerInfo myTimer, ILogger log
+            [TimerTrigger("0 0 * * * *", RunOnStartup = true)]TimerInfo myTimer,
+            ILogger log
         )
         {
             log.LogInformation($"`ScraperFunction` Timer trigger function executed at: {DateTime.Now}");
 
-            DbContextFactory ctxFac = null;
-            try
+            DbCtx.Database.Migrate();
+
+            await DbCtx.Items.ForEachAsync(i => { DbCtx.Remove(i); } );
+
+            var bScraper = new BarboraScraper();
+            var iScraper = new IKIScraper();
+
+            var tasks = new List<Task>();
+            tasks.Add(Task.Run(async () =>
             {
-                ctxFac = new DbContextFactory("AzureDB");
-            } catch (Exception e)
+                await bScraper.Scrape();
+                log.LogInformation($"Barbora item Count: {bScraper.Items.Count} at: {DateTime.Now}");
+            }));
+
+            tasks.Add(Task.Run(async () =>
             {
-                log.LogInformation(e.ToString());
-                throw e;
-            }
+                await iScraper.Scrape();
+                log.LogInformation($"IKI item Count: {iScraper.Items.Count} at: {DateTime.Now}");
+            }));
 
-            using (ScraperDbContext db = ctxFac.CreateDbContext(null))
-            {
-                db.Database.Migrate();
+            await Task.WhenAll(tasks);
 
-                await db.Items.ForEachAsync(i => { db.Remove(i); } );
+            DbCtx.Items.AddRange(bScraper.Items);
+            DbCtx.Items.AddRange(iScraper.Items);
 
-                var bScraper = new BarboraScraper();
-                var iScraper = new IKIScraper();
-
-                var tasks = new List<Task>();
-                tasks.Add(Task.Run(async () =>
-                {
-                    await bScraper.Scrape();
-                    log.LogInformation($"Barbora item Count: {bScraper.Items.Count} at: {DateTime.Now}");
-                }));
-
-                tasks.Add(Task.Run(async () =>
-                {
-                    await iScraper.Scrape();
-                    log.LogInformation($"IKI item Count: {iScraper.Items.Count} at: {DateTime.Now}");
-                }));
-
-                await Task.WhenAll(tasks);
-
-                bScraper.Items.ForEach(i => db.Items.Add(i));
-                iScraper.Items.ForEach(i => db.Items.Add(i));
-
-                db.SaveChanges();
-                log.LogInformation($"All items updated successfully");
-            }
+            DbCtx.SaveChanges();
+            log.LogInformation($"All items updated successfully");
 
         }
     }
