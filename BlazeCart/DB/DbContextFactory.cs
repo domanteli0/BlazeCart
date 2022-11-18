@@ -16,7 +16,7 @@ namespace DB
         {
             var configuration = new ConfigurationBuilder()
               .SetBasePath(Directory.GetCurrentDirectory())
-              .AddUserSecrets<Program>()
+              .AddUserSecrets<DbContextFactory>()
               .Build();
             
             string connectionString = configuration.GetConnectionString(_conStrKey)!;
