@@ -117,6 +117,7 @@
                         <ImageButton
                         Margin="0, 0, 10, 0"
                         Source="heart_button_item.png"
+                        Command="{Binding AddItemToFavoritesCommand }"
                         VerticalOptions="End"
                         HeightRequest="50"
                         HorizontalOptions="Start"/>

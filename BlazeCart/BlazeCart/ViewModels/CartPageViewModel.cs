@@ -3,6 +3,7 @@ using BlazeCart.Models;
 using BlazeCart.Services;
 using BlazeCart.Views;
 using CommunityToolkit.Mvvm.Input;
+using Microsoft.Extensions.Logging;
 
 namespace BlazeCart.ViewModels
 {
@@ -12,15 +13,14 @@ namespace BlazeCart.ViewModels
 
         private ItemService _itemService;
 
-        public Cart Cart { get; set; }
-
-        public int ItemCount { get; set; }
-
         public ObservableCollection<Item> CartItems { get; set; } = new();
 
-        public CartPageViewModel(DataService dataService, ItemService itemService)
+        private ILogger<CartPageViewModel> _logger;
+
+        public CartPageViewModel(DataService dataService, ItemService itemService, ILogger<CartPageViewModel> logger)
         {
             _itemService = itemService;
+            _logger = logger;
             _itemService.CartUsed += CartUsedEventHandler;
             _dataService = dataService;
         }
@@ -37,28 +37,46 @@ namespace BlazeCart.ViewModels
         [RelayCommand]
         void Remove(Item item)
         {
-            CartItems.Remove(item);
-            _itemService.RemoveFromCart(item);
+            try
+            {
+                CartItems.Remove(item);
+                _itemService.RemoveFromCart(item);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Unable to remove item from cart: {item.ItemId}, {item.Name}, {ex.Message}");
+                throw;
+            }
         }
 
         [RelayCommand]
         async void Save(object obj)
         {
-            if (CartItems.Count > 0)
+            try
             {
-                string cartName = await Shell.Current.DisplayPromptAsync("Išsaugoti krepšelį", "Įveskite krepšelio pavadinimą: ", "OK",
-               "Cancel", "Įveskite pavadinimą...");
-                foreach (var item in CartItems)
+                if (CartItems.Count > 0)
                 {
-                    item.IsFavorite = false;
+                    string cartName = await Shell.Current.DisplayPromptAsync("Išsaugoti krepšelį",
+                        "Įveskite krepšelio pavadinimą: ", "OK",
+                        "Cancel", "Įveskite pavadinimą...");
+                    foreach (var item in CartItems)
+                    {
+                        item.IsFavorite = false;
+                    }
+
+                    await _dataService.AddCartToDb(cartName, CartItems, GetCartItemsCount(CartItems),
+                        GetCartPrice(CartItems));
+
+                    _itemService.OnCartTbUpdated(EventArgs.Empty);
                 }
-                await _dataService.AddCartToDb(cartName, CartItems, GetCartItemsCount(CartItems), GetCartPrice(CartItems));
-           
-                _itemService.OnCartTbUpdated(EventArgs.Empty);
+                else
+                {
+                    await Shell.Current.DisplayAlert("Klaida!", "Krepšelis tuščias!", "OK");
+                }
             }
-            else
+            catch (Exception ex)
             {
-                await Shell.Current.DisplayAlert("Klaida!", "Krepšelis tuščias!", "OK");
+                _logger.LogError($"Unable to save cart: {ex.Message}");
             }
         }
 
@@ -99,7 +117,8 @@ namespace BlazeCart.ViewModels
         [RelayCommand]
         private void RemoveQuantity(Item item)
         {
-            item.Quantity--;
+            if(item.Quantity > 1)
+                item.Quantity--;
         }
 
     }

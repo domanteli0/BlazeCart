@@ -22,9 +22,9 @@ public class ItemService
             return _itemList;
         }
 
-        using var stream = await FileSystem.OpenAppPackageFileAsync("shopItems.json");
+        await using var stream = await FileSystem.OpenAppPackageFileAsync("shopItems.json");
         using StreamReader r = new(stream);
-        string json = r.ReadToEnd();
+        string json = await r.ReadToEndAsync();
         var jobj = JObject.Parse(json);
         _itemList = JsonConvert.DeserializeObject<ObservableCollection<Item>>(jobj["shopItems"].ToString());
         return _itemList;

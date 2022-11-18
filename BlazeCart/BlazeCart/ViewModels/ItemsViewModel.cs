@@ -84,7 +84,7 @@ public partial class ItemsViewModel : BaseViewModel
 
         catch (Exception ex)
         {
-            _logger.LogError(ex, $"Unable to get items: {ex.Message}");
+            _logger.LogError(ex, $"Unable to get items from .json: {ex.Message}");
             await Shell.Current.DisplayAlert("Klaida!", ex.Message, "OK");
             throw;
         }

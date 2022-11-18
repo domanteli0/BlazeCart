@@ -27,12 +27,12 @@ namespace BlazeCart.ViewModels
             _itemService = itemService;
             _itemService.CartTbUpdated += CartTbUpdatedEventHandler;
             _logger = logger;
-            Task.Run(() => this.Refresh()).Wait();
+            Task.Run(this.Refresh).Wait();
         }
 
         private void CartTbUpdatedEventHandler(object sender, EventArgs e)
         {
-            Task.Run(() => this.Refresh()).Wait();
+            Task.Run(this.Refresh).Wait();
             _logger.LogInformation("Handled event CartTbUpdated");
         }
         public async Task Refresh()
@@ -86,6 +86,7 @@ namespace BlazeCart.ViewModels
             catch(Exception ex)
             {
                 _logger.LogError($"Failed to remove {cart.Id},{cart.Name} from DB, error: {ex.Message}");
+                throw;
             }
             
         }
