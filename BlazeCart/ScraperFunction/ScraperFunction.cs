@@ -4,7 +4,6 @@ using Microsoft.Azure.WebJobs.Host;
 using Microsoft.Extensions.Logging;
 //using Microsoft.Extensions.Logging.Abstractions;
 
-using Models;
 using Scraper;
 using DB;
 using Microsoft.EntityFrameworkCore;
