@@ -2,17 +2,17 @@
 {
     public class Store : Entity
     {
-        public enum Merchendise { IKI, MAXIMA }
-        public string InternalID { get;  }
-        private string? _name;
-        private string? _address;
-        private string? _latitude;
-        private string? _longitude;
-        private Merchendise _merch;
+
+        public string InternalID { get; set; }
+        public string Name { get; set; }
+        public string? Address { get; set; }
+        public string? Latitude { get; set; }
+        public string? Longitude { get; set; }
+        //public Merchendise.Merch Merch { get; set; }
 
         public Store(
             string internalID,
-            Merchendise merch,
+            //Merchendise.Merch merch,
             string? name = null,
             string? address = null,
             string? latitude = null,
@@ -20,11 +20,11 @@
         )
         {
             InternalID = internalID;
-            _merch = merch;
-            _name = name;
-            _address = address;
-            _latitude = latitude;
-            _longitude = longitude;
+            //Merch = merch;
+            Name = name;
+            Address = address;
+            Latitude = latitude;
+            Longitude = longitude;
         }
     }
 }

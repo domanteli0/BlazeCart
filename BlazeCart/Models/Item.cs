@@ -33,7 +33,7 @@ namespace Models
 
         // URIs pointing to an image of that product
         public Uri? Image { get; set; }
-        //private List<Category> _categories;
+        public Category Category { get; set; }
         //private List<String>? _barcodes;
 
         public Item(

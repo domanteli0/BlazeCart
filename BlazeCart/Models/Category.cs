@@ -4,39 +4,34 @@
     {
         public string? InternalID { get; set; }
         public Uri? Uri { get; set; }
-        private string? _nameEN;
-        private string? _nameLT;
-        private Category? _parent;
-        public List<Category> SubCategories { set; get; }
+        public string? NameEN { get; set; }
+        public string? NameLT { get; set; }
+        public Category? Parent { get; set; }
+        //public ICollection<Item> Items { get; set; }
+        public List<Category>? SubCategories { get; set; }
 
-        public Category(string? internalID = null, string? nameLT = null, string? nameEN = null, Category? parent = null, Uri? uri = null)
-        {
-            SubCategories = new List<Category>();
-            InternalID = internalID;
-            _nameLT = nameLT;
-            _nameEN = nameEN;
-            _parent = parent;
-            Uri = uri;
+        public Category() {
+            SubCategories = new();
         }
 
-        public string Tree()
-        {
-            return tree(0);
-        }
+        //public string Tree()
+        //{
+        //    return tree(0);
+        //}
 
-        private string tree(int level)
-        {
-            var str = "\t".Times(level) + ToString() + "\n";
-            foreach (var sub in SubCategories!)
-                str += sub.tree(level + 1);
+        //private string tree(int level)
+        //{
+        //    var str = "\t".Times(level) + ToString() + "\n";
+        //    foreach (var sub in SubCategories!)
+        //        str += sub.tree(level + 1);
 
-            return str;
-        }
+        //    return str;
+        //}
 
-        public override string ToString()
-        {
-            return "Name: '" + _nameLT + "' [" + InternalID + "] (" + Uri + ")";
-        }
+        //public override string ToString()
+        //{
+        //    return "Name: '" + _nameLT + "' [" + InternalID + "] (" + Uri + ")";
+        //}
     }
 
     public static class StringExtentions

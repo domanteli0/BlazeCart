@@ -36,6 +36,5 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Models\Models.csproj" />
-    <ProjectReference Include="..\Scraper\Scraper.csproj" />
   </ItemGroup>
 </Project>

@@ -70,16 +70,16 @@ namespace Scraper
             Items = new List<Item>();
             foreach (var cat in Categories.GetWithoutChildren())
             {
-                foreach (var i in await GetItemsBy(categoryID: cat.InternalID))
+                foreach (var i in await GetItemsBy(category: cat))
                 {
                     Items.AddAsSetByProperty(i, "InternalID");
                 }
             }
         }
 
-        private async Task UpdateItemsBy(string? categoryID = null, string? storeID = null)
+        private async Task UpdateItemsBy(Category? category = null, string? storeID = null)
         {
-            foreach (var item in await GetItemsBy(categoryID, storeID))
+            foreach (var item in await GetItemsBy(category, storeID))
                 Items.UpdateOrAddByProperty(item, "InternalID");
 
         }
@@ -90,7 +90,7 @@ namespace Scraper
         /// <returns></returns>
         /// <exception cref="NotImplementedException">Currently only scraping by categoryID is supported</exception>
         /// <exception cref="ArgumentException">Gets thrown if both categoryId and storeID are null</exception>
-        private async Task<IEnumerable<Item>> GetItemsBy(string? categoryID = null, string? storeID = null)
+        private async Task<IEnumerable<Item>> GetItemsBy(Category? category = null, string? storeID = null)
         {
             var request = new HttpRequestMessage(
                 new HttpMethod("POST"),
@@ -99,18 +99,18 @@ namespace Scraper
             request.Headers.TryAddWithoutValidation("Accept", "application/json, text/plain, */*");
             request.Headers.TryAddWithoutValidation("Host", "eparduotuve.iki.lt");
 
-            if (categoryID is not null)
+            if (category is not null)
             {
                 request.Content =
                     new StringContent("{\"limit\":60,\"params\":{\"type\":\"view_products\",\"categoryIds\":[\""
-                    + categoryID +
+                    + category.InternalID +
                     "\"],\"filter\":{}}}");
 
             }
             // TODO: Implement these
             else if (storeID is not null)
                 throw new NotImplementedException("Fetching items by storeID is not yet supported");
-            else if (storeID is not null && categoryID is not null)
+            else if (storeID is not null && category is not null)
                 throw new NotImplementedException("Fetching items by storeID and categoryID is not yet supported");
             else
                 throw new ArgumentException("Either categoryID or storeID must be not null");
@@ -121,7 +121,7 @@ namespace Scraper
             StreamReader reader = new StreamReader(response.Content.ReadAsStream());
             JObject JSONresponse = JObject.Parse(reader.ReadToEnd());
 
-            return ParseItemsJSON(JSONresponse);
+            return ParseItemsJSON(JSONresponse, category);
         }
 
         /// <summary>
@@ -131,12 +131,12 @@ namespace Scraper
         {
             foreach (var cat in data)
             {
-                var listing = new Category(
-                    nameEN: cat["name"]!["en"]!.ToString(),
-                    internalID: cat["id"]!.ToString(),
-                    nameLT: cat["name"]!["lt"]!.ToString(),
-                    parent: parent
-                );
+                var listing = new Category() {
+                    Parent = parent,
+                    NameEN = cat["name"]!["en"]!.ToString(),
+                    InternalID = cat["id"]!.ToString(),
+                    NameLT = cat["name"]!["lt"]!.ToString(),
+                };
 
                 var cat_ = cat["subcategories"]!;
                 if (cat_.Count() > 0)
@@ -149,7 +149,7 @@ namespace Scraper
                 {
                     Stores.AddAsSetByProperty(
                         new Store(
-                            merch: Store.Merchendise.IKI,
+                            //merch: Merchendise.Merch.IKI,
                             internalID: storeId.ToString()
                         ),
                         "InternalID"
@@ -165,7 +165,7 @@ namespace Scraper
             foreach (JToken cat_ in data["chains"]!.Last!["stores"]!)
             {
                 var newStore = new Store(
-                    merch: Store.Merchendise.IKI,
+                    //merch: Merchendise.Merch.IKI,
                     internalID: cat_["id"]!.ToString(),
                     name: cat_["name"]!.ToString(),
                     address: cat_["streetAndBuilding"]!.ToString(),
@@ -176,7 +176,7 @@ namespace Scraper
             }
         }
 
-        private IEnumerable<Item> ParseItemsJSON(JObject data)
+        private IEnumerable<Item> ParseItemsJSON(JObject data, Category category)
         {
             foreach (var jtoken in data["data"]!)
             {
@@ -206,7 +206,8 @@ namespace Scraper
                     Description = jtoken["description"]?["lt"]?.ToString(),
                     DiscountPrice = (int?)(jtoken["prc"]!["s"]?.ToObject<float?>() * 100),
                     LoyaltyPrice = (int?)(jtoken["prc"]!["l"]?.ToObject<decimal?>() * 100),
-                    Ammount = jtoken["conversionValue"]!.ToObject<float>()
+                    Ammount = jtoken["conversionValue"]!.ToObject<float>(),
+                    Category = category,
                     //barcodes: jtoken["barcodes"]!.ToObject<List<String>>()
                 };
 

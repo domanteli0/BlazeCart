@@ -6,23 +6,26 @@ namespace DB
 {
     public class DbContextFactory : IDesignTimeDbContextFactory<ScraperDbContext>
     {
-        private string _conStrKey;
-        public DbContextFactory(string conStringKey) : base()
+        private string _conStr;
+        public DbContextFactory() : base()
         {
-            _conStrKey = conStringKey;
+            var configuration = new ConfigurationBuilder()
+                .SetBasePath(Directory.GetCurrentDirectory())
+                .AddUserSecrets<DbContextFactory>()
+                .Build();
+
+            _conStr = configuration.GetConnectionString("ScraperDB");
+        }
+
+        public DbContextFactory(string conString) : base()
+        {
+            _conStr = conString;
         }
 
         public ScraperDbContext CreateDbContext(string[] args)
         {
-            var configuration = new ConfigurationBuilder()
-              .SetBasePath(Directory.GetCurrentDirectory())
-              .AddUserSecrets<DbContextFactory>()
-              .Build();
-            
-            string connectionString = configuration.GetConnectionString(_conStrKey)!;
-
             DbContextOptionsBuilder<ScraperDbContext> optionsBuilder = new DbContextOptionsBuilder<ScraperDbContext>()
-                .UseSqlServer(connectionString);
+                .UseSqlServer(_conStr);
 
             return new ScraperDbContext(optionsBuilder.Options);
         }

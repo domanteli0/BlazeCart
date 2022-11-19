@@ -7,6 +7,7 @@ namespace DB
     public class ScraperDbContext : DbContext
     {
         public DbSet<Item> Items { get; set; }
+        public DbSet<Category> Categories { get; set; }
 
         public ScraperDbContext(DbContextOptions<ScraperDbContext> options) : base(options) { }
 
@@ -14,7 +15,12 @@ namespace DB
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Item>().ToTable("Item");
+            modelBuilder.Entity<Item>()
+                .ToTable("Item");
+
+            modelBuilder.Entity<Category>()
+                .ToTable("Category");
+
             base.OnModelCreating(modelBuilder);
         }
 

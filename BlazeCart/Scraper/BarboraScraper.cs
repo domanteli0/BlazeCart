@@ -83,11 +83,12 @@ namespace Scraper
                 {
                     var url = "https://barbora.lt" + catHtml.CssSelect("a").First().GetAttributeValue("href");
 
-                    var cat = new Category(
-                        internalID: catHtml.GetAttributeValue("data-b-cat-id"),
-                        nameLT: catHtml.CssSelect("a").First().InnerText.Trim(),
-                        uri: new Uri(url)
-                    );
+                    var cat = new Category()
+                    {
+                        InternalID = catHtml.GetAttributeValue("data-b-cat-id"),
+                        NameLT = catHtml.CssSelect("a").First().InnerText.Trim(),
+                        Uri = new Uri(url)
+                    };
 
                     using (var request = new HttpRequestMessage(new HttpMethod("GET"), url))
                     {
@@ -103,22 +104,25 @@ namespace Scraper
                     // Category child loop
                     foreach (var i in catDoc.CssSelect("div.b-single-category--box"))
                     {
-                        Category catChild = new Category(
-                            nameLT: i.CssSelect("a.b-single-category--child").First().InnerText.Trim(),
-                            parent: cat,
-                            uri: new Uri("https://barbora.lt/" + i.CssSelect("a.b-single-category--child").First().GetAttributeValue("href"))
-                        );
+                        Category catChild = new Category()
+                        {
+                            NameLT = i.CssSelect("a.b-single-category--child").First().InnerText.Trim(),
+                            Parent = cat,
+                            Uri = new Uri("https://barbora.lt/" + i.CssSelect("a.b-single-category--child").First().GetAttributeValue("href"))
+
+                        };
                         cat.SubCategories.Add(catChild);
 
                         // TODO: Check if there are multiple pages and scrape them if there are
                         // Category grandchild loop
                         foreach (var ii in i.CssSelect("a.b-single-category--grandchild"))
                         {
-                            var catGrandChild = new Category(
-                                nameLT: ii.InnerText.Trim(),
-                                parent: catChild,
-                                uri: new Uri("https://barbora.lt" + ii.GetAttributeValue("href"))
-                            );
+                            var catGrandChild = new Category() {
+                                NameLT = ii.InnerText.Trim(),
+                                Uri = new Uri("https://barbora.lt" + ii.GetAttributeValue("href")),
+                                Parent = catChild,
+
+                            };
 
                             catChild.SubCategories.Add(catGrandChild);
                         }

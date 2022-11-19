@@ -3,6 +3,9 @@ namespace Models
 {
     public class Entity
     {
+        public enum Merchendise { IKI, MAXIMA }
+        public Merchendise Merch { get; set; }
+
         public Guid Id { get; set; }
 
         public DateTime CreatedOn { get; set; }
@@ -10,6 +13,7 @@ namespace Models
         public DateTime? ModifiedOn { get; set; }
 
         protected virtual object Actual => this;
+
 
         public override bool Equals(object obj)
         {
