@@ -1,13 +1,12 @@
-﻿using System;
+﻿using System.IO;
+using DB;
 using Microsoft.Azure.Functions.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
-using DB;
 using Microsoft.Extensions.Configuration;
 using System.IO;
 using System.Reflection;
 
-[assembly: FunctionsStartup(typeof(ScraperFunction.Startup))]
+[assembly: FunctionsStartup(typeof(Startup))]
 namespace ScraperFunction
 {
     public class Startup : FunctionsStartup

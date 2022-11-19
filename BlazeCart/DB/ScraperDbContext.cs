@@ -15,11 +15,7 @@ namespace DB
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Item>()
-                .ToTable("Item");
-
-            modelBuilder.Entity<Category>()
-                .ToTable("Category");
+            modelBuilder.Entity<Item>().HasOne(i => i.Category).WithMany(cat => cat.Items);
 
             base.OnModelCreating(modelBuilder);
         }

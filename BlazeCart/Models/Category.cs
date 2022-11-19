@@ -7,7 +7,7 @@
         public string? NameEN { get; set; }
         public string? NameLT { get; set; }
         public Category? Parent { get; set; }
-        //public ICollection<Item> Items { get; set; }
+        public ICollection<Item> Items { get; set; }
         public List<Category>? SubCategories { get; set; }
 
         public Category() {
