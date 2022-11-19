@@ -27,11 +27,7 @@ namespace ScraperFunction
             ILogger log
         )
         {
-            log.LogInformation($"`ScraperFunction` Timer trigger function executed at: {DateTime.Now}");
-
-            DbCtx.Database.Migrate();
-
-            await DbCtx.Items.ForEachAsync(i => { DbCtx.Remove(i); } );
+            log.LogInformation($"`ScraperFunction` Timer trigger function executed at: {DateTime.UtcNow}");
 
             //var bScraper = new BarboraScraper();
             var iScraper = new IKIScraper();
@@ -46,16 +42,21 @@ namespace ScraperFunction
             tasks.Add(Task.Run(async () =>
             {
                 await iScraper.Scrape();
-                log.LogInformation($"IKI item Count: {iScraper.Items.Count} at: {DateTime.Now}");
+                log.LogInformation($"IKI item Count: {iScraper.Items.Count} at: {DateTime.UtcNow}");
             }));
 
             await Task.WhenAll(tasks);
+            log.LogInformation($"Scraping finished at: {DateTime.UtcNow}");
+
+            DbCtx.Database.Migrate();
+
+            await DbCtx.Items.ForEachAsync(i => { DbCtx.Remove(i); });
 
             //DbCtx.Items.AddRange(bScraper.Items);
             DbCtx.Items.AddRange(iScraper.Items);
 
             DbCtx.SaveChanges();
-            log.LogInformation($"All items updated successfully");
+            log.LogInformation($"All items updated successfully at: {DateTime.UtcNow}");
         }
     }
 }

@@ -7,7 +7,8 @@ namespace Scraper
 {
     internal class Program
     {
-        // This is just for demonstration purposes
+        // In case, ScraperFunction ceases to work
+        // This can be used to populate the DB
         static async Task Main(string[] args)
         {
             var configuration = new ConfigurationBuilder()

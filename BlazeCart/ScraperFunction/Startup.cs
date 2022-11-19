@@ -3,10 +3,12 @@ using DB;
 using Microsoft.Azure.Functions.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
-using System.IO;
+using System;
 using System.Reflection;
+using Microsoft.Extensions.DependencyInjection;
+using Newtonsoft.Json.Serialization;
 
-[assembly: FunctionsStartup(typeof(Startup))]
+[assembly: FunctionsStartup(typeof(ScraperFunction.Startup))]
 namespace ScraperFunction
 {
     public class Startup : FunctionsStartup
@@ -14,14 +16,16 @@ namespace ScraperFunction
 
         public override void Configure(IFunctionsHostBuilder builder)
         {
-            var conf = builder.GetContext().Configuration;
-            var conStr = conf.GetConnectionString("ScraperDB");
+            var config = builder.GetContext().Configuration;
+            var conStr = config.GetConnectionStringOrSetting("ScraperDB");
 
             if (conStr is null)
-                throw new Exception("ScraperDB not found");
+                throw new Exception("ScraperDB connection string not found");
 
             builder.Services.AddDbContext<ScraperDbContext>(
                 options => SqlServerDbContextOptionsExtensions.UseSqlServer(options, conStr));
+
+            builder.Services.AddSingleton<IConfiguration>(config);
         }
     }
 }

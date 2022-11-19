@@ -5,9 +5,9 @@ namespace Models
     {
         public Guid Id { get; set; }
 
-        public DateTime CreatedOn { get; set; }
+        public DateTime CreatedOn { get; set; } = DateTime.Now;
 
-        public DateTime? ModifiedOn { get; set; }
+        public DateTime? ModifiedOn { get; set; } = DateTime.Now;
 
         protected virtual object Actual => this;
 
