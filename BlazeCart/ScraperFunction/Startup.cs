@@ -5,6 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 using DB;
 using Microsoft.Extensions.Configuration;
 using System.IO;
+using System.Reflection;
 
 [assembly: FunctionsStartup(typeof(ScraperFunction.Startup))]
 namespace ScraperFunction
@@ -14,18 +15,14 @@ namespace ScraperFunction
 
         public override void Configure(IFunctionsHostBuilder builder)
         {
-            var configuration = new ConfigurationBuilder()
-              .SetBasePath(Directory.GetCurrentDirectory())
-              .AddUserSecrets<Startup>()
-              .Build();
+            var conf = builder.GetContext().Configuration;
+            var conStr = conf.GetConnectionString("ScraperDB");
 
-            string connectionString = configuration.GetConnectionString("AzureDB")!;
-
-            DbContextOptionsBuilder<ScraperDbContext> optionsBuilder = new DbContextOptionsBuilder<ScraperDbContext>()
-                .UseSqlServer(connectionString);
+            if (conStr is null)
+                throw new Exception("ScraperDB not found");
 
             builder.Services.AddDbContext<ScraperDbContext>(
-                options => SqlServerDbContextOptionsExtensions.UseSqlServer(options, connectionString));
+                options => SqlServerDbContextOptionsExtensions.UseSqlServer(options, conStr));
         }
     }
 }

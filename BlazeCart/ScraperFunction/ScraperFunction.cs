@@ -33,15 +33,15 @@ namespace ScraperFunction
 
             await DbCtx.Items.ForEachAsync(i => { DbCtx.Remove(i); } );
 
-            var bScraper = new BarboraScraper();
+            //var bScraper = new BarboraScraper();
             var iScraper = new IKIScraper();
 
             var tasks = new List<Task>();
-            tasks.Add(Task.Run(async () =>
-            {
-                await bScraper.Scrape();
-                log.LogInformation($"Barbora item Count: {bScraper.Items.Count} at: {DateTime.Now}");
-            }));
+            //tasks.Add(Task.Run(async () =>
+            //{
+            //    await bScraper.Scrape();
+            //    log.LogInformation($"Barbora item Count: {bScraper.Items.Count} at: {DateTime.Now}");
+            //}));
 
             tasks.Add(Task.Run(async () =>
             {
@@ -51,12 +51,11 @@ namespace ScraperFunction
 
             await Task.WhenAll(tasks);
 
-            DbCtx.Items.AddRange(bScraper.Items);
+            //DbCtx.Items.AddRange(bScraper.Items);
             DbCtx.Items.AddRange(iScraper.Items);
 
             DbCtx.SaveChanges();
             log.LogInformation($"All items updated successfully");
-
         }
     }
 }
