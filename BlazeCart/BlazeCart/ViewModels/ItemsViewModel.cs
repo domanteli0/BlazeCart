@@ -170,7 +170,6 @@ public partial class ItemsViewModel : BaseViewModel
              isBusy = true;
              if (double.IsNaN(rangeStart) || double.IsNaN(rangeEnd))
              {
-                 Debug.WriteLine($"Range selected is incorrect");
                  _logger.LogInformation("Range selected is incorrect");
                  isBusy = false;
                  return;
