@@ -98,7 +98,7 @@ public partial class ItemsViewModel : BaseViewModel
     [RelayCommand]
     void SelectionChanged()
     {
-
+        throw new NotImplementedException();
     }
 
     [RelayCommand]
