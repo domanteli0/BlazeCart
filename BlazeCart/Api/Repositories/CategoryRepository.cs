@@ -18,5 +18,11 @@ namespace Api.Repositories
             var records = await _context.Categories.ToListAsync();
             return records;
         }
+
+        public bool IsCategoryActiveAsync(Guid id)
+        {
+            var res = _context.Categories.Any(c => c.Id == id);
+            return res;
+        }
     }
 }

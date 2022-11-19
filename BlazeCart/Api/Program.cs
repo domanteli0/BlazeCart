@@ -1,12 +1,15 @@
 ﻿using DB;
 using Microsoft.EntityFrameworkCore;
 using System.Configuration;
+using Api.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
 builder.Services.AddControllers();
+builder.Services.AddScoped<IItemRepository, ItemRepository>();
+builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
 var configuration = new ConfigurationBuilder()
     .SetBasePath(Directory.GetCurrentDirectory())
     .AddUserSecrets<Program>()

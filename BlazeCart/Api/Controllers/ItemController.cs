@@ -8,7 +8,8 @@ using Scraper;
 
 namespace Api.Controllers
 {
-    [Route("api/items")]
+    [Route("api/[controller]")]
+    [ApiController]
     public class ItemController : Controller
     {
         private readonly  IItemRepository _itemRepository;
@@ -17,21 +18,43 @@ namespace Api.Controllers
         {
             _itemRepository = itemRepository;
         }
-        // GET: api/values
-        // public IEnumerable<Item> Get()
-        //{
-        // TODO: Query the database once DB is implemented
-        //    return (IEnumerable<Item>) (new IKIScraper()).Items;
-        //  return new List<string>();
-        // }
+      
 
-        [HttpGet(Name = "api/items")]
+        [HttpGet]
+        [ProducesResponseType(200, Type = typeof(IEnumerable<Item>))]
         public async Task<IActionResult> GetAllItems()
         {
             var items = await _itemRepository.GetAllItemsAsync();
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
             return Ok(items);
 
         }
+
+        [HttpGet("{id}")]
+        [ProducesResponseType(200, Type = typeof(Item))]
+        [ProducesResponseType(400)]
+        public async Task<IActionResult> GetItemByIdAsync(Guid id)
+        {
+            if (!_itemRepository.IsItemActiveAsync(id))
+                return NotFound();
+            var item = await _itemRepository.GetItemByIdAsync(id);
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+            return Ok(item);
+        }
+       // [HttpGet("{itemId}/category")]
+      //  [ProducesResponseType(200, Type = typeof(Item))]
+       // [ProducesResponseType(400)]
+       // public async Task<IActionResult> GetItemsByCategoryAsync(Category category)
+       // {
+         //   if (!_itemRepository.IsCategoriesActiveAsync(category.Id))
+         //       return NotFound();
+         //   var item = await _itemRepository.GetItemByIdAsync(id);
+         //   if (!ModelState.IsValid)
+        //        return BadRequest(ModelState);
+         //   return Ok(item);
+       // }
     }
 }
 
