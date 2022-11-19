@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using Api.Repositories;
 using DB;
 using Microsoft.AspNetCore.Mvc;
 using Models;
@@ -14,19 +11,26 @@ namespace Api.Controllers
     [Route("api/items")]
     public class ItemController : Controller
     {
-        private ScraperDbContext _dbContext;
+        private readonly  IItemRepository _itemRepository;
 
-        public ItemController(ScraperDbContext dbContext)
+        public ItemController(IItemRepository itemRepository)
         {
-            _dbContext = dbContext;
+            _itemRepository = itemRepository;
         }
         // GET: api/values
+        // public IEnumerable<Item> Get()
+        //{
+        // TODO: Query the database once DB is implemented
+        //    return (IEnumerable<Item>) (new IKIScraper()).Items;
+        //  return new List<string>();
+        // }
+
         [HttpGet(Name = "api/items")]
-        public IEnumerable<Item> Get()
+        public async Task<IActionResult> GetAllItems()
         {
-            // TODO: Query the database once DB is implemented
-            return (IEnumerable<Item>) (new IKIScraper()).Items;
-            //return new List<string>();
+            var items = await _itemRepository.GetAllItemsAsync();
+            return Ok(items);
+
         }
     }
 }
