@@ -49,6 +49,16 @@ namespace Api.Controllers
                 return BadRequest(ModelState);
             return Ok(items);
         }
+        [HttpGet("{name}/categories")]
+        [ProducesResponseType(200, Type = typeof(List<Category>))]
+        [ProducesResponseType(400)]
+        public async Task<IActionResult> GetCategoriesByNameAsync(string name)
+        {
+            var categories =  await _categoryRepository.GetCategoriesByNameAsync(name);
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+            return Ok(categories);
+        }
 
     }
 }

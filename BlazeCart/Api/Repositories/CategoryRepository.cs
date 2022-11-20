@@ -35,5 +35,11 @@ namespace Api.Repositories
             var items = _context.Items.Where(i => i.Category.Id == id).ToList();
             return items;
         }
+
+        public async Task<List<Category>> GetCategoriesByNameAsync(string name)
+        {
+            var category = await _context.Categories.Where(c => c.NameLT.Contains(name)).ToListAsync();
+            return category;
+        }
     }
 }
