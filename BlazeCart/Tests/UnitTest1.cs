@@ -1,5 +1,5 @@
 ﻿using Scraper;
-using static Scraper.CollectionExtentions;
+using Common;
 
 namespace Tests;
 

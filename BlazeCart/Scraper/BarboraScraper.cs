@@ -4,6 +4,7 @@ using ScrapySharp.Extensions;
 using Models;
 using System;
 using System.Threading;
+using Common;
 
 namespace Scraper
 {
