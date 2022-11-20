@@ -7,6 +7,6 @@ public partial class CategoryPage : ContentPage
 	public CategoryPage(CategoryViewModel vm)
 	{
 		InitializeComponent();
-        BindingContext = vm;
-    }
+		BindingContext = vm;
+	}
 }

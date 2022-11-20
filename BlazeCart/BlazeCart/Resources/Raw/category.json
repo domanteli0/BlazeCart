@@ -1,10 +1,34 @@
 {
     "category": [
-        {
-            "InternalID": 1,
+      {
+        "InternalID": 1,
+        "Uri": "https://media.istockphoto.com/photos/broccoli-picture-id147060621?k=20&m=147060621&s=612x612&w=0&h=aJVEauEV59KkxJfp6mWJm52JkYPi3_UiHL8Osxyql-s=",
+        "nameLt": "Daržovės",
+        "SubCategories": [
+          {
+            "InternalID": 5,
             "Uri": "https://media.istockphoto.com/photos/broccoli-picture-id147060621?k=20&m=147060621&s=612x612&w=0&h=aJVEauEV59KkxJfp6mWJm52JkYPi3_UiHL8Osxyql-s=",
-            "nameLt":"Daržovės"
-        },
+            "nameLt": "Brokoliai"
+          },
+          {
+            "InternalID": 6,
+            "Uri": "https://media.istockphoto.com/photos/broccoli-picture-id147060621?k=20&m=147060621&s=612x612&w=0&h=aJVEauEV59KkxJfp6mWJm52JkYPi3_UiHL8Osxyql-s=",
+            "nameLt": "Bulvės",
+            "SubCategories": [
+              {
+                "InternalID": 7,
+                "Uri": "https://media.istockphoto.com/photos/broccoli-picture-id147060621?k=20&m=147060621&s=612x612&w=0&h=aJVEauEV59KkxJfp6mWJm52JkYPi3_UiHL8Osxyql-s=",
+                "nameLt": "Naujos bulvės"
+              },
+              {
+                "InternalID": 8,
+                "Uri": "https://media.istockphoto.com/photos/broccoli-picture-id147060621?k=20&m=147060621&s=612x612&w=0&h=aJVEauEV59KkxJfp6mWJm52JkYPi3_UiHL8Osxyql-s=",
+                "nameLt": "Senos bulvės"
+              }
+            ]
+          }
+        ]
+      },
 
         {
             "InternalID": 2,
@@ -18,10 +42,10 @@
             "nameLt":"Duonos produktai"
         },
 
-        {
-            "InternalID": 4,
-            "Uri": "http://cdn.cnn.com/cnnnext/dam/assets/181127105254-08-50-sweets-travel-donuts.jpg",
-            "nameLt":"Saldumynai"
-        }
+      {
+        "InternalID": 4,
+        "Uri": "http://cdn.cnn.com/cnnnext/dam/assets/181127105254-08-50-sweets-travel-donuts.jpg",
+        "nameLt": "Saldumynai"
+      }
     ]
 }

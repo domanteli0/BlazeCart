@@ -1,5 +1,4 @@
-﻿
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using BlazeCart.Models;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -25,4 +24,3 @@ public class CategoryService
         return _categoryList;
     }
 }
-
