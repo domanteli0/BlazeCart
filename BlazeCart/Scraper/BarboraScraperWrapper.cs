@@ -11,7 +11,8 @@ namespace Scraper
         /// The file will be saved to $PROJECT_LOCATION/BlazeCart/Scraper/BarboraScraper/test.json
         /// </summary>
         // TODO?: Serialize data
-        public override void scrape()
+
+        public void scrape()
         {
             ProcessStartInfo startInfo = new ProcessStartInfo()
             {
@@ -24,6 +25,11 @@ namespace Scraper
                 StartInfo = startInfo,
             };
             proc.Start();
+        }
+
+        public override Task Scrape()
+        {
+            throw new NotImplementedException();
         }
     }
 }
