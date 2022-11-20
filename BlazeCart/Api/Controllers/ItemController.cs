@@ -43,18 +43,9 @@ namespace Api.Controllers
                 return BadRequest(ModelState);
             return Ok(item);
         }
-       // [HttpGet("{itemId}/category")]
-      //  [ProducesResponseType(200, Type = typeof(Item))]
-       // [ProducesResponseType(400)]
-       // public async Task<IActionResult> GetItemsByCategoryAsync(Category category)
-       // {
-         //   if (!_itemRepository.IsCategoriesActiveAsync(category.Id))
-         //       return NotFound();
-         //   var item = await _itemRepository.GetItemByIdAsync(id);
-         //   if (!ModelState.IsValid)
-        //        return BadRequest(ModelState);
-         //   return Ok(item);
-       // }
+
+
+
     }
 }
 

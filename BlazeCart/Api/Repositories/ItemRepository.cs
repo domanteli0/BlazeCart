@@ -1,6 +1,7 @@
 ﻿using DB;
 using Microsoft.EntityFrameworkCore;
 using Models;
+using System.Xml.Linq;
 
 namespace Api.Repositories
 {
@@ -30,11 +31,6 @@ namespace Api.Repositories
             return records;
         }
 
-        public async Task<List<Item>> GetItemsByCategoryAsync(Category category)
-        {
-            var records = await _context.Items.Where(i => i.Category.Id == category.Id).ToListAsync();
-            return records;
-        }
 
         public bool IsItemActiveAsync(Guid id)
         {
@@ -42,17 +38,6 @@ namespace Api.Repositories
             return res;
         }
 
-        public async Task<double> GetItemPrice(Guid id)
-        {
-            var record = await _context.Items.Where(i => i.Id == id).FirstOrDefaultAsync();
-            if (record != null)
-            {
-                double price = record.Price;
-                return price;
-            }
-
-            return 0;
-        }
 
     }
 }

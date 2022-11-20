@@ -9,10 +9,7 @@ namespace Api.Repositories
         Task<Item> GetItemByIdAsync(Guid id);
         Task<List<Item>> GetItemsByNameAsync(string name);
 
-        Task<List<Item>> GetItemsByCategoryAsync(Category category);
-
         bool IsItemActiveAsync(Guid id);
 
-        Task<double> GetItemPrice(Guid id);
     }
 }

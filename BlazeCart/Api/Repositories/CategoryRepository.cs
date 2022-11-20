@@ -19,10 +19,21 @@ namespace Api.Repositories
             return records;
         }
 
-        public bool IsCategoryActiveAsync(Guid id)
+        public bool IsCategoryActive(Guid id)
         {
             var res = _context.Categories.Any(c => c.Id == id);
             return res;
+        }
+
+        public async Task<Category> GetCategoryByIdAsync(Guid id)
+        {
+            var category = await _context.Categories.FirstOrDefaultAsync(c => c.Id == id);
+            return category;
+        }
+        public List<Item> GetItemsByCategoryIdAsync(Guid id)
+        {
+            var items = _context.Items.Where(i => i.Category.Id == id).ToList();
+            return items;
         }
     }
 }

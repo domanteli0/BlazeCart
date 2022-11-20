@@ -6,6 +6,9 @@ namespace Api.Repositories
     {
         Task<List<Category>> GetAllCategoriesAsync();
 
-        bool IsCategoryActiveAsync(Guid id);
+        bool IsCategoryActive(Guid id);
+        Task<Category> GetCategoryByIdAsync(Guid id);
+        List<Item> GetItemsByCategoryIdAsync(Guid id);
+
     }
 }
