@@ -16,7 +16,8 @@ namespace ScraperFunction
         public override void Configure(IFunctionsHostBuilder builder)
         {
             var config = builder.GetContext().Configuration;
-            var conStr = config.GetConnectionStringOrSetting("ProcessedDB");
+            var a = config.GetSection("DB").Value;
+            var conStr = config.GetConnectionStringOrSetting(a);
 
             if (conStr is null)
                 throw new Exception("DB connection string not found");

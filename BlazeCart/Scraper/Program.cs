@@ -14,9 +14,12 @@ namespace Scraper
             var configuration = new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())
                 .AddUserSecrets<Program>()
+                .AddJsonFile("appsettings.json")
                 .Build();
 
-            var dbCtxFac = new DbContextFactory(configuration.GetConnectionString("ProcessedDB"));
+            var dbCtxFac = new DbContextFactory(
+                configuration.GetConnectionString(configuration.GetSection("DB").Value!)
+            );
 
             var dbCtx = dbCtxFac.CreateDbContext(null);
 

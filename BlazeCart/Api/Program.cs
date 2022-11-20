@@ -12,9 +12,10 @@ builder.Services.AddScoped<IItemRepository, ItemRepository>();
 builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
 var configuration = new ConfigurationBuilder()
     .SetBasePath(Directory.GetCurrentDirectory())
+    .AddJsonFile("appsettings.json")
     .AddUserSecrets<Program>()
     .Build();
-string connectionString = configuration.GetConnectionString("ProcessedDB")!;
+string connectionString = configuration.GetConnectionString(configuration.GetSection("DB").Value!);
 
 DbContextOptionsBuilder<ScraperDbContext> optionsBuilder = new DbContextOptionsBuilder<ScraperDbContext>()
     .UseSqlServer(connectionString);
