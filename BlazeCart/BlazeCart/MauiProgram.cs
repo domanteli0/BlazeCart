@@ -4,6 +4,8 @@ using BlazeCart.ViewModels;
 using Syncfusion.Maui.Core.Hosting;
 using Syncfusion.Maui.ListView.Hosting;
 using CommunityToolkit.Maui;
+using MetroLog.Maui;
+using MetroLog.MicrosoftExtensions;
 using SkiaSharp.Views.Maui.Controls.Hosting;
 
 namespace BlazeCart;
@@ -88,7 +90,15 @@ public static class MauiProgram
         builder.Services.AddSingleton<FavoriteItemPage>();
         builder.Services.AddSingleton<FavoriteItemViewModel>();
 
-        
+        builder.Logging
+            .AddStreamingFileLogger(options =>
+            {
+                options.RetainDays = 2;
+                options.FolderPath = Path.Combine(
+                    FileSystem.CacheDirectory, "MetroLogs");
+            })
+            .AddTraceLogger(_ => { })
+            .AddInMemoryLogger(_ => { });
         return builder.Build();
 	}
 }
