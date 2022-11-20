@@ -18,6 +18,8 @@ namespace DB
             modelBuilder.Entity<Item>()
                 .HasOne(i => i.Category).WithMany(cat => cat.Items);
 
+            //modelBuilder.Entity<Item>().Has();
+
             base.OnModelCreating(modelBuilder);
         }
 

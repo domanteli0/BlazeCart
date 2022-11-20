@@ -1,6 +1,8 @@
 ﻿using System;
 namespace Models
 {
+    // IF ANY CHANGE TO A CLASS FIELD(S) IS DONE
+    // A DATABASE MIGRATION IS NECESSARY
     public class Entity
     {
         public Guid Id { get; set; }

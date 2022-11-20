@@ -4,6 +4,7 @@
     // A DATABASE MIGRATION IS NECESSARY
     public class Category : Entity
     {
+        //[NotMapped]
         public string? InternalID { get; set; }
         public Uri? Uri { get; set; }
         public string? NameEN { get; set; }

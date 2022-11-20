@@ -1,11 +1,12 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
 namespace Models
 {
-    //[Table("Item")]
     // IF ANY CHANGE TO A CLASS FIELD(S) IS DONE
     // A DATABASE MIGRATION IS NECESSARY
+    [Table("Item")]
     public class Item : Entity
     {
         public enum UnitOfMeasure { UNKNOWN, VNT, KG, L }

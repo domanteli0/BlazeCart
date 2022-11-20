@@ -31,6 +31,7 @@ namespace Scraper
         {
             await Init();
             await RefetchAllItems();
+            setMerch();
         }
 
         /// <summary>
@@ -132,7 +133,6 @@ namespace Scraper
             foreach (var cat in data)
             {
                 var listing = new Category() {
-                    Parent = parent,
                     NameEN = cat["name"]!["en"]!.ToString(),
                     InternalID = cat["id"]!.ToString(),
                     NameLT = cat["name"]!["lt"]!.ToString(),
@@ -149,7 +149,7 @@ namespace Scraper
                 {
                     Stores.AddAsSetByProperty(
                         new Store(
-                            //merch: Merchendise.Merch.IKI,
+                            merch: Merchendise.Merch.IKI,
                             internalID: storeId.ToString()
                         ),
                         "InternalID"
@@ -165,7 +165,7 @@ namespace Scraper
             foreach (JToken cat_ in data["chains"]!.Last!["stores"]!)
             {
                 var newStore = new Store(
-                    //merch: Merchendise.Merch.IKI,
+                    merch: Merchendise.Merch.IKI,
                     internalID: cat_["id"]!.ToString(),
                     name: cat_["name"]!.ToString(),
                     address: cat_["streetAndBuilding"]!.ToString(),

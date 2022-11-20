@@ -16,7 +16,7 @@ namespace Scraper
                 .AddUserSecrets<Program>()
                 .Build();
 
-            var dbCtxFac = new DbContextFactory(configuration.GetConnectionString("ScraperDB"));
+            var dbCtxFac = new DbContextFactory(configuration.GetConnectionString("ProcessedDB"));
 
             var dbCtx = dbCtxFac.CreateDbContext(null);
 

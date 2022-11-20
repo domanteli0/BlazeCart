@@ -56,7 +56,7 @@ namespace ScraperFunction
             DbCtx.Items.AddRange(iScraper.Items);
 
             DbCtx.SaveChanges();
-            log.LogInformation($"All items updated successfully at: {DateTime.UtcNow}");
+            log.LogInformation($"All items updated successfully to DB at: {DateTime.UtcNow}");
         }
     }
 }

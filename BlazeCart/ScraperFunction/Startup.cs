@@ -13,14 +13,13 @@ namespace ScraperFunction
 {
     public class Startup : FunctionsStartup
     {
-
         public override void Configure(IFunctionsHostBuilder builder)
         {
             var config = builder.GetContext().Configuration;
-            var conStr = config.GetConnectionStringOrSetting("ScraperDB");
+            var conStr = config.GetConnectionStringOrSetting("ProcessedDB");
 
             if (conStr is null)
-                throw new Exception("ScraperDB connection string not found");
+                throw new Exception("DB connection string not found");
 
             builder.Services.AddDbContext<ScraperDbContext>(
                 options => SqlServerDbContextOptionsExtensions.UseSqlServer(options, conStr));

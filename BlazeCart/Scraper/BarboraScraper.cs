@@ -107,7 +107,6 @@ namespace Scraper
                         Category catChild = new Category()
                         {
                             NameLT = i.CssSelect("a.b-single-category--child").First().InnerText.Trim(),
-                            Parent = cat,
                             Uri = new Uri("https://barbora.lt/" + i.CssSelect("a.b-single-category--child").First().GetAttributeValue("href"))
 
                         };
@@ -120,8 +119,6 @@ namespace Scraper
                             var catGrandChild = new Category() {
                                 NameLT = ii.InnerText.Trim(),
                                 Uri = new Uri("https://barbora.lt" + ii.GetAttributeValue("href")),
-                                Parent = catChild,
-
                             };
 
                             catChild.SubCategories.Add(catGrandChild);
