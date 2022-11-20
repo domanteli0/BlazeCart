@@ -14,7 +14,7 @@ var configuration = new ConfigurationBuilder()
     .SetBasePath(Directory.GetCurrentDirectory())
     .AddUserSecrets<Program>()
     .Build();
-string connectionString = configuration.GetConnectionString("ScraperDB")!;
+string connectionString = configuration.GetConnectionString("ProcessedDB")!;
 
 DbContextOptionsBuilder<ScraperDbContext> optionsBuilder = new DbContextOptionsBuilder<ScraperDbContext>()
     .UseSqlServer(connectionString);
