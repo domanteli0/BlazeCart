@@ -20,7 +20,6 @@ namespace BlazeCart.ViewModels
         [RelayCommand]
         async void Register(object obj)
         {
-            //here should be register page, but temporary home page
             await Shell.Current.GoToAsync(nameof(RegisterPage));
         }
     }

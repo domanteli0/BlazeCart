@@ -151,5 +151,22 @@
         <Setter Property="FontSize" Value="25"/>
     </Style>
 
+    <Style x:Key="FavoriteItemStore" TargetType="Label">
+        <Setter Property="FontFamily" Value="Poppins-SemiBold" />
+        <Setter Property="TextColor" Value="{StaticResource DarkTextColor}" />
+        <Setter Property="FontSize" Value="{StaticResource FavoriteItemStoreFont}"/>
+    </Style>
+
+    <Style x:Key="FaSolidStyle" TargetType="Label">
+        <Setter Property="FontFamily" Value="fa-solid"/>
+    </Style>
+
+    <Style x:Key="FaBrandsStyle" TargetType="Label">
+        <Setter Property="FontFamily" Value="fa-brands"/>
+    </Style>
+
+    <Style x:Key="FaRegularStyle" TargetType="Label">
+        <Setter Property="FontFamily" Value="fa-regular"/>
+    </Style>
 
 </ResourceDictionary>

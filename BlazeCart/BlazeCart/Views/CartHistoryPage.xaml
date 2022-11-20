@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8"?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="BlazeCart.Views.CartHistoryPage"
@@ -8,113 +8,111 @@
              x:DataType="viewmodel:CartHistoryPageViewModel"
              BackgroundColor="{StaticResource PageBackgroundColor}"
              Title="CartHistoryPage">
-    
     <ScrollView>
         <StackLayout>
-            <Frame HeightRequest="90" Padding="10">
+            <Frame HeightRequest="90"
+                   Padding="10">
                 <HorizontalStackLayout HorizontalOptions="Center">
-                    <ImageButton
-                        Source="back_button.png"
-                        VerticalOptions="Start"/>
-                    <Label
-                        Text="Krepšelių istorija"
-                        Style="{StaticResource PageNamePoppins}"
-                        VerticalOptions="Center"
-                        HorizontalOptions="Center" />
+                    <ImageButton Source="back_button.png"
+                                 VerticalOptions="Start" />
+                    <Label Text="Krepšelių istorija"
+                           Style="{StaticResource PageNamePoppins}"
+                           VerticalOptions="Center"
+                           HorizontalOptions="Center" />
                 </HorizontalStackLayout>
             </Frame>
-
-            <StackLayout
-                Orientation="Horizontal"
-                HorizontalOptions="Center"
-                Spacing="0"
-                Margin="0,15,0,0">
-                <Image
-                    Aspect="AspectFill"
-                    Margin="5"
-                    HorizontalOptions="Start"
-                    VerticalOptions="Center"
-                    Source="cart_option_logo.png" />
-                <Label
-                    HorizontalTextAlignment="Center"
-                    Margin="0, 5, 2, 5"
-                    Style="{StaticResource CheapestStoreHeaderPoppins}"
-                    Text="Visi krepšeliai"
-                    TextColor="{StaticResource PrimaryTextColor}"
-                    VerticalOptions="Center" />
+            <StackLayout Orientation="Horizontal"
+                         HorizontalOptions="Center"
+                         Spacing="0"
+                         Margin="0,15,0,0">
+                <Image Aspect="AspectFill"
+                       Margin="5"
+                       HorizontalOptions="Start"
+                       VerticalOptions="Center"
+                       Source="cart_option_logo.png" />
+                <Label HorizontalTextAlignment="Center"
+                       Margin="0, 5, 2, 5"
+                       Style="{StaticResource CheapestStoreHeaderPoppins}"
+                       Text="Visi krepšeliai"
+                       TextColor="{StaticResource PrimaryTextColor}"
+                       VerticalOptions="Center" />
             </StackLayout>
-
-
             <CollectionView ItemsSource="{Binding Carts}">
                 <CollectionView.ItemTemplate>
-                <DataTemplate x:DataType="models:Cart">
-                    <Frame Padding="5"
-                           MaximumHeightRequest="120"
-                           HeightRequest="120"
-                           Margin="15">
-
-                            <VerticalStackLayout>
-                                <HorizontalStackLayout>
-                                    <Label
-                                        HorizontalTextAlignment="Start"
-                                    Margin="10, 15, 2, 0"
-                                    Style="{StaticResource ItemNamePoppins}"
-                                    Text="{Binding Name}"
-                                    TextColor="{StaticResource PrimaryTextColor}"
-                                    LineBreakMode="CharacterWrap"></Label>
-                                    <Label
-                                        HorizontalTextAlignment="Start"
-                                        Margin="0, 15, 0, 0"
-                                        Padding="0"
-                                        Style="{StaticResource ItemNamePoppins}"
-                                        Text="("
-                                        TextColor="{StaticResource PrimaryTextColor}"
-                                        LineBreakMode="CharacterWrap"></Label>
-                                    <Label
-                                        HorizontalTextAlignment="Start"
-                                        Margin="0, 15, 0, 0"
-                                        Style="{StaticResource ItemNamePoppins}"
-                                        Text="{Binding ItemCount}"
-                                        TextColor="{StaticResource PrimaryTextColor}"
-                                        LineBreakMode="CharacterWrap"></Label>
-                                    <Label
-                                        HorizontalTextAlignment="Start"
-                                        Margin="0, 15, 0, 0"
-                                        Style="{StaticResource ItemNamePoppins}"
-                                        Text=")"
-                                        TextColor="{StaticResource PrimaryTextColor}"
-                                        LineBreakMode="CharacterWrap"></Label>
-                                </HorizontalStackLayout>
-
-                                <HorizontalStackLayout
-                                    Spacing="0">
-                                    <Label
-                                        HorizontalTextAlignment="Start"
-                                        Margin="10, 15, 0, 0"
-                                        Style="{StaticResource ItemNamePoppins}"
-                                        Text="{Binding TotalPrice}"
-                                        TextColor="{StaticResource PrimaryTextColor}"
-                                        LineBreakMode="CharacterWrap"></Label>
-
-                                    <Label
-                                        HorizontalTextAlignment="Start"
-                                        Margin="0, 15, 15, 0"
-                                        Style="{StaticResource ItemNamePoppins}"
-                                        Text="€"
-                                        TextColor="{StaticResource PrimaryTextColor}"></Label>
-                                </HorizontalStackLayout>
-
-                                <ImageButton
-                                        HeightRequest="14.34"
-                                        WidthRequest="20.99"
-                                        Source="additional_cart_info.png"
-                                        HorizontalOptions="Center"/>
-
-                            </VerticalStackLayout>
-                    </Frame>
-                </DataTemplate>
-            </CollectionView.ItemTemplate>
-         </CollectionView>
-            </StackLayout>
+                    <DataTemplate x:DataType="models:Cart">
+                        <SwipeView>
+                            <SwipeView.RightItems>
+                                <SwipeItems>
+                                    <SwipeItem IconImageSource="trash.png"
+                                               BackgroundColor="{StaticResource BinColor}"
+                                               Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:CartHistoryPageViewModel}}, Path=RemoveCommand}"
+                                               CommandParameter="{Binding .}" />
+                                </SwipeItems>
+                            </SwipeView.RightItems>
+                            <Frame Padding="10"
+                                   MaximumHeightRequest="120"
+                                   HeightRequest="120"
+                                   Margin="15">
+                                <VerticalStackLayout>
+                                    <HorizontalStackLayout>
+                                        <Label HorizontalTextAlignment="Start"
+                                               Margin="10, 15, 2, 0"
+                                               Style="{StaticResource ItemNamePoppins}"
+                                               Text="{Binding Name}"
+                                               TextColor="{StaticResource PrimaryTextColor}"
+                                               LineBreakMode="CharacterWrap" />
+                                        <Label HorizontalTextAlignment="Start"
+                                               Margin="0, 15, 0, 0"
+                                               Padding="0"
+                                               Style="{StaticResource ItemNamePoppins}"
+                                               Text="("
+                                               TextColor="{StaticResource PrimaryTextColor}"
+                                               LineBreakMode="CharacterWrap" />
+                                        <Label HorizontalTextAlignment="Start"
+                                               Margin="0, 15, 0, 0"
+                                               Style="{StaticResource ItemNamePoppins}"
+                                               Text="{Binding ItemsCount}"
+                                               TextColor="{StaticResource PrimaryTextColor}"
+                                               LineBreakMode="CharacterWrap" />
+                                        <Label HorizontalTextAlignment="Start"
+                                               Margin="0, 15, 0, 0"
+                                               Style="{StaticResource ItemNamePoppins}"
+                                               Text=")"
+                                               TextColor="{StaticResource PrimaryTextColor}"
+                                               LineBreakMode="CharacterWrap" />
+                                        <Button x:Name="UseButton"
+                                                BackgroundColor="{StaticResource PrimaryColor}"
+                                                TextColor="{StaticResource White}"
+                                                Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:CartHistoryPageViewModel}}, Path=UseCartCommand}"
+                                                CommandParameter="{Binding .}"
+                                                Text="Taikyti"
+                                                Margin="90, 0, 0,0"
+                                                VerticalOptions="Center">
+                                        </Button>
+                                    </HorizontalStackLayout>
+                                    <HorizontalStackLayout Spacing="0">
+                                        <Label HorizontalTextAlignment="Start"
+                                               Margin="10, 15, 0, 0"
+                                               Style="{StaticResource ItemNamePoppins}"
+                                               Text="{Binding TotalPrice, StringFormat='{0:F2}'}"
+                                               TextColor="{StaticResource PrimaryTextColor}"
+                                               LineBreakMode="CharacterWrap" />
+                                        <Label HorizontalTextAlignment="Start"
+                                               Margin="0, 15, 15, 0"
+                                               Style="{StaticResource ItemNamePoppins}"
+                                               Text="€"
+                                               TextColor="{StaticResource PrimaryTextColor}" />
+                                    </HorizontalStackLayout>
+                                    <ImageButton HeightRequest="14.34"
+                                                 WidthRequest="20.99"
+                                                 Source="additional_cart_info.png"
+                                                 HorizontalOptions="Center" />
+                                </VerticalStackLayout>
+                            </Frame>
+                        </SwipeView>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </StackLayout>
     </ScrollView>
 </ContentPage>

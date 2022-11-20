@@ -4,17 +4,22 @@
              x:Class="BlazeCart.Views.WelcomePage2"
              xmlns:viewmodel="clr-namespace:BlazeCart.ViewModels"
              x:DataType="viewmodel:WelcomePage2ViewModel"
+             xmlns:skia="clr-namespace:SkiaSharp.Extended.UI.Controls;assembly=SkiaSharp.Extended.UI"
              Title="WelcomePage2"
              Shell.TabBarIsVisible="False"
              Shell.NavBarIsVisible="False"
              BackgroundColor="{StaticResource PageBackgroundColor}">
     <ContentPage.Content>
         <StackLayout VerticalOptions="Center" HorizontalOptions="Center">
-            <Image
-                Aspect="AspectFit"
-                Source="welcome_page_image_sec.png"
+            <skia:SKLottieView
+                Source="animation2.json"
                 HorizontalOptions="Center" 
-                Margin="20"></Image>
+                RepeatCount="-1"
+	            RepeatMode="Restart"
+                HeightRequest="275"
+                WidthRequest="275"
+                MaximumHeightRequest="300"
+                Margin="20"/>
             <Label
                 HorizontalTextAlignment="Center"
                 Margin="5, 0, 5, 10"

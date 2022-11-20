@@ -6,6 +6,7 @@ namespace BlazeCart.ViewModels
 {
     public partial class HomePageViewModel : ObservableObject
     {
+
         [RelayCommand]
         async void SearchItem(object obj)
         {
@@ -19,8 +20,10 @@ namespace BlazeCart.ViewModels
         [RelayCommand]
         async void FavoriteItems(object obj)
         {
-            await Shell.Current.GoToAsync(nameof(ErrorPage));
+            await Shell.Current.GoToAsync(nameof(FavoriteItemPage));
         }
+
+        
     }
 }
 

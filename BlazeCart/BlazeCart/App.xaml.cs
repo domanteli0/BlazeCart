@@ -1,4 +1,7 @@
-﻿namespace BlazeCart;
+﻿using BlazeCart.Views;
+using MetroLog.Maui;
+
+namespace BlazeCart;
 
 public partial class App : Application
 {
@@ -7,6 +10,9 @@ public partial class App : Application
 		InitializeComponent();
 
 		MainPage = new AppShell();
-		//MainPage = new NavigationPage(new RegisterPage());
-	}
+
+        LogController.InitializeNavigation(
+            page => MainPage!.Navigation.PushModalAsync(page),
+            () => MainPage!.Navigation.PopModalAsync());
+    }
 }

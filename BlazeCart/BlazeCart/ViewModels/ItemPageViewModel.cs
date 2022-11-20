@@ -1,6 +1,8 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using BlazeCart.Models;
+using BlazeCart.Services;
 using CommunityToolkit.Mvvm.Input;
+using Microsoft.Extensions.Logging;
 
 namespace BlazeCart.ViewModels
 {
@@ -9,8 +11,7 @@ namespace BlazeCart.ViewModels
     [QueryProperty(nameof(Price), "Price")]
     [QueryProperty(nameof(Image), "Image")]
     [QueryProperty(nameof(Description), "Description")]
-    
-    
+
     public partial class ItemPageViewModel : BaseViewModel
     {
         [ObservableProperty]
@@ -27,18 +28,43 @@ namespace BlazeCart.ViewModels
         [ObservableProperty]
         public string description;
 
-        private CartPageViewModel _vm;
+        private ItemService _itemService;
 
-        public ItemPageViewModel(CartPageViewModel vm)
+        private DataService _dataService;
+
+        private ILogger<ItemPageViewModel> _logger; 
+
+        public ItemPageViewModel(ItemService itemService, DataService dataService, ILogger<ItemPageViewModel> logger)
         {
-            _vm = vm;
+            _itemService = itemService;
+            _dataService = dataService;
+            _logger = logger;
         }
 
         [RelayCommand]
         async void Cart(object obj)
         {
-            _vm.CartItems.Add(item);
+            _itemService.AddToCart(item);
             await Shell.Current.DisplayAlert("Įdėta į krepšelį!", "Prekė sėkmingai įdėta į krepšelį!", "OK");
+        }
+
+        [RelayCommand]
+        async void AddItemToFavorites(object obj)
+        {
+            try
+            {
+                item.IsFavorite = true;
+                await Shell.Current.DisplayAlert("Prekės pridėjimas sėkmingas", "Sėkmingai pažymėjote prekę kaip mėgstamiausią", "OK");
+                await _dataService.AddFavoriteItemToDb(item);
+                _itemService.OnFavTbUpdated(EventArgs.Empty);
+                _logger.LogInformation($"Item {item.Name} added to favorites");
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error on adding favorite item to DB");
+                await Shell.Current.DisplayAlert("Klaida!", ex.Message, "OK");
+                throw;
+            }
         }
        
     }

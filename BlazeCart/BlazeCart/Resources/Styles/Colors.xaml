@@ -5,6 +5,8 @@
     <Color x:Key="PrimaryColor">#FFA500</Color>
 
     <Color x:Key="PrimaryTextColor">#000000</Color>
+    <Color x:Key="DarkTextColor">#201A25</Color>
+
     <Color x:Key="SecondaryTextColor">#9586A8</Color>
 
     <Color x:Key="TextColorPrimary">#1C1B1F</Color>
@@ -18,5 +20,6 @@
     <Color x:Key="Green">#00BD00</Color>
 
     <Color x:Key="LightGrey">#D9D9D9</Color>
+    <Color x:Key="BinColor">#D63230</Color>
 
 </ResourceDictionary>

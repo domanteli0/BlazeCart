@@ -1,37 +1,19 @@
 ﻿using System.Collections.ObjectModel;
+using SQLite;
+using SQLiteNetExtensions.Attributes;
 
 namespace BlazeCart.Models
 {
-    [Serializable]
     public class Cart
     {
-        public int CartId { get; set; }
+        [PrimaryKey, AutoIncrement]
+        public int Id { get; set; }
         public string  Name { get; set; }
+        [OneToMany(CascadeOperations = CascadeOperation.All)]
         public ObservableCollection<Item>  CartItems { get; set; }
         public string Image { get; set; }
+        public int? ItemsCount { get; set; }
 
-        public int ItemCount { get; set; }
-
-        public double TotalPrice { get; set; }
-
-        public Cart(int cartId, ObservableCollection<Item> cartItems, string name = "untitled")
-        {
-            CartId = cartId;
-            CartItems = cartItems;
-            Name = name;
-            Image = "cart_option_logo.png";
-            ItemCount = cartItems.Count;
-            TotalPrice = GetCartPrice(CartItems);
-        }
-
-        private Double GetCartPrice(ObservableCollection<Item> cartItems)
-        {
-            Double TotalPrice = 0;
-            foreach (Item I in cartItems)
-            {
-                TotalPrice += I.Price;
-            }
-            return TotalPrice;
-        }
+        public double? TotalPrice { get; set; }
     }
 }

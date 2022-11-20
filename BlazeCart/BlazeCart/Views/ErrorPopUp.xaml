@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<mct:Popup xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="BlazeCart.Views.ErrorPopUp"
+             xmlns:mct="clr-namespace:CommunityToolkit.Maui.Views;assembly=CommunityToolkit.Maui"
+              CanBeDismissedByTappingOutsideOfPopup="False">
+    <VerticalStackLayout BackgroundColor="{StaticResource PageBackgroundColor}">
+        <ImageButton Source="close_button.png"
+                    HorizontalOptions="End"
+                    VerticalOptions="Start"
+                     HeightRequest="7"
+                     WidthRequest="11"/>
+        <Image
+                Aspect="AspectFit"
+                Source="error_symbol.png"
+                HorizontalOptions="Center"
+                HeightRequest="80"
+                WidthRequest="80"></Image>
+        <ImageButton Source="try_again_button.png"
+                    HorizontalOptions="End"
+                    VerticalOptions="Start"/>
+    </VerticalStackLayout>
+</mct:Popup>

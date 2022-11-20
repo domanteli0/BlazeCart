@@ -3,49 +3,80 @@ using BlazeCart.Models;
 using BlazeCart.Services;
 using BlazeCart.Views;
 using CommunityToolkit.Mvvm.Input;
+using Microsoft.Extensions.Logging;
 
 namespace BlazeCart.ViewModels
 {
     public partial class CartPageViewModel : BaseViewModel
     {
-        private readonly CartService _cartService;
+        private readonly DataService _dataService;
 
-        public Cart Cart { get; set; }
+        private ItemService _itemService;
 
         public ObservableCollection<Item> CartItems { get; set; } = new();
 
-        public CartPageViewModel(CartService cartService)
+        private ILogger<CartPageViewModel> _logger;
+
+        public CartPageViewModel(DataService dataService, ItemService itemService, ILogger<CartPageViewModel> logger)
         {
-            _cartService = cartService;
+            _itemService = itemService;
+            _logger = logger;
+            _itemService.CartUsed += CartUsedEventHandler;
+            _dataService = dataService;
+        }
+
+        private void CartUsedEventHandler(object sender, CartUsedEventArgs e)
+        {
+            CartItems.Clear();
+            foreach (var item in e.Items)
+            {
+                CartItems.Add(item);
+            }
         }
 
         [RelayCommand]
         void Remove(Item item)
         {
-            CartItems.Remove(item);
+            try
+            {
+                CartItems.Remove(item);
+                _itemService.RemoveFromCart(item);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Unable to remove item from cart: {item.ItemId}, {item.Name}, {ex.Message}");
+                throw;
+            }
         }
 
         [RelayCommand]
         async void Save(object obj)
         {
-            Cart cart;
-            if(CartItems.Count > 0)
+            try
             {
-                string cartName = await Shell.Current.DisplayPromptAsync("Išsaugoti krepšelį", "Įveskite krepšelio pavadinimą: ", "OK",
-               "Cancel", "Įveskite pavadinimą...");
-                if (string.IsNullOrEmpty(cartName))
+                if (CartItems.Count > 0)
                 {
-                    cart = new(cartId: 1, cartItems: CartItems);
+                    string cartName = await Shell.Current.DisplayPromptAsync("Išsaugoti krepšelį",
+                        "Įveskite krepšelio pavadinimą: ", "OK",
+                        "Cancel", "Įveskite pavadinimą...");
+                    foreach (var item in CartItems)
+                    {
+                        item.IsFavorite = false;
+                    }
+
+                    await _dataService.AddCartToDb(cartName, CartItems, GetCartItemsCount(CartItems),
+                        GetCartPrice(CartItems));
+
+                    _itemService.OnCartTbUpdated(EventArgs.Empty);
                 }
                 else
                 {
-                    cart = new(cartId: 1, cartItems: CartItems, name: cartName);
+                    await Shell.Current.DisplayAlert("Klaida!", "Krepšelis tuščias!", "OK");
                 }
-                await _cartService.SaveCart(cart);
             }
-            else
+            catch (Exception ex)
             {
-                await Shell.Current.DisplayAlert("Klaida!", "Krepšelis tuščias!", "OK");
+                _logger.LogError($"Unable to save cart: {ex.Message}");
             }
         }
 
@@ -55,5 +86,40 @@ namespace BlazeCart.ViewModels
         {
             await Shell.Current.GoToAsync(nameof(CheapestStorePage));
         }
+
+        private static double GetCartPrice(ObservableCollection<Item> cartItems)
+        {
+            double totalPrice = 0;
+            foreach (Item I in cartItems)
+            {
+                totalPrice += I.Price * (double)I.Quantity;
+            }
+
+            return totalPrice;
+        }
+
+        private int GetCartItemsCount(ObservableCollection<Item> cartItems)
+        {
+            int quantity = 0;
+            foreach (var item in cartItems)
+            {
+                quantity += item.Quantity;
+            }
+
+            return quantity;
+        }
+
+        [RelayCommand]
+        private void AddQuantity(Item item)
+        {
+            item.Quantity++;
+        }
+        [RelayCommand]
+        private void RemoveQuantity(Item item)
+        {
+            if(item.Quantity > 1)
+                item.Quantity--;
+        }
+
     }
 }
