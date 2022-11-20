@@ -1,10 +1,11 @@
 ﻿using System;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
 namespace Models
 {
-    [Table("Item")]
+    //[Table("Item")]
+    // IF ANY CHANGE TO A CLASS FIELD(S) IS DONE
+    // A DATABASE MIGRATION IS NECESSARY
     public class Item : Entity
     {
         public enum UnitOfMeasure { UNKNOWN, VNT, KG, L }
@@ -34,7 +35,8 @@ namespace Models
         // URIs pointing to an image of that product
         public Uri? Image { get; set; }
         public Category Category { get; set; }
-        //private List<String>? _barcodes;
+        public Merchendise.Merch Merch { get; set; }
+        // TODO: public virtual ICollection<string>? Barcodes { get; set; }
 
         public Item(
             string internalID
