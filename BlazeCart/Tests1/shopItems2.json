@@ -1,0 +1,35 @@
+{
+    "shopItems": [
+      {
+        "ItemId": 6,
+        "Category": "Bread",
+        "Name": "Raikytas SOSTINĖS batonas, 400 g",
+        "Price": 1.24,
+        "Units": "kg",
+        "PackageAmount": 0.4,
+        "PricePerUnit": 3.10,
+        "Description": "„Sostinės“ batonas išsiskiria puikiu skoniu ir aromatu, itin drėgna, minkšta ir švelnia struktūra.",
+        "Origin": "Lietuva",
+        "Image": "https://lastmile.lt/_next/image?url=https%3A%2F%2Fstorage.googleapis.com%2Fdownload%2Fstorage%2Fv1%2Fb%2Flastmile-ui%2Fo%2Fimages%252Fproducts%252FhrDO2qHBQlzcwVogVHIp.jpg%3Fgeneration%3D1623743335266084%26alt%3Dmedia&w=650&q=75",
+        "Components": "Kvietiniai miltai, vanduo, lieso pieno milteliai, cukrus, rapsų aliejus, mielės, joduota druska, kviečių glitimas, miežių salyklo ekstraktas.",
+        "Store": "IKI",
+        "Availability": false
+      },
+
+        {
+            "ItemId": 7,
+            "Category": "Bread",
+            "Name": "Sumuštinių duona, 500 g",
+            "Price": 1.55,
+            "Units": "kg",
+            "PackageAmount": 0.5,
+            "PricePerUnit": 3.10,
+            "Description": "Puikios struktūros ir skonio sumuštinių duona. Riekės forma puikiai tinka sumuštiniams, kepamiems sumuštinių kepyklėlėje.",
+            "Origin": "Lietuva",
+            "Image": "https://lastmile.lt/_next/image?url=https%3A%2F%2Fstorage.googleapis.com%2Fdownload%2Fstorage%2Fv1%2Fb%2Flastmile-ui%2Fo%2Fimages%252Fproducts%252Fs0lGCrNlrFuYbuOfcV48.jpg%3Fgeneration%3D1623743584941883%26alt%3Dmedia&w=384&q=75",
+            "Components": "Kvietiniai miltai, geriamasis vanduo, cukrus, mielės, druska, rapsų aliejus.",
+            "Store": "IKI",
+            "Availability": true
+        }
+    ]
+}
