@@ -1,8 +1,10 @@
 ﻿using System.Collections.ObjectModel;
 using BlazeCart.Models;
+using BlazeCart.Services;
 using BlazeCart.ViewModels;
+using FakeItEasy;
 using FluentAssertions;
-using Xunit.Abstractions;
+using Microsoft.Extensions.Logging;
 
 namespace Tests1.BlazeCart.ViewModels
 {
@@ -11,10 +13,19 @@ namespace Tests1.BlazeCart.ViewModels
         private readonly Item _item1 = new();
         private readonly Item _item2 = new();
         private readonly ObservableCollection<Item> _cartItems;
-        private readonly CartPageViewModel _vm = new();
+        private readonly CartPageViewModel _vm;
+        private readonly DataService _dataService;
+        private readonly ItemService _itemService;
+        private readonly Logger<CartPageViewModel> _logger;
 
         public CartPageViewModelTest()
         {
+            //MOCKING
+            _dataService = A.Fake<DataService>();
+            _itemService = A.Fake<ItemService>();
+            _logger = A.Fake<Logger<CartPageViewModel>>();
+            _vm = new CartPageViewModel(_dataService, _itemService, _logger);
+
             _item1.Price = 5.67;
             _item2.Price = 3.14;
             _item1.Quantity = 2;

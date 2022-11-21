@@ -25,9 +25,6 @@ namespace BlazeCart.ViewModels
             _dataService = dataService;
         }
 
-        public CartPageViewModel()
-        {
-        }
 
         private void CartUsedEventHandler(object sender, CartUsedEventArgs e)
         {

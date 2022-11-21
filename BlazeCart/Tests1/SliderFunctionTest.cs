@@ -4,16 +4,17 @@ using System.Collections.ObjectModel;
 
 namespace Tests1
 {
+
     public class SliderFunctionTest
     {
         private readonly SliderService _sut;
         private readonly ItemService _itemService;
         private static ObservableCollection<Item>[] testData = new ObservableCollection<Item>[3];
-        private string[] _fileNames = new string[] { "shopItems.json", "shopItems1.json","shopItems2.json"};
+        private readonly string[] _fileNames = new string[] { "shopItems.json", "shopItems1.json","shopItems2.json"};
 
 
         public SliderFunctionTest()
-        { 
+        {
             _sut = new SliderService();
             _itemService = new ItemService();
             for (int i = 0; i < _fileNames.Count(); i++)
@@ -24,8 +25,7 @@ namespace Tests1
 
         [Theory]
         [MemberData(nameof(MaximumTestData))]
-        public void returnMaximumValueTest(
-            double expected, ObservableCollection<Item> testItems)
+        public void ReturnMaximumValueTest(double expected, ObservableCollection<Item> testItems)
         {
             Assert.Equal(expected, _sut.GetMaximum(testItems));
         }
@@ -39,8 +39,7 @@ namespace Tests1
 
         [Theory]
         [MemberData(nameof(MinimumTestData))]
-        public void returnMinimumValueTest(
-            double expected, ObservableCollection<Item> testItems)
+        public void ReturnMinimumValueTest(double expected, ObservableCollection<Item> testItems)
         {
             Assert.Equal(expected, _sut.GetMinimum(testItems));
         }
