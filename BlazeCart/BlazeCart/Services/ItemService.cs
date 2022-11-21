@@ -15,14 +15,14 @@ public class ItemService
     public event EventHandler<EventArgs> CartTbUpdated;
 
     public event EventHandler<EventArgs> FavTbUpdated;
-    public async Task<ObservableCollection<Item>> GetItems()
+    public async Task<ObservableCollection<Item>> GetItems(string fileName)
     {
 
         if (_itemList.Count > 0) {
             return _itemList;
         }
 
-        await using var stream = await FileSystem.OpenAppPackageFileAsync("shopItems.json");
+        await using var stream = await FileSystem.OpenAppPackageFileAsync(fileName);
         using StreamReader r = new(stream);
         string json = await r.ReadToEndAsync();
         var jobj = JObject.Parse(json);
