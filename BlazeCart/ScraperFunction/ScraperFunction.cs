@@ -51,6 +51,7 @@ namespace ScraperFunction
             DbCtx.Database.Migrate();
 
             await DbCtx.Items.ForEachAsync(i => { DbCtx.Remove(i); });
+            await DbCtx.Categories.ForEachAsync(i => { DbCtx.Remove(i); });
 
             //DbCtx.Items.AddRange(bScraper.Items);
             DbCtx.Items.AddRange(iScraper.Items);
