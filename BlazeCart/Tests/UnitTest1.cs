@@ -34,7 +34,7 @@ public class UnitTest1
     {
         // NOTE: This test should take a long time
         // (aprox. 3min, but depending on the machine may take longer)
-        BarboraScraper scraper = new BarboraScraper();
+        BarboraScraper scraper = new();
         await scraper.Scrape();
 
         //foreach (var store in scraper.Stores)
@@ -50,7 +50,7 @@ public class UnitTest1
     {
         // NOTE: This test should take a long time
         // (aprox. 3min, but depending on the machine may take longer)
-        IKIScraper IkiScraper = new IKIScraper();
+        IKIScraper IkiScraper = new();
         await IkiScraper.Scrape();
 
         foreach (var store in IkiScraper.Stores)
