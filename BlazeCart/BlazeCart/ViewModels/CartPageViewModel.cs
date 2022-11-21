@@ -25,6 +25,10 @@ namespace BlazeCart.ViewModels
             _dataService = dataService;
         }
 
+        public CartPageViewModel()
+        {
+        }
+
         private void CartUsedEventHandler(object sender, CartUsedEventArgs e)
         {
             CartItems.Clear();
@@ -87,7 +91,7 @@ namespace BlazeCart.ViewModels
             await Shell.Current.GoToAsync(nameof(CheapestStorePage));
         }
 
-        private static double GetCartPrice(ObservableCollection<Item> cartItems)
+        public double GetCartPrice(ObservableCollection<Item> cartItems)
         {
             double totalPrice = 0;
             foreach (Item I in cartItems)
@@ -98,7 +102,7 @@ namespace BlazeCart.ViewModels
             return totalPrice;
         }
 
-        private int GetCartItemsCount(ObservableCollection<Item> cartItems)
+        public int GetCartItemsCount(ObservableCollection<Item> cartItems)
         {
             int quantity = 0;
             foreach (var item in cartItems)
