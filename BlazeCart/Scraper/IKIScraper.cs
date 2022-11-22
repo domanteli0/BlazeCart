@@ -1,8 +1,9 @@
-﻿using Newtonsoft.Json.Linq;
+﻿using System.Net.Http;
 using System.Net.Http.Headers;
-using Models;
 using static System.Net.Mime.MediaTypeNames;
-using System.Net.Http;
+using Microsoft.Extensions.Logging;
+using Newtonsoft.Json.Linq;
+using Models;
 
 namespace Scraper
 {
@@ -23,7 +24,7 @@ namespace Scraper
         // * Referencing items with `Store`, `Category` instances and vice versa (Back-referencing)
         // Units of measurement and available ammounts
 
-        public IKIScraper(HttpClient httpClient) : base(httpClient) { }
+        public IKIScraper(HttpClient httpClient, ILogger<Scraper> logger) : base(httpClient, logger) { }
 
         /// <summary>
         /// Gets all data
@@ -54,6 +55,8 @@ namespace Scraper
                 requestInit.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json");
 
                 responseInit = await _httpClient.SendAsync(requestInit);
+                _logger.LogInformation($"Sent request to {requestInit.RequestUri}");
+
             }
             StreamReader readerInit = new StreamReader(responseInit.Content.ReadAsStream());
             var JSONresponseInit = JObject.Parse(readerInit.ReadToEnd());
@@ -121,6 +124,8 @@ namespace Scraper
 
             request.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json");
             var response = await _httpClient.SendAsync(request);
+
+            _logger.LogInformation($"Sent request to {request.RequestUri}");
 
             StreamReader reader = new StreamReader(response.Content.ReadAsStream());
             JObject JSONresponse = JObject.Parse(reader.ReadToEnd());

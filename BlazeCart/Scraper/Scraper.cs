@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Net;
 using Models;
+using Microsoft.Extensions.Logging;
 
 namespace Scraper
 {
@@ -12,10 +13,12 @@ namespace Scraper
         public List<Item> Items { get; private protected set; } = new List<Item>();
 
         private protected HttpClient _httpClient;
+        private protected ILogger<Scraper> _logger;
 
-        public Scraper(HttpClient httpClient)
+        public Scraper(HttpClient httpClient, ILogger<Scraper> logger)
         {
             _httpClient = httpClient;
+            _logger = logger;
         }
 
         abstract public Task Scrape();

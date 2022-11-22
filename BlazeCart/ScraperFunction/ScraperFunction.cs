@@ -23,12 +23,13 @@ namespace ScraperFunction
 
         [FunctionName("ScraperFunction")]
         public async Task Run(
+             // Use this tool to check if your
+             // crontab expression is correct: https://crontab.cronhub.io
             [TimerTrigger("0 0 * * * *", RunOnStartup = true)]TimerInfo myTimer,
             ILogger log
         )
         {
-            log.LogInformation($"`ScraperFunction` Timer trigger function executed at: {DateTime.UtcNow}");
-
+            log.LogInformation($"`ScraperFunction` Timer trigger function began executing at: {DateTime.UtcNow}");
 
             var tasks = new List<Task>();
             foreach (var scraper in _scraperRepo)
@@ -37,7 +38,7 @@ namespace ScraperFunction
                 {
                     await scraper.Scrape();
                     log.LogInformation(
-                        $"Item Count: {scraper.Items.Count} from {scraper.GetType().Name} at: {DateTime.UtcNow}"
+                        $"ITEM COUNT: {scraper.Items.Count} FROM {scraper.GetType().Name} AT: {DateTime.UtcNow}"
                     );
                 }));
             }
@@ -57,7 +58,7 @@ namespace ScraperFunction
             }
 
             _dbCtx.SaveChanges();
-            log.LogInformation($"All items updated successfully to DB at: {DateTime.UtcNow}");
+            log.LogInformation($"Scraping finshed. All items updated successfully to DB at: {DateTime.UtcNow}");
         }
     }
 }
