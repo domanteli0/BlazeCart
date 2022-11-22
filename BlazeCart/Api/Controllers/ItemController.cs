@@ -25,13 +25,12 @@ namespace Api.Controllers
 
         [HttpGet]
         [ProducesResponseType(200, Type = typeof(IEnumerable<Item>))]
-        public async Task<IActionResult> GetRangeOfItems([FromQuery] int index, [FromQuery] int count = 10)
+        public async Task<ActionResult<IEnumerable<Item>>> GetRangeOfItems([FromQuery] int index, [FromQuery] int count = 10)
         {
-            var items = await _itemRepository.GetAllItemsAsync();
+            var items = await _itemRepository.GetRangeOfItemsAsync(index, count);
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
-            var returnedItems = items.GetRange(index, count);
-            return Ok(returnedItems);
+            return Ok(items);
 
         }
 

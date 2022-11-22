@@ -1,10 +1,11 @@
-﻿using Models;
+﻿using Microsoft.AspNetCore.Mvc;
+using Models;
 
 namespace Api.Repositories
 {
     public interface IItemRepository
     {
-        Task<List<Item>> GetAllItemsAsync();
+        Task<IEnumerable<Item>> GetRangeOfItemsAsync(int index, int count);
 
         Task<Item> GetItemByIdAsync(Guid id);
         Task<List<Item>> GetItemsByNameAsync(string name);

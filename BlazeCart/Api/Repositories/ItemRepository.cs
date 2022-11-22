@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Models;
 using System.Xml.Linq;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Api.Repositories
 {
@@ -13,9 +14,10 @@ namespace Api.Repositories
         {
             _context = context;
         }
-        public async Task<List<Item>> GetAllItemsAsync()
+        public async Task<IEnumerable<Item>> GetRangeOfItemsAsync(int index, int count)
         {
-            var records = await _context.Items.ToListAsync();
+            var res = await _context.Items.ToListAsync();
+            var records = res.GetRange(index, count);
             return records;
         }
 
