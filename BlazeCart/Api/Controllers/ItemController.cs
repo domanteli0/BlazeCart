@@ -1,4 +1,7 @@
-﻿using Api.Repositories;
+﻿using System.Collections.ObjectModel;
+using System.ComponentModel.DataAnnotations;
+using System.Runtime.InteropServices;
+using Api.Repositories;
 using DB;
 using Microsoft.AspNetCore.Mvc;
 using Models;
@@ -22,12 +25,13 @@ namespace Api.Controllers
 
         [HttpGet]
         [ProducesResponseType(200, Type = typeof(IEnumerable<Item>))]
-        public async Task<IActionResult> GetAllItems()
+        public async Task<IActionResult> GetRangeOfItems([FromQuery] int index, [FromQuery] int count = 10)
         {
             var items = await _itemRepository.GetAllItemsAsync();
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
-            return Ok(items);
+            var returnedItems = items.GetRange(index, count);
+            return Ok(returnedItems);
 
         }
 
