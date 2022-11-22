@@ -26,8 +26,8 @@ namespace Scraper
             Console.WriteLine(dbCtx);
 
 
-            var a = new IKIScraper();
-            var b = new BarboraScraper();
+            var a = new IKIScraper(new HttpClient());
+            var b = new BarboraScraper(new HttpClient());
 
             List<Task> tasks = new();
             //tasks.Add(Task.Run(async () =>

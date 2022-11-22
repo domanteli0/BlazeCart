@@ -1,24 +1,24 @@
 ﻿using System;
+using System.Threading.Tasks;
+using System.Collections.Generic;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Host;
 using Microsoft.Extensions.Logging;
-//using Microsoft.Extensions.Logging.Abstractions;
-
+using Microsoft.EntityFrameworkCore;
 using Scraper;
 using DB;
-using Microsoft.EntityFrameworkCore;
-using System.Threading.Tasks;
-using System.Collections.Generic;
 
 namespace ScraperFunction
 {
     public class ScraperFunction
     {
-        public readonly ScraperDbContext DbCtx;
+        private readonly ScraperDbContext _dbCtx;
+        private readonly ICollection<IScraper> _scraperRepo;
 
-        public ScraperFunction(ScraperDbContext dbCtx)
+        public ScraperFunction(ScraperDbContext dbCtx, IScraper []scraperRepo)
         {
-            DbCtx = dbCtx;
+            _dbCtx = dbCtx;
+            _scraperRepo = scraperRepo;
         }
 
         [FunctionName("ScraperFunction")]
@@ -29,34 +29,34 @@ namespace ScraperFunction
         {
             log.LogInformation($"`ScraperFunction` Timer trigger function executed at: {DateTime.UtcNow}");
 
-            //var bScraper = new BarboraScraper();
-            var iScraper = new IKIScraper();
 
             var tasks = new List<Task>();
-            //tasks.Add(Task.Run(async () =>
-            //{
-            //    await bScraper.Scrape();
-            //    log.LogInformation($"Barbora item Count: {bScraper.Items.Count} at: {DateTime.Now}");
-            //}));
-
-            tasks.Add(Task.Run(async () =>
+            foreach (var scraper in _scraperRepo)
             {
-                await iScraper.Scrape();
-                log.LogInformation($"IKI item Count: {iScraper.Items.Count} at: {DateTime.UtcNow}");
-            }));
+                tasks.Add(Task.Run(async () =>
+                {
+                    await scraper.Scrape();
+                    log.LogInformation(
+                        $"Item Count: {scraper.Items.Count} from {scraper.GetType().Name} at: {DateTime.UtcNow}"
+                    );
+                }));
+            }
 
             await Task.WhenAll(tasks);
             log.LogInformation($"Scraping finished at: {DateTime.UtcNow}");
 
-            DbCtx.Database.Migrate();
+            _dbCtx.Database.Migrate();
 
-            await DbCtx.Items.ForEachAsync(i => { DbCtx.Remove(i); });
-            await DbCtx.Categories.ForEachAsync(i => { DbCtx.Remove(i); });
+            await _dbCtx.Items.ForEachAsync(i => { _dbCtx.Remove(i); });
+            await _dbCtx.Categories.ForEachAsync(i => { _dbCtx.Remove(i); });
 
-            //DbCtx.Items.AddRange(bScraper.Items);
-            DbCtx.Items.AddRange(iScraper.Items);
+            foreach (var scraper in _scraperRepo)
+            {
+                _dbCtx.Items.AddRange(scraper.Items);
+                _dbCtx.Categories.AddRange(scraper.Categories);
+            }
 
-            DbCtx.SaveChanges();
+            _dbCtx.SaveChanges();
             log.LogInformation($"All items updated successfully to DB at: {DateTime.UtcNow}");
         }
     }

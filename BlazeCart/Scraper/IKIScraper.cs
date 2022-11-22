@@ -2,11 +2,14 @@
 using System.Net.Http.Headers;
 using Models;
 using static System.Net.Mime.MediaTypeNames;
+using System.Net.Http;
 
 namespace Scraper
 {
+
     public class IKIScraper : Scraper
     {
+        private protected override Merchendise.Merch _merch { get { return Merchendise.Merch.IKI; } }
         // Fields which are thought (as of when implemented) to always be non-null
         // are marked with null-forgiving operators (!)
         // If a field is thought to be able to be null,
@@ -20,7 +23,7 @@ namespace Scraper
         // * Referencing items with `Store`, `Category` instances and vice versa (Back-referencing)
         // Units of measurement and available ammounts
 
-        public IKIScraper() : base() { }
+        public IKIScraper(HttpClient httpClient) : base(httpClient) { }
 
         /// <summary>
         /// Gets all data
@@ -50,7 +53,7 @@ namespace Scraper
                 requestInit.Content = new StringContent("{\"locale\":\"lt\"}");
                 requestInit.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json");
 
-                responseInit = await httpClient.SendAsync(requestInit);
+                responseInit = await _httpClient.SendAsync(requestInit);
             }
             StreamReader readerInit = new StreamReader(responseInit.Content.ReadAsStream());
             var JSONresponseInit = JObject.Parse(readerInit.ReadToEnd());
@@ -117,7 +120,7 @@ namespace Scraper
                 throw new ArgumentException("Either categoryID or storeID must be not null");
 
             request.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json");
-            var response = await httpClient.SendAsync(request);
+            var response = await _httpClient.SendAsync(request);
 
             StreamReader reader = new StreamReader(response.Content.ReadAsStream());
             JObject JSONresponse = JObject.Parse(reader.ReadToEnd());
@@ -148,10 +151,7 @@ namespace Scraper
                 foreach (var storeId in cat["storeIds"]!)
                 {
                     Stores.AddAsSetByProperty(
-                        new Store(
-                            merch: Merchendise.Merch.IKI,
-                            internalID: storeId.ToString()
-                        ),
+                        new Store() { InternalID = storeId.ToString() },
                         "InternalID"
                     );
                 }
@@ -164,14 +164,14 @@ namespace Scraper
         {
             foreach (JToken cat_ in data["chains"]!.Last!["stores"]!)
             {
-                var newStore = new Store(
-                    merch: Merchendise.Merch.IKI,
-                    internalID: cat_["id"]!.ToString(),
-                    name: cat_["name"]!.ToString(),
-                    address: cat_["streetAndBuilding"]!.ToString(),
-                    longitude: cat_["location"]!["geopoint"]!["longitude"]!.ToString(),
-                    latitude: cat_["location"]!["geopoint"]!["latitude"]!.ToString()
-                    );
+                var newStore = new Store()
+                {
+                    InternalID = cat_["id"]!.ToString(),
+                    Name = cat_["name"]!.ToString(),
+                    Address = cat_["streetAndBuilding"]!.ToString(),
+                    Longitude = cat_["location"]!["geopoint"]!["longitude"]!.ToString(),
+                    Latitude = cat_["location"]!["geopoint"]!["latitude"]!.ToString(),
+                };
                 yield return newStore;
             }
         }

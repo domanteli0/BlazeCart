@@ -4,12 +4,15 @@ using ScrapySharp.Extensions;
 using Models;
 using System;
 using System.Threading;
+using System.Net.Http;
 
 namespace Scraper
 {
     public class BarboraScraper : Scraper
     {
-        public BarboraScraper() : base() { }
+        private protected override Merchendise.Merch _merch { get { return Merchendise.Merch.BARBORA; } }
+
+        public BarboraScraper(HttpClient httpClient) : base(httpClient) { }
 
         public override async Task Scrape()
         {
@@ -66,7 +69,7 @@ namespace Scraper
             HttpResponseMessage response;
             using (var request = new HttpRequestMessage(new HttpMethod("GET"), "https://barbora.lt/"))
             {
-                response = httpClient.Send(request);
+                response = _httpClient.Send(request);
             }
 
             StreamReader reader = new StreamReader(response.Content.ReadAsStream());
@@ -92,7 +95,7 @@ namespace Scraper
 
                     using (var request = new HttpRequestMessage(new HttpMethod("GET"), url))
                     {
-                        response = await httpClient.SendAsync(request);
+                        response = await _httpClient.SendAsync(request);
                     }
 
                     reader = new StreamReader(response.Content.ReadAsStream());
@@ -140,7 +143,7 @@ namespace Scraper
             Console.WriteLine(category);
             using (var request = new HttpRequestMessage(new HttpMethod("GET"), category))
             {
-                response = await httpClient.SendAsync(request);
+                response = await _httpClient.SendAsync(request);
             }
 
             var reader_ = new StreamReader(response.Content.ReadAsStream());
