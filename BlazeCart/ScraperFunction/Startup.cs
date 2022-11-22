@@ -36,11 +36,11 @@ namespace ScraperFunction
                     serv.GetService<HttpClient>(), serv.GetService<ILogger<Scraper.Scraper>>()
                 )
             );
-            builder.Services.AddScoped<IScraper>(
-                serv => new BarboraScraper(
-                    serv.GetService<HttpClient>(), serv.GetService<ILogger<Scraper.Scraper>>()
-                )
-            );
+            //builder.Services.AddScoped<IScraper>(
+            //    serv => new BarboraScraper(
+            //        serv.GetService<HttpClient>(), serv.GetService<ILogger<Scraper.Scraper>>()
+            //    )
+            //);
         }
     }
 }
