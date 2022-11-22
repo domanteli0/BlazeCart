@@ -16,7 +16,7 @@ namespace Api.Controllers
 
         [HttpGet]
         [ProducesResponseType(200, Type = typeof(IEnumerable<Category>))]
-        public async Task<IActionResult> GetAllItems()
+        public async Task<IActionResult> GetAllCategories()
         {
             var categories = await _categoryRepository.GetAllCategoriesAsync();
             if (!ModelState.IsValid)

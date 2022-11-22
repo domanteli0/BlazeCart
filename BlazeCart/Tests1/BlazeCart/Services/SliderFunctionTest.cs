@@ -2,7 +2,7 @@
 using BlazeCart.Services;
 using System.Collections.ObjectModel;
 
-namespace Tests1
+namespace Tests1.BlazeCart.Services
 {
 
     public class SliderFunctionTest
@@ -10,7 +10,7 @@ namespace Tests1
         private readonly SliderService _sut;
         private readonly ItemService _itemService;
         private static ObservableCollection<Item>[] testData = new ObservableCollection<Item>[3];
-        private readonly string[] _fileNames = new string[] { "shopItems.json", "shopItems1.json","shopItems2.json"};
+        private readonly string[] _fileNames = new string[] { "shopItems.json", "shopItems1.json", "shopItems2.json" };
 
 
         public SliderFunctionTest()
@@ -32,7 +32,7 @@ namespace Tests1
 
         public static IEnumerable<object[]> MaximumTestData()
         {
-            yield return new object[] { 5.84, testData[0]};
+            yield return new object[] { 5.84, testData[0] };
             yield return new object[] { 3.70, testData[1] };
             yield return new object[] { 3.10, testData[2] };
         }
