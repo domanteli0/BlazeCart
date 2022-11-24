@@ -18,7 +18,7 @@ public class ItemService
 
     
     private HttpClient _client;
-    private string BaseUrl = "https://10.0.2.2:5000";
+    private string BaseUrl = "https://blazecartapi.azure-api.net";
 
     public ItemService()
     {
