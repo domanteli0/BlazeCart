@@ -8,10 +8,16 @@
     <PackageReference Include="Microsoft.NET.Sdk.Functions" Version="4.1.3" />
     <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="5.0.0" />
     <PackageReference Include="Microsoft.Azure.Functions.Extensions" Version="1.1.0" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="6.0.0" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="6.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Http" Version="6.0.0" />
   </ItemGroup>
   <ItemGroup>
     <None Remove="Microsoft.Extensions.Configuration.UserSecrets" />
     <None Remove="Microsoft.Azure.Functions.Extensions" />
+    <None Remove="Microsoft.Extensions.DependencyInjection" />
+    <None Remove="Microsoft.Extensions.DependencyInjection.Abstractions" />
+    <None Remove="Microsoft.Extensions.Http" />
   </ItemGroup>
   <ItemGroup>
     <None Update="host.json">

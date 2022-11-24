@@ -1,5 +1,7 @@
 ﻿using System.Diagnostics;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging.Console;
 using Models;
 using DB;
 
@@ -25,23 +27,25 @@ namespace Scraper
 
             Console.WriteLine(dbCtx);
 
+            var factory = LoggerFactory.Create(b => b.AddConsole());
+            var logger = factory.CreateLogger<Scraper>();
 
-            var a = new IKIScraper();
-            var b = new BarboraScraper();
+            var iScraper = new IKIScraper(new HttpClient(), logger);
+            var bScraper = new BarboraScraper(new HttpClient(), logger);
 
             List<Task> tasks = new();
-            //tasks.Add(Task.Run(async () =>
-            //{
-            //    await b.Scrape();
-            //    await dbCtx.Items.AddRangeAsync(b.Items);
-            //    await dbCtx.Categories.AddRangeAsync(b.Categories);
-            //}));
+            tasks.Add(Task.Run(async () =>
+            {
+                await bScraper.Scrape();
+                await dbCtx.Items.AddRangeAsync(bScraper.Items);
+                await dbCtx.Categories.AddRangeAsync(bScraper.Categories);
+            }));
 
             tasks.Add(Task.Run(async () =>
             {
-                await a.Scrape();
-                await dbCtx.Items.AddRangeAsync(a.Items);
-                await dbCtx.Categories.AddRangeAsync(a.Categories);
+                await iScraper.Scrape();
+                await dbCtx.Items.AddRangeAsync(iScraper.Items);
+                await dbCtx.Categories.AddRangeAsync(iScraper.Categories);
             }));
 
             await Task.WhenAll(tasks);

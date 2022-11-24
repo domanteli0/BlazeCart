@@ -3,9 +3,9 @@ using System.Diagnostics;
 
 namespace Scraper
 {
-    public class BarboraScraperWrapper : Scraper
+    public class BarboraScraperWrapper
     {
-        public BarboraScraperWrapper() : base() { }
+        public BarboraScraperWrapper() { }
 
         /// <summary>
         /// The file will be saved to $PROJECT_LOCATION/BlazeCart/Scraper/BarboraScraper/test.json
@@ -27,9 +27,9 @@ namespace Scraper
             proc.Start();
         }
 
-        public override Task Scrape()
+        public Task Scrape()
         {
-            throw new NotImplementedException();
+            throw new NotImplementedException("Use `scrape`");
         }
     }
 }
