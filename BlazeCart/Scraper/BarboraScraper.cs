@@ -4,6 +4,7 @@ using ScrapySharp.Extensions;
 using Microsoft.Extensions.Logging;
 using Models;
 using System;
+using Common;
 using System.Threading;
 using System.Net.Http;
 

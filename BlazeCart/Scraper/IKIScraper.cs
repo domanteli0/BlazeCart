@@ -1,9 +1,10 @@
 ﻿using System.Net.Http;
 using System.Net.Http.Headers;
+using Models;
+using Common;
 using static System.Net.Mime.MediaTypeNames;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json.Linq;
-using Models;
 
 namespace Scraper
 {
