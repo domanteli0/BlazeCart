@@ -15,6 +15,27 @@ public class ItemService
     public event EventHandler<EventArgs> CartTbUpdated;
 
     public event EventHandler<EventArgs> FavTbUpdated;
+
+    
+    private HttpClient _client;
+    private string BaseUrl = "https://10.0.2.2:5000";
+
+    public ItemService()
+    {
+        _client = new HttpClient
+        {
+            BaseAddress = new Uri(BaseUrl),
+
+        };
+    }
+
+    public async Task<ObservableCollection<Item>> Get(int index, int count)
+    {
+        var json = await _client.GetStringAsync($"api/Item/{index}/{count}");
+        var jarr = JArray.Parse(json);
+        var items = JsonConvert.DeserializeObject<ObservableCollection<Item>>(jarr.ToString());
+        return items;
+    }
     public async Task<ObservableCollection<Item>> GetItems(string fileName)
     {
 
