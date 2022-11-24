@@ -1,12 +1,14 @@
 ﻿using System;
-using DB;
+using System.Net.Http;
+using System.Collections.Generic;
 using Microsoft.Azure.Functions.Extensions.DependencyInjection;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-using System;
-using System.Reflection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.DependencyInjection;
-using Newtonsoft.Json.Serialization;
+using Microsoft.Extensions.Configuration;
+using Microsoft.EntityFrameworkCore;
+using DB;
+using Scraper;
+using Microsoft.Extensions.Logging;
 
 [assembly: FunctionsStartup(typeof(ScraperFunction.Startup))]
 namespace ScraperFunction
@@ -25,7 +27,20 @@ namespace ScraperFunction
             builder.Services.AddDbContext<ScraperDbContext>(
                 options => SqlServerDbContextOptionsExtensions.UseSqlServer(options, conStr));
 
+            builder.Services.AddLogging();
+
             builder.Services.AddSingleton<IConfiguration>(config);
+            builder.Services.AddScoped<HttpClient>(_=> new HttpClient());
+            builder.Services.AddScoped<IScraper>(
+                serv => new IKIScraper(
+                    serv.GetService<HttpClient>(), serv.GetService<ILogger<Scraper.Scraper>>()
+                )
+            );
+            //builder.Services.AddScoped<IScraper>(
+            //    serv => new BarboraScraper(
+            //        serv.GetService<HttpClient>(), serv.GetService<ILogger<Scraper.Scraper>>()
+            //    )
+            //);
         }
     }
 }
