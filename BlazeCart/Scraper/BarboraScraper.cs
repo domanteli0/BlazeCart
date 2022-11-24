@@ -1,15 +1,22 @@
 ﻿using HtmlAgilityPack;
 using Newtonsoft.Json.Linq;
 using ScrapySharp.Extensions;
+using Microsoft.Extensions.Logging;
 using Models;
 using System;
+using Common;
 using System.Threading;
+using System.Net.Http;
 
 namespace Scraper
 {
     public class BarboraScraper : Scraper
     {
-        public BarboraScraper() : base() { }
+        private protected override Merchendise.Merch _merch
+            { get { return Merchendise.Merch.BARBORA; } }
+
+        public BarboraScraper(HttpClient httpClient, ILogger<Scraper> logger) :
+            base(httpClient, logger) { }
 
         public override async Task Scrape()
         {
@@ -42,12 +49,15 @@ namespace Scraper
                     {
                         var items = await GetFetchableItems(cat.Uri!);
                         if (items is null)
-                            // TODO: Proper logging
-                            Console.WriteLine($"Failed to retrieve {cat.Uri}");
+                            _logger.LogError(
+                                $"Failed to retrieve {cat.Uri}" +
+                                ((tries > 0) ? "Retrying" : "")
+                            );
                         else
                         {
+                            _logger.LogInformation($"Successfully retrieved from {cat.Uri}");
                             Items.AddRange(items);
-                            tries = 0;
+                            break;
                         }
                         Thread.Sleep(100);
                         tries -= 1;
@@ -58,6 +68,7 @@ namespace Scraper
 
             }
             await Task.WhenAll(tasks);
+            setMerch();
         }
 
         /// <returns>An inumeraion of async functions which fetch a category</returns>
@@ -66,7 +77,8 @@ namespace Scraper
             HttpResponseMessage response;
             using (var request = new HttpRequestMessage(new HttpMethod("GET"), "https://barbora.lt/"))
             {
-                response = httpClient.Send(request);
+                response = _httpClient.Send(request);
+                _logger.LogInformation($"Sent request to {request.RequestUri}");
             }
 
             StreamReader reader = new StreamReader(response.Content.ReadAsStream());
@@ -92,7 +104,8 @@ namespace Scraper
 
                     using (var request = new HttpRequestMessage(new HttpMethod("GET"), url))
                     {
-                        response = await httpClient.SendAsync(request);
+                        response = await _httpClient.SendAsync(request);
+                        _logger.LogInformation($"Sent request to {request.RequestUri}");
                     }
 
                     reader = new StreamReader(response.Content.ReadAsStream());
@@ -136,11 +149,10 @@ namespace Scraper
         private async Task<IEnumerable<Item>?> GetFetchableItems(Uri category)
         {
             HttpResponseMessage response;
-            // TODO: Proper logging
-            Console.WriteLine(category);
             using (var request = new HttpRequestMessage(new HttpMethod("GET"), category))
             {
-                response = await httpClient.SendAsync(request);
+                response = await _httpClient.SendAsync(request);
+                _logger.LogInformation($"Sent request to {request.RequestUri}");
             }
 
             var reader_ = new StreamReader(response.Content.ReadAsStream());
@@ -160,8 +172,7 @@ namespace Scraper
             }
             catch (ArgumentNullException)
             {
-                // TODO: proper logging
-                Console.WriteLine($"Barbora probably responded with 500.\n");
+                _logger.LogInformation($"Barbora probably responded with 500");
             }
 
             return null;

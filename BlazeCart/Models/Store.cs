@@ -12,21 +12,6 @@
         public string? Longitude { get; set; }
         public Merchendise.Merch Merch { get; set; }
 
-        public Store(
-            string internalID,
-            Merchendise.Merch merch,
-            string? name = null,
-            string? address = null,
-            string? latitude = null,
-            string? longitude = null
-        )
-        {
-            InternalID = internalID;
-            Merch = merch;
-            Name = name;
-            Address = address;
-            Latitude = latitude;
-            Longitude = longitude;
-        }
+        public Store() { }
     }
 }

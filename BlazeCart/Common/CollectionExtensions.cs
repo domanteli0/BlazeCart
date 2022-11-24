@@ -1,10 +1,10 @@
-﻿using Models;
-using System.Text.RegularExpressions;
-
-namespace Scraper
+﻿using System;
+using Models;
+using static Common.ObjectExtensions;
+namespace Common
 {
-    static public class CollectionExtentions
-    {
+	public static class CollectionExtensions
+	{
         /// <summary>
         /// Checks if an object with the equal property (Determined by Equals() method) exists,
         /// if not elem is added, otherthise it is not added
@@ -45,7 +45,7 @@ namespace Scraper
 
         public static IEnumerable<Category> GetWithoutChildren(this IEnumerable<Category> categories)
         {
-            foreach(var cat in categories)
+            foreach (var cat in categories)
             {
                 if (cat.SubCategories.Count() > 0)
                     foreach (var child in cat.SubCategories.GetWithoutChildren())
@@ -69,7 +69,7 @@ namespace Scraper
                 var str = "";
                 foreach (var cat in categories!)
                 {
-                    str += "\t".Times(level) + cat.ToString() +"\n";
+                    str += "\t".Times(level) + cat.ToString() + "\n";
                     str += categoryTree(cat.SubCategories, level + 1);
                 }
 
@@ -77,19 +77,19 @@ namespace Scraper
             }
         }
 
-        /// <summary>
-        /// Returns first match based on a specified pattern.
-        /// </summary>
-        public static string FindFirstRegexMatch(this string str, string pattern)
+        public static string Tree(this Category category)
         {
-            return (new Regex(pattern)).Matches(str).First().ToString();
+            return tree(category, 0);
         }
 
-        private static bool EqualPropertyValue(this object left, object right, string property)
+        private static string tree(Category category,int level)
         {
-            return left.GetType().GetProperty(property)!.GetValue(left)!.Equals(
-                    right.GetType().GetProperty(property)!.GetValue(right)
-                );
+            var str = "\t".Times(level) + category.ToString() + "\n";
+            foreach (var sub in category.SubCategories)
+                str += tree(sub, level + 1);
+
+            return str;
         }
     }
 }
+

@@ -26,5 +26,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Scraper\Scraper.csproj" />
+    <ProjectReference Include="..\Common\Common.csproj" />
   </ItemGroup>
 </Project>
