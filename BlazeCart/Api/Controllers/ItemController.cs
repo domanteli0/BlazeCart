@@ -23,7 +23,7 @@ namespace Api.Controllers
         }
       
 
-        [HttpGet]
+        [HttpGet("{index}/{count}")]
         [ProducesResponseType(200, Type = typeof(IEnumerable<Item>))]
         public async Task<ActionResult<IEnumerable<Item>>> GetRangeOfItems([FromQuery] int index, [FromQuery] int count = 10)
         {

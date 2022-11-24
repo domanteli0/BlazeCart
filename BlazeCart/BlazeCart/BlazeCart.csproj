@@ -2,12 +2,12 @@
 
 	<PropertyGroup>
 		<!--REMOVE net.6.0 TO RUN BLAZECART-->
-		<TargetFrameworks>net6.0;net6.0-android;net6.0-ios;net6.0-maccatalyst</TargetFrameworks>
+		<TargetFrameworks>net6.0-android;net6.0-ios;net6.0-maccatalyst;net6.0</TargetFrameworks>
 		<TargetFrameworks Condition="$([MSBuild]::IsOSPlatform('windows'))">$(TargetFrameworks);net6.0-windows10.0.19041.0</TargetFrameworks>
 		<!-- Uncomment to also build the tizen app. You will need to install tizen by following this: https://github.com/Samsung/Tizen.NET -->
 		<!-- <TargetFrameworks>$(TargetFrameworks);net6.0-tizen</TargetFrameworks> -->
 		<!--UNCOMMENT THIS IF YOU WANT TO RUN BLAZECART-->
-		<!--<OutputType>Exe</OutputType>--> 
+		<!--<OutputType>Exe</OutputType>-->
 		<OutputType Condition="'$(TargetFramework)' != 'net6.0'">Exe</OutputType>
 		<RootNamespace>BlazeCart</RootNamespace>
 		<UseMaui>true</UseMaui>

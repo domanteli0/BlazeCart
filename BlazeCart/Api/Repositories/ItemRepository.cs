@@ -14,14 +14,14 @@ namespace Api.Repositories
         {
             _context = context;
         }
-        public async Task<IEnumerable<Item>> GetRangeOfItemsAsync(int index, int count)
+        public async Task <IEnumerable<Item>> GetRangeOfItemsAsync(int index, int count)
         {
             var res = await _context.Items.ToListAsync();
             var records = res.GetRange(index, count);
             return records;
         }
 
-        public async Task<Item> GetItemByIdAsync(Guid id)
+        public async Task <Item> GetItemByIdAsync(Guid id)
         {
             var records =  await _context.Items.Where(i => i.Id == id).FirstOrDefaultAsync();
             return records;

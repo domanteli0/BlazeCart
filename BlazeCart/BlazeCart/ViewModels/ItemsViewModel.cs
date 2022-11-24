@@ -15,8 +15,6 @@ public partial class ItemsViewModel : BaseViewModel
     [ObservableProperty] public bool isRefreshing;
     public ObservableCollection<Item> Items { get; set; } = new();
 
-    [ObservableProperty] private ObservableCollection<Item> cartItems = new();
-
     [ObservableProperty]  double maximum;
     [ObservableProperty]  double minimum;
     [ObservableProperty]  double interval;
