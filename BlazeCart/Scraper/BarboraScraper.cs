@@ -44,25 +44,37 @@ namespace Scraper
                 {
                     semaphore.Wait();
 
-                    var tries = 3;
-                    while(tries > 0)
+                    IEnumerable<Item>? items;
+                    try
                     {
-                        var items = await GetFetchableItems(cat.Uri!);
-                        if (items is null)
-                            _logger.LogError(
-                                $"Failed to retrieve {cat.Uri}" +
-                                ((tries > 0) ? "Retrying" : "")
-                            );
-                        else
-                        {
-                            _logger.LogInformation($"Successfully retrieved from {cat.Uri}");
-                            Items.AddRange(items);
-                            break;
-                        }
-                        Thread.Sleep(100);
-                        tries -= 1;
+                        items = await GetFetchableItems(cat.Uri!);
                     }
+                    catch (EmptyGetExcepsion ex)
+                    {
+                        try
+                        {
+                            var tries = 3;
+                            while (tries > 0)
+                            {
+                                items = await GetFetchableItems(ex.Uri!);
+                                if (items is null)
+                                    _logger.LogError(
+                                        $"Failed to retrieve {ex.Uri}" +
+                                        ((tries > 0) ? "Retrying" : "")
+                                    );
+                                else
+                                {
+                                    _logger.LogInformation($"Successfully retrieved from {cat.Uri}");
+                                    Items.AddRange(items);
+                                    break;
+                                }
+                                Thread.Sleep(100);
+                                tries -= 1;
+                            }
+                        }
+                        catch (EmptyGetExcepsion) { }
 
+                    }
                     semaphore.Release();
                 }));
 
@@ -173,9 +185,8 @@ namespace Scraper
             catch (ArgumentNullException)
             {
                 _logger.LogInformation($"Barbora probably responded with 500");
+                throw new EmptyGetExcepsion(category);
             }
-
-            return null;
         }
 
         private IEnumerable<Item> ProccesItems(string json)
