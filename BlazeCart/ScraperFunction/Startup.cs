@@ -20,7 +20,6 @@ namespace ScraperFunction
             var config = builder.GetContext().Configuration;
             var a = config.GetSection("DB").Value;
             var conStr = config.GetConnectionStringOrSetting(a);
-
             if (conStr is null)
                 throw new Exception("DB connection string not found");
 
@@ -33,9 +32,11 @@ namespace ScraperFunction
             builder.Services.AddScoped<HttpClient>(_=> new HttpClient());
             builder.Services.AddScoped<IScraper>(
                 serv => new IKIScraper(
-                    serv.GetService<HttpClient>(), serv.GetService<ILogger<Scraper.Scraper>>()
+                    serv.GetService<HttpClient>(),
+                    serv.GetService<ILogger<Scraper.Scraper>>()
                 )
             );
+
             //builder.Services.AddScoped<IScraper>(
             //    serv => new BarboraScraper(
             //        serv.GetService<HttpClient>(), serv.GetService<ILogger<Scraper.Scraper>>()

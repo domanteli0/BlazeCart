@@ -1,46 +1,32 @@
 ﻿using DB;
-using Microsoft.EntityFrameworkCore;
+using System;
+//using System.Collections.Generic;
 using System.Configuration;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Api.Repositories;
 
-var builder = WebApplication.CreateBuilder(args);
+//using Microsoft.Extensions.DependencyInjection.Extensions;
+//using Microsoft.Extensions.DependencyInjection;
+//using Microsoft.Extensions.Logging;
 
-// Add services to the container.
-
-builder.Services.AddControllers();
-builder.Services.AddScoped<IItemRepository, ItemRepository>();
-builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
-var configuration = new ConfigurationBuilder()
-    .SetBasePath(Directory.GetCurrentDirectory())
-    .AddJsonFile("appsettings.json")
-    .AddUserSecrets<Program>()
-    .Build();
-string connectionString = configuration.GetConnectionString(configuration.GetSection("DB").Value!);
-
-DbContextOptionsBuilder<ScraperDbContext> optionsBuilder = new DbContextOptionsBuilder<ScraperDbContext>()
-    .UseSqlServer(connectionString);
-
-builder.Services.AddDbContext<ScraperDbContext>(
-    options => options.UseSqlServer(connectionString));
-
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
-
-var app = builder.Build();
-
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
+namespace Api
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
+    public class Program
+    {
+        public static void Main(string[] args)
+        {
+            CreateHostBuilder(args).Build().Run();
+        }
+
+        public static IHostBuilder CreateHostBuilder(string[] args)
+        {
+            var ret = WebApplication.CreateBuilder(args);
+            return Host.CreateDefaultBuilder(args)
+                .ConfigureWebHostDefaults(webBuilder =>
+                {
+                    webBuilder.UseStartup<Startup>();
+                });
+        }
+    }
 }
-
-app.UseHttpsRedirection();
-
-app.UseAuthorization();
-
-app.MapControllers();
-
-app.Run();
-
