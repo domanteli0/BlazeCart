@@ -1,5 +1,6 @@
 ﻿using Api.Repositories;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Models;
 
 namespace Api.Controllers
@@ -38,9 +39,9 @@ namespace Api.Controllers
         }
 
         [HttpGet("{id}/items")]
-        [ProducesResponseType(200, Type = typeof(List<Item>))]
+        [ProducesResponseType(200, Type = typeof(IEnumerable<Item>))]
         [ProducesResponseType(400)]
-        public IActionResult GetItemsByCategoryIdAsync(Guid id)
+        public async Task <IActionResult> GetItemsByCategoryIdAsync(Guid id)
         {
             if (!_categoryRepository.IsCategoryActive(id))
                 return NotFound();
@@ -49,8 +50,9 @@ namespace Api.Controllers
                 return BadRequest(ModelState);
             return Ok(items);
         }
+
         [HttpGet("{name}/categories")]
-        [ProducesResponseType(200, Type = typeof(List<Category>))]
+        [ProducesResponseType(200, Type = typeof(IEnumerable<Category>))]
         [ProducesResponseType(400)]
         public async Task<IActionResult> GetCategoriesByNameAsync(string name)
         {
@@ -58,6 +60,18 @@ namespace Api.Controllers
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
             return Ok(categories);
+        }
+
+        [HttpGet("{index}/{count}")]
+        [ProducesResponseType(200, Type = typeof(IEnumerable<Category>))]
+        [ProducesResponseType(400)]
+        public async Task<IActionResult> GetRangeOfItems(int index, int count)
+        {
+            var items = await _categoryRepository.GetRangeOfCategoriesAsync(index, count);
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+            return Ok(items);
+
         }
 
     }

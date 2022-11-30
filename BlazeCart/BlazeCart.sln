@@ -5,8 +5,6 @@ VisualStudioVersion = 17.0.31611.283
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazeCart", "BlazeCart\BlazeCart.csproj", "{51ABB9CD-18AF-4BB5-BF3C-595437700555}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tests", "Tests\Tests.csproj", "{B03A73CB-05D1-4AC2-9AAD-3E291D7DC486}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Scraper", "Scraper\Scraper.csproj", "{0DFF0B66-6A81-45CE-ADDF-D1399FC6EF89}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Api", "Api\Api.csproj", "{611418AD-5952-41C7-AB92-B35D5FCC4B73}"
@@ -17,9 +15,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DB", "DB\DB.csproj", "{3137
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ScraperFunction", "ScraperFunction\ScraperFunction.csproj", "{B7C3C145-CF56-4650-BCD7-377C0AA67F82}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tests1", "Tests1\Tests1.csproj", "{F7D4927C-942F-45D6-9479-39A59D67A783}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tests", "Tests1\Tests.csproj", "{F7D4927C-942F-45D6-9479-39A59D67A783}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common", "Common\Common.csproj", "{A3D373DB-17C5-407C-B26D-AB1028F29714}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Common", "Common\Common.csproj", "{A3D373DB-17C5-407C-B26D-AB1028F29714}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -41,14 +39,6 @@ Global
 		{51ABB9CD-18AF-4BB5-BF3C-595437700555}.Release|x86.ActiveCfg = Release|x86
 		{51ABB9CD-18AF-4BB5-BF3C-595437700555}.Release|x86.Build.0 = Release|x86
 		{51ABB9CD-18AF-4BB5-BF3C-595437700555}.Release|x86.Deploy.0 = Release|x86
-		{B03A73CB-05D1-4AC2-9AAD-3E291D7DC486}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B03A73CB-05D1-4AC2-9AAD-3E291D7DC486}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B03A73CB-05D1-4AC2-9AAD-3E291D7DC486}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{B03A73CB-05D1-4AC2-9AAD-3E291D7DC486}.Debug|x86.Build.0 = Debug|Any CPU
-		{B03A73CB-05D1-4AC2-9AAD-3E291D7DC486}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B03A73CB-05D1-4AC2-9AAD-3E291D7DC486}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B03A73CB-05D1-4AC2-9AAD-3E291D7DC486}.Release|x86.ActiveCfg = Release|Any CPU
-		{B03A73CB-05D1-4AC2-9AAD-3E291D7DC486}.Release|x86.Build.0 = Release|Any CPU
 		{0DFF0B66-6A81-45CE-ADDF-D1399FC6EF89}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{0DFF0B66-6A81-45CE-ADDF-D1399FC6EF89}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0DFF0B66-6A81-45CE-ADDF-D1399FC6EF89}.Debug|x86.ActiveCfg = Debug|Any CPU
