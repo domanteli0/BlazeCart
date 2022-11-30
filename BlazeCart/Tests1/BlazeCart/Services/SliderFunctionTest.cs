@@ -1,6 +1,8 @@
 ﻿using BlazeCart.Models;
 using BlazeCart.Services;
 using System.Collections.ObjectModel;
+using FakeItEasy;
+using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace Tests1.BlazeCart.Services
 {
@@ -9,18 +11,17 @@ namespace Tests1.BlazeCart.Services
     {
         private readonly SliderService _sut;
         private readonly ItemService _itemService;
-        private static ObservableCollection<Item>[] testData = new ObservableCollection<Item>[3];
+        private static IList<ObservableCollection<Item>> _testData;
         private readonly string[] _fileNames = new string[] { "shopItems.json", "shopItems1.json", "shopItems2.json" };
 
 
         public SliderFunctionTest()
         {
+           _testData = A.CollectionOfFake<ObservableCollection<Item>>(3);
+           
             _sut = new SliderService();
             _itemService = new ItemService();
-            for (int i = 0; i < _fileNames.Count(); i++)
-            {
-                testData[i] = _itemService.GetItems(_fileNames[i]).Result;
-            }
+
         }
 
         [Theory]
@@ -32,9 +33,9 @@ namespace Tests1.BlazeCart.Services
 
         public static IEnumerable<object[]> MaximumTestData()
         {
-            yield return new object[] { 5.84, testData[0] };
-            yield return new object[] { 3.70, testData[1] };
-            yield return new object[] { 3.10, testData[2] };
+            yield return new object[] { 5.84, _testData[0] };
+            yield return new object[] { 3.70, _testData[1] };
+            yield return new object[] { 3.10, _testData[2] };
         }
 
         [Theory]
@@ -46,9 +47,9 @@ namespace Tests1.BlazeCart.Services
 
         public static IEnumerable<object[]> MinimumTestData()
         {
-            yield return new object[] { 1.05, testData[0] };
-            yield return new object[] { 1.59, testData[1] };
-            yield return new object[] { 3.10, testData[2] };
+            yield return new object[] { 1.05, _testData[0] };
+            yield return new object[] { 1.59, _testData[1] };
+            yield return new object[] { 3.10, _testData[2] };
         }
 
     }
