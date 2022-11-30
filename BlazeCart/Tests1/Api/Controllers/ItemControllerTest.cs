@@ -28,7 +28,7 @@ namespace Tests1.Api.Controllers
 
             var actionResult = await _controller.GetRangeOfItems(index, count);
 
-            var result = actionResult.Result as OkObjectResult;
+            var result = actionResult as OkObjectResult;
             var returnItems = result.Value as IEnumerable<Item>;
             Assert.NotNull(returnItems);
             Assert.Equal(count, returnItems.Count());

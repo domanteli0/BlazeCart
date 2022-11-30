@@ -65,7 +65,7 @@ namespace Api.Controllers
         [HttpGet("{index}/{count}")]
         [ProducesResponseType(200, Type = typeof(IEnumerable<Category>))]
         [ProducesResponseType(400)]
-        public async Task<IActionResult> GetRangeOfItems(int index, int count)
+        public async Task<IActionResult> GetRangeOfCategories(int index, int count)
         {
             var items = await _categoryRepository.GetRangeOfCategoriesAsync(index, count);
             if (!ModelState.IsValid)
