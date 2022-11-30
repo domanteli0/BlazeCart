@@ -11,5 +11,7 @@ namespace Api.Repositories
         Task<List<Category>> GetCategoriesByNameAsync(string name);
         List<Item> GetItemsByCategoryIdAsync(Guid id);
 
+        Task<IEnumerable<Category>> GetRangeOfCategoriesAsync(int index, int count);
+
     }
 }
