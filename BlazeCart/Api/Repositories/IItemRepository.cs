@@ -4,6 +4,7 @@ namespace Api.Repositories
 {
     public interface IItemRepository
     {
+        Task<IEnumerable<Item>> GetRangeOfItemsAsync(int index, int count);
         Task<List<Item>> GetAllItemsAsync();
 
         Task<Item> GetItemByIdAsync(Guid id);
