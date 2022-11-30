@@ -3,7 +3,7 @@ namespace Models
 {
 	public static class Merchendise
 	{
-		public enum Merch { IKI, RIMI }
+		public enum Merch { IKI, BARBORA }
 	}
 }
 
