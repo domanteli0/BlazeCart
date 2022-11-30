@@ -68,7 +68,7 @@ public partial class ItemsViewModel : BaseViewModel
         try
         {
             isBusy = true;
-            var items = await _itemService.GetItems("shopItems.json");
+            var items = await _itemService.Get(0, 3);
 
             if (Items.Count != 0)
             {
