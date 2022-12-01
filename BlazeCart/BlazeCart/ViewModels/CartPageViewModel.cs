@@ -45,7 +45,7 @@ namespace BlazeCart.ViewModels
             }
             catch (Exception ex)
             {
-                _logger.LogError($"Unable to remove item from cart: {item.ItemId}, {item.Name}, {ex.Message}");
+                _logger.LogError($"Unable to remove item from cart: {item.ItemId}, {item.NameLT}, {ex.Message}");
                 throw;
             }
         }

@@ -124,7 +124,7 @@
                                                HorizontalTextAlignment="Start"
                                                Margin="0, 0, 15, 0"
                                                Style="{StaticResource ItemNamePoppins}"
-                                               Text="{Binding Name}"
+                                               Text="{Binding NameLT}"
                                                TextColor="{StaticResource PrimaryTextColor}"
                                                LineBreakMode="CharacterWrap" />
                                         <HorizontalStackLayout Grid.Column="1"
@@ -132,7 +132,7 @@
                                             <Label HorizontalTextAlignment="Start"
                                                    Margin="0, 0, 2, 0"
                                                    Style="{StaticResource ItemPricePoppins}"
-                                                   Text="{Binding PricePerUnit}" />
+                                                   Text="{Binding PricePerUnitOfMeasure}" />
                                             <Label HorizontalTextAlignment="Start"
                                                    Margin="0, 0, 15, 0"
                                                    Style="{StaticResource ItemPricePoppins}"
@@ -140,7 +140,7 @@
                                             <Label HorizontalTextAlignment="Start"
                                                    Margin="0, 0, 1, 0"
                                                    Style="{StaticResource ItemPricePoppins}"
-                                                   Text="{Binding Units}" />
+                                                   Text="{Binding MeasureUnit}" />
                                         </HorizontalStackLayout>
                                         <HorizontalStackLayout Grid.Column="1"
                                                                Grid.Row="0">

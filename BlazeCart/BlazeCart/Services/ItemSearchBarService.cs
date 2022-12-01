@@ -15,7 +15,7 @@ public class ItemSearchBarService
     internal ObservableCollection<Item> GetSearchResults(string text)
     {
         var searchResults = from I in FetchedItems
-            where I.Name.Contains(text)
+            where I.NameLT.Contains(text)
             select I;
 
         ObservableCollection<Item> itemSearchResult = new ObservableCollection<Item>(searchResults.ToList());

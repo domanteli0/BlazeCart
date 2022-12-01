@@ -68,7 +68,7 @@ public partial class ItemsViewModel : BaseViewModel
         try
         {
             isBusy = true;
-            var items = await _itemService.Get(0,3);
+            var items = await _itemService.Get(0,5);
 
             if (Items.Count != 0)
             {
@@ -76,7 +76,11 @@ public partial class ItemsViewModel : BaseViewModel
             }
 
             foreach (var item in items)
+            {
+                item.Price = item.Price / 100;
+                item.PricePerUnitOfMeasure = item.PricePerUnitOfMeasure / 100;
                 Items.Add(item);
+            }
             _logger.LogInformation("Successfully retrieved items from .json");
         }
 
@@ -109,7 +113,7 @@ public partial class ItemsViewModel : BaseViewModel
             await Shell.Current.DisplayAlert("Prekės pridėjimas sėkmingas", "Sėkmingai pažymėjote prekę kaip mėgstamiausią", "OK");
             await _dataService.AddFavoriteItemToDb(item);
             _itemService.OnFavTbUpdated(EventArgs.Empty);
-            _logger.LogInformation($"Item {item.Name} added to favorites");
+            _logger.LogInformation($"Item {item.NameLT} added to favorites");
         }
         catch (Exception ex)
         {
@@ -224,7 +228,7 @@ public partial class ItemsViewModel : BaseViewModel
         try
         {
             _itemService.AddToCart(item);
-            _logger.LogInformation($"Item {item.Name} added to cart");
+            _logger.LogInformation($"Item {item.NameLT} added to cart");
             await Shell.Current.DisplayAlert("Įdėta į krepšelį!", "Prekė sėkmingai įdėta į krepšelį!", "OK");
         }
         catch (Exception ex)
@@ -244,7 +248,7 @@ public partial class ItemsViewModel : BaseViewModel
                   $"{nameof(ItemPage)}", new Dictionary<string, object>
                   { 
                       {"Item", item},
-                      {"Name", item.Name},
+                      {"NameLT", item.NameLT},
                        {"Price", item.Price},
                        {"Image", item.Image},
                       {"Description", item.Description}

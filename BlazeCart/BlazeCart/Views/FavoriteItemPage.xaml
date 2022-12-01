@@ -104,7 +104,7 @@
                                                    Margin="5, 3, 0, 0"
                                                    Style="{StaticResource CheapestStoreNamePoppins}"
                                                    FontSize="18"
-                                                   Text="{Binding Name}"
+                                                   Text="{Binding NameLT}"
                                                    TextColor="{StaticResource PrimaryTextColor}"
                                                    VerticalOptions="Center" />
                                             <Label HorizontalTextAlignment="Start"

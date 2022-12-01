@@ -62,7 +62,7 @@ public class ItemService
     }
     public void AddToCart(Item item)
     {
-        var query = CartItems.Where(x => x.Name == item.Name && x.Store == item.Store);
+        var query = CartItems.Where(x => x.NameLT == item.NameLT && x.Store == item.Store);
         var result = query.ToList();
         if (result.Count == 0)
         {
