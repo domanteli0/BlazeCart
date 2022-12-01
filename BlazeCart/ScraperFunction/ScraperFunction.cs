@@ -46,8 +46,6 @@ namespace ScraperFunction
             await Task.WhenAll(tasks);
             log.LogInformation($"Scraping finished at: {DateTime.UtcNow}");
 
-            _dbCtx.Database.Migrate();
-
             await _dbCtx.Items.ForEachAsync(i => { _dbCtx.Remove(i); });
             await _dbCtx.Categories.ForEachAsync(i => { _dbCtx.Remove(i); });
 
