@@ -35,15 +35,7 @@
                                        BackgroundColor="{StaticResource White}"
                                        CornerRadius="20"
                                        Margin="10, 5, 10, 5">
-                            <SwipeView>
-                            <SwipeView.RightItems>
-                                <SwipeItems>
-                                    <SwipeItem IconImageSource="trash.png"
-                                               BackgroundColor="{StaticResource BinColor}"
-                                               Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:CartPageViewModel}}, Path=RemoveCommand}"
-                                               CommandParameter="{Binding .}" />
-                                </SwipeItems>
-                            </SwipeView.RightItems>
+                            
                             <Grid x:Name="ItemCard"
                                   MaximumHeightRequest="220"
                                   BackgroundColor="White"
@@ -150,7 +142,7 @@
                                 </HorizontalStackLayout>
                                
                             </Grid>
-                        </SwipeView>
+                        
                         </Frame>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>

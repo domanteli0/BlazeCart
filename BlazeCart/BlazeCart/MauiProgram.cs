@@ -5,6 +5,8 @@ using Syncfusion.Maui.Core.Hosting;
 using Syncfusion.Maui.ListView.Hosting;
 using CommunityToolkit.Maui;
 using MetroLog.Maui;
+using DevExpress.Maui;
+using DevExpress.Maui.CollectionView;
 using MetroLog.MicrosoftExtensions;
 using SkiaSharp.Views.Maui.Controls.Hosting;
 
@@ -19,6 +21,7 @@ public static class MauiProgram
         builder
 			.UseMauiApp<App>()
             .UseSkiaSharp()
+            .UseDevExpress()
             .ConfigureSyncfusionCore()
             .ConfigureSyncfusionListView()
             .ConfigureFonts(fonts =>

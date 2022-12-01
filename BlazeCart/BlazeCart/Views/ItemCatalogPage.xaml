@@ -10,20 +10,25 @@
              xmlns:editors="clr-namespace:Syncfusion.Maui.Inputs;assembly=Syncfusion.Maui.Inputs"
              xmlns:model="clr-namespace:BlazeCart.Models"
              xmlns:viewmodel="clr-namespace:BlazeCart.ViewModels"
+             xmlns:dxcv="clr-namespace:DevExpress.Maui.CollectionView;assembly=DevExpress.Maui.CollectionView"
              x:DataType="viewmodel:ItemsViewModel">
     <ContentPage.Content>
-        <ScrollView Margin="7">
+        
             <RefreshView IsRefreshing="{Binding IsRefreshing}"
                          Command="{Binding RefreshCommand}">
                 <StackLayout Margin="5">
                     <ImageButton Source="back_button"
+                                 HeightRequest="55"
+                                 Padding="0.5"
                                  HorizontalOptions="Start" />
-                    <Switch Toggled="Switch_OnToggled">
+                    <Switch Toggled="Switch_OnToggled"
+                            Margin="0, 0, 15, 0">
                     </Switch>
                     <Label HorizontalTextAlignment="Start"
-                           Margin="10, 5, 50, 5"
+                           Margin="10, 0, 20, 5"
                            Style="{StaticResource ItemCatalogPoppinsBold}"
                            Text="Produktų katalogas"
+                           HeightRequest="55"
                            TextColor="{StaticResource PrimaryTextColor}" />
                     <SearchBar x:Name="searchBar"
                                Placeholder="Ieškoti prekės..."
@@ -93,9 +98,13 @@
                                         DropDownIconColor="{StaticResource PrimaryColor}"
                                         BorderColor="{StaticResource PrimaryColor}"
                                         TextMemberPath="{Binding SelectedCommand}" />
-                    <CollectionView x:Name="searchResults"
-                                    ItemsSource="{Binding SearchResults}">
-                        <CollectionView.ItemTemplate>
+                    <dxcv:DXCollectionView x:Name="searchResults"
+                                    ItemsSource="{Binding SearchResults}"
+                                    IsLoadMoreEnabled="True"
+                                    IsRefreshing="{Binding IsRefreshing, Mode=TwoWay}"
+                                    LoadMoreCommand="{Binding GetItemsAsyncCommand}"
+                           IndicatorColor="Lime">
+                        <dxcv:DXCollectionView.ItemTemplate>
                             <DataTemplate x:DataType="model:Item">
                                 <Frame Padding="0"
                                        BackgroundColor="{StaticResource White}"
@@ -181,10 +190,10 @@
                                     </Frame.GestureRecognizers>
                                 </Frame>
                             </DataTemplate>
-                        </CollectionView.ItemTemplate>
-                    </CollectionView>
+                        </dxcv:DXCollectionView.ItemTemplate>
+                    </dxcv:DXCollectionView>
                 </StackLayout>
             </RefreshView>
-        </ScrollView>
+        
     </ContentPage.Content>
 </ContentPage>

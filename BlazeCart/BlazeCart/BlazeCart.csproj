@@ -308,6 +308,30 @@
 	  </MauiXaml>
 	</ItemGroup>
 
+	<ItemGroup Condition="'$(TargetFramework)' == 'net6.0-android'">
+	  <PackageReference Include="DevExpress.Maui.CollectionView">
+	    <Version>22.1.6</Version>
+	  </PackageReference>
+	  <PackageReference Include="DevExpress.Maui.Core">
+	    <Version>22.1.6</Version>
+	  </PackageReference>
+	  <PackageReference Include="DevExpress.Maui.DataGrid">
+	    <Version>22.1.6</Version>
+	  </PackageReference>
+	</ItemGroup>
+
+	<ItemGroup Condition="'$(TargetFramework)' == 'net6.0-ios'">
+	  <PackageReference Include="DevExpress.Maui.CollectionView">
+	    <Version>22.1.6</Version>
+	  </PackageReference>
+	  <PackageReference Include="DevExpress.Maui.Core">
+	    <Version>22.1.6</Version>
+	  </PackageReference>
+	  <PackageReference Include="DevExpress.Maui.DataGrid">
+	    <Version>22.1.6</Version>
+	  </PackageReference>
+	</ItemGroup>
+
 	<ProjectExtensions><VisualStudio><UserProperties resources_4raw_4cart_1json__JsonSchema="cartSchema.json" resources_4raw_4shopitems_1json__JsonSchema="shopItemsSchema.json" resources_4raw_4shopitemsschema_1json__JsonSchema="" /></VisualStudio></ProjectExtensions>
 
 </Project>

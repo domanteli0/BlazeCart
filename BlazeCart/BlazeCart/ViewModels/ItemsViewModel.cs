@@ -6,6 +6,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Microsoft.Extensions.Logging;
 using Debug = System.Diagnostics.Debug;
+using Java.Security;
 
 namespace BlazeCart.ViewModels;
 
@@ -30,6 +31,7 @@ public partial class ItemsViewModel : BaseViewModel
     private readonly SliderService _sliderService;
     private ItemFilterService _itemFilterService;
     private readonly DataService _dataService;
+    private int _startIndex = 0;
 
     [ObservableProperty] public ObservableCollection<Item> searchResults = new();
 
@@ -52,12 +54,12 @@ public partial class ItemsViewModel : BaseViewModel
         _itemFilterService = itemFilterService;
         _logger = logger;
         _dataService = dataService;
-        GetItemsAsync();
+
         SearchResults = Items;
         LoadSlider();
 
     }
-
+    [RelayCommand]
     async void GetItemsAsync()
     {
 
@@ -68,12 +70,8 @@ public partial class ItemsViewModel : BaseViewModel
         try
         {
             isBusy = true;
-            var items = await _itemService.Get(0,5);
-
-            if (Items.Count != 0)
-            {
-                Items.Clear();
-            }
+            var items = await _itemService.Get(_startIndex,20);
+            _startIndex += 20;
 
             foreach (var item in items)
             {
@@ -81,7 +79,7 @@ public partial class ItemsViewModel : BaseViewModel
                 item.PricePerUnitOfMeasure = item.PricePerUnitOfMeasure / 100;
                 Items.Add(item);
             }
-            _logger.LogInformation("Successfully retrieved items from .json");
+            _logger.LogInformation("Successfully retrieved items from API");
         }
 
         catch (Exception ex)
@@ -97,9 +95,10 @@ public partial class ItemsViewModel : BaseViewModel
         }
 
     }
+    
 
     [RelayCommand]
-    void SelectionChanged()
+    async void SelectionChanged()
     {
         throw new NotImplementedException();
     }
