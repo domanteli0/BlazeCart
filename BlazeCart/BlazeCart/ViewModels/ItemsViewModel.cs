@@ -6,7 +6,6 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Microsoft.Extensions.Logging;
 using Debug = System.Diagnostics.Debug;
-using Java.Security;
 
 namespace BlazeCart.ViewModels;
 
@@ -54,7 +53,6 @@ public partial class ItemsViewModel : BaseViewModel
         _itemFilterService = itemFilterService;
         _logger = logger;
         _dataService = dataService;
-
         SearchResults = Items;
         LoadSlider();
 

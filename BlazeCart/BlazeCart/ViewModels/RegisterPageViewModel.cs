@@ -1,12 +1,13 @@
 ﻿using System.Text.RegularExpressions;
-using BlazeCart.Models;
 using BlazeCart.Views;
+using BlazeCart.Services;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Firebase.Auth;
 
 namespace BlazeCart.ViewModels
 {
-    public partial class RegisterPageViewModel : ObservableObject
+    public partial class RegisterPageViewModel : BaseViewModel
     {
         [ObservableProperty] public string name;
 
@@ -18,15 +19,29 @@ namespace BlazeCart.ViewModels
 
         [ObservableProperty] public string confirmPassword;
 
-        private readonly User _user = new();
-
+        private readonly AuthService _authService;
         private async Task Register()
         {
-            _user.Name = name;
-            _user.Surname = surname;
-            _user.Email = email;
-            _user.Password = password;
-            await Shell.Current.GoToAsync(nameof(HomePage));
+            if (IsBusy)
+                return;
+            try
+            {
+                IsBusy = true;
+                await _authService.RegisterAsync(email, password);
+                await Shell.Current.GoToAsync(nameof(HomePage));
+            }
+            catch(FirebaseAuthException ex)
+            {
+                await Shell.Current.DisplayAlert("Klaida!","Neteisingi duomenys!", "OK");
+            }
+            finally
+            {
+                IsBusy = false;
+            }
+        }
+        public RegisterPageViewModel(AuthService authService)
+        {
+            _authService = authService;
         }
 
         [RelayCommand]
