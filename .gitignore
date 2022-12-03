@@ -396,3 +396,4 @@ FodyWeavers.xsd
 
 # JetBrains Rider
 *.sln.iml
+BlazeCart/BlazeCart/Services/AuthService.cs
