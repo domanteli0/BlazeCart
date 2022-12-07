@@ -47,6 +47,16 @@ namespace Api.Controllers
             return Ok(item);
         }
 
+        [HttpGet("{index}/{count}")]
+        [ProducesResponseType(200, Type = typeof(IEnumerable<Item>))]
+        public async Task<IActionResult> GetRangeOfItems(int index, int count)
+        {
+            var items = await _itemRepository.GetRangeOfItemsAsync(index, count);
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+            return Ok(items);
+
+        }
 
 
     }

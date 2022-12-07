@@ -32,7 +32,12 @@ namespace Api.Repositories
             var records = await _context.Items.Where(i => i.NameLT == name).ToListAsync();
             return records;
         }
-
+        public async Task<IEnumerable<Item>> GetRangeOfItemsAsync(int index, int count)
+        {
+            var res = await _context.Items.ToListAsync();
+            var records = res.GetRange(index, count);
+            return records;
+        }
 
         public bool IsItemActiveAsync(Guid id)
         {
