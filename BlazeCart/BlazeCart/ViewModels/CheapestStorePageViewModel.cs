@@ -2,20 +2,35 @@
 using BlazeCart.Services;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Newtonsoft.Json.Linq;
+using Newtonsoft.Json;
 using System.Collections.ObjectModel;
 
 namespace BlazeCart.ViewModels
 {
-    public partial class CheapestStorePageViewModel : ObservableObject
+    [QueryProperty(nameof(TotalPrice), "TotalPrice")]
+    public partial class CheapestStorePageViewModel : BaseViewModel
     {
 
-        public ObservableCollection<Item> CartItems { get; set; }
+        public ObservableCollection<Item> CartItems { get; set; } = new();
         private ItemService _itemService;
-
+        [ObservableProperty] double totalPrice;
         public CheapestStorePageViewModel(ItemService itemservice) {
-            this._itemService = itemservice;
-            CartItems = _itemService.GetItems().Result;
+            _itemService = itemservice;
+            _itemService.CheapestCart += CheapestCartEventHandler;
 
+
+        }
+
+        private void CheapestCartEventHandler(object sender, CartUsedEventArgs e)
+        {
+            CartItems.Clear();
+            foreach (var item in e.Items)
+            {
+                CartItems.Add(item);
+                totalPrice = item.Price + totalPrice;
+            }
+            
         }
 
 

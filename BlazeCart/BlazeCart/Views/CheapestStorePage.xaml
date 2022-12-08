@@ -40,7 +40,7 @@
                 Command="{Binding BackToCartCommand}"
                 VerticalOptions="Center" />
             <Label
-                Text="Pigiausios parduotuvė"
+                Text="Pigiausia parduotuvė"
                 FontSize="20"
                 Style="{StaticResource PageNamePoppins}"
                 VerticalOptions="Center"
@@ -80,15 +80,28 @@
                     <Image
                         HorizontalOptions="Center"
                         Source="orange_button_background"/>
-                    <Label 
+                    <HorizontalStackLayout>
+                        <Label 
                     Style="{StaticResource CheapestStoreHeaderPoppins}"
                     HorizontalOptions="Center"
                     HorizontalTextAlignment="Center"
-                    Margin="90, 10, 0, 5"
-                    Text="17,89€"
+                    Margin="110, 10, 0, 5"
+                    Text="{Binding TotalPrice}"
                     FontSize="32"
                     TextColor="{StaticResource White}"
                     VerticalOptions="Center" />
+                        <Label
+                            Style="{StaticResource CheapestStoreHeaderPoppins}"
+                    HorizontalOptions="Center"
+                    HorizontalTextAlignment="Center"
+                    Margin="14, 10, 0, 5"
+                    Text="€"
+                    FontSize="32"
+                    TextColor="{StaticResource White}"
+                    VerticalOptions="Center"/>
+                       
+                    </HorizontalStackLayout>
+                   
                 </AbsoluteLayout>
 
                 <StackLayout
@@ -105,7 +118,7 @@
                         HorizontalTextAlignment="Start"
                         Margin="0, 5, 50, 5"
                         Style="{StaticResource CheapestStoreHeaderPoppins}"
-                        Text="Krepšelio prekės:"
+                        Text="Pigiausio krepšelio prekės:"
                         TextColor="{StaticResource PrimaryTextColor}"
                         AbsoluteLayout.LayoutBounds="75,20,AutoSize,AutoSize"
                         VerticalOptions="Center" />
@@ -148,7 +161,7 @@
                                                    Margin="5, 3, 0, 0"
                                                    Style="{StaticResource CheapestStoreNamePoppins}"
                                                    FontSize="18"
-                                                   Text="{Binding Name}"
+                                                   Text="{Binding NameLT}"
                                                    TextColor="{StaticResource PrimaryTextColor}"
                                                    VerticalOptions="Center" />
                                             <Label HorizontalTextAlignment="Start"

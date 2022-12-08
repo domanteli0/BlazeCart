@@ -4,6 +4,7 @@ using System.Runtime.InteropServices;
 using Api.Repositories;
 using DB;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.OpenApi.Validations;
 using Models;
 using Scraper;
 
@@ -47,16 +48,27 @@ namespace Api.Controllers
             return Ok(item);
         }
 
-        [HttpGet("{index}/{count}")]
-        [ProducesResponseType(200, Type = typeof(IEnumerable<Item>))]
-        public async Task<IActionResult> GetRangeOfItems(int index, int count)
+        [HttpGet("{index}/{count}/cats")]
+        [ProducesResponseType(200, Type = typeof(IEnumerable<String>))]
+        public async Task<IActionResult> GetItemsCat(int index, int count)
         {
-            var items = await _itemRepository.GetRangeOfItemsAsync(index, count);
+            var cats = await _itemRepository.GetItemsCat(index, count);
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
-            return Ok(items);
+            return Ok(cats);
 
         }
+
+        [HttpGet("{name}/{category}/{price}")]
+        [ProducesResponseType(200, Type = typeof(Item))]
+        public async Task<IActionResult> GetCheapestItem(string name, string category, double price)
+        {
+            var item = await _itemRepository.GetCheapestItem(name, category, price);
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+            return Ok(item);
+        }
+       
 
 
     }

@@ -16,7 +16,9 @@ public class ItemService
 
     public event EventHandler<EventArgs> FavTbUpdated;
 
-    
+    public event EventHandler<CartUsedEventArgs> CheapestCart;
+
+
     private HttpClient _client;
     private string BaseUrl = "https://blazecartapi.azurewebsites.net/";
     public ItemService()
@@ -33,7 +35,33 @@ public class ItemService
         var json = await _client.GetStringAsync($"api/Item/{index}/{count}");
         var jarr = JArray.Parse(json);
         var items = JsonConvert.DeserializeObject<ObservableCollection<Item>>(jarr.ToString());
+
+        var cats = await _client.GetStringAsync($"api/Item/{index}/{count}/cats");
+        var jarCats = JArray.Parse(cats);
+        var categories = JsonConvert.DeserializeObject<List<String>>(jarCats.ToString());
+        foreach (var item in items)
+        {
+            for(int i = 0; i < categories.Count(); i++)
+            {
+                item.Category = categories[i];
+            }
+        }
+        
         return items;
+    }
+    public async Task<ObservableCollection<Item>> GetCheapestItems(ObservableCollection<Item> items)
+    {
+        ObservableCollection<Item> cheapestItems = new ObservableCollection<Item>();
+        foreach(var item in items)
+        {
+            string name = item.NameLT;
+            string category = item.Category;
+            double price = item.Price;
+            var json = await _client.GetStringAsync($"api/Item/{name}/{category}/{price}");
+            
+            cheapestItems.Add((JsonConvert.DeserializeObject<Item>(json.ToString())));
+        }
+        return cheapestItems;
     }
     public async Task<ObservableCollection<Item>> GetItems(string fileName)
     {
@@ -94,5 +122,9 @@ public class ItemService
     public virtual void OnFavTbUpdated(EventArgs e)
     {
         if (FavTbUpdated != null) FavTbUpdated(this, e);
+    }
+    public virtual void OnCheapestCart(CartUsedEventArgs e)
+    {
+        if (CheapestCart != null) CheapestCart(this, e);
     }
 }

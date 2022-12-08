@@ -85,7 +85,43 @@ namespace BlazeCart.ViewModels
         [RelayCommand]
         async void CheapestStore(object obj)
         {
-            await Shell.Current.GoToAsync(nameof(CheapestStorePage));
+
+                if (IsBusy)
+                {
+                    return;
+                }
+            try
+            {
+                isBusy = true;
+                var items = await _itemService.GetCheapestItems(CartItems);
+                double totalPrice = 0;
+                foreach (var item in items)
+                {
+                    item.Price = item.Price / 100;
+                    item.PricePerUnitOfMeasure = item.PricePerUnitOfMeasure / 100;
+                    totalPrice = item.Price + totalPrice;
+                }
+                _itemService.OnCheapestCart(new CartUsedEventArgs(items));
+                
+                await Shell.Current.GoToAsync(
+                 $"{nameof(CheapestStorePage)}", new Dictionary<string, object>{{"TotalPrice", totalPrice}});
+
+            }
+
+            catch (Exception ex)
+            {
+                await Shell.Current.DisplayAlert("Klaida!", ex.Message, "OK");
+                throw;
+            }
+
+            finally
+            {
+                isBusy = false;
+            }
+
+  
+            
+            
         }
 
         public double GetCartPrice(ObservableCollection<Item> cartItems)
@@ -121,6 +157,6 @@ namespace BlazeCart.ViewModels
             if(item.Quantity > 1)
                 item.Quantity--;
         }
-
+      
     }
 }
