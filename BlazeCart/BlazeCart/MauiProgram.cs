@@ -100,6 +100,9 @@ public static class MauiProgram
         builder.Services.AddSingleton<EmptyStorePage>();
         builder.Services.AddSingleton<EmptyStorePageViewModel>();
 
+        builder.Services.AddTransient<GoogleMaps>();
+        builder.Services.AddTransient<GoogleMapsViewModel>();
+
         builder.Logging
             .AddStreamingFileLogger(options =>
             {

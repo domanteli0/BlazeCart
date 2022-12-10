@@ -104,6 +104,10 @@
                    
                 </AbsoluteLayout>
 
+                <ImageButton
+                    Source="show_map_button.png"
+                    Command="{Binding GoToMapsCommand}"/>
+
                 <StackLayout
                     Orientation="Horizontal"
                     HorizontalOptions="Center"
