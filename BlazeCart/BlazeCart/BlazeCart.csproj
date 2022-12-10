@@ -247,6 +247,7 @@
 	    <TreatAsUsed>true</TreatAsUsed>
 	  </PackageReference>
 	  <PackageReference Include="SQLitePCLRaw.provider.dynamic_cdecl" Version="2.1.2" />
+	  <PackageReference Include="StringComparison" Version="1.0.3" />
 	  <PackageReference Include="Syncfusion.Maui.Inputs" Version="20.3.52" />
 	  <PackageReference Include="Syncfusion.Maui.Core" Version="20.3.52">
 	    <TreatAsUsed>true</TreatAsUsed>

@@ -13,7 +13,7 @@
                 Text="{Binding Coordinates}"
                 TextColor="Black"
                 FontSize="50"/>
-            
+            <WebView Source="{Binding Url}"/>
         </VerticalStackLayout>
     </ScrollView>
 </ContentPage>

@@ -48,13 +48,22 @@ namespace BlazeCart.ViewModels
                 String coordinates = await GetCachedLocation();
                 if (coordinates != "none")
                 {
-                    await Shell.Current.GoToAsync($"{nameof(GoogleMaps)}?coordinates={coordinates}");
+                    //await Shell.Current.GoToAsync($"{nameof(GoogleMaps)}?coordinates={coordinates}");
+                    await Shell.Current.GoToAsync(
+                    $"{nameof(GoogleMaps)}", new Dictionary<string, object>
+                    {
+                        {"Coordinates", coordinates}
+                    });
                 }
                 else {
                     coordinates = await GetCurrentLocation();
                     if (coordinates != "none")
                     {
-                        await Shell.Current.GoToAsync($"{nameof(GoogleMaps)}?coordinates={coordinates}");
+                        await Shell.Current.GoToAsync(
+                        $"{nameof(GoogleMaps)}", new Dictionary<string, object>
+                        {
+                            {"Coordinates", coordinates}
+                        });
                     }
                     else
                     {
