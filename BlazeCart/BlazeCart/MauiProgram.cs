@@ -9,9 +9,7 @@ using DevExpress.Maui;
 #endif
 using MetroLog.MicrosoftExtensions;
 using SkiaSharp.Views.Maui.Controls.Hosting;
-using DevExpress.Maui.CollectionView;
-using Android.Content.Res;
-using Microsoft.Extensions.Configuration;
+
 
 namespace BlazeCart;
 
@@ -27,7 +25,6 @@ public static class MauiProgram
 #if ANDROID
             .UseDevExpress()
 #endif
-
             .ConfigureSyncfusionCore()
             .ConfigureSyncfusionListView()
             .ConfigureFonts(fonts =>
@@ -99,7 +96,10 @@ public static class MauiProgram
 
         builder.Services.AddSingleton<FavoriteItemPage>();
         builder.Services.AddSingleton<FavoriteItemViewModel>();
-       
+
+        builder.Services.AddSingleton<EmptyStorePage>();
+        builder.Services.AddSingleton<EmptyStorePageViewModel>();
+
         builder.Logging
             .AddStreamingFileLogger(options =>
             {

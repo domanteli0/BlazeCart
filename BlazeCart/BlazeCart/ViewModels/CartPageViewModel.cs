@@ -102,9 +102,17 @@ namespace BlazeCart.ViewModels
                     totalPrice = item.Price + totalPrice;
                 }
                 _itemService.OnCheapestCart(new CartUsedEventArgs(items));
+
                 
-                await Shell.Current.GoToAsync(
-                 $"{nameof(CheapestStorePage)}", new Dictionary<string, object>{{"TotalPrice", totalPrice}});
+                if (totalPrice > 0)
+                {
+                    await Shell.Current.GoToAsync(
+                 $"{nameof(CheapestStorePage)}", new Dictionary<string, object> { { "TotalPrice", totalPrice } });
+                }
+                else {
+                    await Shell.Current.GoToAsync("EmptyStorePage");
+                }
+                
 
             }
 

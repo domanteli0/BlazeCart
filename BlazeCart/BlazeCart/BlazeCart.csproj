@@ -231,41 +231,30 @@
 	  <PackageReference Include="MetroLog.Maui" Version="2.0.1" />
 	  <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="5.0.0" />
 	  <PackageReference Include="Microsoft.Toolkit.Mvvm" Version="7.1.2" />
-	  <PackageReference Include="Newtonsoft.Json" Version="13.0.2-beta2" />
+	  <PackageReference Include="Newtonsoft.Json" Version="13.0.2-beta2">
+	    <TreatAsUsed>true</TreatAsUsed>
+	  </PackageReference>
 	  <PackageReference Include="SkiaSharp.Extended.UI.Maui" Version="2.0.0-preview.61" />
-	  <PackageReference Include="sqlite-net-pcl" Version="1.8.116" />
+	  <PackageReference Include="sqlite-net-pcl" Version="1.8.116">
+	    <TreatAsUsed>true</TreatAsUsed>
+	  </PackageReference>
 	  <PackageReference Include="SQLiteNetExtensions" Version="2.1.0" />
 	  <PackageReference Include="SQLiteNetExtensions.Async" Version="2.1.0" />
-	  <PackageReference Include="SQLitePCLRaw.bundle_green" Version="2.1.2" />
-	  <PackageReference Include="SQLitePCLRaw.core" Version="2.1.2" />
+	  <PackageReference Include="SQLitePCLRaw.bundle_green" Version="2.1.2">
+	    <TreatAsUsed>true</TreatAsUsed>
+	  </PackageReference>
+	  <PackageReference Include="SQLitePCLRaw.core" Version="2.1.2">
+	    <TreatAsUsed>true</TreatAsUsed>
+	  </PackageReference>
 	  <PackageReference Include="SQLitePCLRaw.provider.dynamic_cdecl" Version="2.1.2" />
 	  <PackageReference Include="Syncfusion.Maui.Inputs" Version="20.3.52" />
-	  <PackageReference Include="Syncfusion.Maui.Core" Version="20.3.52" />
+	  <PackageReference Include="Syncfusion.Maui.Core" Version="20.3.52">
+	    <TreatAsUsed>true</TreatAsUsed>
+	  </PackageReference>
 	  <PackageReference Include="Syncfusion.Maui.Sliders" Version="20.3.52" />
 	</ItemGroup>
-	<ItemGroup Condition="'$(TargetFramework)' == 'net6.0-android'">
-		<PackageReference Include="DevExpress.Maui.CollectionView">
-			<Version>22.1.6</Version>
-		</PackageReference>
-		<PackageReference Include="DevExpress.Maui.Core">
-			<Version>22.1.6</Version>
-		</PackageReference>
-		<PackageReference Include="DevExpress.Maui.DataGrid">
-			<Version>22.1.6</Version>
-		</PackageReference>
-	</ItemGroup>
 
-	<ItemGroup Condition="'$(TargetFramework)' == 'net6.0-ios'">
-		<PackageReference Include="DevExpress.Maui.CollectionView">
-			<Version>22.1.6</Version>
-		</PackageReference>
-		<PackageReference Include="DevExpress.Maui.Core">
-			<Version>22.1.6</Version>
-		</PackageReference>
-		<PackageReference Include="DevExpress.Maui.DataGrid">
-			<Version>22.1.6</Version>
-		</PackageReference>
-	</ItemGroup>
+	
 
 	<ItemGroup>
 	  <Compile Update="Resources\Styles\Styles.xaml.cs">
@@ -297,6 +286,9 @@
 	  <MauiXaml Update="Views\CheapestStorePage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="Views\EmptyStorePage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Views\ErrorPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
@@ -318,6 +310,9 @@
 	  <MauiXaml Update="Views\LoginPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="Views\NewContent1.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Views\NewPage1.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
@@ -330,6 +325,28 @@
 	  <MauiXaml Update="Views\WelcomePage2.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	</ItemGroup>
+	<ItemGroup Condition="'$(TargetFramework)' == 'net6.0-android'">
+	  <PackageReference Include="DevExpress.Maui.CollectionView">
+	    <Version>22.1.6</Version>
+	  </PackageReference>
+	  <PackageReference Include="DevExpress.Maui.Controls">
+	    <Version>22.1.6</Version>
+	  </PackageReference>
+	  <PackageReference Include="DevExpress.Maui.Core">
+	    <Version>22.1.6</Version>
+	  </PackageReference>
+	</ItemGroup>
+	<ItemGroup Condition="'$(TargetFramework)' == 'net6.0-ios'">
+	  <PackageReference Include="DevExpress.Maui.CollectionView">
+	    <Version>22.1.6</Version>
+	  </PackageReference>
+	  <PackageReference Include="DevExpress.Maui.Controls">
+	    <Version>22.1.6</Version>
+	  </PackageReference>
+	  <PackageReference Include="DevExpress.Maui.Core">
+	    <Version>22.1.6</Version>
+	  </PackageReference>
 	</ItemGroup>
 
 	<ProjectExtensions><VisualStudio><UserProperties resources_4raw_4cart_1json__JsonSchema="cartSchema.json" resources_4raw_4shopitems_1json__JsonSchema="shopItemsSchema.json" resources_4raw_4shopitemsschema_1json__JsonSchema="" /></VisualStudio></ProjectExtensions>
