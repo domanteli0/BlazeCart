@@ -30,7 +30,7 @@ namespace BlazeCart.ViewModels
             foreach (var item in e.Items)
             {
                 CartItems.Add(item);
-                totalPrice = item.Price + totalPrice;
+                totalPrice = (item.Price * item.Quantity) + totalPrice;
             }
             
         }
