@@ -3,7 +3,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace BlazeCart.ViewModels;
 
-[QueryProperty("Coordinates", "Coordinates")]
+[QueryProperty(nameof(coordinates), "coordinates")]
 public partial class GoogleMapsViewModel : ObservableObject
 {
     [ObservableProperty]

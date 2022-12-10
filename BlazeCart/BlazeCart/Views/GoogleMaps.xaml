@@ -10,8 +10,10 @@
     <ScrollView>
         <VerticalStackLayout>
             <Label
-                Text="{Binding Coordinates}"/>
-            <WebView Source="https://learn.microsoft.com/dotnet/maui"/>
+                Text="{Binding Coordinates}"
+                TextColor="Black"
+                FontSize="50"/>
+            
         </VerticalStackLayout>
     </ScrollView>
 </ContentPage>

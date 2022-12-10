@@ -45,16 +45,16 @@ namespace BlazeCart.ViewModels
         async void GoToMaps(object obj)
         {
             try {
-                String coordinates = GetCachedLocation().Result;
+                String coordinates = await GetCachedLocation();
                 if (coordinates != "none")
                 {
-                    await Shell.Current.GoToAsync($"{nameof(GoogleMaps)}?Coordinates={coordinates}");
+                    await Shell.Current.GoToAsync($"{nameof(GoogleMaps)}?coordinates={coordinates}");
                 }
-                else { 
-                    coordinates = GetCurrentLocation().Result;
+                else {
+                    coordinates = await GetCurrentLocation();
                     if (coordinates != "none")
                     {
-                        await Shell.Current.GoToAsync($"{nameof(GoogleMaps)}?Coordinates={coordinates}");
+                        await Shell.Current.GoToAsync($"{nameof(GoogleMaps)}?coordinates={coordinates}");
                     }
                     else
                     {
