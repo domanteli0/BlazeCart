@@ -7,6 +7,7 @@
              x:DataType="viewmodel:CheapestStorePageViewModel"
              Title="CheapestStorePage"
              Shell.NavBarIsVisible="False"
+             xmlns:models="clr-namespace:BlazeCart.Models"
              BackgroundColor="{StaticResource PageBackgroundColor}">
     <ScrollView>
         <Grid>
@@ -20,166 +21,92 @@
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
 
-            <Frame HeightRequest="90" Padding="10">
-                <HorizontalStackLayout HorizontalOptions="Center">
-                    <ImageButton
-                        Margin="0, 0, 10, 0"
-                        Source="back_button.png"
-                        Command="{Binding BackToCartCommand}"
-                        VerticalOptions="Center" />
-                    <Label
-                        Text="Pigiausios parduotuvės"
-                        FontSize="20"
-                        Style="{StaticResource PageNamePoppins}"
-                        VerticalOptions="Center"
-                        HorizontalOptions="Center" />
-                    
-                </HorizontalStackLayout>
-            </Frame>
+            <Image
+                Source="white_overlay.png"
+                Aspect="AspectFit"/>
 
+            <Image
+                Source="iki_logo.png"
+                MaximumHeightRequest="160"
+                MaximumWidthRequest="160"
+                HeightRequest="160"
+                WidthRequest="160"/>
+
+            <HorizontalStackLayout HorizontalOptions="Center" 
+                                   Margin="0, -200, 0 ,0">
+            <ImageButton
+                Margin="0, 0, 10, 0"
+                Source="back_button.png"
+                Command="{Binding BackToCartCommand}"
+                VerticalOptions="Center" />
+            <Label
+                Text="Pigiausia parduotuvė"
+                FontSize="20"
+                Style="{StaticResource PageNamePoppins}"
+                VerticalOptions="Center"
+                HorizontalOptions="Center" />
+                    
+        </HorizontalStackLayout>
+
+            
             
             <StackLayout Grid.Row="1">
                 <StackLayout
                     Orientation="Horizontal"
-                    HorizontalOptions="Start"
-                    Margin="15">
+                    HorizontalOptions="Center"
+                    Margin="35, 15 ,0,15">
                     <Image
                         Aspect="AspectFill"
                         Margin="5"
-                        HorizontalOptions="Start"
+                        HorizontalOptions="Center"
                         VerticalOptions="Center"
                         Source="green_check.png" />
                     <Label
-                        HorizontalTextAlignment="Start"
+                        HorizontalTextAlignment="Center"
                         Margin="0, 5, 50, 5"
                         Style="{StaticResource CheapestStoreHeaderPoppins}"
-                        Text="Pigiausia parduotuvė:"
+                        Text="Krepšelio kaina:"
                         TextColor="{StaticResource PrimaryTextColor}"
                         AbsoluteLayout.LayoutBounds="75,20,AutoSize,AutoSize"
                         VerticalOptions="Center" />
                 </StackLayout>
-                <AbsoluteLayout>
+                
+                
+
+                <AbsoluteLayout
+                    HorizontalOptions="Center"
+                    Margin="0,0,0,15">
+
                     <Image
-                        Aspect="AspectFit"
-                        MaximumWidthRequest="350"
-                        Margin="5"
-                        HorizontalOptions="Start"
-                        VerticalOptions="Center"
-                        Source="card_base.png" />
-                    <Image
-                        Aspect="AspectFit"
-                        Margin="5"
-                        MaximumWidthRequest="325"
-                        MaximumHeightRequest="150"
-                        HorizontalOptions="Start"
-                        VerticalOptions="Center"
-                        Source="green_border.png"
-                        AbsoluteLayout.LayoutBounds="14,15,AutoSize,AutoSize" />
-                    <Grid
-                        AbsoluteLayout.LayoutBounds="25,25,AutoSize,AutoSize"
-                        MaximumWidthRequest="300"
-                        MaximumHeightRequest="180"
-                        ColumnSpacing="0">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="1*" />
-                        </Grid.RowDefinitions>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="1*" />
-                            <ColumnDefinition Width="1.5*" />
-                            <ColumnDefinition Width="1*" />
-                        </Grid.ColumnDefinitions>
-
-                        <Image
-                            MaximumHeightRequest="89"
-                            MaximumWidthRequest="180"
-                            Aspect="AspectFit"
-                            Margin="5"
-                            HorizontalOptions="Start"
-                            VerticalOptions="Start"
-                            Source="iki_store.jpg" />
-
-                        <StackLayout
-                            Grid.Column="1"
-                            Spacing="0">
-                            <Label
-                                HorizontalTextAlignment="Start"
-                                VerticalTextAlignment="Start"
-                                Margin="0, 0, 0, 0"
-                                Style="{StaticResource CheapestStoreNamePoppins}"
-                                Text="IKI:"
-                                TextColor="{StaticResource PrimaryTextColor}"
-                                VerticalOptions="Center" />
-                            <Label
-                                HorizontalTextAlignment="Start"
-                                VerticalTextAlignment="Start"
-                                Margin="0, 0, 0, 0"
-                                Style="{StaticResource CheapestStoreAddressPoppins}"
-                                Text="Didlaukio g. 80a Vilnius"
-                                TextColor="{StaticResource PrimaryTextColor}"
-                                VerticalOptions="Center" />
-                            <HorizontalStackLayout
-                                Spacing="2">
-                                <Image
-                                    Source="place_marker.png" />
-                                <Label
-                                    HorizontalTextAlignment="Start"
-                                    Margin="0, 5, 0, 5"
-                                    FontSize="10"
-                                    FontAttributes="Italic"
-                                    Text="Už 0.5km."
-                                    TextColor="{StaticResource PrimaryTextColor}"
-                                    VerticalOptions="Center" />
-                            </HorizontalStackLayout>
-                        </StackLayout>
-                        <StackLayout Grid.Column="2">
-                            <HorizontalStackLayout
-                                HorizontalOptions="End">
-                                <Label
-                                    HorizontalTextAlignment="Center"
-                                    Margin="0, 5, 0, 5"
-                                    Style="{StaticResource CheapestStoreHeaderPoppins}"
-                                    Text="17,89"
-                                    FontSize="22"
-                                    TextColor="{StaticResource Green}"
-                                    VerticalOptions="Center" />
-
-                                <Label
-                                    HorizontalTextAlignment="Start"
-                                    Margin="0, 5, 0, 5"
-                                    Style="{StaticResource CheapestStoreHeaderPoppins}"
-                                    Text="€"
-                                    FontSize="16"
-                                    TextColor="{StaticResource Green}"
-                                    VerticalOptions="Center" />
-                            </HorizontalStackLayout>
-
-                            <HorizontalStackLayout
-                                Spacing="5">
-                                <Image
-                                    Source="green_arrow.png" />
-                                <Label
-                                    HorizontalTextAlignment="End"
-                                    Margin="0, 5, 0, 5"
-                                    Style="{StaticResource CheapestStoreHeaderPoppins}"
-                                    Text="7,5"
-                                    FontSize="10"
-                                    TextColor="{StaticResource PrimaryTextColor}"
-                                    FontAttributes="Italic"
-                                    VerticalOptions="Center" />
-                                <Label
-                                    HorizontalTextAlignment="Start"
-                                    Margin="0, 5, 0, 5"
-                                    Style="{StaticResource CheapestStoreHeaderPoppins}"
-                                    Text="% Pigiau"
-                                    LineBreakMode="CharacterWrap"
-                                    FontAttributes="Italic"
-                                    FontSize="10"
-                                    TextColor="{StaticResource PrimaryTextColor}"
-                                    VerticalOptions="Center" />
-                            </HorizontalStackLayout>
-                        </StackLayout>
-                    </Grid>
+                        HorizontalOptions="Center"
+                        Source="orange_button_background"/>
+                    <HorizontalStackLayout>
+                        <Label 
+                    Style="{StaticResource CheapestStoreHeaderPoppins}"
+                    HorizontalOptions="Center"
+                    HorizontalTextAlignment="Center"
+                    Margin="110, 10, 0, 5"
+                    Text="{Binding TotalPrice}"
+                    FontSize="32"
+                    TextColor="{StaticResource White}"
+                    VerticalOptions="Center" />
+                        <Label
+                            Style="{StaticResource CheapestStoreHeaderPoppins}"
+                    HorizontalOptions="Center"
+                    HorizontalTextAlignment="Center"
+                    Margin="14, 10, 0, 5"
+                    Text="€"
+                    FontSize="32"
+                    TextColor="{StaticResource White}"
+                    VerticalOptions="Center"/>
+                       
+                    </HorizontalStackLayout>
+                   
                 </AbsoluteLayout>
+
+                <ImageButton
+                    Source="show_map_button.png"
+                    Command="{Binding GoToMapsCommand}"/>
 
                 <StackLayout
                     Orientation="Horizontal"
@@ -195,130 +122,78 @@
                         HorizontalTextAlignment="Start"
                         Margin="0, 5, 50, 5"
                         Style="{StaticResource CheapestStoreHeaderPoppins}"
-                        Text="Kitos parduotuvės:"
+                        Text="Pigiausio krepšelio prekės:"
                         TextColor="{StaticResource PrimaryTextColor}"
                         AbsoluteLayout.LayoutBounds="75,20,AutoSize,AutoSize"
                         VerticalOptions="Center" />
                 </StackLayout>
 
-                <AbsoluteLayout>
-                    <Image
-                        Aspect="AspectFit"
-                        MaximumWidthRequest="350"
-                        Margin="5"
-                        HorizontalOptions="Start"
-                        VerticalOptions="Center"
-                        Source="card_base.png" />
-
-                    <Grid
-                        AbsoluteLayout.LayoutBounds="25,25,AutoSize,AutoSize"
-                        MaximumWidthRequest="300"
-                        MaximumHeightRequest="180"
-                        ColumnSpacing="0">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="1*" />
-                        </Grid.RowDefinitions>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="1*" />
-                            <ColumnDefinition Width="1.5*" />
-                            <ColumnDefinition Width="1*" />
-                        </Grid.ColumnDefinitions>
-
-                        <Image
-                            MaximumHeightRequest="89"
-                            MaximumWidthRequest="180"
-                            Aspect="AspectFit"
-                            Margin="5"
-                            HorizontalOptions="Start"
-                            VerticalOptions="Start"
-                            Source="iki_store.jpg" />
-
-                        <StackLayout
-                            Grid.Column="1"
-                            Spacing="0">
-
-                            <Label
-                                HorizontalTextAlignment="Start"
-                                VerticalTextAlignment="Start"
-                                Margin="0, 0, 0, 0"
-                                Style="{StaticResource CheapestStoreNamePoppins}"
-                                Text="IKI:"
-                                TextColor="{StaticResource PrimaryTextColor}"
-                                VerticalOptions="Center" />
-
-                            <Label
-                                HorizontalTextAlignment="Start"
-                                VerticalTextAlignment="Start"
-                                Margin="0, 0, 0, 0"
-                                Style="{StaticResource CheapestStoreAddressPoppins}"
-                                Text="Didlaukio g. 80a Vilnius"
-                                TextColor="{StaticResource PrimaryTextColor}"
-                                VerticalOptions="Center" />
-
-                            <HorizontalStackLayout
-                                Spacing="2">
-                                <Image
-                                    Source="place_marker.png" />
-                                <Label
-                                    HorizontalTextAlignment="Start"
-                                    Margin="0, 5, 0, 5"
-                                    FontSize="10"
-                                    FontAttributes="Italic"
-                                    Text="Už 0.5km."
-                                    TextColor="{StaticResource PrimaryTextColor}"
-                                    VerticalOptions="Center" />
-                            </HorizontalStackLayout>
-                        </StackLayout>
-                        <StackLayout Grid.Column="2">
-                            <HorizontalStackLayout
-                                HorizontalOptions="End">
-                                <Label
-                                    HorizontalTextAlignment="Center"
-                                    Margin="0, 5, 0, 5"
-                                    Style="{StaticResource CheapestStoreHeaderPoppins}"
-                                    Text="17,89"
-                                    FontSize="22"
-                                    TextColor="{StaticResource PrimaryTextColor}"
-                                    VerticalOptions="Center" />
-                                <Label
-                                    HorizontalTextAlignment="Start"
-                                    Margin="0, 5, 0, 5"
-                                    Style="{StaticResource CheapestStoreHeaderPoppins}"
-                                    Text="€"
-                                    FontSize="16"
-                                    TextColor="{StaticResource PrimaryTextColor}"
-                                    VerticalOptions="Center" />
-                            </HorizontalStackLayout>
-                            <HorizontalStackLayout
-                                Spacing="2">
-                                <Image
-                                    Source="red_arrow.png" />
-                                <Label
-                                    HorizontalTextAlignment="End"
-                                    Margin="0, 5, 0, 5"
-                                    Style="{StaticResource CheapestStoreHeaderPoppins}"
-                                    Text="7,5"
-                                    FontSize="10"
-                                    TextColor="{StaticResource PrimaryTextColor}"
-                                    FontAttributes="Italic"
-                                    VerticalOptions="Center" />
-                                <Label
-                                    HorizontalTextAlignment="Start"
-                                    Margin="0, 5, 0, 5"
-                                    Style="{StaticResource CheapestStoreHeaderPoppins}"
-                                    Text="% Brangiau"
-                                    LineBreakMode="CharacterWrap"
-                                    FontAttributes="Italic"
-                                    FontSize="10"
-                                    TextColor="{StaticResource PrimaryTextColor}"
-                                    VerticalOptions="Center" />
-                            </HorizontalStackLayout>
-                        </StackLayout>
-                    </Grid>
-                </AbsoluteLayout>
-                <ImageButton
-                    Source="show_map_button.png"
-                    HorizontalOptions="Center" />
+                <CollectionView x:Name="FavoriteItemSearchResults"
+                                    ItemsSource="{Binding CartItems}">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate x:DataType="models:Item">
+                            <Frame HeightRequest="200"
+                                       WidthRequest="350"
+                                       Margin="5, 10, 5, 10"
+                                       CornerRadius="10">
+                                    <Frame.Shadow>
+                                        <Shadow Brush="Black"
+                                                Offset="10,20"
+                                                Radius="40"
+                                                Opacity="1" />
+                                    </Frame.Shadow>
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="*" />
+                                            <RowDefinition Height="*" />
+                                            <RowDefinition Height="*" />
+                                        </Grid.RowDefinitions>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="3*" />
+                                            <ColumnDefinition Width="4*" />
+                                            <ColumnDefinition Width="2*" />
+                                        </Grid.ColumnDefinitions>
+                                        <Image Source="{Binding Image}"
+                                               Grid.RowSpan="3"
+                                               HeightRequest="106"
+                                               WidthRequest="106" />
+                                        <VerticalStackLayout Grid.Column="1"
+                                                             Grid.ColumnSpan="2"
+                                                             Grid.RowSpan="3">
+                                            <Label HorizontalTextAlignment="Start"
+                                                   VerticalTextAlignment="Start"
+                                                   Margin="5, 3, 0, 0"
+                                                   Style="{StaticResource CheapestStoreNamePoppins}"
+                                                   FontSize="18"
+                                                   Text="{Binding NameLT}"
+                                                   TextColor="{StaticResource PrimaryTextColor}"
+                                                   VerticalOptions="Center" />
+                                            <Label HorizontalTextAlignment="Start"
+                                                   VerticalTextAlignment="Start"
+                                                   Margin="5, 3, 0, 0"
+                                                   FontSize="18"
+                                                   Text="{Binding Store}"
+                                                   Style="{StaticResource FavoriteItemStore}"
+                                                   VerticalOptions="Center" />
+                                            <HorizontalStackLayout Spacing="100"
+                                                                   Margin="0, 10, 0, 0">
+                                                <ImageButton x:Name="heartButton"
+                                                             Source="fav_icon.png"
+                                                             HorizontalOptions="End"
+                                                             Margin="5, 5, 0, 0"/>
+                                                <ImageButton HorizontalOptions="End"
+                                                             
+                                                             Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:FavoriteItemViewModel}}, Path=CartCommand}"
+                                                             CommandParameter="{Binding .}"
+                                                             Source="cart_button_square.png"
+                                                             Margin="5, 5, 0, 0" />
+                                            </HorizontalStackLayout>
+                                        </VerticalStackLayout>
+                                    </Grid>
+                                </Frame>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
             </StackLayout>
         </Grid>
     </ScrollView>

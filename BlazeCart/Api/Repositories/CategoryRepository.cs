@@ -41,5 +41,11 @@ namespace Api.Repositories
             var category = await _context.Categories.Where(c => c.NameLT.Contains(name)).ToListAsync();
             return category;
         }
+        public async Task<IEnumerable<Category>> GetRangeOfCategoriesAsync(int index, int count)
+        {
+            var res = await _context.Categories.ToListAsync();
+            var records = res.GetRange(index, count);
+            return records;
+        }
     }
 }

@@ -4,9 +4,12 @@ using BlazeCart.ViewModels;
 using Syncfusion.Maui.Core.Hosting;
 using Syncfusion.Maui.ListView.Hosting;
 using CommunityToolkit.Maui;
-using MetroLog.Maui;
+#if ANDROID
+using DevExpress.Maui;
+#endif
 using MetroLog.MicrosoftExtensions;
 using SkiaSharp.Views.Maui.Controls.Hosting;
+
 
 namespace BlazeCart;
 
@@ -14,11 +17,14 @@ public static class MauiProgram
 {
 	public static MauiApp CreateMauiApp()
 	{
-		var builder = MauiApp.CreateBuilder();
+        var builder = MauiApp.CreateBuilder();
         builder.UseMauiApp<App>().UseMauiCommunityToolkit();
         builder
-			.UseMauiApp<App>()
+            .UseMauiApp<App>()
             .UseSkiaSharp()
+#if ANDROID
+            .UseDevExpress()
+#endif
             .ConfigureSyncfusionCore()
             .ConfigureSyncfusionListView()
             .ConfigureFonts(fonts =>
@@ -49,6 +55,7 @@ public static class MauiProgram
         builder.Services.AddSingleton<ItemCatalogPage>();
         builder.Services.AddSingleton<ItemService>();
         builder.Services.AddSingleton<ItemsViewModel>();
+        builder.Services.AddSingleton<AuthService>();
 
         builder.Services.AddSingleton<RegisterPage>();
         builder.Services.AddSingleton<RegisterPageViewModel>();
@@ -89,6 +96,12 @@ public static class MauiProgram
 
         builder.Services.AddSingleton<FavoriteItemPage>();
         builder.Services.AddSingleton<FavoriteItemViewModel>();
+
+        builder.Services.AddSingleton<EmptyStorePage>();
+        builder.Services.AddSingleton<EmptyStorePageViewModel>();
+
+        builder.Services.AddTransient<GoogleMaps>();
+        builder.Services.AddTransient<GoogleMapsViewModel>();
 
         builder.Logging
             .AddStreamingFileLogger(options =>

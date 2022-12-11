@@ -26,23 +26,23 @@
                                 HorizontalTextAlignment="Start"
                                 Padding="0, 20, 10, 0"
                                 Style="{StaticResource GreetingPoppinsRegular}"
-                                Text="Sveikas,"
+                                Text="Sveiki atvykę,"
                                 TextColor="{StaticResource TextColorPrimary}">
                             </Label>
 
                             <Label
                                 x:Name="DisplayName"
-                                Padding="0, 10, 100, 10"
-                                Text ="Placeholder"
+                                Padding="0, 2, 85, 10"
+                                Text ="į Blaze Cart"
                                 HorizontalTextAlignment="Start"
                                 Style="{StaticResource NameSurnamePoppinsBold}"
                                 TextColor="{StaticResource TextColorPrimary}"/>
                         </VerticalStackLayout>
                     <Image
                         Aspect="AspectFit"
-                        Source="profile_icon.png"
+                        Source="logo1.png"
                         HorizontalOptions="End"
-                        MaximumHeightRequest="40">
+                        MaximumHeightRequest="60">
                     </Image>
                 </HorizontalStackLayout>
             </Border>

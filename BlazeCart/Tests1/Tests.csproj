@@ -4,9 +4,15 @@
     <TargetFramework>net6.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-
+	 
     <IsPackable>false</IsPackable>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Api\Repositories\**" />
+    <EmbeddedResource Remove="Api\Repositories\**" />
+    <None Remove="Api\Repositories\**" />
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="FakeItEasy" Version="7.3.1" />
@@ -32,7 +38,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Api\Repositories\" />
     <Folder Include="Scraper\" />
     <Folder Include="Common\" />
   </ItemGroup>
@@ -40,4 +45,5 @@
   <ItemGroup>
     <None Remove="Common\" />
   </ItemGroup>
+
 </Project>

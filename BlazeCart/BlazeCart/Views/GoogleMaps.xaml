@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="BlazeCart.Views.GoogleMaps"
+             Title="GoogleMaps"
+             BackgroundColor="{StaticResource PageBackgroundColor}"
+             Shell.NavBarIsVisible="False"
+             xmlns:viewmodel="clr-namespace:BlazeCart.ViewModels"
+             x:DataType="viewmodel:GoogleMapsViewModel">
+    <ScrollView>
+        <VerticalStackLayout>
+            <Label
+                Text="{Binding Coordinates}"
+                TextColor="Black"
+                FontSize="50"/>
+            <WebView Source="{Binding Url}"/>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

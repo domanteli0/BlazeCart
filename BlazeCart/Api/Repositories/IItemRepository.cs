@@ -12,5 +12,9 @@ namespace Api.Repositories
 
         bool IsItemActiveAsync(Guid id);
 
+        Task<IEnumerable<String>> GetItemsCat(int index, int count);
+
+        Task<Item> GetCheapestItem(string name, string category, double price);
+
     }
 }
