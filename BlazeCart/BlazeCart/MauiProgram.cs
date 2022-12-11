@@ -80,6 +80,8 @@ public static class MauiProgram
         builder.Services.AddSingleton<ErrorPageViewModel>();
 
         builder.Services.AddSingleton<CategoryPage>();
+        builder.Services.AddSingleton<CategoryViewModel>();
+        builder.Services.AddSingleton<CategoryService>();
 
         builder.Services.AddSingleton<CheapestStorePage>();
         builder.Services.AddSingleton<CheapestStorePageViewModel>();

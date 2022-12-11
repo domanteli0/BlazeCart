@@ -1,39 +1,51 @@
 {
-    "Category": [
+    "category": [
+      {
+        "InternalID": 1,
+        "Uri": "https://media.istockphoto.com/photos/broccoli-picture-id147060621?k=20&m=147060621&s=612x612&w=0&h=aJVEauEV59KkxJfp6mWJm52JkYPi3_UiHL8Osxyql-s=",
+        "nameLt": "Daržovės",
+        "SubCategories": [
+          {
+            "InternalID": 5,
+            "Uri": "https://media.istockphoto.com/photos/broccoli-picture-id147060621?k=20&m=147060621&s=612x612&w=0&h=aJVEauEV59KkxJfp6mWJm52JkYPi3_UiHL8Osxyql-s=",
+            "nameLt": "Brokoliai"
+          },
+          {
+            "InternalID": 6,
+            "Uri": "https://media.istockphoto.com/photos/broccoli-picture-id147060621?k=20&m=147060621&s=612x612&w=0&h=aJVEauEV59KkxJfp6mWJm52JkYPi3_UiHL8Osxyql-s=",
+            "nameLt": "Bulvės",
+            "SubCategories": [
+              {
+                "InternalID": 7,
+                "Uri": "https://media.istockphoto.com/photos/broccoli-picture-id147060621?k=20&m=147060621&s=612x612&w=0&h=aJVEauEV59KkxJfp6mWJm52JkYPi3_UiHL8Osxyql-s=",
+                "nameLt": "Naujos bulvės"
+              },
+              {
+                "InternalID": 8,
+                "Uri": "https://media.istockphoto.com/photos/broccoli-picture-id147060621?k=20&m=147060621&s=612x612&w=0&h=aJVEauEV59KkxJfp6mWJm52JkYPi3_UiHL8Osxyql-s=",
+                "nameLt": "Senos bulvės"
+              }
+            ]
+          }
+        ]
+      },
+
         {
-            "id": 1,
-            "name": "Daržovės",
-            "numberOfItems" : "5",
-            "items" : [1,2,3,4,5],
-            "picture" : "https://media.istockphoto.com/photos/broccoli-picture-id147060621?k=20&m=147060621&s=612x612&w=0&h=aJVEauEV59KkxJfp6mWJm52JkYPi3_UiHL8Osxyql-s="
+            "InternalID": 2,
+            "Uri": "https://www.homeperch.com/wp-content/uploads/2019/04/Types-of-Citrus-Fruits-1-27-4.jpg",
+            "nameLt":"Vaisiai"
         },
 
         {
-            "id": 2,
-            "name": "Vaisiai",
-            "numberOfItems" : "3",
-            "items" : [6,7,8],
-            "picture" : "https://www.homeperch.com/wp-content/uploads/2019/04/Types-of-Citrus-Fruits-1-27-4.jpg"
+            "InternalID": 3,
+            "Uri": "https://monasterybakery.com/wp-content/uploads/2016/08/product1.jpg",
+            "nameLt":"Duonos produktai"
         },
 
-        {
-            "id": 3,
-            "name": "Duonos produktai",
-            "numberOfItems" : "4",
-            "items" : [9,10,11,12],
-            "picture" : "https://monasterybakery.com/wp-content/uploads/2016/08/product1.jpg"
-        }
-
-        {
-            "id": 4,
-            "name": "Saldumynai",
-            "numberOfItems" : "1",
-            "items" : [13],
-            "picture" : "http://cdn.cnn.com/cnnnext/dam/assets/181127105254-08-50-sweets-travel-donuts.jpg"
-        }
-
+      {
+        "InternalID": 4,
+        "Uri": "http://cdn.cnn.com/cnnnext/dam/assets/181127105254-08-50-sweets-travel-donuts.jpg",
+        "nameLt": "Saldumynai"
+      }
     ]
-
-
-
 }

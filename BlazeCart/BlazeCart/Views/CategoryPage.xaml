@@ -4,20 +4,26 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="BlazeCart.Views.CategoryPage"
              Title="CategoryPage"
-             Shell.NavBarIsVisible="False">
+             Shell.NavBarIsVisible="False"
+             xmlns:model="clr-namespace:BlazeCart.Models"
+             xmlns:viewmodel="clr-namespace:BlazeCart.ViewModels"
+             x:DataType="viewmodel:CategoryViewModel"
+             BackgroundColor="{StaticResource PageBackgroundColor}">
 
     <ContentPage.Content>
         <ScrollView>
             <StackLayout Margin="5">
                 <ImageButton
                     Source="back_button"
-                    HorizontalOptions="Start" />
+                    HorizontalOptions="Start"
+                    Command="{Binding BackCommand}"/>
                 <Label
                     HorizontalTextAlignment="Start"
                     Margin="10, 5, 50, 5"
                     Style="{StaticResource ItemCatalogPoppinsBold}"
                     Text="Kategorijos"
                     TextColor="{StaticResource PrimaryTextColor}" />
+                
 
                 <SearchBar Placeholder="Ieškoti kategorijos..."
                            CancelButtonColor="{StaticResource TextColorSecondary}"
@@ -26,37 +32,43 @@
                            HorizontalTextAlignment="Start"
                            FontSize="Medium"
                            FontAttributes="Italic" />
-                <FlexLayout
-                    Wrap="Wrap"
-                    JustifyContent="SpaceAround"
-                    Margin="20, 10, 0, 0"
-                    Direction="Row"
-                    AlignContent="SpaceEvenly">
 
-                    <Frame
-                        MaximumHeightRequest="200"
-                        MaximumWidthRequest="200"
-                        HeightRequest="200"
-                        WidthRequest="160"
-                        Padding="0,0,0,0"
-                        Margin="5">
-                        <AbsoluteLayout>
-                            <BoxView
+
+                <CollectionView ItemsSource="{Binding Categories}"
+                                ItemsLayout="VerticalGrid, 2">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate x:DataType="model:Category">
+                            <Frame
+                                MaximumHeightRequest="200"
+                                MaximumWidthRequest="200"
+                                HeightRequest="200"
+                                WidthRequest="160"
+                                Padding="0,0,0,0"
+                                Margin="5">
+                                <Frame.GestureRecognizers>
+                                    <TapGestureRecognizer
+                                    Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:CategoryViewModel}}, Path=TapCommand}"
+                                     CommandParameter="{Binding SubCategories}"/>
+                                    
+                                </Frame.GestureRecognizers>
+                                    
+                                <AbsoluteLayout>
+                                    <BoxView
                                 Color="{StaticResource White}"
                                 WidthRequest="160"
                                 HeightRequest="200"
                                 CornerRadius="12">
-                                <BoxView.Shadow>
-                                    <Shadow
+                                        <BoxView.Shadow>
+                                            <Shadow
                                         Brush="Black"
                                         Offset="20,20"
                                         Radius="40"
                                         Opacity="0.1" />
-                                </BoxView.Shadow>
-                            </BoxView>
-                            <StackLayout
+                                        </BoxView.Shadow>
+                                    </BoxView>
+                                    <StackLayout
                                 HorizontalOptions="Center">
-                                <Border
+                                        <Border
                                     MaximumHeightRequest="150"
                                     MaximumWidthRequest="177"
                                     StrokeThickness="0.001"
@@ -64,189 +76,32 @@
                                     Margin="0"
                                     Background="{StaticResource White}"
                                     StrokeShape="RoundRectangle 5,5,0,0">
-                                    <Image
-                                        Source="https://fandbrecipes.com/wp-content/uploads/2021/01/The-Ultimate-List-of-Citrus-Fruits-and-Vegetables-scaled.jpg"
+                                            <Image
+                                        Source="{Binding Uri}"
                                         MaximumHeightRequest="150"
                                         MaximumWidthRequest="160"
                                         AbsoluteLayout.LayoutBounds="0, 0, 0, 0" />
-                                </Border>
-                                <Label
+                                        </Border>
+                                        <Label
                                     HorizontalTextAlignment="Start"
                                     Margin="5, 10, 10, 0"
                                     Style="{StaticResource ItemNamePoppins}"
-                                    Text="Vaisiai"
+                                    Text="{Binding NameLT}"
+                                    MaximumWidthRequest="160"
                                     TextColor="{StaticResource PrimaryTextColor}"
                                     LineBreakMode="CharacterWrap" />
-                                <Label
+                                        <Label
                                     HorizontalTextAlignment="Start"
                                     Margin="5, 10, 10, 0"
                                     Style="{StaticResource CategoryCountRoboto}"
                                     Text="(32)"
                                     LineBreakMode="CharacterWrap" />
-                            </StackLayout>
-                        </AbsoluteLayout>
-                    </Frame>
-
-                    <Frame
-                        MaximumHeightRequest="200"
-                        MaximumWidthRequest="200"
-                        HeightRequest="200"
-                        WidthRequest="160"
-                        Padding="0,0,0,0"
-                        Margin="5">
-                        <AbsoluteLayout>
-                            <BoxView
-                                Color="{StaticResource White}"
-                                WidthRequest="160"
-                                HeightRequest="200"
-                                CornerRadius="12">
-                                <BoxView.Shadow>
-                                    <Shadow
-                                        Brush="Black"
-                                        Offset="20,20"
-                                        Radius="40"
-                                        Opacity="0.1" />
-                                </BoxView.Shadow>
-                            </BoxView>
-                            <StackLayout
-                                HorizontalOptions="Center">
-                                <Border
-                                    MaximumHeightRequest="150"
-                                    MaximumWidthRequest="177"
-                                    StrokeThickness="0.001"
-                                    Padding="0"
-                                    Margin="0"
-                                    Background="{StaticResource White}"
-                                    StrokeShape="RoundRectangle 5,5,0,0">
-                                    <Image
-                                        Source="https://fandbrecipes.com/wp-content/uploads/2021/01/The-Ultimate-List-of-Citrus-Fruits-and-Vegetables-scaled.jpg"
-                                        MaximumHeightRequest="150"
-                                        MaximumWidthRequest="160"
-                                        AbsoluteLayout.LayoutBounds="0, 0, 0, 0" />
-                                </Border>
-                                <Label
-                                    HorizontalTextAlignment="Start"
-                                    Margin="5, 10, 10, 0"
-                                    Style="{StaticResource ItemNamePoppins}"
-                                    Text="Vaisiai"
-                                    TextColor="{StaticResource PrimaryTextColor}"
-                                    LineBreakMode="CharacterWrap" />
-                                <Label
-                                    HorizontalTextAlignment="Start"
-                                    Margin="5, 10, 10, 0"
-                                    Style="{StaticResource CategoryCountRoboto}"
-                                    Text="(32)"
-                                    LineBreakMode="CharacterWrap" />
-                            </StackLayout>
-                        </AbsoluteLayout>
-                    </Frame>
-
-                    <Frame
-                        MaximumHeightRequest="200"
-                        MaximumWidthRequest="200"
-                        HeightRequest="200"
-                        WidthRequest="160"
-                        Padding="0,0,0,0">
-                        <AbsoluteLayout>
-                            <BoxView
-                                Color="{StaticResource White}"
-                                WidthRequest="160"
-                                HeightRequest="200"
-                                CornerRadius="12">
-                                <BoxView.Shadow>
-                                    <Shadow
-                                        Brush="Black"
-                                        Offset="20,20"
-                                        Radius="40"
-                                        Opacity="0.1" />
-                                </BoxView.Shadow>
-                            </BoxView>
-                            <StackLayout
-                                HorizontalOptions="Center">
-                                <Border
-                                    MaximumHeightRequest="150"
-                                    MaximumWidthRequest="177"
-                                    StrokeThickness="0.001"
-                                    Padding="0"
-                                    Margin="0"
-                                    Background="{StaticResource White}"
-                                    StrokeShape="RoundRectangle 5,5,0,0">
-                                    <Image
-                                        Source="https://fandbrecipes.com/wp-content/uploads/2021/01/The-Ultimate-List-of-Citrus-Fruits-and-Vegetables-scaled.jpg"
-                                        MaximumHeightRequest="150"
-                                        MaximumWidthRequest="160"
-                                        AbsoluteLayout.LayoutBounds="0, 0, 0, 0" />
-                                </Border>
-                                <Label
-                                    HorizontalTextAlignment="Start"
-                                    Margin="5, 10, 10, 0"
-                                    Style="{StaticResource ItemNamePoppins}"
-                                    Text="Vaisiai"
-                                    TextColor="{StaticResource PrimaryTextColor}"
-                                    LineBreakMode="CharacterWrap" />
-                                <Label
-                                    HorizontalTextAlignment="Start"
-                                    Margin="5, 10, 10, 0"
-                                    Style="{StaticResource CategoryCountRoboto}"
-                                    Text="(32)"
-                                    LineBreakMode="CharacterWrap" />
-                            </StackLayout>
-                        </AbsoluteLayout>
-                    </Frame>
-
-                    <Frame
-                        MaximumHeightRequest="200"
-                        MaximumWidthRequest="200"
-                        HeightRequest="200"
-                        WidthRequest="160"
-                        Padding="0,0,0,0">
-                        <AbsoluteLayout>
-                            <BoxView
-                                Color="{StaticResource White}"
-                                WidthRequest="160"
-                                HeightRequest="200"
-                                CornerRadius="12">
-                                <BoxView.Shadow>
-                                    <Shadow
-                                        Brush="Black"
-                                        Offset="20,20"
-                                        Radius="40"
-                                        Opacity="0.1" />
-                                </BoxView.Shadow>
-                            </BoxView>
-                            <StackLayout
-                                HorizontalOptions="Center">
-                                <Border
-                                    MaximumHeightRequest="150"
-                                    MaximumWidthRequest="177"
-                                    StrokeThickness="0.001"
-                                    Padding="0"
-                                    Margin="0"
-                                    Background="{StaticResource White}"
-                                    StrokeShape="RoundRectangle 5,5,0,0">
-                                    <Image
-                                        Source="https://fandbrecipes.com/wp-content/uploads/2021/01/The-Ultimate-List-of-Citrus-Fruits-and-Vegetables-scaled.jpg"
-                                        MaximumHeightRequest="150"
-                                        MaximumWidthRequest="160"
-                                        AbsoluteLayout.LayoutBounds="0, 0, 0, 0" />
-                                </Border>
-                                <Label
-                                    HorizontalTextAlignment="Start"
-                                    Margin="5, 10, 10, 0"
-                                    Style="{StaticResource ItemNamePoppins}"
-                                    Text="Vaisiai"
-                                    TextColor="{StaticResource PrimaryTextColor}"
-                                    LineBreakMode="CharacterWrap" />
-                                <Label
-                                    HorizontalTextAlignment="Start"
-                                    Margin="5, 10, 10, 0"
-                                    Style="{StaticResource CategoryCountRoboto}"
-                                    Text="(32)"
-                                    LineBreakMode="CharacterWrap" />
-                            </StackLayout>
-                        </AbsoluteLayout>
-                    </Frame>
-                </FlexLayout>
+                                    </StackLayout>
+                                </AbsoluteLayout>
+                            </Frame>
+                        </DataTemplate>
+            </CollectionView.ItemTemplate>
+            </CollectionView>
             </StackLayout>
         </ScrollView>
     </ContentPage.Content>

@@ -10,7 +10,7 @@ namespace BlazeCart.ViewModels
         [RelayCommand]
         async void SearchItem(object obj)
         {
-            await Shell.Current.GoToAsync(nameof(ItemCatalogPage));
+            await Shell.Current.GoToAsync(nameof(CategoryPage));
         }
         [RelayCommand]
         async void CartHistory(object obj)
