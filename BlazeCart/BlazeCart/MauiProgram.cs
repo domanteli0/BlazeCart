@@ -9,7 +9,10 @@ using DevExpress.Maui;
 #endif
 using MetroLog.MicrosoftExtensions;
 using SkiaSharp.Views.Maui.Controls.Hosting;
-
+using System.Reflection;
+using Microsoft.Extensions.Configuration;
+using BlazeCart.Models;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace BlazeCart;
 
@@ -52,10 +55,20 @@ public static class MauiProgram
                 fonts.AddFont("fa-v4compatibility.ttf", "fa-v4");
             });
 
+        string strAppConfigStreamName = string.Empty;
+        strAppConfigStreamName = "BlazeCart.appsettings.json";
+
+        var assembly = IntrospectionExtensions.GetTypeInfo(typeof(MauiProgram)).Assembly;
+        var stream = assembly.GetManifestResourceStream(strAppConfigStreamName);
+        builder.Configuration.AddJsonStream(stream);
+
+        string firebaseKey = builder.Configuration["FirebaseKey"];
+
+
         builder.Services.AddSingleton<ItemCatalogPage>();
         builder.Services.AddSingleton<ItemService>();
         builder.Services.AddSingleton<ItemsViewModel>();
-        builder.Services.AddSingleton<AuthService>();
+        builder.Services.AddSingleton<AuthService>( new AuthService(firebaseKey));
 
         builder.Services.AddSingleton<RegisterPage>();
         builder.Services.AddSingleton<RegisterPageViewModel>();

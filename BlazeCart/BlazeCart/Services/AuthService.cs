@@ -1,21 +1,26 @@
-﻿using System.Text.Json;
+﻿using BlazeCart.Models;
 using Firebase.Auth;
+using Microsoft.Extensions.Configuration;
+
+
 
 namespace BlazeCart.Services
 {
+    
     public class AuthService
     {
-        //HERE SHOULD BE API KEY
-        private const string apiKey = "PASTE_KEY_HERE";
-        private readonly FirebaseAuthProvider authProvider = new(new FirebaseConfig(apiKey));
+        public AuthService(string apiKey) {
+            this._authProvider = new(new FirebaseConfig(apiKey));
+        }
 
+        private readonly FirebaseAuthProvider _authProvider;
         private FirebaseAuth auth = null;
 
         public async Task RegisterAsync(string email, string password)
         {
             try
             {
-                auth = await authProvider.CreateUserWithEmailAndPasswordAsync(email, password);
+                auth = await _authProvider.CreateUserWithEmailAndPasswordAsync(email, password);
             }
             catch {
                 throw;
@@ -26,7 +31,7 @@ namespace BlazeCart.Services
         {
             try
             {
-                auth = await authProvider.SignInWithEmailAndPasswordAsync(email, password);
+                auth = await _authProvider.SignInWithEmailAndPasswordAsync(email, password);
             }
             catch {
                 throw;
