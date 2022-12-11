@@ -20,12 +20,12 @@ public class ItemService
 
 
     private HttpClient _client;
-    private string BaseUrl = "https://blazecartapi.azurewebsites.net/";
-    public ItemService()
+
+    public ItemService(string baseUrl)
     {
         _client = new HttpClient
         {
-            BaseAddress = new Uri(BaseUrl),
+            BaseAddress = new Uri(baseUrl),
 
         };
     }
