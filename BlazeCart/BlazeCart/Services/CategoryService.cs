@@ -8,13 +8,12 @@ namespace BlazeCart.Services;
 public class CategoryService
 {
     private HttpClient _client;
-    private string BaseUrl = "https://blazecartapi.azurewebsites.net/";
     
-    public CategoryService()
+    public CategoryService(string baseUrl)
     {
         _client = new HttpClient
         {
-            BaseAddress = new Uri(BaseUrl),
+            BaseAddress = new Uri(baseUrl),
         };
     }
     public async Task<ObservableCollection<Category>> GetCategories(int index, int count)
