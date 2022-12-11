@@ -66,9 +66,9 @@ public static class MauiProgram
         string baseUrl = builder.Configuration["BaseUrl"];
 
 
-        builder.Services.AddSingleton<ItemCatalogPage>();
+        builder.Services.AddTransient<ItemCatalogPage>();
         builder.Services.AddSingleton<ItemService>(new ItemService(baseUrl));
-        builder.Services.AddSingleton<ItemsViewModel>();
+        builder.Services.AddTransient<ItemsViewModel>();
         builder.Services.AddSingleton<AuthService>( new AuthService(firebaseKey));
 
         builder.Services.AddSingleton<RegisterPage>();

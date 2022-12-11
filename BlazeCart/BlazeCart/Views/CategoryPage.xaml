@@ -7,25 +7,28 @@
              Shell.NavBarIsVisible="False"
              xmlns:model="clr-namespace:BlazeCart.Models"
              xmlns:viewmodel="clr-namespace:BlazeCart.ViewModels"
+             xmlns:dxcv="clr-namespace:DevExpress.Maui.CollectionView;assembly=DevExpress.Maui.CollectionView"
              x:DataType="viewmodel:CategoryViewModel"
              BackgroundColor="{StaticResource PageBackgroundColor}">
 
     <ContentPage.Content>
-        <ScrollView>
-            <StackLayout Margin="5">
-                <ImageButton
+        <RefreshView IsRefreshing="{Binding IsRefreshing}"
+                         Command="{Binding RefreshCommand}">
+            <ScrollView>
+                <StackLayout Margin="5">
+                    <ImageButton
                     Source="back_button"
                     HorizontalOptions="Start"
                     Command="{Binding BackCommand}"/>
-                <Label
+                    <Label
                     HorizontalTextAlignment="Start"
                     Margin="10, 5, 50, 5"
                     Style="{StaticResource ItemCatalogPoppinsBold}"
                     Text="Kategorijos"
                     TextColor="{StaticResource PrimaryTextColor}" />
-                
 
-                <SearchBar Placeholder="Ieškoti kategorijos..."
+
+                    <SearchBar Placeholder="Ieškoti kategorijos..."
                            CancelButtonColor="{StaticResource TextColorSecondary}"
                            PlaceholderColor="{StaticResource TextColorSecondary}"
                            TextColor="{StaticResource TextColorSecondary}"
@@ -34,75 +37,98 @@
                            FontAttributes="Italic" />
 
 
-                <CollectionView ItemsSource="{Binding Categories}"
-                                ItemsLayout="VerticalGrid, 2">
-                    <CollectionView.ItemTemplate>
-                        <DataTemplate x:DataType="model:Category">
-                            <Frame
-                                MaximumHeightRequest="200"
-                                MaximumWidthRequest="200"
-                                HeightRequest="200"
-                                WidthRequest="160"
-                                Padding="0,0,0,0"
-                                Margin="5">
-                                <Frame.GestureRecognizers>
-                                    <TapGestureRecognizer
-                                    Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:CategoryViewModel}}, Path=TapCommand}"
-                                     CommandParameter="{Binding SubCategories}"/>
+                    <dxcv:DXCollectionView x:Name="searchResults"
                                     
-                                </Frame.GestureRecognizers>
-                                    
-                                <AbsoluteLayout>
-                                    <BoxView
-                                Color="{StaticResource White}"
-                                WidthRequest="160"
-                                HeightRequest="200"
-                                CornerRadius="12">
-                                        <BoxView.Shadow>
-                                            <Shadow
-                                        Brush="Black"
-                                        Offset="20,20"
-                                        Radius="40"
-                                        Opacity="0.1" />
-                                        </BoxView.Shadow>
-                                    </BoxView>
-                                    <StackLayout
-                                HorizontalOptions="Center">
-                                        <Border
-                                    MaximumHeightRequest="150"
-                                    MaximumWidthRequest="177"
-                                    StrokeThickness="0.001"
-                                    Padding="0"
-                                    Margin="0"
-                                    Background="{StaticResource White}"
-                                    StrokeShape="RoundRectangle 5,5,0,0">
-                                            <Image
-                                        Source="{Binding Uri}"
-                                        MaximumHeightRequest="150"
-                                        MaximumWidthRequest="160"
-                                        AbsoluteLayout.LayoutBounds="0, 0, 0, 0" />
-                                        </Border>
-                                        <Label
-                                    HorizontalTextAlignment="Start"
-                                    Margin="5, 10, 10, 0"
-                                    Style="{StaticResource ItemNamePoppins}"
-                                    Text="{Binding NameLT}"
-                                    MaximumWidthRequest="160"
-                                    TextColor="{StaticResource PrimaryTextColor}"
-                                    LineBreakMode="CharacterWrap" />
-                                        <Label
-                                    HorizontalTextAlignment="Start"
-                                    Margin="5, 10, 10, 0"
-                                    Style="{StaticResource CategoryCountRoboto}"
-                                    Text="(32)"
-                                    LineBreakMode="CharacterWrap" />
-                                    </StackLayout>
-                                </AbsoluteLayout>
-                            </Frame>
-                        </DataTemplate>
-            </CollectionView.ItemTemplate>
-            </CollectionView>
-            </StackLayout>
-        </ScrollView>
+                                    ItemsSource="{Binding Categories}"
+                                    IsLoadMoreEnabled="True"
+                                    IsRefreshing="{Binding IsRefreshing, Mode=TwoWay}"
+                                    LoadMoreCommand="{Binding GetCategoriesAsyncCommand}"
+                           IndicatorColor="Lime">
+                        <dxcv:DXCollectionView.ItemTemplate>
+                            <DataTemplate x:DataType="model:Category">
+                                <Border>
+                                    <Frame Padding="0"
+                                       BackgroundColor="{StaticResource White}"
+                                       CornerRadius="20"
+                                       
+                                       Margin="10, 5, 10, 5">
+                                    <Grid MaximumHeightRequest="160">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="1*" />
+                                            <ColumnDefinition Width="1*" />
+                                        </Grid.ColumnDefinitions>
+                                        <Grid.RowDefinitions>
+
+                                            
+                                            <RowDefinition Height="110" />
+
+                                            </Grid.RowDefinitions>
+
+
+                                        <Image Grid.Row="0"
+                                               Grid.Column="0"
+                                               Margin="0.8"
+                                                Source="{Binding Image}"
+                                               HeightRequest="95"
+                                               MaximumHeightRequest="95">
+
+                                        </Image>
+                                            <VerticalStackLayout Grid.Column="1"
+                                                               Grid.Row="0">
+
+                                                <Label
+                                           
+                                            VerticalOptions="Center"
+                                            HorizontalOptions="Start"
+                                            Margin="1, 3, 3, 1"
+                                            Padding="1, 3, 3, 1"
+                                            Text="{Binding NameLT}"
+                                            TextColor="{StaticResource PrimaryTextColor}"
+                                            Style="{StaticResource ItemNamePoppins}">
+                                                </Label>
+                                                <HorizontalStackLayout>
+                                                    <Label  HorizontalOptions="Start"
+                                                            VerticalOptions="Center"
+                                                            Text="(">
+                                                       
+                                                    </Label>
+                                                    <Label
+                                            
+                                            VerticalOptions="Center"
+                                            HorizontalOptions="Start"
+                                            Margin="3"
+                                            Padding="3"
+                                            Text="{Binding Count}"
+                                            
+                                            >
+                                                    </Label>
+                                                    <Label  HorizontalOptions="Start"
+                                                            Text=")"
+                                                             VerticalOptions="Center">
+
+                                                    </Label>
+                                                </HorizontalStackLayout>
+                                               
+                                            </VerticalStackLayout>
+                                           
+
+                                           
+
+
+
+                                        </Grid>
+                                    <Frame.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:CategoryViewModel}}, Path=TapCommand}"
+                                                              CommandParameter="{Binding .}" />
+                                    </Frame.GestureRecognizers>
+                                </Frame>
+                                </Border>
+
+                            </DataTemplate>
+                        </dxcv:DXCollectionView.ItemTemplate>
+                    </dxcv:DXCollectionView>
+                </StackLayout>
+            </ScrollView>
+        </RefreshView>
     </ContentPage.Content>
 </ContentPage>

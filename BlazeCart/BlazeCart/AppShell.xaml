@@ -16,7 +16,7 @@
         </Tab>
         <Tab Title="" Icon="grid.png">
             <ShellContent
-                ContentTemplate="{DataTemplate views:ItemCatalogPage}"
+                ContentTemplate="{DataTemplate views:CategoryPage}"
                 Route="MainPage"/>
         </Tab>
         <Tab Title="" Icon="shopping_cart.png">

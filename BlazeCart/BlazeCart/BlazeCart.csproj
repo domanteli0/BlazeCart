@@ -199,7 +199,6 @@
 	  <None Remove="Resources\Images\red_arrow.png" />
 	  <None Remove="Resources\Images\reverse_colored_back_button.png" />
 	  <None Remove="Resources\Images\show_map_button.png" />
-	  <None Remove="Resources\Raw\cart.json" />
 	  <None Remove="Resources\Raw\cartSchema.json" />
 	  <None Remove="Resources\Raw\introductionAnimation1.json" />
 	  <None Remove="Resources\Raw\introductionAnimation2.json" />
@@ -341,28 +340,29 @@
 	  </MauiXaml>
 	</ItemGroup>
 	<ItemGroup Condition="'$(TargetFramework)' == 'net6.0-android'">
-	  <PackageReference Include="DevExpress.Maui.CollectionView">
-	    <Version>22.1.6</Version>
-	  </PackageReference>
 	  <PackageReference Include="DevExpress.Maui.Controls">
-	    <Version>22.1.6</Version>
+	    <Version>22.1.7-pre-22306</Version>
 	  </PackageReference>
 	  <PackageReference Include="DevExpress.Maui.Core">
-	    <Version>22.1.6</Version>
+	    <Version>22.1.7-pre-22306</Version>
 	  </PackageReference>
+		<PackageReference Include="DevExpress.Maui.CollectionView">
+			<Version>22.1.7-pre-22306</Version>
+		</PackageReference>
 	</ItemGroup>
 	<ItemGroup Condition="'$(TargetFramework)' == 'net6.0-ios'">
-	  <PackageReference Include="DevExpress.Maui.CollectionView">
-	    <Version>22.1.6</Version>
-	  </PackageReference>
+	  
 	  <PackageReference Include="DevExpress.Maui.Controls">
-	    <Version>22.1.6</Version>
+	    <Version>22.1.7-pre-22306</Version>
 	  </PackageReference>
 	  <PackageReference Include="DevExpress.Maui.Core">
-	    <Version>22.1.6</Version>
+	    <Version>22.1.7-pre-22306</Version>
 	  </PackageReference>
+		<PackageReference Include="DevExpress.Maui.CollectionView">
+			<Version>22.1.7-pre-22306</Version>
+		</PackageReference>
 	</ItemGroup>
 
-	<ProjectExtensions><VisualStudio><UserProperties resources_4raw_4cart_1json__JsonSchema="cartSchema.json" resources_4raw_4shopitems_1json__JsonSchema="shopItemsSchema.json" resources_4raw_4shopitemsschema_1json__JsonSchema="" /></VisualStudio></ProjectExtensions>
+	<ProjectExtensions><VisualStudio><UserProperties resources_4raw_4shopitems_1json__JsonSchema="shopItemsSchema.json" resources_4raw_4shopitemsschema_1json__JsonSchema="" /></VisualStudio></ProjectExtensions>
 
 </Project>

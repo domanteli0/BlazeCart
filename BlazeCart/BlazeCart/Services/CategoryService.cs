@@ -7,20 +7,39 @@ namespace BlazeCart.Services;
 
 public class CategoryService
 {
-    ObservableCollection<Category> _categoryList = new();
-    public async Task<ObservableCollection<Category>> GetCategories()
+    private HttpClient _client;
+    private string BaseUrl = "https://blazecartapi.azurewebsites.net/";
+    
+    public CategoryService()
     {
-
-        if (_categoryList.Count > 0)
+        _client = new HttpClient
         {
-            return _categoryList;
-        }
+            BaseAddress = new Uri(BaseUrl),
+        };
+    }
+    public async Task<ObservableCollection<Category>> GetCategories(int index, int count)
+    {
+        var json = await _client.GetStringAsync($"api/Category/{index}/{count}");
+        var jarr = JArray.Parse(json);
+        var cats = JsonConvert.DeserializeObject<ObservableCollection<Category>>(jarr.ToString());
 
-        using var stream = await FileSystem.OpenAppPackageFileAsync("category.json");
-        using StreamReader r = new(stream);
-        string json = r.ReadToEnd();
-        var jobj = JObject.Parse(json);
-        _categoryList = JsonConvert.DeserializeObject<ObservableCollection<Category>>(jobj["category"].ToString());
-        return _categoryList;
+        return cats;
+    }
+
+    public async Task<ObservableCollection<Item>> GetItemsByCategoryId(Guid id)
+    {
+        var json = await _client.GetStringAsync($"api/Category/{id}/items");
+        var jarr = JArray.Parse(json);
+        var items = JsonConvert.DeserializeObject<ObservableCollection<Item>>(jarr.ToString());
+
+        return items;
+    }
+    public async Task<ObservableCollection<Item>> GetRangeOfItemsByCategoryId(Guid id, int index, int count)
+    {
+        var json = await _client.GetStringAsync($"api/Category/{id}/{index}/{count}");
+        var jarr = JArray.Parse(json);
+        var items = JsonConvert.DeserializeObject<ObservableCollection<Item>>(jarr.ToString());
+
+        return items;
     }
 }

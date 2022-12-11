@@ -9,10 +9,14 @@ using Debug = System.Diagnostics.Debug;
 
 namespace BlazeCart.ViewModels;
 
-
+[QueryProperty(nameof(NameLT), "NameLT")]
+[QueryProperty(nameof(Id), "Id")]
 public partial class ItemsViewModel : BaseViewModel
 {
     [ObservableProperty] public bool isRefreshing;
+
+    [ObservableProperty] public string nameLT;
+    [ObservableProperty] public Guid id;
     public ObservableCollection<Item> Items { get; set; } = new();
 
     [ObservableProperty]  double maximum;
@@ -26,6 +30,7 @@ public partial class ItemsViewModel : BaseViewModel
     [ObservableProperty] string selectedCommand;
 
     private readonly ItemService _itemService;
+    private readonly CategoryService _categoryService;
     private readonly ItemSearchBarService _itemSearchBarService;
     private readonly SliderService _sliderService;
     private ItemFilterService _itemFilterService;
@@ -35,7 +40,7 @@ public partial class ItemsViewModel : BaseViewModel
     [ObservableProperty] public ObservableCollection<Item> searchResults = new();
 
     private readonly ILogger<ItemsViewModel> _logger;
-    public ItemsViewModel(ItemService itemService, ItemSearchBarService itemSearchBarService, SliderService sliderService, ItemFilterService itemFilterService, DataService dataService, ILogger<ItemsViewModel> logger)
+    public ItemsViewModel(ItemService itemService, CategoryService categoryService, ItemSearchBarService itemSearchBarService, SliderService sliderService, ItemFilterService itemFilterService, DataService dataService, ILogger<ItemsViewModel> logger)
     {
         ComboBoxCommands = new ObservableCollection<string>
         {
@@ -48,6 +53,7 @@ public partial class ItemsViewModel : BaseViewModel
         };
 
         _itemService = itemService;
+        _categoryService = categoryService;
         _itemSearchBarService = itemSearchBarService;
         _sliderService = sliderService;
         _itemFilterService = itemFilterService;
@@ -68,11 +74,13 @@ public partial class ItemsViewModel : BaseViewModel
         try
         {
             isBusy = true;
-            var items = await _itemService.Get(_startIndex,20);
+            var items = await _categoryService.GetRangeOfItemsByCategoryId(Id, _startIndex, 20);
+            //var items = await _itemService.Get(_startIndex,20);
             _startIndex += 20;
-
+    
             foreach (var item in items)
             {
+                item.Category = nameLT;
                 item.Price = item.Price / 100;
                 item.PricePerUnitOfMeasure = item.PricePerUnitOfMeasure / 100;
                 Items.Add(item);
@@ -248,7 +256,8 @@ public partial class ItemsViewModel : BaseViewModel
                       {"NameLT", item.NameLT},
                        {"Price", item.Price},
                        {"Image", item.Image},
-                      {"Description", item.Description}
+                      {"Description", item.Description},
+                      {"Cat", item.Category }
                   });
             
         }

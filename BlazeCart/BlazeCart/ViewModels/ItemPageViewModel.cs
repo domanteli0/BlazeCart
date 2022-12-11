@@ -11,6 +11,7 @@ namespace BlazeCart.ViewModels
     [QueryProperty(nameof(Price), "Price")]
     [QueryProperty(nameof(Image), "Image")]
     [QueryProperty(nameof(Description), "Description")]
+    [QueryProperty(nameof(Cat), "Cat")]
 
     public partial class ItemPageViewModel : BaseViewModel
     {
@@ -24,6 +25,9 @@ namespace BlazeCart.ViewModels
 
         [ObservableProperty]
         public Uri image;
+
+        [ObservableProperty]
+        public string cat;
 
         [ObservableProperty]
         public string description;

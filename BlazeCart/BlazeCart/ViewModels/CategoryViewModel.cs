@@ -10,19 +10,25 @@ namespace BlazeCart.ViewModels;
 
 public partial class CategoryViewModel : BaseViewModel
 {
-    public ObservableCollection<Category> Categories { get; set; } = new();
-    private Stack<Collection<Category>> _pastCategories { get; set; } = new();
+    [ObservableProperty]
+    public ObservableCollection<Category> categories = new();
+
     private readonly CategoryService _categoryService;
+
+    private readonly ItemService _itemService;
+
+    private int _startIndex = 0;
 
     [ObservableProperty]
     public bool isRefreshing;
 
-    public CategoryViewModel(CategoryService categoryService)
+    public CategoryViewModel(CategoryService categoryService, ItemService itemService)
     {
         _categoryService = categoryService;
-        GetCategoriesAsync();
+        _itemService = itemService;
     }
 
+    [RelayCommand]
     async void GetCategoriesAsync()
     {
         if (IsBusy)
@@ -32,13 +38,19 @@ public partial class CategoryViewModel : BaseViewModel
         try
         {
             isBusy = true;
-            var categories = await _categoryService.GetCategories();
-            _pastCategories.Clear();
 
-            if (Categories.Count != 0)
+            //getting categories
+            var categories = await _categoryService.GetCategories(_startIndex, 8);
+            _startIndex += 20;
+            
+            //getting categories image
+            foreach(var cat in categories)
             {
-                Categories.Clear();
+                var items = await _categoryService.GetItemsByCategoryId(cat.Id);
+                cat.Count = items.Count();
+                cat.Image = items[3].Image;
             }
+
 
             foreach (var category in categories)
                 Categories.Add(category);
@@ -56,48 +68,28 @@ public partial class CategoryViewModel : BaseViewModel
         }
     }
 
-    //Add search -> clear stack
-
     [RelayCommand]
-    async Task Tap(List<Category> list) {
-        if (list == null)
-        {
-            await Shell.Current.GoToAsync(nameof(ItemCatalogPage));
-            //TODO: Get http request of passed items that belong to the collection
-        }
-        else {
-            _pastCategories.Push(Categories);
-            ObservableCollection<Category> collection = new ObservableCollection<Category>(list);
-            UpdateCategory(collection);
-        } 
-    }
-
-    private void UpdateCategory(ObservableCollection<Category> newCategory) {
-        Categories.Clear();
-        foreach (var category in newCategory) { 
-            Categories.Add(category);
-        }
-    
-    }
-
-    [RelayCommand]
-    static async void Back(object obj)
+    async Task Tap(Category category)
     {
-
-        if (_pastCategories.Count == 0)
-        {
-            await Shell.Current.GoToAsync("..");
-        }
-        else {
-            // TODO: Get Back to stack
-            ObservableCollection<Category> pastCategory = (ObservableCollection<Category>)_pastCategories.Pop();
-            UpdateCategory(pastCategory);
-        }
-
-
-
+        await Shell.Current.GoToAsync($"{nameof(ItemCatalogPage)}", new Dictionary<string, object>
+                  {
+                      {"Id", category.Id},
+                      {"NameLT", category.NameLT}
+                      
+                  });
+    }
+    [RelayCommand]
+    void Refresh()
+    {
+        IsRefreshing = false;
     }
 
-    //Refresh
+    [RelayCommand]
+    async void Back()
+    {
+        await Shell.Current.GoToAsync("..");
+    }
 
 }
+
+
