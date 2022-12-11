@@ -4,6 +4,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using System.Collections.ObjectModel;
 using BlazeCart.Views;
+using System.Security.Cryptography.X509Certificates;
 
 namespace BlazeCart.ViewModels
 {
@@ -44,26 +45,42 @@ namespace BlazeCart.ViewModels
         [RelayCommand]
         async void GoToMaps(object obj)
         {
+            String storeName = "Iki";
             try {
                 String coordinates = await GetCachedLocation();
                 if (coordinates != "none")
                 {
-                    //await Shell.Current.GoToAsync($"{nameof(GoogleMaps)}?coordinates={coordinates}");
+                  
+                    await Launcher.OpenAsync($"https://www.google.com/maps/dir/?api=1&origin={coordinates}&destination={storeName}+Parduotuve");
+                    // await Shell.Current.GoToAsync($"{nameof(GoogleMaps)}?Coordinates={coordinates}");
+          
+                    /*
                     await Shell.Current.GoToAsync(
                     $"{nameof(GoogleMaps)}", new Dictionary<string, object>
                     {
-                        {"Coordinates", coordinates}
+                        {"Coordinates", coordinates},
+                        {"Url", url }
                     });
+                    */
+                 
                 }
                 else {
                     coordinates = await GetCurrentLocation();
                     if (coordinates != "none")
                     {
+                        // await Shell.Current.GoToAsync($"{nameof(GoogleMaps)}?Coordinates={coordinates}");
+                      //  Uri url = new Uri($"https://www.google.com/maps/dir/?api=1&origin=55.701206,21.151459&destination=Iki+Parduotuve");
+                        await Launcher.OpenAsync($"https://www.google.com/maps/dir/?api=1&origin={coordinates}&destination={storeName}+Parduotuve");
+                        //string url = $"https://www.google.com/maps/dir/?api=1&origin=55.701206,21.151459&destination=Iki+Parduotuve";
+                        /*
                         await Shell.Current.GoToAsync(
                         $"{nameof(GoogleMaps)}", new Dictionary<string, object>
                         {
-                            {"Coordinates", coordinates}
+                            {"Coordinates", coordinates},
+                            {"Url",  url}
                         });
+                        */
+                        
                     }
                     else
                     {

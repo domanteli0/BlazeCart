@@ -13,19 +13,17 @@ namespace Scraper
         // This can be used to populate the DB
         static async Task Main(string[] args)
         {
-            var configuration = new ConfigurationBuilder()
-                .SetBasePath(Directory.GetCurrentDirectory())
-                .AddUserSecrets<Program>()
-                .AddJsonFile("appsettings.json")
-                .Build();
+            //var configuration = new ConfigurationBuilder()
+            //    .SetBasePath(Directory.GetCurrentDirectory())
+            //    .AddUserSecrets<Program>()
+            //    .AddJsonFile("appsettings.json")
+            //    .Build();
 
-            var dbCtxFac = new DbContextFactory(
-                configuration.GetConnectionString(configuration.GetSection("DB").Value!)
-            );
+            //var dbCtxFac = new DbContextFactory(
+            //    configuration.GetConnectionString(configuration.GetSection("DB").Value!)
+            //);
 
-            var dbCtx = dbCtxFac.CreateDbContext(null);
-
-            Console.WriteLine(dbCtx);
+            //var dbCtx = dbCtxFac.CreateDbContext(null);
 
             var factory = LoggerFactory.Create(b => b.AddConsole());
             var logger = factory.CreateLogger<Scraper>();
@@ -37,20 +35,20 @@ namespace Scraper
             tasks.Add(Task.Run(async () =>
             {
                 await bScraper.Scrape();
-                await dbCtx.Items.AddRangeAsync(bScraper.Items);
-                await dbCtx.Categories.AddRangeAsync(bScraper.Categories);
+                //await dbCtx.Items.AddRangeAsync(bScraper.Items);
+                //await dbCtx.Categories.AddRangeAsync(bScraper.Categories);
             }));
 
             tasks.Add(Task.Run(async () =>
             {
                 await iScraper.Scrape();
-                await dbCtx.Items.AddRangeAsync(iScraper.Items);
-                await dbCtx.Categories.AddRangeAsync(iScraper.Categories);
+                //await dbCtx.Items.AddRangeAsync(iScraper.Items);
+                //await dbCtx.Categories.AddRangeAsync(iScraper.Categories);
             }));
 
             await Task.WhenAll(tasks);
 
-            dbCtx.SaveChanges();
+            //dbCtx.SaveChanges();
         }
     }
 }
