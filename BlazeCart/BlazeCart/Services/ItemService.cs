@@ -57,7 +57,8 @@ public class ItemService
             string name = item.NameLT;
             string category = item.Category;
             double price = item.Price;
-            var json = await _client.GetStringAsync($"api/Item/{name}/{category}/{price}");
+            double? amount = item.Ammount;
+            var json = await _client.GetStringAsync($"api/Item/{name}/{category}/{price}/{amount}");
             
             cheapestItems.Add((JsonConvert.DeserializeObject<Item>(json.ToString())));
         }

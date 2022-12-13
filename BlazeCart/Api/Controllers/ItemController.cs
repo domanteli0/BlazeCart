@@ -59,11 +59,11 @@ namespace Api.Controllers
 
         }
 
-        [HttpGet("{name}/{category}/{price}")]
+        [HttpGet("{name}/{category}/{price}/{amount}")]
         [ProducesResponseType(200, Type = typeof(Item))]
-        public async Task<IActionResult> GetCheapestItem(string name, string category, double price)
+        public async Task<IActionResult> GetCheapestItem(string name, string category, double price, double amount)
         {
-            var item = await _itemRepository.GetCheapestItem(name, category, price);
+            var item = await _itemRepository.GetCheapestItem(name, category, price, amount);
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
             return Ok(item);

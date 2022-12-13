@@ -34,7 +34,7 @@ namespace Api.Repositories
             
             return records;
         }
-        public async Task<Item> GetCheapestItem(string name, string category, double price)
+        public async Task<Item> GetCheapestItem(string name, string category, double price, double amount)
         {
             double min = price;
             Item cheapestItem = new();
