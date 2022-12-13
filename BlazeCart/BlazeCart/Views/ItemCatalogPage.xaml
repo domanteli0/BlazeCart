@@ -119,7 +119,8 @@
                                             <RowDefinition Height="auto" />
                                             <RowDefinition Height="2*" />
                                             <RowDefinition Height="3*" />
-                                        </Grid.RowDefinitions>
+                                        <RowDefinition Height="4*" />
+                                    </Grid.RowDefinitions>
                                         <Image Grid.Column="0"
                                                Grid.Row="0"
                                                Grid.RowSpan="3"
@@ -136,8 +137,26 @@
                                                Text="{Binding NameLT}"
                                                TextColor="{StaticResource PrimaryTextColor}"
                                                LineBreakMode="CharacterWrap" />
-                                        <HorizontalStackLayout Grid.Column="1"
-                                                               Grid.Row="1">
+                                    <HorizontalStackLayout Grid.Column="1"
+                                                               Grid.Row="0">
+                                        <Label HorizontalTextAlignment="Start"
+                                                   Margin="0, 105 ,2, 0"
+                                                   Style="{StaticResource ItemNumberPricePoppins}"
+                                                   Text="Kaina:"
+                                                   TextColor="{StaticResource PrimaryTextColor}" />
+                                        <Label HorizontalTextAlignment="Start"
+                                                   Margin="0, 105 ,2, 0"
+                                                   Style="{StaticResource ItemNumberPricePoppins}"
+                                                   Text="{Binding Price}"
+                                                   TextColor="{StaticResource PrimaryTextColor}" />
+                                        <Label HorizontalTextAlignment="Start"
+                                                   Margin="0, 105 ,2, 0"
+                                                   Style="{StaticResource ItemNumberPricePoppins}"
+                                                   Text="€"
+                                                   TextColor="{StaticResource PrimaryTextColor}" />
+                                    </HorizontalStackLayout>
+                                    <HorizontalStackLayout Grid.Column="1"
+                                                               Grid.Row="2">
                                             <Label HorizontalTextAlignment="Start"
                                                    Margin="0, 0, 2, 0"
                                                    Style="{StaticResource ItemPricePoppins}"
@@ -151,26 +170,18 @@
                                                    Style="{StaticResource ItemPricePoppins}"
                                                    Text="{Binding MeasureUnit}" />
                                         </HorizontalStackLayout>
-                                        <HorizontalStackLayout Grid.Column="1"
-                                                               Grid.Row="0">
-                                            <Label HorizontalTextAlignment="Start"
-                                                   Margin="0, 105 ,2, 0"
-                                                   Style="{StaticResource ItemNumberPricePoppins}"
-                                                   Text="Kaina:"
-                                                   TextColor="{StaticResource PrimaryTextColor}" />
-                                            <Label HorizontalTextAlignment="Start"
-                                                   Margin="0, 105 ,2, 0"
-                                                   Style="{StaticResource ItemNumberPricePoppins}"
-                                                   Text="{Binding Price}"
-                                                   TextColor="{StaticResource PrimaryTextColor}" />
-                                            <Label HorizontalTextAlignment="Start"
-                                                   Margin="0, 105 ,2, 0"
-                                                   Style="{StaticResource ItemNumberPricePoppins}"
-                                                   Text="€"
-                                                   TextColor="{StaticResource PrimaryTextColor}" />
-                                        </HorizontalStackLayout>
-                                        <HorizontalStackLayout Grid.Column="1"
-                                                               Grid.Row="2"
+
+                                    <HorizontalStackLayout Grid.Column="1"
+                                                               Grid.Row="1">
+                                        <Label HorizontalTextAlignment="Start"
+                                                   Margin="0,  0,2, 0"
+                                                   Style="{StaticResource ItemPricePoppins}"
+                                                   Text="{Binding LowerPrice}"
+                                                   TextColor="{StaticResource BinColor}" />
+                                       
+                                    </HorizontalStackLayout>
+                                    <HorizontalStackLayout Grid.Column="1"
+                                                               Grid.Row="3"
                                                                Margin="0">
                                             <ImageButton Source="heart_button"
                                                          WidthRequest="70"

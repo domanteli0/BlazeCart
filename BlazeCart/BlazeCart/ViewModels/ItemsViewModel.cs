@@ -83,7 +83,28 @@ public partial class ItemsViewModel : BaseViewModel
                 item.Category = nameLT;
                 item.Price = item.Price / 100;
                 item.PricePerUnitOfMeasure = item.PricePerUnitOfMeasure / 100;
-                Items.Add(item);
+                if (item.DiscountPrice == null && item.LoyaltyPrice == null)
+                {
+                    item.LowerPrice = "";
+                }
+                else if (item.DiscountPrice > item.LoyaltyPrice && (item.DiscountPrice != null && item.LoyaltyPrice != null))
+                {
+                    item.LowerPrice = "Akcija: " + (item.LoyaltyPrice / 100).ToString() + "€";
+                }
+                else if(item.LoyaltyPrice > item.DiscountPrice && (item.DiscountPrice != null && item.LoyaltyPrice != null))
+                {
+                    item.LowerPrice = "Akcija: " + (item.DiscountPrice / 100).ToString() + "€";
+                }
+                else if(item.DiscountPrice == null && item.LoyaltyPrice != null)
+                {
+                    item.LowerPrice = "Akcija: " + (item.LoyaltyPrice / 100).ToString() + "€";
+                }
+                else if(item.LoyaltyPrice == null && item.DiscountPrice != null)
+                {
+                    item.LowerPrice = "Akcija: " +(item.DiscountPrice / 100).ToString() + "€";
+                }
+                if(item.Price != 0)
+                    Items.Add(item);
             }
             _logger.LogInformation("Successfully retrieved items from API");
         }
