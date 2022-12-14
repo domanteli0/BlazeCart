@@ -9,6 +9,12 @@ namespace Models
     [Table("Item")]
     public class Item : Entity
     {
+        public Item(string name, string category, double price, double amount) { 
+            this.NameLT = name;
+            this.Category.NameLT = category;
+            this.Price = (int)(price * 100);
+            this.Ammount = (float?)amount;
+        }
         public enum UnitOfMeasure { UNKNOWN, VNT, KG, L }
 
         public string InternalID { get; set; }

@@ -6,7 +6,7 @@ namespace Api.Services
     {
         Dictionary<Item, string> GetItemDictionary(List<Item> _itemList);
         string refactorItemName(string? name);
-        Item GetCheapestItem(KeyValuePair<Item, string> comparedPair, Dictionary<Item, string> refactoredD);
+        Item GetCheapestItemAlgorithm(KeyValuePair<Item, string> comparedPair, Dictionary<Item, string> refactoredD);
 
         string ThrowOutAllBrandNamesAndNumbers(string nameLT);
         string ThrowOutAllCommas(string name);

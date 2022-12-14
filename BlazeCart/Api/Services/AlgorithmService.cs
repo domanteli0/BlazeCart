@@ -30,7 +30,7 @@ namespace Api.Services
             return -1;
         }
 
-        public Item GetCheapestItem(KeyValuePair<Item, string> comparedPair, Dictionary<Item, string> refactoredD)
+        public Item GetCheapestItemAlgorithm(KeyValuePair<Item, string> comparedPair, Dictionary<Item, string> refactoredD)
         {
             Collection<Item> potentialCollection = new();
             potentialCollection.Add(comparedPair.Key);

@@ -1,13 +1,11 @@
 ﻿using DB;
 using Microsoft.EntityFrameworkCore;
 using Models;
-using System.Xml.Linq;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
-using Microsoft.EntityFrameworkCore.Query;
+using Api.Services;
+
 namespace Api.Repositories
 {
-    public class ItemRepository : IItemRepository
+    public class ItemRepository : AlgorithmService, IItemRepository
     {
         private readonly ScraperDbContext _context;
 
@@ -36,32 +34,39 @@ namespace Api.Repositories
         }
         public async Task<Item> GetCheapestItem(string name, string category, double price, double amount)
         {
-            double min = price;
-            Item cheapestItem = new();
-            
+            Item cheapestItem = new();   
+            //Get items from the specific category:
            var records = await _context.Items.Where(i => i.Category.NameLT == category).ToListAsync();
-            foreach(var item in records)
+            //Applying filter:
+            for (int i = 0; i < records.Count; i++)
             {
-                double priceValue = item.Price;
-                if (priceValue / 100 <= min && item.Price != 0)
+                if (IsInvalidItemFilter(records[i]))
                 {
-                    cheapestItem.Price = item.Price;
-                    cheapestItem.PricePerUnitOfMeasure = item.PricePerUnitOfMeasure;
-                    cheapestItem.MeasureUnit = item.MeasureUnit;
-                    cheapestItem.Image = item.Image;
-                    cheapestItem.Merch = item.Merch;
-                    cheapestItem.NameLT = item.NameLT;
-                    cheapestItem.Description = item.Description;
-                    cheapestItem.Ammount = item.Ammount;
-                   
-                    min = item.Price;
+                    records.Remove(records[i]);
+                    i--;
                 }
-                
             }
+            //Sort to find unique categories first:
+            List<Item> _sortedList = records.OrderBy(x => x.NameLT).ToList<Item>();
+            Dictionary<Item, string> refactoredD = GetItemDictionary(_sortedList);
+            HashSet<String> hs = GetSetOfUnique(refactoredD);
+            refactoredD = RefactorDictionaryToUnique(refactoredD, hs);
+
+            Item comparedItem= new(name,category,price,amount);
+            KeyValuePair<Item, string> comparedPair = new KeyValuePair<Item, string>(comparedItem, refactorItemName(comparedItem.NameLT).ToLower());
+            cheapestItem = GetCheapestItemAlgorithm(comparedPair, refactoredD);
             return cheapestItem;
-
-
         }
+
+        private Boolean IsInvalidItemFilter(Item item)
+        {
+            if(item.Price == 0 || item.NameLT == null || item.NameLT.Length < 4)
+            {
+                return true;
+            }
+            return false;
+        }
+
         public async Task<IEnumerable<String>> GetItemsCat(int index, int count)
         {
             var resWithCat = await _context.Items.Include(e => e.Category).ToListAsync();
