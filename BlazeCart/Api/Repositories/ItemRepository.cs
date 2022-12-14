@@ -55,6 +55,9 @@ namespace Api.Repositories
             HashSet<String> hs = _algorithmService.GetSetOfUnique(refactoredD);
             refactoredD = _algorithmService.RefactorDictionaryToUnique(refactoredD, hs);
             Item comparedItem = new();
+            Category category1 = new();
+            comparedItem.Category = category1;
+     
             comparedItem.NameLT = name;
             comparedItem.Category.NameLT = category;
             comparedItem.Price = (int)(price * 100);
