@@ -1,8 +1,10 @@
-﻿namespace Models
+﻿using System.Linq;
+
+namespace Models
 {
     // IF ANY CHANGE TO A CLASS FIELD(S) IS DONE
     // A DATABASE MIGRATION IS NECESSARY
-    public class Category : Entity
+    public class Category : Entity, ICloneable
     {
         //[NotMapped]
         public string? InternalID { get; set; }
@@ -14,7 +16,31 @@
         public Merchendise.Merch Merch { get; set; }
 
         public Category() {
-            SubCategories = new();
+            SubCategories = new List<Category>();
+            Items = new List<Item>();
+        }
+
+        public override string ToString()
+        {
+            var str = (NameLT is null) ? "null" : NameLT;
+            var count = (Items is null) ? "null" : Items.Count.ToString();
+            //var
+            //var item_count = (Items is not null) ? "[null]" : Items.Count.ToString();
+            return "[" + count + "] " + str;
+        }
+
+        public object Clone()
+        {
+            return new Category()
+            {
+                InternalID = (string) this.InternalID?.Clone(),
+                Uri = new(this.Uri?.ToString()),
+                NameEN = (string) this.NameEN?.Clone(),
+                NameLT = (string) this.NameLT?.Clone(),
+                Items = this.Items.ToList().ConvertAll(i => (Item) i.Clone()),
+                SubCategories = SubCategories.ConvertAll(i => (Category) i.Clone()),
+                Merch = this.Merch,
+            };
         }
     }
 }
