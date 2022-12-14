@@ -2,13 +2,16 @@
 using System.Net.Http;
 using System.Collections.Generic;
 using Microsoft.Azure.Functions.Extensions.DependencyInjection;
-using Microsoft.Extensions.DependencyInjection.Extensions;
+using Microsoft.Extensions;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Configuration;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using DB;
 using Scraper;
-using Microsoft.Extensions.Logging;
+using CategoryMap.Implementations;
+using Impl = CategoryMap.Implementations;
 
 [assembly: FunctionsStartup(typeof(ScraperFunction.Startup))]
 namespace ScraperFunction
@@ -29,19 +32,34 @@ namespace ScraperFunction
             builder.Services.AddLogging();
 
             builder.Services.AddSingleton<IConfiguration>(config);
-            builder.Services.AddScoped<HttpClient>(_=> new HttpClient());
-            builder.Services.AddScoped<IScraper>(
-                serv => new IKIScraper(
-                    serv.GetService<HttpClient>(),
-                    serv.GetService<ILogger<Scraper.Scraper>>()
-                )
+            builder.Services.AddScoped<HttpClient>(_ => new HttpClient());
+
+            builder.Services.AddScoped<IDictionary<string, ICategoryMap>>(
+                serv => new Dictionary<string, ICategoryMap>() {
+                    { "BarboraScraper", new BarboraCategoryMap(
+                        serv.GetService<ILogger<Impl.BarboraCategoryMap>>()
+                        ) },
+                    { "IKIScraper", new IkiCategoryMap(
+                        serv.GetService<ILogger<Impl.BarboraCategoryMap>>()
+                        ) },
+                }
             );
 
+            // TODO: Re-enable once IKIScraper gets up to date with the new Iki API
             //builder.Services.AddScoped<IScraper>(
-            //    serv => new BarboraScraper(
-            //        serv.GetService<HttpClient>(), serv.GetService<ILogger<Scraper.Scraper>>()
+            //    serv => new IKIScraper(
+            //        serv.GetService<HttpClient>(),
+            //        serv.GetService<ILogger<Scraper.Scraper>>()
             //    )
             //);
+
+            builder.Services.AddScoped<IScraper> (
+                serv => (
+                    new BarboraScraper(
+                        serv.GetService<HttpClient>(),
+                        serv.GetService<ILogger<Scraper.Scraper>>()
+                ))
+            );
         }
     }
 }
