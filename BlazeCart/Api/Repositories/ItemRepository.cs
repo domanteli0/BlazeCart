@@ -54,8 +54,11 @@ namespace Api.Repositories
             Dictionary<Item, string> refactoredD = _algorithmService.GetItemDictionary(_sortedList);
             HashSet<String> hs = _algorithmService.GetSetOfUnique(refactoredD);
             refactoredD = _algorithmService.RefactorDictionaryToUnique(refactoredD, hs);
-
-            Item comparedItem= new(name,category,price,amount);
+            Item comparedItem = new();
+            comparedItem.NameLT = name;
+            comparedItem.Category.NameLT = category;
+            comparedItem.Price = (int)(price * 100);
+            comparedItem.Ammount = (float?)amount;
             KeyValuePair<Item, string> comparedPair = new KeyValuePair<Item, string>(comparedItem, _algorithmService.refactorItemName(comparedItem.NameLT).ToLower());
             cheapestItem = _algorithmService.GetCheapestItemAlgorithm(comparedPair, refactoredD);
             return cheapestItem;
