@@ -5,13 +5,16 @@ using Api.Services;
 
 namespace Api.Repositories
 {
-    public class ItemRepository : AlgorithmService, IItemRepository
+    public class ItemRepository : IItemRepository
     {
         private readonly ScraperDbContext _context;
+        private readonly IAlgorithmService _algorithmService;
 
-        public ItemRepository(ScraperDbContext context)
+        public ItemRepository(ScraperDbContext context, IAlgorithmService algorithmService)
         {
             _context = context;
+            _algorithmService = algorithmService;
+            
         }
         public async Task <IEnumerable<Item>> GetRangeOfItemsAsync(int index, int count)
         {
@@ -48,13 +51,13 @@ namespace Api.Repositories
             }
             //Sort to find unique categories first:
             List<Item> _sortedList = records.OrderBy(x => x.NameLT).ToList<Item>();
-            Dictionary<Item, string> refactoredD = GetItemDictionary(_sortedList);
-            HashSet<String> hs = GetSetOfUnique(refactoredD);
-            refactoredD = RefactorDictionaryToUnique(refactoredD, hs);
+            Dictionary<Item, string> refactoredD = _algorithmService.GetItemDictionary(_sortedList);
+            HashSet<String> hs = _algorithmService.GetSetOfUnique(refactoredD);
+            refactoredD = _algorithmService.RefactorDictionaryToUnique(refactoredD, hs);
 
             Item comparedItem= new(name,category,price,amount);
-            KeyValuePair<Item, string> comparedPair = new KeyValuePair<Item, string>(comparedItem, refactorItemName(comparedItem.NameLT).ToLower());
-            cheapestItem = GetCheapestItemAlgorithm(comparedPair, refactoredD);
+            KeyValuePair<Item, string> comparedPair = new KeyValuePair<Item, string>(comparedItem, _algorithmService.refactorItemName(comparedItem.NameLT).ToLower());
+            cheapestItem = _algorithmService.GetCheapestItemAlgorithm(comparedPair, refactoredD);
             return cheapestItem;
         }
 
