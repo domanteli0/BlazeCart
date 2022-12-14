@@ -1,5 +1,4 @@
 ﻿using Models;
-using System.Collections.ObjectModel;
 
 namespace Api.Services
 {
@@ -30,21 +29,21 @@ namespace Api.Services
             return -1;
         }
 
-        public Item GetCheapestItemAlgorithm(KeyValuePair<Item, string> comparedPair, Dictionary<Item, string> refactoredD)
+        public Item GetCheapestItemAlgorithm(Item comparedItem, List<Item> itemList)
         {
-            Collection<Item> potentialCollection = new();
-            potentialCollection.Add(comparedPair.Key);
-            foreach (KeyValuePair<Item, string> pair in refactoredD)
+            List<Item> potentialCollection = new();
+            foreach (var item in itemList)
             {
-                if (pair.Value == comparedPair.Value)
+                //USING CONTAINTS() METHOD INSTEAD OF "==", THERE IS NO NEED OF REFACTORING ALL CATEGORIES AND USING DICTIONARIES
+                if (item.NameLT.ToLower().Contains(comparedItem.NameLT.ToLower()))
                 {
-                    potentialCollection.Add(pair.Key);
+                    potentialCollection.Add(item);
                 }
             }
 
-            if (potentialCollection.Count == 0)
+            if (potentialCollection.Count == 1)
             {
-                return comparedPair.Key;
+                return potentialCollection[0];
             }
             else
             {
@@ -52,16 +51,19 @@ namespace Api.Services
                 Item minItem = new Item();
                 foreach (Item item in potentialCollection)
                 {
-                    if (item.Price < min && item.Ammount >= comparedPair.Key.Ammount)
+                    if (item.Price < min && item.Ammount >= comparedItem.Ammount)
                     {
-                        minItem = item;
+                        minItem.NameLT = item.NameLT;
+                        minItem.Image = item.Image;
+                        minItem.Ammount = item.Ammount;
+                        minItem.Price = item.Price;
                         min = item.Price;
                     }
                 }
                 return minItem;
             }
         }
-
+        /*
         public Dictionary<Item, string> GetItemDictionary(List<Item> _itemList)
         {
             Dictionary<Item, string> refactoredD = new Dictionary<Item, string>();
@@ -79,7 +81,9 @@ namespace Api.Services
             }
             return refactoredD;
         }
+        */
 
+        /*
         public HashSet<string> GetSetOfUnique(Dictionary<Item, string> refactoredD)
         {
             HashSet<string> uniqueSet = new HashSet<string>();
@@ -116,7 +120,9 @@ namespace Api.Services
             }
             return uniqueSet;
         }
+        */
 
+        /*
         public bool IsUnique(string name)
         {
             string[] tokens = name.Split(' ');
@@ -137,6 +143,7 @@ namespace Api.Services
             }
             return refactoredD;
         }
+        */
 
         public string refactorItemName(string? name)
         {

@@ -4,9 +4,9 @@ namespace Api.Services
 {
     public interface IAlgorithmService
     {
-        Dictionary<Item, string> GetItemDictionary(List<Item> _itemList);
+       //Dictionary<Item, string> GetItemDictionary(List<Item> _itemList);
         string refactorItemName(string? name);
-        Item GetCheapestItemAlgorithm(KeyValuePair<Item, string> comparedPair, Dictionary<Item, string> refactoredD);
+        Item GetCheapestItemAlgorithm(Item comparedItem, List<Item> itemList);
 
         string ThrowOutAllBrandNamesAndNumbers(string nameLT);
         string ThrowOutAllCommas(string name);
@@ -20,13 +20,12 @@ namespace Api.Services
         string ThrowOutAllNumbers(string name);
 
         int returnFirstWhitespace(string substring);
+        //Boolean IsUnique(string name);
 
-        Boolean IsUnique(string name);
-
-        HashSet<string> GetSetOfUnique(Dictionary<Item, string> refactoredD);
+        //HashSet<string> GetSetOfUnique(Dictionary<Item, string> refactoredD);
 
         int CheckIfContainsNumber(string name);
 
-        Dictionary<Item, string> RefactorDictionaryToUnique(Dictionary<Item, string> refactoredD, HashSet<String> hs);
+        //Dictionary<Item, string> RefactorDictionaryToUnique(Dictionary<Item, string> refactoredD, HashSet<String> hs);
     }
 }

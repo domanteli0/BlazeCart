@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Models;
 using Api.Services;
+using System.Drawing;
 
 namespace Api.Repositories
 {
@@ -38,9 +39,9 @@ namespace Api.Repositories
         public async Task<Item> GetCheapestItem(string name, string category, double price, double amount)
         {
             Item cheapestItem = new();   
-            //Get items from the specific category:
-           var records = await _context.Items.Where(i => i.Category.NameLT == category).ToListAsync();
-            //Applying filter:
+
+            var records = await _context.Items.Where(i => i.Category.NameLT == category).ToListAsync();
+
             for (int i = 0; i < records.Count; i++)
             {
                 if (IsInvalidItemFilter(records[i]))
@@ -49,25 +50,27 @@ namespace Api.Repositories
                     i--;
                 }
             }
-            //Sort to find unique categories first:
-            List<Item> _sortedList = records.OrderBy(x => x.NameLT).ToList<Item>();
+
+            List<Item> sortedList = records.OrderBy(x => x.NameLT).ToList();
+
+            /*
             Dictionary<Item, string> refactoredD = _algorithmService.GetItemDictionary(_sortedList);
             HashSet<String> hs = _algorithmService.GetSetOfUnique(refactoredD);
             refactoredD = _algorithmService.RefactorDictionaryToUnique(refactoredD, hs);
+            */
+
             Item comparedItem = new();
-            Category category1 = new();
-            comparedItem.Category = category1;
-     
             comparedItem.NameLT = name;
-            comparedItem.Category.NameLT = category;
             comparedItem.Price = (int)(price * 100);
             comparedItem.Ammount = (float?)amount;
-            KeyValuePair<Item, string> comparedPair = new KeyValuePair<Item, string>(comparedItem, _algorithmService.refactorItemName(comparedItem.NameLT).ToLower());
-            cheapestItem = _algorithmService.GetCheapestItemAlgorithm(comparedPair, refactoredD);
+     
+
+            comparedItem.NameLT = _algorithmService.refactorItemName(comparedItem.NameLT).ToLower();
+            cheapestItem = _algorithmService.GetCheapestItemAlgorithm(comparedItem, sortedList);
             return cheapestItem;
         }
 
-        private Boolean IsInvalidItemFilter(Item item)
+        private bool IsInvalidItemFilter(Item item)
         {
             if(item.Price == 0 || item.NameLT == null || item.NameLT.Length < 4)
             {
