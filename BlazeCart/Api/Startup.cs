@@ -1,15 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Builder;
-
-using DB;
-using System.Configuration;
+﻿using DB;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 using Api.Repositories;
-using Microsoft.AspNetCore.Identity;
+using Api.Middleware;
+using Api.Aspects;
+using Autofac;
+using Autofac.Extensions.DependencyInjection;
+using Autofac.Extras.DynamicProxy;
 
 namespace Api
 {
@@ -25,42 +21,48 @@ namespace Api
         }
 
         public IConfiguration Configuration { get; }
-
+        public ILifetimeScope AutofacContainer { get; private set; }
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-            services.AddScoped<IItemRepository, ItemRepository>();
-            services.AddScoped<ICategoryRepository, CategoryRepository>();
 
-            // If no connection string is found (i.e. GetConnectionString("thisKeyHasNoCorrespondingValue"))
-            // then System.ArgumentNullException will be thrown.
-            // If you're hosting this as a Azure App Service
-            // Then you vitit [your.api.domain.com]/ you'll probably get `HTTP Error 500.30 - ASP.NET Core app failed to start` or just blank page white page (404)
-            // 
-            // HAVE FUN FIGURING OUT WHY NO CONNSTR IS NOT BEING READ FROM THE ENVIRONMNET
-            // EVEN THOUGH YOU HAVE SPECIFIED IT
+          
             var conName = Configuration.GetConnectionString("DB") ?? Configuration["DB"];
             services.AddDbContext<ScraperDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString(conName) ?? Configuration[conName]));
 
-            // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+            services.AddLogging();
             services.AddEndpointsApiExplorer();
             services.AddSwaggerGen();
         }
+        public void ConfigureContainer(ContainerBuilder builder)
+        {
+            builder.RegisterType<ItemRepository>().As<IItemRepository>()
+                .EnableInterfaceInterceptors().InterceptedBy(typeof(LogAspect))
+                .InstancePerDependency();
 
-        public static void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+            builder.RegisterType<CategoryRepository>().As<ICategoryRepository>()
+                .EnableInterfaceInterceptors().InterceptedBy(typeof(LogAspect))
+                .InstancePerDependency();
+
+            builder.RegisterType<LogAspect>().SingleInstance();
+
+        }
+
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             // Configure the HTTP request pipeline.
-            //if (app.Environment.IsDevelopment())
-            //{
-            app.UseSwagger();
-            app.UseSwaggerUI();
-            //}
-
+            if (env.IsDevelopment())
+            {
+                app.UseSwagger();
+                app.UseSwaggerUI();
+            }
+            AutofacContainer = app.ApplicationServices.GetAutofacRoot();
+            app.UseMiddleware<ErrorHandlingMiddleware>();
             app.UseHttpsRedirection();
 
-            //app.UseAuthorization();
+            app.UseAuthorization();
 
             app.UseRouting();
             app.UseEndpoints(endpoints =>

@@ -66,6 +66,7 @@ namespace Api.Controllers
             var item = await _itemRepository.GetCheapestItem(name, category, price);
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
+            int pr = item.Price / 0;
             return Ok(item);
         }
        
