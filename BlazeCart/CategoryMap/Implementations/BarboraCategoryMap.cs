@@ -9,21 +9,17 @@ namespace CategoryMap.Implementations
 	{
 		public BarboraCategoryMap(ILogger log) : base(log) { }
 
-        public void Map(IList<Category> root_cats, IDictionary<string, Category> into)
+        public void Map(IList<Category> root_cat, IDictionary<string, Category> into)
         {
-            foreach (var cat in root_cats.GetWithoutChildren())
-            {
-                switch (cat.NameLT)
-                {
-                    case "Pieno gėrimai":
-                        map_category(cat, into["Pieno gėrimai"]);
-                        break;
-                    default:
-                        _logger.LogInformation(cat.NameLT + " wasn't mapped");
-                        map_category(cat, into["UNMAPPED"]);
-                        break;
-                }
-            }
+            // NOTE: '.*' will match anything
+            this.addMapper("Pieno gėrimai", new() { ("(?i).*", into["Pieno gėrimai"]) });
+            this.addForUnmapped(into["UNMAPPED"]);
+
+            var items = root_cat
+                .GetWithoutChildren()
+                .ToDictionary(c => c.NameLT!, c => c);
+
+            this.executeMapper(items);
         }
 
     }

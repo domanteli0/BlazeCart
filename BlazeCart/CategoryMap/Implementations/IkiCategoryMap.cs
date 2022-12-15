@@ -10,36 +10,21 @@ namespace CategoryMap.Implementations
 	{
 		public IkiCategoryMap(ILogger logger) : base(logger) { }
 
-        public void Map(IList<Category> root_cat, IDictionary<string, Category> into)
+		public void Map(IList<Category> root_cat, IDictionary<string, Category> into)
 		{
-			foreach (var cat in root_cat.GetWithoutChildren())
-			{
-				foreach (var item in cat.Items)
-				{
-					switch (item.Category.NameLT)
-					{
-						case "Pienas":
-							if (item.NameLT.ContainsPattern("(?i)Pieno gėrimai"))
-								map_item(
-									item,
-                                    into["Pieno gėrimai"]
-								);
-							else if (item.NameLT.ContainsPattern("(?i)Sojų"))
-								map_item(
-									item,
-                                    into["Sojų pienas"]
-								);
+			this.addMapper("Pienas", new() {
+				("(?i)gėrimai", into["Pieno gėrimai"]),
+				("(?i)sojų", into["Sojų pienas"])
+			});
 
-							break;
-                        default:
-                            //_logger.LogInformation(item.NameLT + " wasn't mapped");
-                            map_category(cat, into["UNMAPPED"]);
-                            break;
-                    };
-				}
+			this.addForUnmapped(into["UNMAPPED"]);
 
-			}
-        }
+			var items = root_cat
+				.GetWithoutChildren()
+				.ToDictionary(c => c.NameLT!, c => c);
+
+			this.executeMapper(items);
+		}
 	}
 }
 
