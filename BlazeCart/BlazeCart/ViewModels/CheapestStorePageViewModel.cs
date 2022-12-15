@@ -3,8 +3,7 @@ using BlazeCart.Services;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using System.Collections.ObjectModel;
-using BlazeCart.Views;
-using System.Security.Cryptography.X509Certificates;
+
 
 namespace BlazeCart.ViewModels
 {
@@ -18,7 +17,15 @@ namespace BlazeCart.ViewModels
         private static CancellationTokenSource _cancelTokenSource;
         private static bool _isCheckingLocation;
 
-        public CheapestStorePageViewModel(ItemService itemservice) {
+        [ObservableProperty]
+        private static string storename = "iki_logo.png";
+        [ObservableProperty]
+        private static string percentDifference = "7.5";
+
+
+
+        public CheapestStorePageViewModel(ItemService itemservice)
+        {
             _itemService = itemservice;
             _itemService.CheapestCart += CheapestCartEventHandler;
 
@@ -41,6 +48,7 @@ namespace BlazeCart.ViewModels
         {
             await Shell.Current.GoToAsync("..");
         }
+
 
         [RelayCommand]
         async void GoToMaps(object obj)
