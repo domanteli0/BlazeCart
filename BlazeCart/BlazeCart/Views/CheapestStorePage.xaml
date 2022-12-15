@@ -86,7 +86,7 @@
                     HorizontalOptions="Center"
                     HorizontalTextAlignment="Center"
                     Margin="110, 10, 0, 5"
-                    Text="{Binding TotalPrice}"
+                    Text="{Binding TotalPrice, StringFormat='{0:F2}'}"
                     FontSize="32"
                     TextColor="{StaticResource White}"
                     VerticalOptions="Center" />
@@ -134,13 +134,14 @@
                         <DataTemplate x:DataType="models:Item">
                             <Frame HeightRequest="200"
                                        WidthRequest="350"
+                                       Padding="3"
                                        Margin="5, 10, 5, 10"
                                        CornerRadius="10">
                                     <Frame.Shadow>
                                         <Shadow Brush="Black"
                                                 Offset="10,20"
                                                 Radius="40"
-                                                Opacity="1" />
+                                                Opacity="15" />
                                     </Frame.Shadow>
                                     <Grid>
                                         <Grid.RowDefinitions>
