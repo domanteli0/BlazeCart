@@ -74,7 +74,7 @@ public partial class ItemsViewModel : BaseViewModel
         try
         {
             isBusy = true;
-            var items = await _categoryService.GetRangeOfItemsByCategoryId(Id, _startIndex, 20);
+            var items = await _categoryService.GetRangeOfItemsByCategoryId(Id, _startIndex, 40);
             //var items = await _itemService.Get(_startIndex,20);
             _startIndex += 20;
     

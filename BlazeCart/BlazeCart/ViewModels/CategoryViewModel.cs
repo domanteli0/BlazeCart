@@ -40,7 +40,7 @@ public partial class CategoryViewModel : BaseViewModel
             isBusy = true;
 
             //getting categories
-            var categories = await _categoryService.GetCategories(_startIndex, 8);
+            var categories = await _categoryService.GetCategories(_startIndex, 30);
             _startIndex += 20;
             
             //getting categories image
