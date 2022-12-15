@@ -26,7 +26,7 @@
                 Aspect="AspectFit"/>
 
             <Image
-                Source="iki_logo.png"
+                Source="{Binding Storename}"
                 MaximumHeightRequest="160"
                 MaximumWidthRequest="160"
                 HeightRequest="160"
@@ -79,7 +79,7 @@
 
                     <Image
                         HorizontalOptions="Center"
-                        Source="orange_button_background"/>
+                        Source="orange_card_bg.png"/>
                     <HorizontalStackLayout>
                         <Label 
                     Style="{StaticResource CheapestStoreHeaderPoppins}"
@@ -99,8 +99,32 @@
                     FontSize="32"
                     TextColor="{StaticResource White}"
                     VerticalOptions="Center"/>
-                       
                     </HorizontalStackLayout>
+
+                    <HorizontalStackLayout>
+                        <Image
+                            Source="green_arrow_resized.png"
+                            Margin="30, 50, -10, 0"/>
+                        <Label
+                            Style="{StaticResource CheapestStoreHeaderPoppins}"
+                            HorizontalOptions="Center"
+                            HorizontalTextAlignment="Center"
+                            Margin="14, 60, 0, 5"
+                            Text="{Binding PercentDifference}"
+                            TextColor="{StaticResource White}"
+                            VerticalOptions="Center"
+                            />
+                        <Label
+                            Style="{StaticResource CheapestStoreHeaderPoppins}"
+                            HorizontalOptions="Center"
+                            HorizontalTextAlignment="Center"
+                            Margin="0, 60, 0, 5"
+                            Text="% pigiau nei kitur"
+                            TextColor="{StaticResource White}"
+                            VerticalOptions="Center"
+                            />
+                    </HorizontalStackLayout>
+
                    
                 </AbsoluteLayout>
 
@@ -111,7 +135,7 @@
                 <StackLayout
                     Orientation="Horizontal"
                     HorizontalOptions="Center"
-                    Spacing="5">
+                    Spacing="1">
                     <Image
                         Aspect="AspectFill"
                         Margin="5"
@@ -127,6 +151,7 @@
                         AbsoluteLayout.LayoutBounds="75,20,AutoSize,AutoSize"
                         VerticalOptions="Center" />
                 </StackLayout>
+
 
                 <CollectionView x:Name="FavoriteItemSearchResults"
                                     ItemsSource="{Binding CartItems}">
