@@ -39,9 +39,9 @@ If you have run into problems make consult with this checklist:
 
 * You may need to fetch app-settings using [func](https://learn.microsoft.com/en-us/azure/azure-functions/functions-run-local?tabs=v4%2Cmacos%2Ccsharp%2Cportal%2Cbash#install-the-azure-functions-core-tools). 
 Run `func azure functionapp fetch-app-settings <function-name>`
-* __[NOT VERIFIED]__ If you get this:
+* If you get this:
     ```
     [TIMESTAMP] Executed 'ScraperFunction' (Failed, Id=[...], Duration=80ms)
     [TIMESTAMP] System.Private.Uri: Value cannot be null. (Parameter 'uriString').
     ```
-    This _may_ mean that the server is not responding to scraper requests, check if the website isn't down or if you haven't been blocked.
+    This _may_ mean that (Consult Google first for most common causes) `Uri` field is `null` in some `Category`.

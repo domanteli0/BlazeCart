@@ -12,6 +12,7 @@ using DB;
 using Scraper;
 using CategoryMap.Implementations;
 using Impl = CategoryMap.Implementations;
+using CategoryMap;
 
 [assembly: FunctionsStartup(typeof(ScraperFunction.Startup))]
 namespace ScraperFunction
@@ -45,19 +46,19 @@ namespace ScraperFunction
                 }
             );
 
-            // TODO: Re-enable once IKIScraper gets up to date with the new Iki API
-            //builder.Services.AddScoped<IScraper>(
-            //    serv => new IKIScraper(
-            //        serv.GetService<HttpClient>(),
-            //        serv.GetService<ILogger<Scraper.Scraper>>()
-            //    )
-            //);
+            //// TODO: Re-enable once IKIScraper gets up to date with the new Iki API
+            ////builder.Services.AddScoped<IScraper>(
+            ////    serv => new IKIScraper(
+            ////        serv.GetService<HttpClient>(),
+            ////        serv.GetService<ILogger<Scraper.Scraper>>()
+            ////    )
+            ////);
 
-            builder.Services.AddScoped<IScraper> (
+            builder.Services.AddScoped<IScraper>(
                 serv => (
                     new BarboraScraper(
-                        serv.GetService<HttpClient>(),
-                        serv.GetService<ILogger<Scraper.Scraper>>()
+                        serv.GetService<HttpClient>()
+                        , serv.GetService<ILogger<Scraper.Scraper>>()
                 ))
             );
         }

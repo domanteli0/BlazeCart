@@ -20,6 +20,7 @@ namespace CategoryMap.Implementations
 		public void map_item(Item from, Category to)
 		{
 			from.Category = to;
+			to.Items.Add(from);
 			_logger
 				.LogInformation(
 					$"Mapped {from.NameLT} to {to.NameLT}"

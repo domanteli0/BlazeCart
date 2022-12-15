@@ -99,6 +99,13 @@ namespace Common
             return dic.ToList().ConvertAll((kvp) => kvp.Value);
 
         }
+
+        public static Dictionary<K, V> Clone<K, V>(this IDictionary<K,V> dic)
+            where K : ICloneable
+            where V : ICloneable =>
+            dic.ToDictionary(
+                c => (K) c.Key.Clone(), c => (V) c.Value.Clone()
+            );
     }
 }
 
