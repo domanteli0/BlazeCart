@@ -8,7 +8,7 @@ namespace CategoryMap
 	{
         private static Dictionary<string, Category> CategoryDict = new()
 		{
-			// Pieno produktai
+			// Pieno produktai ir kiaušiniai
 			{ "Pasterizuotas pienas", new() { NameLT = "Pasterizuotas pienas" } },
 			{ "Pieno gėrimai", new() { NameLT = "Pieno gėrimai" } },
 			{ "Ilgo galiojimo pienas", new() { NameLT = "Ilgo galiojimo pienas" } },
@@ -60,14 +60,66 @@ namespace CategoryMap
 			{"Varškės sūreliai", new() { NameLT = "Varškės sūreliai" } },
 			{"Vištų kiaušinai", new() { NameLT = "Vištų kiaušiniai" } },
 			{"Putpelių kiaušiniai", new() { NameLT = "Putpelių kiaušiniai"} },
-
-
-
-
-
-			// TODO:
-			// Daržovės
-
+			
+			// Daržovės ir vaisiai
+			{"Pomidorai ir agurkai", new() { NameLT = "Pomidorai ir agurkai"} },
+            {"Paprikos ir baklažanai", new() { NameLT = "Paprikos ir baklažanai"} },
+            {"Bulvės, morkos ir kopūstai", new() { NameLT = "Bulvės, morkos ir kopūstai"} },
+            {"Svogūnai, porai ir česnakai", new() { NameLT = "Svogūnai, porai ir česnakai"} },
+            {"Būrokėliai ir kiti šakniavaisiai", new() { NameLT = "Būrokėliai ir kiti šakniavaisiai"} },
+            {"Salotos ir jų mišiniai", new() { NameLT = "Salotos ir jų mišiniai"} },
+            {"Prieskoninės daržovės ir žolelės", new() { NameLT = "Prieskoninės daržovės ir žolelės"} },
+            {"Kukurūzai, žirniai, pupelės ir smidrai", new() { NameLT = "Kukurūzai, žirniai, pupelės ir smidrai"} },
+            {"Moliūgai ir cukinijos", new() { NameLT = "Moliūgai ir cukinijos"} },
+            {"Marinuotos, raugintos ir sūdytos daržovės", new() { NameLT = "Marinuotos, raugintos ir sūdytos daržovės"} },
+            {"Bananai", new() { NameLT = "Bananai"} },
+            {"Citrusiniai vaisiai", new() { NameLT = "Citrusiniai vaisiai"} },
+            {"Obuoliai ir kriaušės", new() { NameLT = "Obuoliai ir kriaušės"} },
+            {"Vynuogės ir uogos", new() { NameLT = "Vynuogės ir uogos"} },
+            {"Egzotiniai vaisiai", new() { NameLT = "Egzotiniai vaisiai"} },
+            {"Melionai", new() { NameLT = "Melionai"} },
+            {"Kaulavaisiai", new() { NameLT = "Kaulavaisiai"} },
+            {"Avokadai", new() { NameLT = "Avokadai"} },
+            {"Apdoroti vaisiai ir uogos", new() { NameLT = "Apdoroti vaisiai ir uogos"} },
+            {"Grybai", new() { NameLT = "Grybai"} },
+            {"", new() { NameLT = ""} },
+            {"", new() { NameLT = ""} },
+            {"", new() { NameLT = ""} },
+            {"", new() { NameLT = ""} },
+            {"", new() { NameLT = ""} },
+            {"", new() { NameLT = ""} },
+            {"", new() { NameLT = ""} },
+            {"", new() { NameLT = ""} },
+            {"", new() { NameLT = ""} },
+            {"", new() { NameLT = ""} },
+            {"", new() { NameLT = ""} },
+            {"", new() { NameLT = ""} },
+            {"", new() { NameLT = ""} },
+            {"", new() { NameLT = ""} },
+            {"", new() { NameLT = ""} },
+            {"", new() { NameLT = ""} },
+            {"", new() { NameLT = ""} },
+            {"", new() { NameLT = ""} },
+            {"", new() { NameLT = ""} },
+            {"", new() { NameLT = ""} },
+            {"", new() { NameLT = ""} },
+            {"", new() { NameLT = ""} },
+            {"", new() { NameLT = ""} },
+            {"", new() { NameLT = ""} },
+            {"", new() { NameLT = ""} },
+            {"", new() { NameLT = ""} },
+            {"", new() { NameLT = ""} },
+            {"", new() { NameLT = ""} },
+            {"", new() { NameLT = ""} },
+            {"", new() { NameLT = ""} },
+            {"", new() { NameLT = ""} },
+            {"", new() { NameLT = ""} },
+            {"", new() { NameLT = ""} },
+            {"", new() { NameLT = ""} },
+            {"", new() { NameLT = ""} },
+            {"", new() { NameLT = ""} },
+            {"", new() { NameLT = ""} },
+            {"", new() { NameLT = ""} },
 			// Vaisiai
 
 			// Mėsa
