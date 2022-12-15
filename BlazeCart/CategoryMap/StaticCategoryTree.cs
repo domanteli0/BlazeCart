@@ -289,26 +289,49 @@ namespace CategoryMap
             {"Intymios higienos servetelės", new() { NameLT = "Intymios higienos servetelės"} },
             {"Sauskelnės suaugusiems", new() { NameLT = "Sauskelnės suaugusiems"} },
             {"Kosmetikos rinkiniai", new() { NameLT = "Kosmetikos rinkiniai"} },
-            {"", new() { NameLT = ""} },
-            {"", new() { NameLT = ""} },
-            {"", new() { NameLT = ""} },
-            {"", new() { NameLT = ""} },
-            {"", new() { NameLT = ""} },
-            {"", new() { NameLT = ""} },
-            {"", new() { NameLT = ""} },
 
-
-			// Vaisiai
-
-			// Mėsa
-
-			// Kiaušiniai
-
-			// ...
-
-			//{ "Kiti", new() { NameLT = "Kiti" } },
-
-			// This category contains items, for which no appropiate category was found
+            //Namai ir laisvalaikis
+            {"Virtuvės buitinė technika", new() { NameLT = "Virtuvės buitinė technika"} },
+            {"Elektronikos prietaisai ir jų priedai", new() { NameLT = "Elektronikos prietaisai ir jų priedai"} },
+            {"Asmeniniai elektronikos prietaisai ir jų priedai", new() { NameLT = "Asmeniniai elektronikos prietaisai ir jų priedai"} },
+            {"Kompiuterijos prekės", new() { NameLT = "Kompiuterijos prekės"} },
+            {"Kita elektronika", new() { NameLT = "Kita elektronika"} },
+            {"Ilgintuvai ir jungtukai", new() { NameLT = "Ilgintuvai ir jungtukai"} },
+            {"Elektros lemputės ir žibintuvėliai", new() { NameLT = "Elektros lemputės ir žibintuvėliai"} },
+            {"Automobilų švaros priemonės", new() { NameLT = "Automobilų švaros priemonės"} },
+            {"Automobiliniai oro gaivikliai", new() { NameLT = "Automobiliniai oro gaivikliai"} },
+            {"Automobilių lemputės", new() { NameLT = "Automobilių lemputės"} },
+            {"Tepalai, alyvos", new() { NameLT = "Tepalai, alyvos"} },
+            {"Kitos automobilių prekės", new() { NameLT = "Kitos automobilių prekės"} },
+            {"Kepsninės ir jų reikmenys", new() { NameLT = "Kepsninės ir jų reikmenys"} },
+            {"Pridegimo priemonės", new() { NameLT = "Pridegimo priemonės"} },
+            {"Vienkartiniai indai ir įrankiai", new() { NameLT = "Vienkartiniai indai ir įrankiai"} },
+            {"Insekticidai, repelentai", new() { NameLT = "Insekticidai, repelentai"} },
+            {"Lauko pramogų prekės", new() { NameLT = "Lauko pramogų prekės"} },
+            {"Vandens pramogų prekės", new() { NameLT = "Vandens pramogų prekės"} },
+            {"Sporto ir laisvalaikio prekės", new() { NameLT = "Sporto ir laisvalaikio prekės"} },
+            {"Stovyklavimo prekės", new() { NameLT = "Stovyklavimo prekės"} },
+            {"Pramogos lauke", new() { NameLT = "Pramogos lauke"} },
+            {"Žūklės prekės", new() { NameLT = "Žūklės prekės"} },
+            {"Indai", new() { NameLT = "Indai"} },
+            {"Stalo įrankiai", new() { NameLT = "Stalo įrankiai"} },
+            {"Taurės ir stiklinės", new() { NameLT = "Taurės ir stiklinės"} },
+            {"Proginė atributika", new() { NameLT = "Proginė atributika"} },
+            {"Žvakės ir žvakidės", new() { NameLT = "Žvakės ir žvakidės"} },
+            {"Popierinės servetėlės", new() { NameLT = "Popierinės servetėlės"} },
+            {"Vandens filtrai ir jų priedai", new() { NameLT = "Vandens filtrai ir jų priedai"} },
+            {"Staltiesės", new() { NameLT = "Staltiesės"} },
+            {"Virtuvinė tekstilė", new() { NameLT = "Virtuvinė tekstilė"} },
+            {"Popierius, popieriaus gaminiai", new() { NameLT = "Popierius, popieriaus gaminiai"} },
+            {"Piešimo, rašymo ir lipdymo priemonės", new() { NameLT = "Piešimo, rašymo ir lipdymo priemonės"} },
+            {"Kitos kanceliarinės prekės", new() { NameLT = "Kitos kanceliarinės prekės"} },
+            {"Žurnalai ir laikraščiai", new() { NameLT = "Žurnalai ir laikraščiai"} },
+            {"Žurnalai vaikams", new() { NameLT = "Žurnalai vaikams"} },
+            {"Kryžiažodžiai", new() { NameLT = "Kryžiažodžiai"} },
+            {"Suagusiųjų populiarioji literatūra", new() { NameLT = "Suagusiųjų populiarioji literatūra"} },
+            {"Spalvinimo knygos", new() { NameLT = "Spalvinimo knygos"} },
+            {"Valstybinė atributika", new() { NameLT = "Valstybinė atributika"} },
+           
 			{ "UNMAPPED", new() { NameLT = "UNMAPPED" } },
 		};
 
