@@ -11,12 +11,14 @@ namespace BlazeCart.ViewModels;
 
 [QueryProperty(nameof(NameLT), "NameLT")]
 [QueryProperty(nameof(Id), "Id")]
+[QueryProperty(nameof(Count), "Count")]
 public partial class ItemsViewModel : BaseViewModel
 {
     [ObservableProperty] public bool isRefreshing;
 
     [ObservableProperty] public string nameLT;
     [ObservableProperty] public Guid id;
+    [ObservableProperty] public int count;
     public ObservableCollection<Item> Items { get; set; } = new();
 
     [ObservableProperty]  double maximum;
@@ -36,6 +38,7 @@ public partial class ItemsViewModel : BaseViewModel
     private ItemFilterService _itemFilterService;
     private readonly DataService _dataService;
     private int _startIndex = 0;
+    private bool flag = true;
 
     [ObservableProperty] public ObservableCollection<Item> searchResults = new();
 
@@ -74,39 +77,45 @@ public partial class ItemsViewModel : BaseViewModel
         try
         {
             isBusy = true;
-            var items = await _categoryService.GetRangeOfItemsByCategoryId(Id, _startIndex, 40);
-            //var items = await _itemService.Get(_startIndex,20);
-            _startIndex += 20;
-    
-            foreach (var item in items)
+
+            if (flag)
             {
-                item.Category = nameLT;
-                item.Price = item.Price / 100;
-                item.PricePerUnitOfMeasure = item.PricePerUnitOfMeasure / 100;
-                if (item.DiscountPrice == null && item.LoyaltyPrice == null)
+                
+                var items = await _categoryService.GetRangeOfItemsByCategoryId(id, 0, count);
+               
+                foreach (var item in items)
                 {
-                    item.LowerPrice = "";
+                    item.Category = nameLT;
+                    item.Price = item.Price / 100;
+                    item.PricePerUnitOfMeasure = item.PricePerUnitOfMeasure / 100;
+                    if (item.DiscountPrice == null && item.LoyaltyPrice == null)
+                    {
+                        item.LowerPrice = "";
+                    }
+                    else if (item.DiscountPrice > item.LoyaltyPrice && (item.DiscountPrice != null && item.LoyaltyPrice != null))
+                    {
+                        item.LowerPrice = "Akcija: " + (item.LoyaltyPrice / 100).ToString() + "€";
+                    }
+                    else if (item.LoyaltyPrice > item.DiscountPrice && (item.DiscountPrice != null && item.LoyaltyPrice != null))
+                    {
+                        item.LowerPrice = "Akcija: " + (item.DiscountPrice / 100).ToString() + "€";
+                    }
+                    else if (item.DiscountPrice == null && item.LoyaltyPrice != null)
+                    {
+                        item.LowerPrice = "Akcija: " + (item.LoyaltyPrice / 100).ToString() + "€";
+                    }
+                    else if (item.LoyaltyPrice == null && item.DiscountPrice != null)
+                    {
+                        item.LowerPrice = "Akcija: " + (item.DiscountPrice / 100).ToString() + "€";
+                    }
+                    if (item.Price != 0)
+                        Items.Add(item);
                 }
-                else if (item.DiscountPrice > item.LoyaltyPrice && (item.DiscountPrice != null && item.LoyaltyPrice != null))
-                {
-                    item.LowerPrice = "Akcija: " + (item.LoyaltyPrice / 100).ToString() + "€";
-                }
-                else if(item.LoyaltyPrice > item.DiscountPrice && (item.DiscountPrice != null && item.LoyaltyPrice != null))
-                {
-                    item.LowerPrice = "Akcija: " + (item.DiscountPrice / 100).ToString() + "€";
-                }
-                else if(item.DiscountPrice == null && item.LoyaltyPrice != null)
-                {
-                    item.LowerPrice = "Akcija: " + (item.LoyaltyPrice / 100).ToString() + "€";
-                }
-                else if(item.LoyaltyPrice == null && item.DiscountPrice != null)
-                {
-                    item.LowerPrice = "Akcija: " +(item.DiscountPrice / 100).ToString() + "€";
-                }
-                if(item.Price != 0)
-                    Items.Add(item);
+                _logger.LogInformation("Successfully retrieved items from API");
+                flag = false;
             }
-            _logger.LogInformation("Successfully retrieved items from API");
+    
+            
         }
 
         catch (Exception ex)

@@ -19,6 +19,9 @@ public partial class CategoryViewModel : BaseViewModel
 
     private int _startIndex = 0;
 
+    private bool flag = true;
+    private int count;
+
     [ObservableProperty]
     public bool isRefreshing;
 
@@ -26,6 +29,7 @@ public partial class CategoryViewModel : BaseViewModel
     {
         _categoryService = categoryService;
         _itemService = itemService;
+        
     }
 
     [RelayCommand]
@@ -38,13 +42,11 @@ public partial class CategoryViewModel : BaseViewModel
         try
         {
             isBusy = true;
-
-            //getting categories
+           
             var categories = await _categoryService.GetCategories(_startIndex, 30);
-            _startIndex += 20;
+            _startIndex += 30;
             
-            //getting categories image
-            foreach(var cat in categories)
+            foreach (var cat in categories)
             {
                 var items = await _categoryService.GetItemsByCategoryId(cat.Id);
                 cat.Count = items.Count();
@@ -74,8 +76,8 @@ public partial class CategoryViewModel : BaseViewModel
         await Shell.Current.GoToAsync($"{nameof(ItemCatalogPage)}", new Dictionary<string, object>
                   {
                       {"Id", category.Id},
-                      {"NameLT", category.NameLT}
-                      
+                      {"NameLT", category.NameLT},
+                      {"Count", category.Count }
                   });
     }
     [RelayCommand]
