@@ -29,8 +29,7 @@ namespace ScraperFunction
 
         // NOTE: Using static classes means that data is persisted each run
         // thus `StaticCategoryTree.CategoryDict` must be copied
-        private IDictionary<string, Category> _categoryDict =
-            StaticCategoryTree.GetCategoryDict();
+        public Dictionary<string, Category> _categoryDict;
 
         private IDictionary<string, ICategoryMap> _categoryMappers;
 
@@ -42,7 +41,8 @@ namespace ScraperFunction
         {
             _dbCtx = dbCtx;
             _scraperRepo = scraperRepo;
-            //_categoryMappers = categoryMap;
+            _categoryMappers = categoryMap;
+            _categoryDict = StaticCategoryTree.GetCategoryDict();
         }
 
         [FunctionName("ScraperFunction")]
@@ -57,6 +57,7 @@ namespace ScraperFunction
 
             try
             {
+                await Task.Delay(10);
                 // Scraping
                 var tasks = new List<Task>();
                 foreach (var scraper in _scraperRepo)
@@ -95,7 +96,8 @@ namespace ScraperFunction
                 _dbCtx.SaveChanges();
                 log.LogInformation($"Scraping finshed. All items updated successfully to DB at: {DateTime.UtcNow}");
 
-            } catch (Exception e) {
+            } catch (Exception e)
+            {
                 log.LogError("An exception was thrown (aborting): " + e.ToString());
             }
         }

@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+//using Common;
 
 namespace Models
 {
@@ -33,10 +34,10 @@ namespace Models
         {
             return new Category()
             {
-                InternalID = (string) this.InternalID?.Clone(),
-                Uri = new(this.Uri?.ToString()),
-                NameEN = (string) this.NameEN?.Clone(),
-                NameLT = (string) this.NameLT?.Clone(),
+                InternalID = this.InternalID.CloneOrNull(),
+                Uri = this.Uri.CloneOrNull(),
+                NameEN = this.NameEN.CloneOrNull(),
+                NameLT = this.NameLT.CloneOrNull(),
                 Items = this.Items.ToList().ConvertAll(i => (Item) i.Clone()),
                 SubCategories = SubCategories.ConvertAll(i => (Category) i.Clone()),
                 Merch = this.Merch,

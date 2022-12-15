@@ -34,7 +34,9 @@ namespace CategoryMap
 		};
 
 		public static Dictionary<string, Category> GetCategoryDict() =>
-			CategoryDict.ToDictionary(c => c.Key, c => (Category) c.Value.Clone());
-    }
+			CategoryDict.ToDictionary(
+				c => (string)c.Key.Clone(), c => (Category)c.Value.Clone()
+			);
+	}
 }
 
