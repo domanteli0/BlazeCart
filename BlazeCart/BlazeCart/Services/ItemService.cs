@@ -68,9 +68,14 @@ public class ItemService
            // var itemIKI = JsonConvert.DeserializeObject<Item>(jsonIKI.ToString());
             itemBarbora.Quantity = item.Quantity;
            // itemIKI.Quantity = item.Quantity;
-            cheapestItemsBarbora.Add(itemBarbora);
-           // cheapestItemsIKI.Add(itemIKI);
-
+           if(itemBarbora.Merch == 0)
+                cheapestItemsBarbora.Add(itemBarbora);
+            //if(itemBarbora.Merch == 1)
+            // cheapestItemsIKI.Add(itemIKI);
+           // if (itemIKI.Merch == 0)
+             //   cheapestItemsBarbora.Add(itemIKI);
+         //   if(ItemIKI.Merch == 1)
+           //     cheapestItemsIKI.Add(itemIKI);
         }
 
         foreach(var item in cheapestItemsBarbora)
