@@ -124,6 +124,98 @@ namespace CategoryMap.Implementations
                 ("(?i)slyvos", into["Kaulavaisiai"]),
             });
 
+            this.addMapper("Šviežia paukštiena", new()
+            {
+                ("(?i)vištiena", into["Vištiena"]),
+                ("(?i)šviežias viščiukas", into["Vištiena"]),
+                ("(?i)viščiukų", into["Vištiena"]),
+                ("(?i)vištienos", into["Vištiena"]),
+                ("(?i)broilerių", into["Vištiena"]),
+                ("(?i)kalakutiena", into["Kalakutiena"]),
+                ("(?i)kalakutų", into["Kalakutiena"]),
+                ("(?i)kalakutienos", into["Kalakutiena"]),
+                ("(?i)antiena", into["Antiena"]),
+                ("(?i)antienos", into["Antienos"]),
+            });
+
+
+            this.addMapper("Virtos mėsos gaminiai", new()
+            {
+                ("(?i)virta dešra", into["Virtos dešros"]),
+                ("(?i)virtos dešros", into["Virtos dešros"]),
+            });
+
+            this.addMapper("Karštai rūkyti mėsos gaminiai", new()
+            {
+                ("(?i)karštai rūkyta", into["Karštai rūkyti gaminiai"]),
+                ("(?i)karštai rūkytas", into["Karštai rūkyti gaminiai"]),
+            });
+
+            this.addMapper("Vytintos mėsos produktai", new()
+            {
+                ("(?i)vytinta", into["Vytinti mėsos gaminiai"]),
+                ("(?i)vytintų", into["Vytinti mėsos gaminiai"]),
+                ("(?i)vytintas", into["Vytinti mėsos gaminiai"]),
+            });
+
+            this.addMapper("Šaltai rūkyti gaminiai", new()
+            {
+                ("(?i)šaltai rūkyta", into["Šaltai rūkyti gaminiai"]),
+                ("(?i)šaltai rūkytas", into["Šaltai rūkyti gaminiai"]),
+            });
+
+            this.addMapper("Dešrelės", new()
+            {
+                ("(?i)virtos dešrelės", into["Virtos dešrelės"]),
+                ("(?i)pieniškos dešrelės", into["Virtos dešrelės"]),
+                ("(?i)kabanossi", into["Virtos dešrelės"]),
+                ("(?i)kabanosy", into["Virtos dešrelės"]),
+                ("(?i) sardelės", into["Virtos dešrelės"]),
+                ("(?i)virtos pieniškos dešrelės", into["Virtos dešrelės"]),
+                ("(?i)kepamos dešrelės", into["Dešrelės griliui"]),
+                ("(?i)kepamosios vištienos dešrelės", into["Dešrelės griliui"]),
+                ("(?i)kepamosios kiaulienos dešrelės", into["Dešrelės griliui"]),
+            });
+
+            this.addMapper("Mėsos gaminiai", new()
+            {
+                ("(?i)paštetas", into["Paštetai ir kiti gaminiai"]),
+                ("(?i)drebučiai", into["Paštetai ir kiti gaminiai"]),
+                ("(?i)konservai", into["Mėsos ir paukštienos konservai"]),
+                ("(?i)kotletas", into["Virti, kepti ir sūdyti gaminiai"]),
+                ("(?i)plovas", into["Virti, kepti ir sūdyti gaminiai"]),
+                ("(?i)cepelinai", into["Virti, kepti ir sūdyti gaminiai"]),
+                ("(?i)balandėliai", into["Virti, kepti ir sūdyti gaminiai"]),
+                ("(?i)apkepas", into["Virti, kepti ir sūdyti gaminiai"]),
+                ("(?i)bulvių plokštainis", into["Virti, kepti ir sūdyti gaminiai"]),
+                ("(?i)netikras zuikis", into["Virti, kepti ir sūdyti gaminiai"]),
+                ("(?i)balandėliai", into["Virti, kepti ir sūdyti gaminiai"]),
+                ("(?i)kepsneliai", into["Virti, kepti ir sūdyti gaminiai"]),
+                ("(?i)žemaičių blynai", into["Virti, kepti ir sūdyti gaminiai"]),
+                ("(?i)šašlykas", into["Marinuota mėsa"]),
+                ("(?i)marinuota", into["Marinuota mėsa"]),
+                ("(?i)marinuotas", into["Marinuota mėsa"]),
+                ("(?i)marinuoti", into["Marinuota mėsa"]),
+                ("(?i)marinate", into["Marinuota mėsa"]),
+            });
+
+            this.addMapper("Šviežia mėsa", new()
+            {
+                ("(?i)kiauliena", into["Kiauliena"]),
+                ("(?i)kiaulių", into["Kiauliena"]),
+                ("(?i)kiaulienos", into["Kiauliena"]),
+                ("(?i)jautiena", into["Jautiena"]),
+                ("(?i)jaučių", into["Jautiena"]),
+                ("(?i)jautienos", into["Jautiena"]),
+                ("(?i)veršiena", into["Jautiena"]),
+                ("(?i)veršienos", into["Jautiena"]),
+                ("(?i)triušiena", into["Triušiena"]),
+                ("(?i)triušio", into["Triušiena"]),
+                ("(?i)triušienos", into["Triušienos"]),
+                ("(?i)avienos", into["Aviena"]),
+                ("(?i)aviena", into["Aviena"]),
+                ("(?i)avies", into["Aviena"]),
+            });
 
             this.addMapper("Pienas", new() {
 				("(?i)gėrimas", into["Pieno gėrimai"]),
