@@ -1,4 +1,4 @@
-﻿using System;
+﻿using System.Linq;
 using Models;
 using Common;
 using Microsoft.Extensions.Logging;
@@ -9,7 +9,7 @@ namespace CategoryMap.Implementations
 	{
 		public BarboraCategoryMap(ILogger log) : base(log) { }
 
-        public void Map(IList<Category> root_cat, IDictionary<string, Category> into)
+        public void Map(List<Category> root_cat, IDictionary<string, Category> into)
         {
             // NOTE: '.*' will match anything
             this.addMapper("Pieno gėrimai", new() { ("(?i).*", into["Pieno gėrimai"]) });
@@ -17,7 +17,7 @@ namespace CategoryMap.Implementations
 
             var items = root_cat
                 .GetWithoutChildren()
-                .ToDictionary(c => c.NameLT!, c => c);
+                .ToList();
 
             this.executeMapper(items);
         }

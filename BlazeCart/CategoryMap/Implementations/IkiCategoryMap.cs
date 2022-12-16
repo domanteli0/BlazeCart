@@ -10,7 +10,7 @@ namespace CategoryMap.Implementations
 	{
 		public IkiCategoryMap(ILogger logger) : base(logger) { }
 
-		public void Map(IList<Category> root_cat, IDictionary<string, Category> into)
+		public void Map(List<Category> root_cat, IDictionary<string, Category> into)
 		{
 			this.addMapper("Pienas", new() {
 				("(?i)gėrimas", into["Pieno gėrimai"]),
@@ -146,11 +146,11 @@ namespace CategoryMap.Implementations
             });
             this.addForUnmapped(into["UNMAPPED"]);
 
-			var items = root_cat
-				.GetWithoutChildren()
-				.ToDictionary(c => c.NameLT!, c => c);
+            var items = root_cat
+                .GetWithoutChildren()
+                .ToList();
 
-			this.executeMapper(items);
+            this.executeMapper(items);
 		}
 	}
 }

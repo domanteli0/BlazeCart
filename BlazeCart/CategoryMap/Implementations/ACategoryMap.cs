@@ -6,7 +6,6 @@ namespace CategoryMap.Implementations
 {
 	public abstract class ACategoryMap
 	{
-		public const string UNMAPPED_CAT_NAME = "UNMAPPED";
         private protected readonly ILogger _logger;
         public ACategoryMap(ILogger logger) { _logger = logger;  }
 
@@ -59,18 +58,21 @@ namespace CategoryMap.Implementations
         /// </summary>
         /// <param name="categories"> WARNING!: ASUMES THAT CATEGORIES DON'T CONTAIN CHILDREN</param>
         /// <exception cref="NotImplementedException"></exception>
-        private protected void executeMapper(IDictionary<string, Category> from)
+        // TODO: Figure out why unmapped isn't saved to the DB
+        private protected void executeMapper(List<Category> from)
 		{
             if (_unmappedCat is null) throw new Exception("No category for unmatched items, use `addForUnmapped` (if you did, make sure `unmapCat` is not null)");
 
 			foreach (var (catName, item_pattern_pairs) in _map_store)
 			{
 				var unmapped = new List<Item>();
-                foreach (var item in from[catName].Items)
+                foreach (
+                    var item in
+                    from.FindAll(c => c.NameLT!.Equals(catName)).SelectMany(c => c.Items))
                 {
                     foreach (var (item_pattern, to) in item_pattern_pairs)
                     {
-                        if (item.NameLT.ContainsPattern(item_pattern))
+                        if (item.NameLT.ToLower().ContainsPattern(item_pattern))
                         {
 							unmapped.Remove(item);
                             item.Category = to;
@@ -87,6 +89,10 @@ namespace CategoryMap.Implementations
 
 				foreach (var item in unmapped)
                 {
+                    _logger
+                        .LogInformation(
+                            $"Mapped {item.NameLT} wasn't mapped"
+                        );
                     item.Category = _unmappedCat;
                     _unmappedCat.Items.Add(item);
                 }

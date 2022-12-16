@@ -10,7 +10,7 @@ namespace CategoryMap.Implementations
         /// </summary>
         /// <param name="category"></param>
         /// <returns></returns>
-        public void Map(IList<Category> root_cats, IDictionary<string, Category> into);
+        public void Map(List<Category> root_cats, IDictionary<string, Category> into);
 
         public void Map(Category root_cat, IDictionary<string, Category> into)
         {
