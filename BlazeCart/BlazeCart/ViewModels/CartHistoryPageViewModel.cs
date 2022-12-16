@@ -90,5 +90,10 @@ namespace BlazeCart.ViewModels
             }
             
         }
+        [RelayCommand]
+        async void Back(object obj)
+        {
+            await Shell.Current.GoToAsync("..");
+        }
     }
 }
