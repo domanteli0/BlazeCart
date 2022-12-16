@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8"?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="BlazeCart.Views.WelcomePage1"
@@ -10,43 +10,37 @@
              xmlns:skia="clr-namespace:SkiaSharp.Extended.UI.Controls;assembly=SkiaSharp.Extended.UI"
              BackgroundColor="{StaticResource PageBackgroundColor}">
     <ContentPage.Content>
-        <StackLayout VerticalOptions="Center" HorizontalOptions="Center">
-           
-            <skia:SKLottieView
-                Source="animation1.json"
-                HorizontalOptions="Center" 
-                RepeatCount="-1"
-	            RepeatMode="Restart"
-                HeightRequest="275"
-                WidthRequest="275"
-                MaximumHeightRequest="300"
-                Margin="20"/>
-            <Label
-                HorizontalTextAlignment="Center"
-                Margin="5, 0, 5, 10"
-                Style="{StaticResource WelcomePageHeadingPoppins}"
-                Text="Sudaryk pirkinių krepšelį"
-                TextColor="{StaticResource TextColorPrimary}"></Label>
-            <Label
-                HorizontalTextAlignment="Center"
-                Margin="0, 0, 0, 10"
-                Style="{StaticResource WelcomePageSubHeadingRoboto}"
-                Text="Pasirink norimas prekes iš prekių katalogo"
-                TextColor="{StaticResource TextColorSecondary}"></Label>
-            <ImageButton
-                Aspect="AspectFit"
-                Clicked="ImageButton_OnClicked"
-                Source="welcome_button.png"
-                HorizontalOptions="Center"></ImageButton>
-            <Button
-                Text="Praleisti pristatymą"
-                Clicked="Button_OnClicked"
-                Style="{StaticResource SecondaryButton}"
-                VerticalOptions="End"></Button>
-            <Image
-                Aspect="AspectFit"
-                Source="selection_dots1.png"
-                HorizontalOptions="Center"></Image>
+        <StackLayout VerticalOptions="Center"
+                     HorizontalOptions="Center">
+            <skia:SKLottieView Source="animation1.json"
+                               HorizontalOptions="Center"
+                               RepeatCount="-1"
+                               RepeatMode="Restart"
+                               HeightRequest="275"
+                               WidthRequest="275"
+                               MaximumHeightRequest="300"
+                               Margin="20" />
+            <Label HorizontalTextAlignment="Center"
+                   Margin="5, 0, 5, 10"
+                   Style="{StaticResource WelcomePageHeadingPoppins}"
+                   Text="Sudaryk pirkinių krepšelį"
+                   TextColor="{StaticResource TextColorPrimary}" />
+            <Label HorizontalTextAlignment="Center"
+                   Margin="0, 0, 0, 10"
+                   Style="{StaticResource WelcomePageSubHeadingRoboto}"
+                   Text="Pasirink norimas prekes iš prekių katalogo"
+                   TextColor="{StaticResource TextColorSecondary}" />
+            <ImageButton Aspect="AspectFit"
+                         Clicked="ImageButton_OnClicked"
+                         Source="welcome_button.png"
+                         HorizontalOptions="Center" />
+            <Button Text="Praleisti pristatymą"
+                    Clicked="Button_OnClicked"
+                    Style="{StaticResource SecondaryButton}"
+                    VerticalOptions="End" />
+            <Image Aspect="AspectFit"
+                   Source="selection_dots1.png"
+                   HorizontalOptions="Center" />
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

@@ -2,13 +2,6 @@
 using Microsoft.EntityFrameworkCore;
 using Models;
 using Api.Services;
-using System.Drawing;
-
-using System;
-using System.Xml.Linq;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
-using Microsoft.EntityFrameworkCore.Query;
 namespace Api.Repositories
 {
     public class ItemRepository : IItemRepository

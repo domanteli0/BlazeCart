@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8"?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:viewmodel="clr-namespace:BlazeCart.ViewModels"
@@ -8,37 +8,31 @@
              BackgroundColor="{StaticResource PageBackgroundColor}"
              Title="ErrorPage"
              xmlns:skia="clr-namespace:SkiaSharp.Extended.UI.Controls;assembly=SkiaSharp.Extended.UI">
-
     <ContentPage.Content>
-        <StackLayout VerticalOptions="Center" HorizontalOptions="Center">
-            <skia:SKLottieView
-                Source="errorAnimation.json"
-                HorizontalOptions="Center" 
-                RepeatCount="-1"
-	            RepeatMode="Restart"
-                HeightRequest="275"
-                WidthRequest="275"
-                MaximumHeightRequest="300"
-                Margin="20"/>
-            <Label
-                HorizontalTextAlignment="Center"
-                Margin="5, 0, 5, 10"
-                Style="{StaticResource WelcomePageHeadingPoppins}"
-                Text="Klaida!"
-                TextColor="{StaticResource TextColorPrimary}"></Label>
-            <Label
-                HorizontalTextAlignment="Center"
-                Margin="0, 0, 0, 40"
-                Style="{StaticResource WelcomePageSubHeadingRoboto}"
-                Text="Puslapis nerastas"
-                TextColor="{StaticResource TextColorSecondary}"></Label>
-            <ImageButton
-                Aspect="AspectFit"
-                Command="{Binding ReturnHomeCommand}"
-                Source="error_button.png"
-                HorizontalOptions="Center"></ImageButton>
-            
+        <StackLayout VerticalOptions="Center"
+                     HorizontalOptions="Center">
+            <skia:SKLottieView Source="errorAnimation.json"
+                               HorizontalOptions="Center"
+                               RepeatCount="-1"
+                               RepeatMode="Restart"
+                               HeightRequest="275"
+                               WidthRequest="275"
+                               MaximumHeightRequest="300"
+                               Margin="20" />
+            <Label HorizontalTextAlignment="Center"
+                   Margin="5, 0, 5, 10"
+                   Style="{StaticResource WelcomePageHeadingPoppins}"
+                   Text="Klaida!"
+                   TextColor="{StaticResource TextColorPrimary}" />
+            <Label HorizontalTextAlignment="Center"
+                   Margin="0, 0, 0, 40"
+                   Style="{StaticResource WelcomePageSubHeadingRoboto}"
+                   Text="Puslapis nerastas"
+                   TextColor="{StaticResource TextColorSecondary}" />
+            <ImageButton Aspect="AspectFit"
+                         Command="{Binding ReturnHomeCommand}"
+                         Source="error_button.png"
+                         HorizontalOptions="Center" />
         </StackLayout>
     </ContentPage.Content>
-
 </ContentPage>

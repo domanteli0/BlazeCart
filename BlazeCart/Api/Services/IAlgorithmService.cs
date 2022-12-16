@@ -4,7 +4,6 @@ namespace Api.Services
 {
     public interface IAlgorithmService
     {
-       //Dictionary<Item, string> GetItemDictionary(List<Item> _itemList);
         string refactorItemName(string? name);
         Item GetCheapestItemAlgorithm(Item comparedItem, List<Item> itemList);
 
@@ -20,12 +19,8 @@ namespace Api.Services
         string ThrowOutAllNumbers(string name);
 
         int returnFirstWhitespace(string substring);
-        //Boolean IsUnique(string name);
-
-        //HashSet<string> GetSetOfUnique(Dictionary<Item, string> refactoredD);
-
+      
         int CheckIfContainsNumber(string name);
 
-        //Dictionary<Item, string> RefactorDictionaryToUnique(Dictionary<Item, string> refactoredD, HashSet<String> hs);
     }
 }

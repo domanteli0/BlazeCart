@@ -1,14 +1,6 @@
-﻿using System.Collections.ObjectModel;
-using System.ComponentModel.DataAnnotations;
-using System.Runtime.InteropServices;
-using Api.Repositories;
-using DB;
+﻿using Api.Repositories;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.OpenApi.Validations;
 using Models;
-using Scraper;
-
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace Api.Controllers
 {

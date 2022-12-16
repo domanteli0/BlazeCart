@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8"?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:viewmodel="clr-namespace:BlazeCart.ViewModels"
@@ -31,118 +31,99 @@
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
-            <Image
-            Grid.Row="0"
-            Grid.RowSpan="5"
-            Grid.Column="0"
-            Grid.ColumnSpan="6"
-            HeightRequest="400"
-            WidthRequest="400"
-            Source="{Binding Image}"
-            Aspect="AspectFit"/>
-            <Frame
-            Grid.Row="4"
-            Grid.RowSpan="7"
-            Grid.Column="0"
-            Grid.ColumnSpan="6"
-            Padding="0"
-            BackgroundColor="{StaticResource PageBackgroundColor}"
-            CornerRadius="20">
+            <Image Grid.Row="0"
+                   Grid.RowSpan="5"
+                   Grid.Column="0"
+                   Grid.ColumnSpan="6"
+                   HeightRequest="400"
+                   WidthRequest="400"
+                   Source="{Binding Image}"
+                   Aspect="AspectFit" />
+            <Frame Grid.Row="4"
+                   Grid.RowSpan="7"
+                   Grid.Column="0"
+                   Grid.ColumnSpan="6"
+                   Padding="0"
+                   BackgroundColor="{StaticResource PageBackgroundColor}"
+                   CornerRadius="20">
                 <VerticalStackLayout Margin="10, 40, 10, 10">
-                    <Label
-                    HorizontalTextAlignment="Start"
-                    Text="{Binding Name}"
-                    Style="{StaticResource SingleItemTitle}"></Label>
-
+                    <Label HorizontalTextAlignment="Start"
+                           Text="{Binding Name}"
+                           Style="{StaticResource SingleItemTitle}" />
                     <HorizontalStackLayout>
-                        <Label
-                        HorizontalTextAlignment="Start"
-                        Margin="0, 0, 2, 0"
-                        Style="{StaticResource ItemNumberPricePoppins}"
-                        TextColor="{StaticResource PrimaryTextColor}"
-                        FontAttributes="Bold"
-                        FontSize="25"
-                        Text ="{Binding Price}"></Label>
-                        <Label
-                        HorizontalTextAlignment="Start"
-                        Margin="0, 0, 2, 0"
-                        Style="{StaticResource SingleItemPriceQuantity}"
-                        FontSize="25"
-                        FontFamily="Poppins"
-                        Text="€"></Label>
-                        <Label
-                        HorizontalTextAlignment="Start"
-                        Margin="0, 0, 2, 0"
-                        Style="{StaticResource SingleItemPriceQuantity}"
-                        FontSize="25"
-                        FontFamily="Poppins"
-                        Text="/vnt"></Label>
+                        <Label HorizontalTextAlignment="Start"
+                               Margin="0, 0, 2, 0"
+                               Style="{StaticResource ItemNumberPricePoppins}"
+                               TextColor="{StaticResource PrimaryTextColor}"
+                               FontAttributes="Bold"
+                               FontSize="25"
+                               Text="{Binding Price}" />
+                        <Label HorizontalTextAlignment="Start"
+                               Margin="0, 0, 2, 0"
+                               Style="{StaticResource SingleItemPriceQuantity}"
+                               FontSize="25"
+                               FontFamily="Poppins"
+                               Text="€" />
+                        <Label HorizontalTextAlignment="Start"
+                               Margin="0, 0, 2, 0"
+                               Style="{StaticResource SingleItemPriceQuantity}"
+                               FontSize="25"
+                               FontFamily="Poppins"
+                               Text="/vnt" />
                     </HorizontalStackLayout>
                     <HorizontalStackLayout>
-                        <Label
-                        HorizontalTextAlignment="Start"
-                        Margin="0, 0, 2, 0"
-                        Style="{StaticResource SingleItemAdditionalSizing}"
-                        Text="~"></Label>
-                        <Label
-                        HorizontalTextAlignment="Start"
-                        Margin="0, 0, 2, 0"
-                        Style="{StaticResource SingleItemAdditionalSizing}"
-                        Text="150"></Label>
-                        <Label
-                        HorizontalTextAlignment="Start"
-                        Margin="0, 0, 2, 0"
-                        Style="{StaticResource SingleItemAdditionalSizing}"
-                        Text="g"></Label>
-                        <Label
-                        HorizontalTextAlignment="Start"
-                        Margin="0, 0, 2, 0"
-                        Style="{StaticResource SingleItemAdditionalSizing}"
-                        Text="/"></Label>
-                        <Label
-                        HorizontalTextAlignment="Start"
-                        Margin="0, 0, 2, 0"
-                        Style="{StaticResource SingleItemAdditionalSizing}"
-                        Text="vnt"></Label>
+                        <Label HorizontalTextAlignment="Start"
+                               Margin="0, 0, 2, 0"
+                               Style="{StaticResource SingleItemAdditionalSizing}"
+                               Text="~" />
+                        <Label HorizontalTextAlignment="Start"
+                               Margin="0, 0, 2, 0"
+                               Style="{StaticResource SingleItemAdditionalSizing}"
+                               Text="150" />
+                        <Label HorizontalTextAlignment="Start"
+                               Margin="0, 0, 2, 0"
+                               Style="{StaticResource SingleItemAdditionalSizing}"
+                               Text="g" />
+                        <Label HorizontalTextAlignment="Start"
+                               Margin="0, 0, 2, 0"
+                               Style="{StaticResource SingleItemAdditionalSizing}"
+                               Text="/" />
+                        <Label HorizontalTextAlignment="Start"
+                               Margin="0, 0, 2, 0"
+                               Style="{StaticResource SingleItemAdditionalSizing}"
+                               Text="vnt" />
                     </HorizontalStackLayout>
-                    <Label
-                    HorizontalTextAlignment="Start"
-                    Margin="0, 0, 2, 0"
-                    Style="{StaticResource SingleItemDescription}"
-                    Text="{Binding Description}"></Label>
-                    <Label
-                    HorizontalTextAlignment="Start"
-                    Margin="0, 0, 2, 0"
-                    Style="{StaticResource SingleItemDescription}"
-                    Text="{Binding Cat}"></Label>
-                    <Label
-                    HorizontalTextAlignment="Start"
-                    Margin="0, 0, 2, 0"
-                    Style="{StaticResource SingleItemDescription}"
-                    Text="{Binding Merch}"></Label>
-                    <HorizontalStackLayout 
-                    Margin ="0, 180, 0, 0"
-                    VerticalOptions="End"
-                    HorizontalOptions="Center">
-                        <ImageButton
-                        Margin="0, 0, 10, 0"
-                        Source="heart_button_item.png"
-                        Command="{Binding AddItemToFavoritesCommand }"
-                        VerticalOptions="End"
-                        HeightRequest="50"
-                        HorizontalOptions="Start"/>
-
-                        <ImageButton
-                        Margin="0, 0, 10, 0"
-                        Source="add_to_cart_button.png"
-                        Command ="{Binding CartCommand}"
-                        HeightRequest="50"
-                        WidthRequest="250"
-                        VerticalOptions="End"
-                        HorizontalOptions="Start"/>
+                    <Label HorizontalTextAlignment="Start"
+                           Margin="0, 0, 2, 0"
+                           Style="{StaticResource SingleItemDescription}"
+                           Text="{Binding Description}" />
+                    <Label HorizontalTextAlignment="Start"
+                           Margin="0, 0, 2, 0"
+                           Style="{StaticResource SingleItemDescription}"
+                           Text="{Binding Cat}" />
+                    <Label HorizontalTextAlignment="Start"
+                           Margin="0, 0, 2, 0"
+                           Style="{StaticResource SingleItemDescription}"
+                           Text="{Binding Merch}" />
+                    <HorizontalStackLayout Margin="0, 180, 0, 0"
+                                           VerticalOptions="End"
+                                           HorizontalOptions="Center">
+                        <ImageButton Margin="0, 0, 10, 0"
+                                     Source="heart_button_item.png"
+                                     Command="{Binding AddItemToFavoritesCommand }"
+                                     VerticalOptions="End"
+                                     HeightRequest="50"
+                                     HorizontalOptions="Start" />
+                        <ImageButton Margin="0, 0, 10, 0"
+                                     Source="add_to_cart_button.png"
+                                     Command="{Binding CartCommand}"
+                                     HeightRequest="50"
+                                     WidthRequest="250"
+                                     VerticalOptions="End"
+                                     HorizontalOptions="Start" />
                     </HorizontalStackLayout>
                 </VerticalStackLayout>
             </Frame>
         </Grid>
-        </ScrollView>
+    </ScrollView>
 </ContentPage>

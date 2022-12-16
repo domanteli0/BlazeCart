@@ -12,8 +12,7 @@
     <ScrollView>
         <StackLayout>
             <Frame HeightRequest="90"
-                   Padding="10"
-                   >
+                   Padding="10">
                 <HorizontalStackLayout HorizontalOptions="Center">
                     <Label Text="Krepšelis"
                            Margin="50, 0, 0, 0"
@@ -34,15 +33,11 @@
                 <dxcv:DXCollectionView.ItemTemplate>
                     <DataTemplate x:DataType="model:Item">
                         <Border Padding="5"
-                                BackgroundColor="{StaticResource White}"   
+                                BackgroundColor="{StaticResource White}"
                                 Margin="10, 5, 10, 5">
                             <Border.StrokeShape>
-                                <RoundRectangle CornerRadius="20, 20, 20, 20">
-                                    
-                                </RoundRectangle>
+                                <RoundRectangle CornerRadius="20, 20, 20, 20" />
                             </Border.StrokeShape>
-                            
-                            
                             <Grid x:Name="ItemCard"
                                   MaximumHeightRequest="220"
                                   BackgroundColor="White"
@@ -92,8 +87,9 @@
                                            Style="{StaticResource ItemPricePoppins}"
                                            Text="€" />
                                 </HorizontalStackLayout>
-                                <HorizontalStackLayout Grid.Column ="1"
-                                                       Grid.Row ="2" Margin="0, 4, 0, 4">
+                                <HorizontalStackLayout Grid.Column="1"
+                                                       Grid.Row="2"
+                                                       Margin="0, 4, 0, 4">
                                     <Label HorizontalTextAlignment="Start"
                                            Margin="0, 0, 2, 0"
                                            Style="{StaticResource ItemNumberPricePoppins}"
@@ -121,8 +117,7 @@
                                                  CommandParameter="{Binding .}"
                                                  VerticalOptions="Center"
                                                  HorizontalOptions="Center"
-                                                 HeightRequest="40">
-                                    </ImageButton>
+                                                 HeightRequest="40" />
                                     <Label HorizontalTextAlignment="Start"
                                            VerticalOptions="Center"
                                            Style="{StaticResource ItemPricePoppins}"
@@ -133,9 +128,7 @@
                                                  CommandParameter="{Binding .}"
                                                  VerticalOptions="Center"
                                                  HorizontalOptions="Center"
-                                                 HeightRequest="40">
-                                    </ImageButton>
-
+                                                 HeightRequest="40" />
                                 </HorizontalStackLayout>
                                 <HorizontalStackLayout Grid.Column="1"
                                                        Grid.Row="4"
@@ -147,9 +140,7 @@
                                                  Source="bin_button"
                                                  HorizontalOptions="Start" />
                                 </HorizontalStackLayout>
-                               
                             </Grid>
-                        
                         </Border>
                     </DataTemplate>
                 </dxcv:DXCollectionView.ItemTemplate>
