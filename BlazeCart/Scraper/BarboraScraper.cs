@@ -117,7 +117,8 @@ namespace Scraper
                     {
                         InternalID = catHtml.GetAttributeValue("data-b-cat-id"),
                         NameLT = catHtml.CssSelect("a").First().InnerText.Trim(),
-                        Uri = new Uri(url)
+                        Uri = new Uri(url),
+                        Merch = _merch,
                     };
 
                     using (var request = new HttpRequestMessage(new HttpMethod("GET"), url))
@@ -138,8 +139,8 @@ namespace Scraper
                         Category catChild = new Category()
                         {
                             NameLT = i.CssSelect("a.b-single-category--child").First().InnerText.Trim(),
-                            Uri = new Uri("https://barbora.lt/" + i.CssSelect("a.b-single-category--child").First().GetAttributeValue("href"))
-
+                            Uri = new Uri("https://barbora.lt/" + i.CssSelect("a.b-single-category--child").First().GetAttributeValue("href")),
+                            Merch = _merch,
                         };
                         cat.SubCategories.Add(catChild);
 
@@ -150,6 +151,7 @@ namespace Scraper
                             var catGrandChild = new Category() {
                                 NameLT = ii.InnerText.Trim(),
                                 Uri = new Uri("https://barbora.lt" + ii.GetAttributeValue("href")),
+                                Merch = _merch,
                             };
 
                             catChild.SubCategories.Add(catGrandChild);
@@ -206,7 +208,8 @@ namespace Scraper
                     Image = itemJSON["big_image"]!.ToObject<Uri>()!,
                     MeasureUnit = Item.ParseUnitOfMeasurement(itemJSON["comparative_unit"]!.ToString()),
                     PricePerUnitOfMeasure =
-                        (int)(itemJSON["comparative_unit_price"]!.ToObject<float>() * 100)
+                        (int)(itemJSON["comparative_unit_price"]!.ToObject<float>() * 100),
+                    Merch = _merch,
                 };
 
                 yield return item;
