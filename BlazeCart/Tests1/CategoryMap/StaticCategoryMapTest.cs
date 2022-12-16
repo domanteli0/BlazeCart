@@ -1,6 +1,6 @@
-﻿using System;
-using CategoryMap;
-namespace Tests.CategoryMap
+﻿using CategoryMap;
+
+namespace Tests1.CategoryMap
 {
 	public class StaticCategoryMapTest
 	{
@@ -14,6 +14,7 @@ namespace Tests.CategoryMap
 			// If it doesn't throw an Exception it passes.
 			var test = StaticCategoryTree.GetCategoryDict();
 
+			Assert.True(true);
         }
 	}
 }

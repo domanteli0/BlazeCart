@@ -9,7 +9,7 @@ namespace CategoryMap.Implementations
         private protected readonly ILogger _logger;
         public ACategoryMap(ILogger logger) { _logger = logger;  }
 
-		private List<(string, List<(string, Category)>)> _map_store = new();
+		public List<(string, List<(string, Category)>)> _map_store = new();
         private Category _unmappedCat = null;
 
         public void map_category(Category from, Category to)

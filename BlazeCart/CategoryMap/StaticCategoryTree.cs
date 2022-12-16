@@ -215,7 +215,7 @@ namespace CategoryMap
    //         {"Riešutų mišiniai", new() { NameLT = "Riešutų mišiniai"} },
    //         {"Riešutų ir džiovintų vaisių, uogų mišiniai", new() { NameLT = "Riešutų ir džiovintų vaisių, uogų mišiniai"} },
    //         {"Džiovinti vaisiai ir uogos", new() { NameLT = "Džiovinti vaisiai ir uogos"} },
-   //         {"Sėklos", new() { NameLT = "Sėklos"} },
+            {"Sėklos", new() { NameLT = "Sėklos"} },
    //         {"Džiovintos daržovės ir grybai", new() { NameLT = "Džiovintos daržovės ir grybai"} },
    //         {"Šaltyje džiovinti vaisiai, uogos, daržovės", new() { NameLT = "Šaltyje džiovinti vaisiai, uogos, daržovės"} },
    //         {"Razinos ir spanguolės", new() { NameLT = "Razinos ir spanguolės"} },

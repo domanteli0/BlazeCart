@@ -13,6 +13,7 @@
     <EmbeddedResource Remove="Api\Repositories\**" />
     <None Remove="Api\Repositories\**" />
     <None Remove="CategoryMap\" />
+    <None Remove="CategoryMap\Implementations\" />
   </ItemGroup>
 
   <ItemGroup>
@@ -44,6 +45,7 @@
     <Folder Include="Scraper\" />
     <Folder Include="Common\" />
     <Folder Include="CategoryMap\" />
+    <Folder Include="CategoryMap\Implementations\" />
   </ItemGroup>
 
   <ItemGroup>
