@@ -115,7 +115,7 @@ namespace CategoryMap.Implementations
             this.addMapper("Kiti miltai", new() { ("(?i).*", into["Kiti miltai"]) });
             this.addMapper("Pilno grūdo miltai", new() { ("(?i).*", into["Pilno grūdo miltai"]) });
             this.addMapper("Kvietiniai miltai", new() { ("(?i).*", into["Kvietiniai miltai"]) });
-            this.addMapper("Kitos krupos", new() { ("(?i).*", into["Kitos krupos"]) });
+            this.addMapper("Kitos kruopos", new() { ("(?i).*", into["Kitos kruopos"]) });
             this.addMapper("Manų kruopos", new() { ("(?i).*", into["Manų kruopos"]) });
             this.addMapper("Perlinės kruopos", new() { ("(?i).*", into["Perlinės kruopos"]) });
             this.addMapper("Kvietinės ir miežinės kruopos", new() { ("(?i).*", into["Kvietinės ir miežinės kruopos"]) });

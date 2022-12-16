@@ -28,6 +28,10 @@ Steps:
 
 Migrations are needed then properties of classes `Entity`, `Category`, `Item` have been changed, added or removed.
 
+### Tests
+
+Run `dotnet test` to test.
+
 ## Troubleshooting
 
 If you have run into problems make consult with this checklist:

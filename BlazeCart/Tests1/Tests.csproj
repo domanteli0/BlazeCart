@@ -12,6 +12,7 @@
     <Compile Remove="Api\Repositories\**" />
     <EmbeddedResource Remove="Api\Repositories\**" />
     <None Remove="Api\Repositories\**" />
+    <None Remove="CategoryMap\" />
   </ItemGroup>
 
   <ItemGroup>
@@ -30,16 +31,19 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Api\Api.csproj" />
-    <ProjectReference Include="..\BlazeCart\BlazeCart.csproj" />
     <ProjectReference Include="..\Models\Models.csproj" />
     <ProjectReference Include="..\Scraper\Scraper.csproj" />
     <ProjectReference Include="..\Common\Common.csproj" />
+    <ProjectReference Include="..\CategoryMap\CategoryMap.csproj" />
+    <ProjectReference Include="..\DB\DB.csproj" />
+    <ProjectReference Include="..\ScraperFunction\ScraperFunction.csproj" />
+    <ProjectReference Include="..\Api\Api.csproj" />
   </ItemGroup>
 
   <ItemGroup>
     <Folder Include="Scraper\" />
     <Folder Include="Common\" />
+    <Folder Include="CategoryMap\" />
   </ItemGroup>
 
   <ItemGroup>
