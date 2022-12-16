@@ -51,19 +51,42 @@ public class ItemService
     }
     public async Task<ObservableCollection<Item>> GetCheapestItems(ObservableCollection<Item> items)
     {
-        ObservableCollection<Item> cheapestItems = new ObservableCollection<Item>();
-        foreach(var item in items)
+        ObservableCollection<Item> cheapestItemsIKI = new ObservableCollection<Item>();
+        ObservableCollection<Item> cheapestItemsBarbora = new ObservableCollection<Item>();
+        double totalPriceIKI = 0;
+       // double totalPriceBarbora = 0;
+        foreach (var item in items)
         {
             string name = item.NameLT;
             string? category = item.Category;
             double price = item.Price;
+            int comparedMerch = item.Merch;
             double? amount = item.Ammount;
-            
-            var json = await _client.GetStringAsync($"api/Item/{name}/{category}/{price}/{amount}");
-            
-            cheapestItems.Add((JsonConvert.DeserializeObject<Item>(json.ToString())));
+            var jsonIKI = await _client.GetStringAsync($"api/Item/{name}/{category}/{price}/{amount}/0/{comparedMerch}");
+            //  var jsonBarbora = await _client.GetStringAsync($"api/Item/{name}/{category}/{price}/{amount}/1/{comparedMerch}");
+            var itemIKI = JsonConvert.DeserializeObject<Item>(jsonIKI.ToString());
+           // var itemBarbora = JsonConvert.DeserializeObject<Item>(jsonBarbora.ToString());
+            itemIKI.Quantity = item.Quantity;
+           // itemBarbora.Quantity = item.Quantity;
+            cheapestItemsIKI.Add(itemIKI);
+           // cheapestItemsBarbora.Add(itemBarbora);
+
         }
-        return cheapestItems;
+
+        foreach(var item in cheapestItemsIKI)
+        {
+            totalPriceIKI += item.Price * item.Quantity;
+        }
+        /*
+        foreach(var item in cheapestItemsBarbora)
+        {
+            totalPriceBarbora += item.Price * item.Quantity;
+        }
+        if (totalPriceBarbora < totalPriceIKI)
+            return cheapestItemsBarbora;
+        else
+        */
+            return cheapestItemsIKI;
     }
     public async Task<ObservableCollection<Item>> GetItems(string fileName)
     {
@@ -92,7 +115,7 @@ public class ItemService
     }
     public void AddToCart(Item item)
     {
-        var query = CartItems.Where(x => x.NameLT == item.NameLT && x.Store == item.Store);
+        var query = CartItems.Where(x => x.NameLT == item.NameLT && x.Merch == item.Merch);
         var result = query.ToList();
         if (result.Count == 0)
         {

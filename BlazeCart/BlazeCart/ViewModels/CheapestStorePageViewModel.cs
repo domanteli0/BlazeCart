@@ -38,7 +38,7 @@ namespace BlazeCart.ViewModels
             foreach (var item in e.Items)
             {
                 CartItems.Add(item);
-                totalPrice = (item.Price * item.Quantity) + totalPrice;
+               
             }
             
         }
@@ -58,37 +58,13 @@ namespace BlazeCart.ViewModels
                 String coordinates = await GetCachedLocation();
                 if (coordinates != "none")
                 {
-                  
                     await Launcher.OpenAsync($"https://www.google.com/maps/dir/?api=1&origin={coordinates}&destination={storeName}+Parduotuve");
-                    // await Shell.Current.GoToAsync($"{nameof(GoogleMaps)}?Coordinates={coordinates}");
-          
-                    /*
-                    await Shell.Current.GoToAsync(
-                    $"{nameof(GoogleMaps)}", new Dictionary<string, object>
-                    {
-                        {"Coordinates", coordinates},
-                        {"Url", url }
-                    });
-                    */
-                 
                 }
                 else {
                     coordinates = await GetCurrentLocation();
                     if (coordinates != "none")
-                    {
-                        // await Shell.Current.GoToAsync($"{nameof(GoogleMaps)}?Coordinates={coordinates}");
-                      //  Uri url = new Uri($"https://www.google.com/maps/dir/?api=1&origin=55.701206,21.151459&destination=Iki+Parduotuve");
+                    { 
                         await Launcher.OpenAsync($"https://www.google.com/maps/dir/?api=1&origin={coordinates}&destination={storeName}+Parduotuve");
-                        //string url = $"https://www.google.com/maps/dir/?api=1&origin=55.701206,21.151459&destination=Iki+Parduotuve";
-                        /*
-                        await Shell.Current.GoToAsync(
-                        $"{nameof(GoogleMaps)}", new Dictionary<string, object>
-                        {
-                            {"Coordinates", coordinates},
-                            {"Url",  url}
-                        });
-                        */
-                        
                     }
                     else
                     {

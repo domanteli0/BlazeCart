@@ -5,6 +5,7 @@ using BlazeCart.Services;
 using BlazeCart.Views;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using MonkeyCache.FileStore;
 
 namespace BlazeCart.ViewModels;
 
@@ -29,7 +30,8 @@ public partial class CategoryViewModel : BaseViewModel
     {
         _categoryService = categoryService;
         _itemService = itemService;
-        
+     //   Barrel.Current.EmptyAll();
+
     }
 
     [RelayCommand]

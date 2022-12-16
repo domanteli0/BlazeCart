@@ -14,7 +14,7 @@ namespace Api.Repositories
 
         Task<IEnumerable<String>> GetItemsCat(int index, int count);
 
-        Task<Item> GetCheapestItem(string name, string category, double price, double amount);
+        Task<Item> GetCheapestItem(string name, string category, double price, double amount, int merch, int comparedMerch);
 
     }
 }

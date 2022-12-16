@@ -34,7 +34,7 @@ namespace Api.Services
             List<Item> potentialCollection = new();
             foreach (var item in itemList)
             {
-                //USING CONTAINTS() METHOD INSTEAD OF "==", THERE IS NO NEED OF REFACTORING ALL CATEGORIES AND USING DICTIONARIES
+      
                 if (item.NameLT.ToLower().Contains(comparedItem.NameLT.ToLower()))
                 {
                     potentialCollection.Add(item);
@@ -44,6 +44,10 @@ namespace Api.Services
             if (potentialCollection.Count == 1)
             {
                 return potentialCollection[0];
+            }
+            if(potentialCollection.Count == 0)
+            {
+                return comparedItem;
             }
             else
             {

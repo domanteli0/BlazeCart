@@ -8,6 +8,7 @@
              Title="CheapestStorePage"
              Shell.NavBarIsVisible="False"
              xmlns:models="clr-namespace:BlazeCart.Models"
+             xmlns:dxcv="clr-namespace:DevExpress.Maui.CollectionView;assembly=DevExpress.Maui.CollectionView"
              BackgroundColor="{StaticResource PageBackgroundColor}">
     <ScrollView>
         <Grid>
@@ -153,73 +154,90 @@
                 </StackLayout>
 
 
-                <CollectionView x:Name="FavoriteItemSearchResults"
-                                    ItemsSource="{Binding CartItems}">
-                    <CollectionView.ItemTemplate>
+                <dxcv:DXCollectionView x:Name="searchResults"
+                                    ItemsSource="{Binding CartItems}"
+                                    
+                           >
+                    <dxcv:DXCollectionView.ItemTemplate>
                         <DataTemplate x:DataType="models:Item">
-                            <Frame HeightRequest="200"
-                                       WidthRequest="350"
-                                       Padding="3"
-                                       Margin="5, 10, 5, 10"
-                                       CornerRadius="10">
-                                    <Frame.Shadow>
-                                        <Shadow Brush="Black"
-                                                Offset="10,20"
-                                                Radius="40"
-                                                Opacity="15" />
-                                    </Frame.Shadow>
-                                    <Grid>
-                                        <Grid.RowDefinitions>
-                                            <RowDefinition Height="*" />
-                                            <RowDefinition Height="*" />
-                                            <RowDefinition Height="*" />
-                                        </Grid.RowDefinitions>
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="3*" />
-                                            <ColumnDefinition Width="4*" />
-                                            <ColumnDefinition Width="2*" />
-                                        </Grid.ColumnDefinitions>
-                                        <Image Source="{Binding Image}"
+                            <Border Padding="5"
+                                BackgroundColor="{StaticResource White}"   
+                                Margin="10, 5, 10, 5">
+                                <Border.StrokeShape>
+                                    <RoundRectangle CornerRadius="20, 20, 20, 20">
+
+                                    </RoundRectangle>
+                                </Border.StrokeShape>
+                                <Grid MaximumHeightRequest="230"
+                                      Margin="10">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="1*" />
+                                        <ColumnDefinition Width="1*" />
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="auto" />
+                                        <RowDefinition Height="2*" />
+                                        <RowDefinition Height="3*" />
+                                        <RowDefinition Height="4*" />
+                                    </Grid.RowDefinitions>
+                                    <Image Grid.Column="0"
+                                               Grid.Row="0"
                                                Grid.RowSpan="3"
-                                               HeightRequest="106"
-                                               WidthRequest="106" />
-                                        <VerticalStackLayout Grid.Column="1"
-                                                             Grid.ColumnSpan="2"
-                                                             Grid.RowSpan="3">
-                                            <Label HorizontalTextAlignment="Start"
-                                                   VerticalTextAlignment="Start"
-                                                   Margin="5, 3, 0, 0"
-                                                   Style="{StaticResource CheapestStoreNamePoppins}"
-                                                   FontSize="18"
-                                                   Text="{Binding NameLT}"
-                                                   TextColor="{StaticResource PrimaryTextColor}"
-                                                   VerticalOptions="Center" />
-                                            <Label HorizontalTextAlignment="Start"
-                                                   VerticalTextAlignment="Start"
-                                                   Margin="5, 3, 0, 0"
-                                                   FontSize="18"
-                                                   Text="{Binding Store}"
-                                                   Style="{StaticResource FavoriteItemStore}"
-                                                   VerticalOptions="Center" />
-                                            <HorizontalStackLayout Spacing="100"
-                                                                   Margin="0, 10, 0, 0">
-                                                <ImageButton x:Name="heartButton"
-                                                             Source="fav_icon.png"
-                                                             HorizontalOptions="End"
-                                                             Margin="5, 5, 0, 0"/>
-                                                <ImageButton HorizontalOptions="End"
-                                                             
-                                                             Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:FavoriteItemViewModel}}, Path=CartCommand}"
-                                                             CommandParameter="{Binding .}"
-                                                             Source="cart_button_square.png"
-                                                             Margin="5, 5, 0, 0" />
-                                            </HorizontalStackLayout>
-                                        </VerticalStackLayout>
-                                    </Grid>
-                                </Frame>
+                                               Aspect="AspectFill"
+                                               Source="{Binding Image}"
+                                               Margin="20"
+                                               HorizontalOptions="Start"
+                                               VerticalOptions="Start" />
+                                    <Label Grid.Column="1"
+                                               Grid.Row="0"
+                                               HorizontalTextAlignment="Start"
+                                               Margin="0, 0, 15, 0"
+                                               Style="{StaticResource ItemNamePoppins}"
+                                               Text="{Binding NameLT}"
+                                               TextColor="{StaticResource PrimaryTextColor}"
+                                               LineBreakMode="CharacterWrap" />
+                                    <HorizontalStackLayout Grid.Column="1"
+                                                               Grid.Row="0">
+                                        <Label HorizontalTextAlignment="Start"
+                                                   Margin="0, 105 ,2, 0"
+                                                   Style="{StaticResource ItemNumberPricePoppins}"
+                                                   Text="Kaina:"
+                                                   TextColor="{StaticResource PrimaryTextColor}" />
+                                        <Label HorizontalTextAlignment="Start"
+                                                   Margin="0, 105 ,2, 0"
+                                                   Style="{StaticResource ItemNumberPricePoppins}"
+                                                   Text="{Binding Price}"
+                                                   TextColor="{StaticResource PrimaryTextColor}" />
+                                        <Label HorizontalTextAlignment="Start"
+                                                   Margin="0, 105 ,2, 0"
+                                                   Style="{StaticResource ItemNumberPricePoppins}"
+                                                   Text="€"
+                                                   TextColor="{StaticResource PrimaryTextColor}" />
+                                    </HorizontalStackLayout>
+                                    
+
+                                    <HorizontalStackLayout Grid.Column="1"
+                                                               Grid.Row="1">
+                                        <Label HorizontalTextAlignment="Start"
+                                                   Margin="0,  0,2, 0"
+                                                   Style="{StaticResource ItemPricePoppins}"
+                                                   Text="Kiekis: "
+                                                    />
+                                        <Label HorizontalTextAlignment="Start"
+                                                   Margin="0,  0,2, 0"
+                                                   Style="{StaticResource ItemPricePoppins}"
+                                                   Text="{Binding Quantity}"
+                                                    />
+                                        
+
+                                    </HorizontalStackLayout>
+                                    
+                                </Grid>
+                               
+                            </Border>
                         </DataTemplate>
-                    </CollectionView.ItemTemplate>
-                </CollectionView>
+                    </dxcv:DXCollectionView.ItemTemplate>
+                </dxcv:DXCollectionView>
             </StackLayout>
         </Grid>
     </ScrollView>

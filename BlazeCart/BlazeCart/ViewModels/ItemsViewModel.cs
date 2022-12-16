@@ -287,7 +287,8 @@ public partial class ItemsViewModel : BaseViewModel
                        {"Price", item.Price},
                        {"Image", item.Image},
                       {"Description", item.Description},
-                      {"Cat", item.Category }
+                      {"Cat", item.Category },
+                      {"Merch", item.Merch }
                   });
             
         }

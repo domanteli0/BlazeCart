@@ -42,8 +42,7 @@ namespace BlazeCart.Models
             [JsonIgnore]
             public bool IsFavorite { get; set; }
             public string? Components { get; set; }
-            
-            public string? Store { get; set; }
+            public int Merch { get; set; }
             public bool? Availability { get; set; }
 
     }

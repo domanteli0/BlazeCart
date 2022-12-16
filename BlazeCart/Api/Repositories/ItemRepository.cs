@@ -4,6 +4,11 @@ using Models;
 using Api.Services;
 using System.Drawing;
 
+using System;
+using System.Xml.Linq;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
+using Microsoft.EntityFrameworkCore.Query;
 namespace Api.Repositories
 {
     public class ItemRepository : IItemRepository
@@ -36,12 +41,12 @@ namespace Api.Repositories
             
             return records;
         }
-        public async Task<Item> GetCheapestItem(string name, string category, double price, double amount)
+        public async Task<Item> GetCheapestItem(string name, string category, double price, double amount, int merch, int comparedMerch)
         {
-            Item cheapestItem = new();   
+            double min = price;
+            Item cheapestItem = new();
 
-            var records = await _context.Items.Where(i => i.Category.NameLT == category).ToListAsync();
-
+            var records = await _context.Items.Where(i => i.Category.NameLT == category && i.Merch == (Merchendise.Merch)merch).ToListAsync();
             for (int i = 0; i < records.Count; i++)
             {
                 if (IsInvalidItemFilter(records[i]))
@@ -53,16 +58,11 @@ namespace Api.Repositories
 
             List<Item> sortedList = records.OrderBy(x => x.NameLT).ToList();
 
-            /*
-            Dictionary<Item, string> refactoredD = _algorithmService.GetItemDictionary(_sortedList);
-            HashSet<String> hs = _algorithmService.GetSetOfUnique(refactoredD);
-            refactoredD = _algorithmService.RefactorDictionaryToUnique(refactoredD, hs);
-            */
-
             Item comparedItem = new();
             comparedItem.NameLT = name;
             comparedItem.Price = (int)(price * 100);
             comparedItem.Ammount = (float?)amount;
+            comparedItem.Merch = (Merchendise.Merch)comparedMerch;
      
 
             comparedItem.NameLT = _algorithmService.refactorItemName(comparedItem.NameLT).ToLower();
