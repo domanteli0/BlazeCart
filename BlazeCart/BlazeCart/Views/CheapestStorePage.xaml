@@ -10,64 +10,71 @@
              xmlns:dxcv="clr-namespace:DevExpress.Maui.CollectionView;assembly=DevExpress.Maui.CollectionView"
              BackgroundColor="{StaticResource PageBackgroundColor}">
     <ScrollView>
-        <Grid>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="1*" />
-                <RowDefinition Height="8*" />
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
-            <Image Source="white_overlay.png"
+        <StackLayout>
+
+            <Frame HeightRequest="90"
+                   Padding="10">
+                <HorizontalStackLayout HorizontalOptions="Center">
+                    <ImageButton Source="back_button"
+                                 HorizontalOptions="Start"
+                                 Command="{Binding BackToCartCommand}" />
+                    <Label Text="Pigiausia parduotuvė"
+                           Margin="15, 15, 15, 15"
+                           
+                           Style="{StaticResource PageNamePoppins}"
+                           VerticalOptions="Start"
+                           HorizontalOptions="Start" />
+
+                </HorizontalStackLayout>
+            </Frame>
+
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="1*" />
+                    <RowDefinition Height="8*" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Image Source="white_overlay.png"
                    Aspect="AspectFit" />
-            <Image Source="{Binding Logo}"
-                   MaximumHeightRequest="160"
-                   MaximumWidthRequest="160"
-                   HeightRequest="160"
-                   WidthRequest="160" />
-            <HorizontalStackLayout HorizontalOptions="Center"
-                                   Margin="0, -200, 0 ,0">
-                <ImageButton Margin="0, 0, 10, 0"
-                             Source="back_button.png"
-                             Command="{Binding BackToCartCommand}"
-                             VerticalOptions="Center" />
-                <Label Text="Pigiausia parduotuvė"
-                       FontSize="20"
-                       Style="{StaticResource PageNamePoppins}"
-                       VerticalOptions="Center"
-                       HorizontalOptions="Center" />
-            </HorizontalStackLayout>
-            <StackLayout Grid.Row="1">
-                <StackLayout Orientation="Horizontal"
+                <Image Source="{Binding Logo}"
+                   HeightRequest="200"
+                   WidthRequest="200"
+                 
+                    />
+
+                <StackLayout Grid.Row="1">
+                    <StackLayout Orientation="Horizontal"
                              HorizontalOptions="Center"
                              Margin="35, 15 ,0,15">
-                    <Image Aspect="AspectFill"
+                        <Image Aspect="AspectFill"
                            Margin="5"
                            HorizontalOptions="Center"
                            VerticalOptions="Center"
                            Source="green_check.png" />
-                    <Label HorizontalTextAlignment="Center"
+                        <Label HorizontalTextAlignment="Center"
                            Margin="0, 5, 50, 5"
                            Style="{StaticResource CheapestStoreHeaderPoppins}"
                            Text="Krepšelio kaina:"
                            TextColor="{StaticResource PrimaryTextColor}"
                            AbsoluteLayout.LayoutBounds="75,20,AutoSize,AutoSize"
                            VerticalOptions="Center" />
-                </StackLayout>
-                <AbsoluteLayout HorizontalOptions="Center"
+                    </StackLayout>
+                    <AbsoluteLayout HorizontalOptions="Center"
                                 Margin="0,0,0,15">
-                    <Image HorizontalOptions="Center"
+                        <Image HorizontalOptions="Center"
                            Source="orange_card_bg.png" />
-                    <HorizontalStackLayout>
-                        <Label Style="{StaticResource CheapestStoreHeaderPoppins}"
+                        <HorizontalStackLayout>
+                            <Label Style="{StaticResource CheapestStoreHeaderPoppins}"
                                HorizontalOptions="Center"
                                HorizontalTextAlignment="Center"
-                               Margin="110, 10, 0, 5"
+                               Margin="110, 10, 10, 5"
                                Text="{Binding TotalPrice, StringFormat='{0:F2}'}"
                                FontSize="32"
                                TextColor="{StaticResource White}"
                                VerticalOptions="Center" />
-                        <Label Style="{StaticResource CheapestStoreHeaderPoppins}"
+                            <Label Style="{StaticResource CheapestStoreHeaderPoppins}"
                                HorizontalOptions="Center"
                                HorizontalTextAlignment="Center"
                                Margin="14, 10, 0, 5"
@@ -75,67 +82,68 @@
                                FontSize="32"
                                TextColor="{StaticResource White}"
                                VerticalOptions="Center" />
-                    </HorizontalStackLayout>
-                    <HorizontalStackLayout>
-                        <Image Source="green_arrow_resized.png"
-                               Margin="30, 50, -10, 0" />
-                        <Label Style="{StaticResource CheapestStoreHeaderPoppins}"
+                        </HorizontalStackLayout>
+                        <HorizontalStackLayout>
+                            <Image Source="green_arrow_resized.png"
+                               Margin="30, 50, 10, 0" />
+                            <Label Style="{StaticResource CheapestStoreHeaderPoppins}"
                                HorizontalOptions="Center"
                                HorizontalTextAlignment="Center"
                                Margin="14, 60, 0, 5"
                                Text="{Binding PercentDifference}"
                                TextColor="{StaticResource White}"
                                VerticalOptions="Center" />
-                        <Label Style="{StaticResource CheapestStoreHeaderPoppins}"
+                            <Label Style="{StaticResource CheapestStoreHeaderPoppins}"
                                HorizontalOptions="Center"
                                HorizontalTextAlignment="Center"
                                Margin="0, 60, 0, 5"
                                Text="% pigiau nei kitur"
                                TextColor="{StaticResource White}"
                                VerticalOptions="Center" />
-                    </HorizontalStackLayout>
-                </AbsoluteLayout>
-                <ImageButton Source="show_map_button.png"
+                        </HorizontalStackLayout>
+                    </AbsoluteLayout>
+                    <ImageButton Source="show_map_button.png"
                              Command="{Binding GoToMapsCommand}" />
-                <StackLayout Orientation="Horizontal"
+                    <StackLayout Orientation="Horizontal"
                              HorizontalOptions="Center"
                              Spacing="1">
-                    <Image Aspect="AspectFill"
+                        <Image Aspect="AspectFill"
                            Margin="5"
                            HorizontalOptions="Start"
                            VerticalOptions="Center"
                            Source="cart_option_logo.png" />
-                    <Label HorizontalTextAlignment="Start"
-                           Margin="0, 5, 50, 5"
+                        <Label HorizontalTextAlignment="Start"
+                           Margin="30, 7, 50, 7"
                            Style="{StaticResource CheapestStoreHeaderPoppins}"
                            Text="Pigiausio krepšelio prekės:"
                            TextColor="{StaticResource PrimaryTextColor}"
                            AbsoluteLayout.LayoutBounds="75,20,AutoSize,AutoSize"
                            VerticalOptions="Center" />
-                </StackLayout>
-                <dxcv:DXCollectionView x:Name="searchResults"
+                    </StackLayout>
+
+                    <dxcv:DXCollectionView x:Name="searchResults"
                                        ItemsSource="{Binding CartItems}">
-                    <dxcv:DXCollectionView.ItemTemplate>
-                        <DataTemplate x:DataType="models:Item">
-                            <Border Padding="5"
+                        <dxcv:DXCollectionView.ItemTemplate>
+                            <DataTemplate x:DataType="models:Item">
+                                <Border Padding="5"
                                     BackgroundColor="{StaticResource White}"
                                     Margin="10, 5, 10, 5">
-                                <Border.StrokeShape>
-                                    <RoundRectangle CornerRadius="20, 20, 20, 20" />
-                                </Border.StrokeShape>
-                                <Grid MaximumHeightRequest="230"
+                                    <Border.StrokeShape>
+                                        <RoundRectangle CornerRadius="20, 20, 20, 20" />
+                                    </Border.StrokeShape>
+                                    <Grid MaximumHeightRequest="230"
                                       Margin="10">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="1*" />
-                                        <ColumnDefinition Width="1*" />
-                                    </Grid.ColumnDefinitions>
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="auto" />
-                                        <RowDefinition Height="2*" />
-                                        <RowDefinition Height="3*" />
-                                        <RowDefinition Height="4*" />
-                                    </Grid.RowDefinitions>
-                                    <Image Grid.Column="0"
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="1*" />
+                                            <ColumnDefinition Width="1*" />
+                                        </Grid.ColumnDefinitions>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="auto" />
+                                            <RowDefinition Height="2*" />
+                                            <RowDefinition Height="3*" />
+                                            <RowDefinition Height="4*" />
+                                        </Grid.RowDefinitions>
+                                        <Image Grid.Column="0"
                                            Grid.Row="0"
                                            Grid.RowSpan="3"
                                            Aspect="AspectFill"
@@ -143,7 +151,7 @@
                                            Margin="20"
                                            HorizontalOptions="Start"
                                            VerticalOptions="Start" />
-                                    <Label Grid.Column="1"
+                                        <Label Grid.Column="1"
                                            Grid.Row="0"
                                            HorizontalTextAlignment="Start"
                                            Margin="0, 0, 15, 0"
@@ -151,41 +159,43 @@
                                            Text="{Binding NameLT}"
                                            TextColor="{StaticResource PrimaryTextColor}"
                                            LineBreakMode="CharacterWrap" />
-                                    <HorizontalStackLayout Grid.Column="1"
+                                        <HorizontalStackLayout Grid.Column="1"
                                                            Grid.Row="0">
-                                        <Label HorizontalTextAlignment="Start"
+                                            <Label HorizontalTextAlignment="Start"
                                                Margin="0, 105 ,2, 0"
                                                Style="{StaticResource ItemNumberPricePoppins}"
                                                Text="Kaina:"
                                                TextColor="{StaticResource PrimaryTextColor}" />
-                                        <Label HorizontalTextAlignment="Start"
+                                            <Label HorizontalTextAlignment="Start"
                                                Margin="0, 105 ,2, 0"
                                                Style="{StaticResource ItemNumberPricePoppins}"
                                                Text="{Binding Price}"
                                                TextColor="{StaticResource PrimaryTextColor}" />
-                                        <Label HorizontalTextAlignment="Start"
+                                            <Label HorizontalTextAlignment="Start"
                                                Margin="0, 105 ,2, 0"
                                                Style="{StaticResource ItemNumberPricePoppins}"
                                                Text="€"
                                                TextColor="{StaticResource PrimaryTextColor}" />
-                                    </HorizontalStackLayout>
-                                    <HorizontalStackLayout Grid.Column="1"
+                                        </HorizontalStackLayout>
+                                        <HorizontalStackLayout Grid.Column="1"
                                                            Grid.Row="1">
-                                        <Label HorizontalTextAlignment="Start"
+                                            <Label HorizontalTextAlignment="Start"
                                                Margin="0,  0,2, 0"
                                                Style="{StaticResource ItemPricePoppins}"
                                                Text="Kiekis: " />
-                                        <Label HorizontalTextAlignment="Start"
+                                            <Label HorizontalTextAlignment="Start"
                                                Margin="0,  0,2, 0"
                                                Style="{StaticResource ItemPricePoppins}"
                                                Text="{Binding Quantity}" />
-                                    </HorizontalStackLayout>
-                                </Grid>
-                            </Border>
-                        </DataTemplate>
-                    </dxcv:DXCollectionView.ItemTemplate>
-                </dxcv:DXCollectionView>
-            </StackLayout>
-        </Grid>
+                                        </HorizontalStackLayout>
+                                    </Grid>
+                                </Border>
+                            </DataTemplate>
+                        </dxcv:DXCollectionView.ItemTemplate>
+                    </dxcv:DXCollectionView>
+                </StackLayout>
+            </Grid>
+
+        </StackLayout>
     </ScrollView>
 </ContentPage>
