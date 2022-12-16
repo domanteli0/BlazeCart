@@ -12,6 +12,118 @@ namespace CategoryMap.Implementations
 
 		public void Map(List<Category> root_cat, IDictionary<string, Category> into)
 		{
+            this.addMapper("Cukrus ir druska", new()
+            {
+                ("(?i)cukrus", into["Cukrus, saldikliai ir druska"]),
+                ("(?i)cukraus", into["Cukrus, saldikliai ir druska"]),
+                ("(?i)saldiklis", into["Cukrus, saldikliai ir druska"]),
+                ("(?i)fruktozė", into["Cukrus, saldikliai ir druska"]),
+                ("(?i)saldiklių", into["Cukrus, saldikliai ir druska"]),
+                ("(?i)druska", into["Cukrus, saldikliai ir druska"]),
+            });
+
+            this.addMapper("Kruopos", new()
+            {
+                ("(?i)grikiai", into["Grikiai"]),
+                ("(?i)grikių", into["Grikiai"]),
+                ("(?i)perlinės", into["Perlinės kruopos"]),
+                ("(?i)avinžirniai", into["Kitos kruopos"]),
+                ("(?i)avinžiniai", into["Kitos kruopos"]),
+                ("(?i)avižinės", into["Kitos kruopos"]),
+                ("(?i)avižinė", into["Kitos kruopos"]),
+                ("(?i)chia", into["Kitos kruopos"]),
+                ("(?i)sorų", into["Kitos kruopos"]),
+                ("(?i)perlinės", into["Kitos kruopos"]),
+                ("(?i)linų", into["Kitos kruopos"]),
+                ("(?i)kanapių", into["Kitos kruopos"]),
+                ("(?i)kuskusas", into["Kitos kruopos"]),
+                ("(?i)lęšiai", into["Kitos kruopos"]),
+                ("(?i)baltos pupupelės", into["Kukurūzai, žirniai, pupelės ir smidrai"]),
+                ("(?i)raudonosios pupupelės", into["Kukurūzai, žirniai, pupelės ir smidrai"]),
+                ("(?i)žirniai", into["Kitos kruopos"]),
+                ("(?i)kukurūzų", into["Kitos kruopos"]),
+                ("(?i)manų", into["Manų kruopos"]),
+                ("(?i)miežinės", into["Kvietinės ir miežinės kruopos"]),
+                ("(?i)kvietinės", into["Kvietinės ir miežinės kruopos"]),
+                ("(?i)basmati", into["Basmati ir kvapieji ryžiai"]),
+                ("(?i)plikyti ryžiai", into["Plikyti ryžiai"]),
+                ("(?i)ilgagrūdžiai", into["Ilgagrūdžiai ryžiai"]),
+                ("(?i)rudi ilgagrūdžiai", into["Rudieji ir laukiniai ryžiai"]),
+                ("(?i)juodieji", into["Rudieji ir laukiniai ryžiai"]),
+                ("(?i)trumpagrūdžiai ryžiai", into["Trumpagrūdžiai ir apvaliagrūdžiai ryžiai"]),
+                ("(?i)apvaliagrūdžiai ryžiai", into["Trumpagrūdžiai ir apvaliagrūdžiai ryžiai"]),
+            });
+
+            this.addMapper("Sėklos", new()
+            {
+                ("(?i)moliūgų sėklos", into["Sėklos"]),
+                ("(?i)saulėgrąžų sėklos", into["Sėklos"]),
+            });
+
+            this.addMapper("Miltai", new()
+            {
+                ("(?i)kvietiniai miltai", into["Kvietiniai miltai"]),
+                ("(?i)migdolų miltai", into["Kiti miltai"]),
+                ("(?i)miltinis mišinys", into["Miltiniai mišiniai"]),
+                ("(?i)grūdo", into["Pilno grūdo miltai"]),
+                ("(?i)ruginiai miltai", into["Pilno grūdo miltai"]),
+                ("(?i)kukurūzų miltai", into["Kiti miltai"]),
+                ("(?i)ryžių miltai", into["Kiti miltai"]),
+                ("(?i)avinžirnių miltai", into["Kiti miltai"]),
+                ("(?i)žemės riešutų miltai", into["Kiti miltai"]),
+                ("(?i)speltos miltai", into["Kiti miltai"]),
+            });
+
+            this.addMapper("Aliejus ir actas", new()
+            {
+                ("(?i)saulėgrąžų aliejus", into["Saulėgrąžų aliejus"]),
+                ("(?i)rapsų aliejus", into["Rapsų aliejus"]),
+                ("(?i)actas", into["Actas ir koncentruotos citrinų sultys"]),
+                ("(?i)acto", into["Actas ir koncentruotos citrinų sultys"]),
+                ("(?i)citrinų sultys", into["Actas ir koncentruotos citrinų sultys"]),
+                ("(?i)alyvuogių aliejus", into["Alyvuogių aliejus"]),
+                ("(?i)kokosų aliejus", into["Kokosų aliejus"]),
+                ("(?i)linų sėmenų aliejus", into["Kitas aliejus"]),
+                ("(?i)moliūgų sėklų aliejus", into["Kitas aliejus"]),
+                ("(?i)vynuogių kauliukų aliejus", into["Kitas aliejus"]),
+                ("(?i)graikinių riešutų aliejus", into["Kitas aliejus"]),
+                ("(?i)sezamų aliejus", into["Kitas aliejus"]),
+                ("(?i)migdolų aliejus", into["Kitas aliejus"]),
+                ("(?i)kanapių aliejus", into["Kitas aliejus"]),
+                ("(?i)ryžių aliejus", into["Kitas aliejus"]),
+            });
+
+            this.addMapper("Makaronai", new()
+            {
+                ("(?i)makaronai", into["Ilgieji ir plokštieji makaronai"]),
+            });
+
+            this.addMapper("Padažai", new()
+            {
+                ("(?i)pomidorų padažas", into["Pomidorų padažai ir pasta"]),
+                ("(?i)adžika", into["Pomidorų padažai ir pasta"]),
+                ("(?i)kečupas", into["Kečupai"]),
+                ("(?i)ketchup", into["Kečupai"]),
+                ("(?i)krienai", into["Krienai"]),
+                ("(?i)garstyčios", into["Garstyčios"]),
+                ("(?i)garstyčių", into["Garstyčios"]),
+                ("(?i)majonezinis", into["Majoneziniai padažai"]),
+                ("(?i)sadžiarūgštis", into["Majoneziniai padažai"]),
+                ("(?i)pesto", into["Kiti padažai"]),
+                ("(?i)cezario", into["Kiti padažai"]),
+                ("(?i)česnakinis", into["Kiti padažai"]),
+                ("(?i)bolonijos", into["Kiti padažai"]),
+                ("(?i)vorčesterio", into["Kiti padažai"]),
+                ("(?i)mėsainių", into["Kiti padažai"]),
+                ("(?i)mėsainiams", into["Kiti padažai"]),
+                ("(?i)barbekiu", into["Kiti padažai"]),
+                ("(?i)salotų padažas", into["Kiti padažai"]),
+                ("(?i)salsa", into["Kiti padažai"]),
+                ("(?i)sojų", into["Sojų padažai"]),
+
+            });
+
+
             this.addMapper("Tortai, pyragai", new()
             {
                 ("(?i)vyniotinis", into["Plokštainiai ir vyniotiniai"]),
