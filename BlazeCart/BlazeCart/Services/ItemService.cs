@@ -53,8 +53,8 @@ public class ItemService
     {
         ObservableCollection<Item> cheapestItemsIKI = new ObservableCollection<Item>();
         ObservableCollection<Item> cheapestItemsBarbora = new ObservableCollection<Item>();
-        double totalPriceIKI = 0;
-       // double totalPriceBarbora = 0;
+       // double totalPriceIKI = 0;
+        double totalPriceBarbora = 0;
         foreach (var item in items)
         {
             string name = item.NameLT;
@@ -62,31 +62,31 @@ public class ItemService
             double price = item.Price;
             int comparedMerch = item.Merch;
             double? amount = item.Ammount;
-            var jsonIKI = await _client.GetStringAsync($"api/Item/{name}/{category}/{price}/{amount}/0/{comparedMerch}");
-            //  var jsonBarbora = await _client.GetStringAsync($"api/Item/{name}/{category}/{price}/{amount}/1/{comparedMerch}");
-            var itemIKI = JsonConvert.DeserializeObject<Item>(jsonIKI.ToString());
-           // var itemBarbora = JsonConvert.DeserializeObject<Item>(jsonBarbora.ToString());
-            itemIKI.Quantity = item.Quantity;
-           // itemBarbora.Quantity = item.Quantity;
-            cheapestItemsIKI.Add(itemIKI);
-           // cheapestItemsBarbora.Add(itemBarbora);
+            var jsonBarbora = await _client.GetStringAsync($"api/Item/{name}/{category}/{price}/{amount}/0/{comparedMerch}");
+            //  var jsonIKI = await _client.GetStringAsync($"api/Item/{name}/{category}/{price}/{amount}/1/{comparedMerch}");
+            var itemBarbora = JsonConvert.DeserializeObject<Item>(jsonBarbora.ToString());
+           // var itemIKI = JsonConvert.DeserializeObject<Item>(jsonIKI.ToString());
+            itemBarbora.Quantity = item.Quantity;
+           // itemIKI.Quantity = item.Quantity;
+            cheapestItemsBarbora.Add(itemBarbora);
+           // cheapestItemsIKI.Add(itemIKI);
 
         }
 
-        foreach(var item in cheapestItemsIKI)
-        {
-            totalPriceIKI += item.Price * item.Quantity;
-        }
-        /*
         foreach(var item in cheapestItemsBarbora)
         {
             totalPriceBarbora += item.Price * item.Quantity;
         }
-        if (totalPriceBarbora < totalPriceIKI)
-            return cheapestItemsBarbora;
+        /*
+        foreach(var item in cheapestItemsIKI)
+        {
+            totalPriceIKI += item.Price * item.Quantity;
+        }
+        if (totalPriceIKI < totalPriceBarbora)
+            return cheapestItemsIKI;
         else
         */
-            return cheapestItemsIKI;
+            return cheapestItemsBarbora;
     }
     public async Task<ObservableCollection<Item>> GetItems(string fileName)
     {
