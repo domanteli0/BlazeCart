@@ -49,7 +49,7 @@ namespace ScraperFunction
         public async Task Run(
              // Use this tool to check if your
              // crontab expression is correct: https://crontab.cronhub.io
-            [TimerTrigger("*/10 * * * *", RunOnStartup = true)]TimerInfo myTimer,
+            [TimerTrigger("0 * * * *", RunOnStartup = true)]TimerInfo myTimer,
             ILogger log
         )
         {
@@ -57,7 +57,6 @@ namespace ScraperFunction
 
             try
             {
-                await Task.Delay(10);
                 // Scraping
                 var tasks = new List<Task>();
                 foreach (var scraper in _scraperRepo)
