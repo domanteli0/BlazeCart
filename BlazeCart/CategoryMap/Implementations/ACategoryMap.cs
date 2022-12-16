@@ -6,7 +6,6 @@ namespace CategoryMap.Implementations
 {
 	public abstract class ACategoryMap
 	{
-		public const string UNMAPPED_CAT_NAME = "UNMAPPED";
         private protected readonly ILogger _logger;
         public ACategoryMap(ILogger logger) { _logger = logger;  }
 
@@ -70,7 +69,7 @@ namespace CategoryMap.Implementations
                 {
                     foreach (var (item_pattern, to) in item_pattern_pairs)
                     {
-                        if (item.NameLT.ContainsPattern(item_pattern))
+                        if (item.NameLT.ToLower().ContainsPattern(item_pattern))
                         {
 							unmapped.Remove(item);
                             item.Category = to;
