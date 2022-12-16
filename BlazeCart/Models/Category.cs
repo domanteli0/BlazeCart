@@ -15,6 +15,15 @@
 
         public Category() {
             SubCategories = new();
+            Items = new List<Item>();
+        }
+
+        public override string ToString()
+        {
+            var id = (InternalID is null) ? "ID: null" : "ID: '" + InternalID;
+            var str = (NameLT is null) ? "null" : NameLT;
+            var count = (Items is null) ? "null" : Items.Count.ToString();
+            return id + "' [" + count + "] " + str;
         }
     }
 }

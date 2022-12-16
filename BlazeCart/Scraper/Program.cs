@@ -32,12 +32,12 @@ namespace Scraper
             var bScraper = new BarboraScraper(new HttpClient(), logger);
 
             List<Task> tasks = new();
-            tasks.Add(Task.Run(async () =>
-            {
-                await bScraper.Scrape();
-                //await dbCtx.Items.AddRangeAsync(bScraper.Items);
-                //await dbCtx.Categories.AddRangeAsync(bScraper.Categories);
-            }));
+            //tasks.Add(Task.Run(async () =>
+            //{
+            //    await bScraper.Scrape();
+            //    //await dbCtx.Items.AddRangeAsync(bScraper.Items);
+            //    //await dbCtx.Categories.AddRangeAsync(bScraper.Categories);
+            //}));
 
             tasks.Add(Task.Run(async () =>
             {
@@ -47,6 +47,8 @@ namespace Scraper
             }));
 
             await Task.WhenAll(tasks);
+
+            iScraper.Categories.ForEach(c => logger.LogInformation(c.NameLT));
 
             //dbCtx.SaveChanges();
         }

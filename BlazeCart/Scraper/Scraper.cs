@@ -1,6 +1,4 @@
-﻿using System;
-using System.Net;
-using Models;
+﻿using Models;
 using Microsoft.Extensions.Logging;
 
 namespace Scraper
