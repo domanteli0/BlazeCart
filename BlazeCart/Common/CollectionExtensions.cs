@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Reflection.Emit;
 using Models;
 using static Common.ObjectExtensions;
 namespace Common
@@ -106,6 +107,29 @@ namespace Common
             dic.ToDictionary(
                 c => (K) c.Key.Clone(), c => (V) c.Value.Clone()
             );
+
+        public static void ForEachR(this IEnumerable<Category> list, Action<Category> act)
+        {
+            foreach (var sub in list)
+            {
+                sub.SubCategories.ForEach(act);
+                act(sub);
+            }
+
+        }
+
+        public static IEnumerable<T> SelectR<T>(this IEnumerable<Category> list, Func<Category, T> func)
+        {
+            var newl = new List<T>();
+            foreach (var sub in list)
+            {
+                newl.Add(func(sub));
+                newl.AddRange(sub.SubCategories.SelectR(func));
+            }
+
+            return newl;
+
+        }
     }
 }
 

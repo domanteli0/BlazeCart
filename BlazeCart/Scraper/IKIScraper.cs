@@ -6,6 +6,7 @@ using static System.Net.Mime.MediaTypeNames;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json.Linq;
 using System.Diagnostics;
+using System.Linq;
 
 namespace Scraper
 {
@@ -78,7 +79,9 @@ namespace Scraper
                 {
                     _logger.LogInformation(i.ToString());
                     Items.AddAsSetByProperty(i, "InternalID");
+                    cat.Items.AddAsSetByProperty(i, "InternalID");
                 }
+                break;
             }
         }
 
@@ -235,9 +238,9 @@ namespace Scraper
 
                     ret.Add(newItem);
                 }
-                catch (System.ArgumentException e) { }
-                catch (System.InvalidOperationException e) { }
-                catch (System.NullReferenceException e) { }
+                catch (System.ArgumentException) { }
+                catch (System.InvalidOperationException) { }
+                catch (System.NullReferenceException) { }
 
             }
 

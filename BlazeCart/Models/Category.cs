@@ -12,7 +12,7 @@ namespace Models
         public Uri? Uri { get; set; }
         public string? NameEN { get; set; }
         public string? NameLT { get; set; }
-        public ICollection<Item> Items { get; set; }
+        public List<Item> Items { get; set; }
         public List<Category> SubCategories { get; set; }
         public Merchendise.Merch Merch { get; set; }
 

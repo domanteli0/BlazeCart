@@ -22,22 +22,16 @@ namespace Scraper
         {
             clean();
             var noOfCons = 10;
-            var semaphore = new SemaphoreSlim(noOfCons, noOfCons);
-            var tasks = new List<Task>();
 
             foreach (var cat in GetFetchableCategories())
             {
-                tasks.Add(Task.Run(async () =>
-                {
-                    semaphore.Wait();
-                    var c = await cat();
-                    Categories.Add(c);
-                    semaphore.Release();
-                }));
+                var c = await cat();
+                Categories.Add(c);
+                break;
             }
-            await Task.WhenAll(tasks);
 
-            semaphore = new SemaphoreSlim(noOfCons, noOfCons);
+            var semaphore = new SemaphoreSlim(noOfCons, noOfCons);
+            var tasks = new List<Task>();
             foreach (var cat in Categories.GetWithoutChildren())
             {
                 tasks.Add(Task.Run(async () =>
@@ -64,12 +58,6 @@ namespace Scraper
                                         $"Failed to retrieve {ex.Uri}" +
                                         ((tries > 0) ? "Retrying" : "")
                                     );
-                                else
-                                {
-                                    _logger.LogInformation($"Successfully retrieved from {cat.Uri}");
-                                    Items.AddRange(items);
-                                    break;
-                                }
                                 Thread.Sleep(100);
                                 tries -= 1;
                             }
@@ -79,7 +67,11 @@ namespace Scraper
                     } finally
                     {
                         if (items is not null)
-                            cat.Items = items.ToList();
+                        {
+                            cat.Items.AddRange(items);
+                            this.Items.AddRange(items);
+                            _logger.LogInformation($"Successfully retrieved from {cat.Uri} with {items.Count()} items");
+                        }
                     }
                     semaphore.Release();
                 }));
@@ -88,7 +80,8 @@ namespace Scraper
             await Task.WhenAll(tasks);
 
             // back-referencing
-            Items.ForEach((i) => i.Category.Items.Add(i));
+            //this.Items.ForEach((i) => i.Category.Items.Add(i));
+            _logger.LogInformation("BARBORA COUNT: " + Items.Count);
             setMerch();
         }
 

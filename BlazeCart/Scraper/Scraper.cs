@@ -1,5 +1,6 @@
 ﻿using Models;
 using Microsoft.Extensions.Logging;
+using Common;
 
 namespace Scraper
 {
@@ -23,7 +24,7 @@ namespace Scraper
 
         private protected void setMerch()
         {
-            Categories.ForEach(el => el.Merch = _merch);
+            Categories.ForEachR(el => el.Merch = _merch);
             Stores.ForEach(el => el.Merch = _merch);
             Items.ForEach(el => el.Merch = _merch);
         }

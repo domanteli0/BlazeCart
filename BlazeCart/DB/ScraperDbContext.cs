@@ -13,6 +13,8 @@ namespace DB
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) { }
 
+
+        // NOTE: catageries MUST be added before items
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Item>()
