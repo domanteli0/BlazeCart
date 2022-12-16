@@ -11,9 +11,9 @@ namespace Tests1.CategoryMap
 		[Fact]
 		public void DuplicateKey()
 		{
-			// If it doesn't throw an Exception it passes.
 			var test = StaticCategoryTree.GetCategoryDict();
 
+			// If it doesn't throw an Exception it passes.
 			Assert.True(true);
         }
 	}
