@@ -27,7 +27,7 @@
                 Aspect="AspectFit"/>
 
             <Image
-                Source="{Binding Storename}"
+                Source="{Binding Logo}"
                 MaximumHeightRequest="160"
                 MaximumWidthRequest="160"
                 HeightRequest="160"
