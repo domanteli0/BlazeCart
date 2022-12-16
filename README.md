@@ -30,7 +30,8 @@ Migrations are needed then properties of classes `Entity`, `Category`, `Item` ha
 
 ### Tests
 
-Run `dotnet test` to test.
+To run all tests: `dotnet test` to test.
+To run a specific test use `--filter`, example: `dotnet test --filter "FullyQualifiedName=Tests1.Scraper.BarboraScarperTest.DuplicateTest"`
 
 ## Troubleshooting
 
