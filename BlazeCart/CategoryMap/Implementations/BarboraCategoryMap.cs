@@ -15,17 +15,9 @@ namespace CategoryMap.Implementations
             this.addMapper("Pieno gėrimai", new() { ("(?i).*", into["Pieno gėrimai"]) });
             this.addForUnmapped(into["UNMAPPED"]);
 
-            // A hacky work-around since keys must be unique
-            var a = root_cat
-                .Find(c => c.NameLT!.Equals("Bakalėja"))!
-                .SubCategories
-                .Find(c => c.NameLT!.Equals("Kalėdiniai saldumynai"))!;
-            _logger.LogInformation(a.ToString());
-            a.SubCategories.RemoveAll(c => c.NameLT!.Equals("Saldainių rinkiniai"));
-
             var items = root_cat
                 .GetWithoutChildren()
-                .ToDictionary(c => c.NameLT!, c => c);
+                .ToList();
 
             this.executeMapper(items);
         }

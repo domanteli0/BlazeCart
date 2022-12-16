@@ -78,11 +78,11 @@ namespace CategoryMap.Implementations
             });
             this.addForUnmapped(into["UNMAPPED"]);
 
-			var items = root_cat
-				.GetWithoutChildren()
-				.ToDictionary(c => c.NameLT!, c => c);
+            var items = root_cat
+                .GetWithoutChildren()
+                .ToList();
 
-			this.executeMapper(items);
+            this.executeMapper(items);
 		}
 	}
 }
