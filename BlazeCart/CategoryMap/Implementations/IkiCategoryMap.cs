@@ -12,6 +12,102 @@ namespace CategoryMap.Implementations
 
 		public void Map(List<Category> root_cat, IDictionary<string, Category> into)
 		{
+            this.addMapper("Tortai, pyragai", new()
+            {
+                ("(?i)vyniotinis", into["Plokštainiai ir vyniotiniai"]),
+                ("(?i)pyragas", into["Plokštainiai ir vyniotiniai"]),
+                ("(?i)tartaletė", into["Plokštainiai ir vyniotiniai"]),
+                ("(?i)šakotis", into["Šakočiai ir skruzdėlynai"]),
+                ("(?i)skurzdėlynas", into["Šakočiai ir skruzdėlynai"]),
+                ("(?i)tortas", into["Tortai"]),
+                ("(?i)torto", into["Tortai"]),
+            });
+
+            this.addMapper("Duona", new()
+            {
+                ("(?i)sumuštinių duona", into["Sumuštinių duona ir duonelės"]),
+                ("(?i)skrudinimui", into["Sumuštinių duona ir duonelės"]),
+                ("(?i)duonelė", into["Sumuštinių duona ir duonelės"]),
+                ("(?i)duonelės", into["Sumuštinių duona ir duonelės"]),
+                ("(?i)skrudinamoji duona", into["Sumuštinių duona ir duonelės"]),
+                ("(?i)batonas", into["Batonas"]),
+                ("(?i)tamsi", into["Tamsi duona"]),
+                ("(?i)juoda", into["Tamsi duona"]),
+                ("(?i)bočių", into["Tamsi duona"]),
+                ("(?i)viso grūdo", into["Tamsi duona"]),
+                ("(?i)ruginė", into["Tamsi duona"]),
+                ("(?i)ajerų", into["Tamsi duona"]),
+                ("(?i)šviesi", into["Šviesi duona"]),
+                ("(?i)duona", into["Tamsi duona"]),
+                ("(?i)kvietinė", into["Šviesi duona"]),
+                ("(?i)batonas", into["Batonas"]),
+            });
+
+            this.addMapper("Bandelės", new()
+            {
+                ("(?i)bandelės", into["Saldžios bandelės"]),
+                ("(?i)grietinėtis", into["Saldžios bandelės"]),
+                ("(?i)kruasanas", into["Saldžios bandelės"]),
+                ("(?i)keksiukai", into["Saldžios bandelės"]),
+                ("(?i)spurgos", into["Saldžios bandelės"]),
+                ("(?i)spurga", into["Saldžios bandelės"]),
+                ("(?i)spurgytės", into["Saldžios bandelės"]),
+                ("(?i)raguolis", into["Saldžios bandelės"]),
+                ("(?i)ragelis", into["Saldžios bandelės"]),
+                ("(?i)raguoliai", into["Saldžios bandelės"]),
+                ("(?i)bandelė", into["Saldžios bandelės"]),
+                ("(?i)riestainiai", into["Saldžios bandelės"]),
+                
+            });
+
+            this.addMapper("Kiti duonos gaminiai", new()
+            {
+                ("(?i)fokačija", into["Kiti duonos gaminiai"]),
+                ("(?i)picos padas", into["Trapučiai ir kiti paplotėliai"]),
+                ("(?i)pynė", into["Kiti duonos gaminiai"]),
+                ("(?i)traškutis", into["Kiti duonos gaminiai"]),
+                ("(?i)traškučiai", into["Kiti duonos gaminiai"]),
+                ("(?i)sumuštinis", into["Kiti duonos gaminiai"]),
+                ("(?i)mėsainis", into["Kiti duonos gaminiai"]),
+                ("(?i)džiūvėsiai", into["Kiti duonos gaminiai"]),
+                ("(?i)kepta duona", into["Kiti duonos gaminiai"]),
+                ("(?i)submarinas", into["Kiti duonos gaminiai"]),
+                ("(?i)panini", into["Kiti duonos gaminiai"]),
+                ("(?i)keksai", into["Kiti duonos gaminiai"]),
+                ("(?i)duonos lazdelės", into["Kiti duonos gaminiai"]),
+                ("(?i)kibinas", into["Kiti duonos gaminiai"]),
+                ("(?i)trapučiai", into["Trapučiai ir kiti paplotėliai"]),
+                ("(?i)konditeriniai krepšeliai", into["Trapučiai ir kiti paplotėliai"]),
+                ("(?i)trapukai", into["Trapučiai ir kiti paplotėliai"]),
+                ("(?i)paplotėliai", into["Trapučiai ir kiti paplotėliai"]),
+                ("(?i)lavašas", into["Trapučiai ir kiti paplotėliai"]),
+            });
+
+            this.addMapper("Konditerijos gaminiai", new()
+            {
+                ("(?i)kanelės", into["Pyragaičiai ir desertai"]),
+                ("(?i)ekleras", into["Pyragaičiai ir desertai"]),
+                ("(?i)pyragėlis", into["Pyragaičiai ir desertai"]),
+                ("(?i)pyragaitis", into["Pyragaičiai ir desertai"]),
+                ("(?i)desertas", into["Pyragaičiai ir desertai"]),
+                ("(?i)kūčiukai", into["Pyragaičiai ir desertai"]),
+                ("(?i)riestainėliai", into["Pyragaičiai ir desertai"])
+                ("(?i)rageliai", into["Pyragaičiai ir desertai"]),
+                ("(?i)žagarėliai", into["Pyragaičiai ir desertai"]),
+                ("(?i)biskvitas", into["Pyragaičiai ir desertai"]),
+                ("(?i)pynė", into["Pyragaičiai ir desertai"]),
+                ("(?i)pynutė", into["Pyragaičiai ir desertai"]),
+                ("(?i)sausainiai", into["Pyragaičiai ir desertai"]),
+                ("(?i)sausučiai", into["Pyragaičiai ir desertai"]),
+                ("(?i)javainiai", into["Pyragaičiai ir desertai"]),
+                ("(?i)javinukai", into["Pyragaičiai ir desertai"]),
+                ("(?i)zefyrai", into["Pyragaičiai ir desertai"]),
+                ("(?i)sausainis", into["Pyragaičiai ir desertai"]),
+                ("(?i)vafliai", into["Pyragaičiai ir desertai"]),
+                ("(?i)vafliniai", into["Pyragaičiai ir desertai"]),
+                ("(?i)meduoliai", into["Meduoliai"]),
+            });
+
             this.addMapper("Grybai", new()
             {
                 ("(?i)pievagrybiai", into["Grybai"]),
