@@ -8,6 +8,7 @@ using System.Collections.ObjectModel;
 namespace BlazeCart.ViewModels
 {
     [QueryProperty(nameof(TotalPrice), "TotalPrice")]
+    [QueryProperty(nameof(Logo), "Logo")]
     public partial class CheapestStorePageViewModel : BaseViewModel
     {
 
@@ -18,14 +19,13 @@ namespace BlazeCart.ViewModels
         private static bool _isCheckingLocation;
 
         [ObservableProperty]
-        private static string storename = "iki_logo.png";
+        private static string logo;
         [ObservableProperty]
         private static string percentDifference = "7.5";
 
 
-
-        public CheapestStorePageViewModel(ItemService itemservice)
-        {
+        
+        public CheapestStorePageViewModel(ItemService itemservice) {
             _itemService = itemservice;
             _itemService.CheapestCart += CheapestCartEventHandler;
 

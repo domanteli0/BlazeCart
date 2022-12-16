@@ -100,14 +100,27 @@ namespace BlazeCart.ViewModels
                     item.Price = item.Price / 100;
                     item.PricePerUnitOfMeasure = item.PricePerUnitOfMeasure / 100;
                     totalPrice = item.Price * item.Quantity + totalPrice;
+                    
                 }
                 _itemService.OnCheapestCart(new CartUsedEventArgs(items));
 
-                
+                string logo = null;
+                if (items[0].Merch == 0)
+                {
+                    logo = "iki_logo.png";
+                }
+                if (items[0].Merch == 1)
+                {
+                    logo = "maxima_logo.png";
+                }
                 if (totalPrice > 0)
                 {
                     await Shell.Current.GoToAsync(
-                 $"{nameof(CheapestStorePage)}", new Dictionary<string, object> { { "TotalPrice", totalPrice } });
+                 $"{nameof(CheapestStorePage)}", new Dictionary<string, object> {
+                     { "TotalPrice", totalPrice },
+                     {"Logo", logo }
+                     }
+                     );
                 }
                 else {
                     await Shell.Current.GoToAsync("EmptyStorePage");
