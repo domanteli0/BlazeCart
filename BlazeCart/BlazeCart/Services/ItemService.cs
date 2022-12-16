@@ -20,12 +20,12 @@ public class ItemService
 
 
     private HttpClient _client;
-    private string BaseUrl = "https://blazecartapi.azurewebsites.net/";
-    public ItemService()
+
+    public ItemService(string baseUrl)
     {
         _client = new HttpClient
         {
-            BaseAddress = new Uri(BaseUrl),
+            BaseAddress = new Uri(baseUrl),
 
         };
     }
@@ -51,17 +51,42 @@ public class ItemService
     }
     public async Task<ObservableCollection<Item>> GetCheapestItems(ObservableCollection<Item> items)
     {
-        ObservableCollection<Item> cheapestItems = new ObservableCollection<Item>();
-        foreach(var item in items)
+        ObservableCollection<Item> cheapestItemsIKI = new ObservableCollection<Item>();
+        ObservableCollection<Item> cheapestItemsBarbora = new ObservableCollection<Item>();
+       // double totalPriceIKI = 0;
+        double totalPriceBarbora = 0;
+        foreach (var item in items)
         {
             string name = item.NameLT;
-            string category = item.Category;
+            string? category = item.Category;
             double price = item.Price;
-            var json = await _client.GetStringAsync($"api/Item/{name}/{category}/{price}");
-            
-            cheapestItems.Add((JsonConvert.DeserializeObject<Item>(json.ToString())));
+            int comparedMerch = item.Merch;
+            double? amount = item.Ammount;
+            var jsonBarbora = await _client.GetStringAsync($"api/Item/{name}/{category}/{price}/{amount}/0/{comparedMerch}");
+            //  var jsonIKI = await _client.GetStringAsync($"api/Item/{name}/{category}/{price}/{amount}/1/{comparedMerch}");
+            var itemBarbora = JsonConvert.DeserializeObject<Item>(jsonBarbora.ToString());
+           // var itemIKI = JsonConvert.DeserializeObject<Item>(jsonIKI.ToString());
+            itemBarbora.Quantity = item.Quantity;
+           // itemIKI.Quantity = item.Quantity;
+            cheapestItemsBarbora.Add(itemBarbora);
+           // cheapestItemsIKI.Add(itemIKI);
+
         }
-        return cheapestItems;
+
+        foreach(var item in cheapestItemsBarbora)
+        {
+            totalPriceBarbora += item.Price * item.Quantity;
+        }
+        /*
+        foreach(var item in cheapestItemsIKI)
+        {
+            totalPriceIKI += item.Price * item.Quantity;
+        }
+        if (totalPriceIKI < totalPriceBarbora)
+            return cheapestItemsIKI;
+        else
+        */
+            return cheapestItemsBarbora;
     }
     public async Task<ObservableCollection<Item>> GetItems(string fileName)
     {
@@ -90,7 +115,7 @@ public class ItemService
     }
     public void AddToCart(Item item)
     {
-        var query = CartItems.Where(x => x.NameLT == item.NameLT && x.Store == item.Store);
+        var query = CartItems.Where(x => x.NameLT == item.NameLT && x.Merch == item.Merch);
         var result = query.ToList();
         if (result.Count == 0)
         {

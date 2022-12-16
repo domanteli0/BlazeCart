@@ -99,7 +99,7 @@ namespace BlazeCart.ViewModels
                 {
                     item.Price = item.Price / 100;
                     item.PricePerUnitOfMeasure = item.PricePerUnitOfMeasure / 100;
-                    totalPrice = item.Price + totalPrice;
+                    totalPrice = item.Price * item.Quantity + totalPrice;
                 }
                 _itemService.OnCheapestCart(new CartUsedEventArgs(items));
 

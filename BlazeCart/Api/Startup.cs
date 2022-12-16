@@ -10,6 +10,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Api.Repositories;
 using Microsoft.AspNetCore.Identity;
+using Api.Services;
 
 namespace Api
 {
@@ -31,6 +32,7 @@ namespace Api
             services.AddControllers();
             services.AddScoped<IItemRepository, ItemRepository>();
             services.AddScoped<ICategoryRepository, CategoryRepository>();
+            services.AddScoped<IAlgorithmService, AlgorithmService>();
 
             // If no connection string is found (i.e. GetConnectionString("thisKeyHasNoCorrespondingValue"))
             // then System.ArgumentNullException will be thrown.

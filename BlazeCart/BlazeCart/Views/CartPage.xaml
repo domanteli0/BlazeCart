@@ -7,11 +7,13 @@
              BackgroundColor="{StaticResource PageBackgroundColor}"
              xmlns:model="clr-namespace:BlazeCart.Models"
              xmlns:viewmodel="clr-namespace:BlazeCart.ViewModels"
+             xmlns:dxcv="clr-namespace:DevExpress.Maui.CollectionView;assembly=DevExpress.Maui.CollectionView"
              x:DataType="viewmodel:CartPageViewModel">
     <ScrollView>
         <StackLayout>
             <Frame HeightRequest="90"
-                   Padding="10">
+                   Padding="10"
+                   >
                 <HorizontalStackLayout HorizontalOptions="Center">
                     <Label Text="Krepšelis"
                            Margin="50, 0, 0, 0"
@@ -28,13 +30,18 @@
                          Command="{Binding CheapestStoreCommand}"
                          HorizontalOptions="Center"
                          Margin="10" />
-            <CollectionView ItemsSource="{Binding CartItems}">
-                <CollectionView.ItemTemplate>
+            <dxcv:DXCollectionView ItemsSource="{Binding CartItems}">
+                <dxcv:DXCollectionView.ItemTemplate>
                     <DataTemplate x:DataType="model:Item">
-                        <Frame Padding="0"
-                                       BackgroundColor="{StaticResource White}"
-                                       CornerRadius="20"
-                                       Margin="10, 5, 10, 5">
+                        <Border Padding="5"
+                                BackgroundColor="{StaticResource White}"   
+                                Margin="10, 5, 10, 5">
+                            <Border.StrokeShape>
+                                <RoundRectangle CornerRadius="20, 20, 20, 20">
+                                    
+                                </RoundRectangle>
+                            </Border.StrokeShape>
+                            
                             
                             <Grid x:Name="ItemCard"
                                   MaximumHeightRequest="220"
@@ -143,10 +150,10 @@
                                
                             </Grid>
                         
-                        </Frame>
+                        </Border>
                     </DataTemplate>
-                </CollectionView.ItemTemplate>
-            </CollectionView>
+                </dxcv:DXCollectionView.ItemTemplate>
+            </dxcv:DXCollectionView>
         </StackLayout>
     </ScrollView>
 </ContentPage>

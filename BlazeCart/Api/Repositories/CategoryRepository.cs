@@ -30,10 +30,17 @@ namespace Api.Repositories
             var category = await _context.Categories.FirstOrDefaultAsync(c => c.Id == id);
             return category;
         }
-        public List<Item> GetItemsByCategoryIdAsync(Guid id)
+        public async Task<List<Item>> GetItemsByCategoryIdAsync(Guid id)
         {
-            var items = _context.Items.Where(i => i.Category.Id == id).ToList();
+            var items = await _context.Items.Where(i => i.Category.Id == id).ToListAsync();
             return items;
+        }
+
+        public async Task<List<Item>> GetRangeOfItemsByCategoryIdAsync(Guid id, int index, int count)
+        {
+            var items = await _context.Items.Where(i => i.Category.Id == id).ToListAsync();
+            var range = items.GetRange(index, count);
+            return range;
         }
 
         public async Task<List<Category>> GetCategoriesByNameAsync(string name)

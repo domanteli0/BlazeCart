@@ -110,6 +110,16 @@
                     Margin="0, 0, 2, 0"
                     Style="{StaticResource SingleItemDescription}"
                     Text="{Binding Description}"></Label>
+                    <Label
+                    HorizontalTextAlignment="Start"
+                    Margin="0, 0, 2, 0"
+                    Style="{StaticResource SingleItemDescription}"
+                    Text="{Binding Cat}"></Label>
+                    <Label
+                    HorizontalTextAlignment="Start"
+                    Margin="0, 0, 2, 0"
+                    Style="{StaticResource SingleItemDescription}"
+                    Text="{Binding Merch}"></Label>
                     <HorizontalStackLayout 
                     Margin ="0, 180, 0, 0"
                     VerticalOptions="End"

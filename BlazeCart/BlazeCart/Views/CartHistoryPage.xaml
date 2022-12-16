@@ -14,7 +14,8 @@
                    Padding="10">
                 <HorizontalStackLayout HorizontalOptions="Center">
                     <ImageButton Source="back_button.png"
-                                 VerticalOptions="Start" />
+                                 VerticalOptions="Start"
+                                 Command="{Binding BackCommand}"/>
                     <Label Text="Krepšelių istorija"
                            Style="{StaticResource PageNamePoppins}"
                            VerticalOptions="Center"

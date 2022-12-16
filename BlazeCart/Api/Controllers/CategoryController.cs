@@ -41,11 +41,11 @@ namespace Api.Controllers
         [HttpGet("{id}/items")]
         [ProducesResponseType(200, Type = typeof(IEnumerable<Item>))]
         [ProducesResponseType(400)]
-        public async Task <IActionResult> GetItemsByCategoryIdAsync(Guid id)
+        public async Task<IActionResult> GetItemsByCategoryIdAsync(Guid id)
         {
             if (!_categoryRepository.IsCategoryActive(id))
                 return NotFound();
-            var items =  _categoryRepository.GetItemsByCategoryIdAsync(id);
+            var items = await _categoryRepository.GetItemsByCategoryIdAsync(id);
            if (!ModelState.IsValid)
                 return BadRequest(ModelState);
             return Ok(items);
@@ -72,6 +72,17 @@ namespace Api.Controllers
                 return BadRequest(ModelState);
             return Ok(items);
 
+        }
+
+        [HttpGet("{id}/{index}/{count}")]
+        [ProducesResponseType(200, Type = typeof(IEnumerable<Item>))]
+        [ProducesResponseType(400)]
+        public async Task<IActionResult> GetRangeOfItemsByCategoryIdAsync(Guid id, int index, int count)
+        {
+            var items = await _categoryRepository.GetRangeOfItemsByCategoryIdAsync(id, index, count);
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+            return Ok(items);
         }
     }
 }
