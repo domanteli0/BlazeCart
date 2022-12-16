@@ -55,18 +55,19 @@ namespace CategoryMap.Implementations
                 ("(?i)slyvomis",  into["Jogurtai su pagardais"]),
                 ("(?i)apelsinų",  into["Jogurtai su pagardais"]),
                 ("(?i)miško uogomis",  into["Jogurtai su pagardais"]),
-
+                ("(?i)be laktozės", into["Jogurtai ir desertai be laktozės"]),
                 ("(?i)natūralus", into["Jogurtai be pagardų"])
             });
             this.addMapper("Grietinė", new()
             {
-                ("(?i)grietinė", into["Grietinė"])
+                ("(?i).*", into["Grietinė"])
             });
             this.addMapper("Geriamasis jogurtas", new()
             {
                 ("(?i)jogurtinis gėrimas", into["Geriamieji jogurtai"]),
                 ("(?i)geriamasis", into["Geriamieji jogurtai"]),
-                ("(?i)geriamas", into["Geriamieji jogurtai"])
+                ("(?i)geriamas", into["Geriamieji jogurtai"]),
+                ("(?i)be laktozės", into["Jogurtai ir desertai be laktozės"])
             });
             this.addMapper("Geriamasis jogurtas", new()
             {
@@ -75,6 +76,73 @@ namespace CategoryMap.Implementations
             this.addMapper("Varškės Sūreliai", new()
             {
                 ("(?i).*", into["Varškės sūreliai"])
+            });
+            this.addMapper("Kefyras, pasukos, rūgpienis", new()
+            {
+                ("(?i)kefyras", into["Kefyras ir kefyro gėrimai"]),
+                ("(?i)kefyro", into["Kefyras ir kefyro gėrimai"]),
+                ("(?i)rūgpienis", into["Rūgpienis"]),
+                ("(?i)rauginto", into["Raugintos pasukos"])
+
+            });
+            this.addMapper("Sviestas, margarinas, riebalai", new()
+            {
+                ("(?i)sviestas", into["Sviestas"]),
+                ("(?i)margarinas", into["Margarinas"]),
+                ("(?i)tepinys", into["Tepieji riebalų mišiniai"]),
+                ("(?i)tepieji", into["Tepieji riebalų mišiniai"]),
+                ("(?i)tepiųjų", into["Tepieji riebalų mišiniai"]),
+                ("(?i)tepus", into["Tepieji riebalų mišiniai"]),
+                ("(?i)tepusis", into["Tepieji riebalų mišiniai"])
+            });
+            this.addMapper("Minkšti sūriai", new()
+            {
+                ("(?i)dešrelės", into["Sūrio užkandžiai ir sūrio lazdelės"]),
+                ("(?i)užkandis", into["Sūrio užkandžiai ir sūrio lazdelės"]),
+                ("(?i)lydytas", into["Lydyti sūriai"]),
+                ("(?i)tepamas", into["Tepamieji sūriai"]),
+                ("(?i)tepamasis", into["Tepamieji sūriai"]),
+                ("(?i)pelėsinis", into["Pelėsiniai sūriai"]),
+                ("(?i)fetos", into["Fetos ir brinzos sūriai"]),
+                ("(?i)maskarponės", into["Maskarponės ir rikotos sūriai"]),
+                ("(?i)buratta", into["Mocarelos ir buratos sūriai"]),
+                ("(?i)mozzarella", into["Mocarelos ir buratos sūriai"]),
+                ("(?i)sūris", into["Fermentiniai sūriai"]),
+
+            });
+            this.addMapper("Puskiečiai ir kieti sūriai", new()
+            {
+                ("(?i).*", into["Kietieji sūriai"])
+            });
+            this.addMapper("Varškės sūriai", new()
+            {
+                ("(?i).*", into["Varškės sūriai"])
+            });
+            this.addMapper("Varškė", new()
+            {
+                ("(?i).*", into["Varškė"])
+            });
+            this.addMapper("Majonezas", new()
+            {
+                ("(?i).*", into["Majonezas"])
+            });
+            this.addMapper("Varškė Desertai, Užtepėlės", new()
+            {
+                ("(?i)grūdėta", into["Grūdėta varškė"]),
+                ("(?i)sūrelis", into["Varškės sūreliai"]),
+                ("(?i)varškytė", into["Desertinė varškė"]),
+                ("(?i)tepamoji", into["Tepamoji varškė"]),
+                ("(?i)užtepėlė", into["Tepamoji varškė"]),
+                ("(?i)figomis", into["Desertinė varškė"]),
+                ("(?i)mangais", into["Desertinė varškė"]),
+                ("(?i)šilauogėmis", into["Desertinė varškė"]),
+                ("(?i)slyvomis", into["Desertinė varškė"]),
+                ("(?i)braškėmis", into["Desertinė varškė"]),
+            });
+            this.addMapper("Produktai be laktozės", new()
+            {
+                ("(?i)pienas", into["Pienas ir gėrimai be laktozės"])
+               
             });
             this.addForUnmapped(into["UNMAPPED"]);
 
