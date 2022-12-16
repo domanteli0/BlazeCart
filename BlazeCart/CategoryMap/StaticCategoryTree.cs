@@ -92,7 +92,7 @@ namespace CategoryMap
             {"Kvietinės ir miežinės kruopos", new() { NameLT = "Kvietinės ir miežinės kruopos"} },
             {"Perlinės kruopos", new() { NameLT = "Perlinės kruopos"} },
            {"Manų kruopos", new() { NameLT = "Manų kruopos"} },
-            {"Kitos krupos", new() { NameLT = "Kitos krupos"} },
+            {"Kitos kruopos", new() { NameLT = "Kitos kruopos"} },
    //         {"Dribsniai", new() { NameLT = "Dribsniai"} },
    //         {"Sausi pusryčiai", new() { NameLT = "Sausi pusryčiai"} },
    //         {"Dribsniai košėms", new() { NameLT = "Dribsniai košėms"} },
