@@ -115,21 +115,18 @@ namespace BlazeCart.ViewModels
                     {
                         logo = "maxima_logo.png";
                     }
-                    if (totalPrice > 0)
-                    {
-                        await Shell.Current.GoToAsync(
-                     $"{nameof(CheapestStorePage)}", new Dictionary<string, object> {
-                     { "TotalPrice", totalPrice },
-                     {"Logo", logo }
-                         }
-                         );
-                    }
+                    
+                     await Shell.Current.GoToAsync(
+                        $"{nameof(CheapestStorePage)}", new Dictionary<string, object> {
+                        { "TotalPrice", totalPrice },
+                        {"Logo", logo }
+                     });
+                    
                 }
                 else
                 {
                     await Shell.Current.GoToAsync("EmptyStorePage");
                 }
-                
 
             }
 
@@ -142,10 +139,7 @@ namespace BlazeCart.ViewModels
             finally
             {
                 isBusy = false;
-            }
-
-  
-            
+            }  
             
         }
 

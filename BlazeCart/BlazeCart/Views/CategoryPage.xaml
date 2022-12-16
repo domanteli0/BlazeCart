@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="BlazeCart.Views.CategoryPage"
@@ -10,120 +9,83 @@
              xmlns:dxcv="clr-namespace:DevExpress.Maui.CollectionView;assembly=DevExpress.Maui.CollectionView"
              x:DataType="viewmodel:CategoryViewModel"
              BackgroundColor="{StaticResource PageBackgroundColor}">
-
     <ContentPage.Content>
         <RefreshView IsRefreshing="{Binding IsRefreshing}"
-                         Command="{Binding RefreshCommand}">
+                     Command="{Binding RefreshCommand}">
             <ScrollView>
                 <StackLayout Margin="5">
-                    <ImageButton
-                    Source="back_button"
-                    HorizontalOptions="Start"
-                    Command="{Binding BackCommand}"/>
-                    <Label
-                    HorizontalTextAlignment="Start"
-                    Margin="10, 5, 50, 5"
-                    Style="{StaticResource ItemCatalogPoppinsBold}"
-                    Text="Kategorijos"
-                    TextColor="{StaticResource PrimaryTextColor}" />
-
-
+                    <ImageButton Source="back_button"
+                                 HorizontalOptions="Start"
+                                 Command="{Binding BackCommand}" />
+                    <Label HorizontalTextAlignment="Start"
+                           Margin="10, 5, 50, 5"
+                           Style="{StaticResource ItemCatalogPoppinsBold}"
+                           Text="Kategorijos"
+                           TextColor="{StaticResource PrimaryTextColor}" />
                     <SearchBar Placeholder="Ieškoti kategorijos..."
-                           CancelButtonColor="{StaticResource TextColorSecondary}"
-                           PlaceholderColor="{StaticResource TextColorSecondary}"
-                           TextColor="{StaticResource TextColorSecondary}"
-                           HorizontalTextAlignment="Start"
-                           FontSize="Medium"
-                           FontAttributes="Italic" />
-
-
+                               CancelButtonColor="{StaticResource TextColorSecondary}"
+                               PlaceholderColor="{StaticResource TextColorSecondary}"
+                               TextColor="{StaticResource TextColorSecondary}"
+                               HorizontalTextAlignment="Start"
+                               FontSize="Medium"
+                               FontAttributes="Italic" />
                     <dxcv:DXCollectionView x:Name="searchResults"
-                                    
-                                    ItemsSource="{Binding Categories}"
-                                    IsLoadMoreEnabled="True"
-                                    IsRefreshing="{Binding IsRefreshing, Mode=TwoWay}"
-                                    LoadMoreCommand="{Binding GetCategoriesAsyncCommand}"
-                           IndicatorColor="Lime">
+                                           ItemsSource="{Binding Categories}"
+                                           IsLoadMoreEnabled="True"
+                                           IsRefreshing="{Binding IsRefreshing, Mode=TwoWay}"
+                                           LoadMoreCommand="{Binding GetCategoriesAsyncCommand}"
+                                           IndicatorColor="Lime">
                         <dxcv:DXCollectionView.ItemTemplate>
                             <DataTemplate x:DataType="model:Category">
                                 <Border>
                                     <Frame Padding="0"
-                                       BackgroundColor="{StaticResource White}"
-                                       CornerRadius="20"
-                                       
-                                       Margin="10, 5, 10, 5">
-                                    <Grid MaximumHeightRequest="160">
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="1*" />
-                                            <ColumnDefinition Width="1*" />
-                                        </Grid.ColumnDefinitions>
-                                        <Grid.RowDefinitions>
-
-                                            
-                                            <RowDefinition Height="110" />
-
+                                           BackgroundColor="{StaticResource White}"
+                                           CornerRadius="20"
+                                           Margin="10, 5, 10, 5">
+                                        <Grid MaximumHeightRequest="160">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="1*" />
+                                                <ColumnDefinition Width="1*" />
+                                            </Grid.ColumnDefinitions>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="110" />
                                             </Grid.RowDefinitions>
-
-
-                                        <Image Grid.Row="0"
-                                               Grid.Column="0"
-                                               Margin="0.8"
-                                                Source="{Binding Image}"
-                                               HeightRequest="95"
-                                               MaximumHeightRequest="95">
-
-                                        </Image>
+                                            <Image Grid.Row="0"
+                                                   Grid.Column="0"
+                                                   Margin="0.8"
+                                                   Source="{Binding Image}"
+                                                   HeightRequest="95"
+                                                   MaximumHeightRequest="95" />
                                             <VerticalStackLayout Grid.Column="1"
-                                                               Grid.Row="0">
-
-                                                <Label
-                                           
-                                            VerticalOptions="Center"
-                                            HorizontalOptions="Start"
-                                            Margin="1, 3, 3, 1"
-                                            Padding="1, 3, 3, 1"
-                                            Text="{Binding NameLT}"
-                                            TextColor="{StaticResource PrimaryTextColor}"
-                                            Style="{StaticResource ItemNamePoppins}">
-                                                </Label>
+                                                                 Grid.Row="0">
+                                                <Label VerticalOptions="Center"
+                                                       HorizontalOptions="Start"
+                                                       Margin="1, 3, 3, 1"
+                                                       Padding="1, 3, 3, 1"
+                                                       Text="{Binding NameLT}"
+                                                       TextColor="{StaticResource PrimaryTextColor}"
+                                                       Style="{StaticResource ItemNamePoppins}" />
                                                 <HorizontalStackLayout>
-                                                    <Label  HorizontalOptions="Start"
-                                                            VerticalOptions="Center"
-                                                            Text="(">
-                                                       
-                                                    </Label>
-                                                    <Label
-                                            
-                                            VerticalOptions="Center"
-                                            HorizontalOptions="Start"
-                                            Margin="3"
-                                            Padding="3"
-                                            Text="{Binding Count}"
-                                            
-                                            >
-                                                    </Label>
-                                                    <Label  HorizontalOptions="Start"
-                                                            Text=")"
-                                                             VerticalOptions="Center">
-
-                                                    </Label>
+                                                    <Label HorizontalOptions="Start"
+                                                           VerticalOptions="Center"
+                                                           Text="(" />
+                                                    <Label VerticalOptions="Center"
+                                                           HorizontalOptions="Start"
+                                                           Margin="3"
+                                                           Padding="3"
+                                                           Text="{Binding Count}" />
+                                                    <Label HorizontalOptions="Start"
+                                                           Text=")"
+                                                           VerticalOptions="Center" />
                                                 </HorizontalStackLayout>
-                                               
                                             </VerticalStackLayout>
-                                           
-
-                                           
-
-
-
                                         </Grid>
-                                    <Frame.GestureRecognizers>
-                                        <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:CategoryViewModel}}, Path=TapCommand}"
-                                                              CommandParameter="{Binding .}" />
-                                    </Frame.GestureRecognizers>
-                                </Frame>
+                                        <Frame.GestureRecognizers>
+                                            <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:CategoryViewModel}}, Path=TapCommand}"
+                                                                  CommandParameter="{Binding .}" />
+                                        </Frame.GestureRecognizers>
+                                    </Frame>
                                 </Border>
-
                             </DataTemplate>
                         </dxcv:DXCollectionView.ItemTemplate>
                     </dxcv:DXCollectionView>

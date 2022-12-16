@@ -15,7 +15,7 @@
                 <HorizontalStackLayout HorizontalOptions="Center">
                     <ImageButton Source="back_button.png"
                                  VerticalOptions="Start"
-                                 Command="{Binding BackCommand}"/>
+                                 Command="{Binding BackCommand}" />
                     <Label Text="Krepšelių istorija"
                            Style="{StaticResource PageNamePoppins}"
                            VerticalOptions="Center"
@@ -96,16 +96,15 @@
                                                TextColor="{StaticResource PrimaryTextColor}" />
                                     </HorizontalStackLayout>
                                     <Button x:Name="UseButton"
-                                                BackgroundColor="{StaticResource PrimaryColor}"
-                                                TextColor="{StaticResource White}"
-                                                Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:CartHistoryPageViewModel}}, Path=UseCartCommand}"
-                                                CommandParameter="{Binding .}"
-                                                HeightRequest="40"
-                                                WidthRequest="80"
-                                                Text="Taikyti"
-                                                Margin="10, 10, 0,0"
-                                                HorizontalOptions="Start">
-                                    </Button>
+                                            BackgroundColor="{StaticResource PrimaryColor}"
+                                            TextColor="{StaticResource White}"
+                                            Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:CartHistoryPageViewModel}}, Path=UseCartCommand}"
+                                            CommandParameter="{Binding .}"
+                                            HeightRequest="40"
+                                            WidthRequest="80"
+                                            Text="Taikyti"
+                                            Margin="10, 10, 0,0"
+                                            HorizontalOptions="Start" />
                                     <ImageButton HeightRequest="14.34"
                                                  WidthRequest="20.99"
                                                  Source="additional_cart_info.png"
