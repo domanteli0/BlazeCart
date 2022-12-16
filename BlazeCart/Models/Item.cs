@@ -7,7 +7,7 @@ namespace Models
     // IF ANY CHANGE TO A CLASS FIELD(S) IS DONE
     // A DATABASE MIGRATION IS NECESSARY
     [Table("Item")]
-    public class Item : Entity
+    public class Item : Entity, ICloneable
     {
         public enum UnitOfMeasure { UNKNOWN, VNT, KG, L }
 
@@ -75,5 +75,25 @@ namespace Models
         {
             return NameLT + " [" + InternalID + "]";
         }
+
+        public object Clone() =>
+            new Item()
+            {
+                InternalID = (string) this.InternalID?.Clone(),
+                NameLT = (string?) this.NameLT?.Clone(),
+                NameEN = (string?) this.NameEN?.Clone(),
+                Description = (string?) this.Description?.Clone(),
+                MeasureUnit = (UnitOfMeasure?) this.MeasureUnit,
+                Ammount = this.Ammount,
+                Price = this.Price,
+                DiscountPrice = this.DiscountPrice,
+                LoyaltyPrice = this.LoyaltyPrice,
+                PricePerUnitOfMeasure = this.PricePerUnitOfMeasure,
+                DiscountPricePerUnitOfMeasure = this.DiscountPricePerUnitOfMeasure,
+                LoyaltyPricePerUnitOfMeasure = this.LoyaltyPricePerUnitOfMeasure,
+                Image = new Uri(this.Image?.ToString()),
+                Category = (Category) this.Category.Clone(),
+                Merch = this.Merch,
+            };
     }
 }

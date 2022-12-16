@@ -44,7 +44,9 @@ namespace Scraper
                 {
                     semaphore.Wait();
 
-                    IEnumerable<Item>? items;
+                    // TODO: refactor this mess
+                    // probably with Polly <https://github.com/App-vNext/Polly>
+                    IEnumerable<Item>? items = null;
                     try
                     {
                         items = await GetFetchableItems(cat.Uri!);
@@ -74,15 +76,26 @@ namespace Scraper
                         }
                         catch (EmptyGetExcepsion) { }
 
+                    } finally
+                    {
+                        if (items is not null)
+                            cat.Items = items.ToList();
                     }
                     semaphore.Release();
                 }));
 
             }
             await Task.WhenAll(tasks);
+
+            // back-referencing
+            Items.ForEach((i) => i.Category.Items.Add(i));
             setMerch();
         }
 
+
+        /// <summary>
+        /// 
+        /// </summary>
         /// <returns>An inumeraion of async functions which fetch a category</returns>
         private IEnumerable<Func<Task<Category>>> GetFetchableCategories()
         {

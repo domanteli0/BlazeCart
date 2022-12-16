@@ -90,6 +90,22 @@ namespace Common
 
             return str;
         }
+
+        /// <summary>
+        /// Converts a dictionary to a list without the keys
+        /// </summary>
+        public static List<V> ToListOfValues<K, V>(this IDictionary<K, V> dic)
+        {
+            return dic.ToList().ConvertAll((kvp) => kvp.Value);
+
+        }
+
+        public static Dictionary<K, V> Clone<K, V>(this IDictionary<K,V> dic)
+            where K : ICloneable
+            where V : ICloneable =>
+            dic.ToDictionary(
+                c => (K) c.Key.Clone(), c => (V) c.Value.Clone()
+            );
     }
 }
 
