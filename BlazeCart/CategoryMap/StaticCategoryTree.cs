@@ -339,7 +339,7 @@ namespace CategoryMap
    //         { "Šviežiai kepti užkandžiai", new() { NameLT = "Šviežiai kepti užkandžiai" } },
    //         { "Džiūvėsiai ir javinukai", new() { NameLT = "Džiūvėsiai ir javinukai" } },
    //         { "Riestainiai", new() { NameLT = "Riestainiai" } },
-   //         { "Meduoliai", new() { NameLT = "Meduoliai" } },
+            { "Meduoliai", new() { NameLT = "Meduoliai" } },
             { "Tamsi duona", new() { NameLT = "Tamsi duona" } },
    //         { "Tamsi duona su pagardais", new() { NameLT = "Tamsi duona su pagardais" } },
             { "Šviesi duona", new() { NameLT = "Šviesi duona" } },
@@ -653,7 +653,13 @@ namespace CategoryMap
 
 			// This category contains items, for which no appropiate category was found
 			{ "UNMAPPED", new() { NameLT = "UNMAPPED" } },
-		};
+
+            // TODO: Refactor these, i've added these in a rush
+            { "Antienos", new() { NameLT = "Antienos" } },
+            { "Triušienos", new() { NameLT = "Triušienos" } },
+            { "Vištų kiaušiniai", new() { NameLT = "Vištų kiaušiniai" } },
+            { "Cukrus ir druska", new() { NameLT = "Cukrus ir druska" } },
+        };
 
 		public static Dictionary<string, Category> GetCategoryDict() =>
 			CategoryDict.ToDictionary(

@@ -26,9 +26,9 @@ namespace Tests1.CategoryMap.Implementations
 			//var static_keys = Map.StaticCategoryTree.GetCategoryDict().Select(kvp => kvp.Key);
 
 			_categoryMap.Map(new List<Category>(), StaticCategoryTree.GetCategoryDict());
-			var barbora_keys = _categoryMap._map_store.Select(i => i.Item1);
+            var barbora_keys = _categoryMap._map_store.SelectMany(i => i.Item2).Select(i => i.Item2.NameLT);
 
-			foreach (var barb_key in barbora_keys)
+            foreach (var barb_key in barbora_keys)
 			{
 				Console.WriteLine(barb_key);
 				var _ = Map.StaticCategoryTree.GetCategoryDict()[barb_key];
