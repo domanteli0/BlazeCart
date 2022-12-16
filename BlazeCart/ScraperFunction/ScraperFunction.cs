@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 using Microsoft.Azure.WebJobs;
@@ -7,56 +8,98 @@ using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
 using Scraper;
 using DB;
+using Models;
+using Common;
+using CategoryMap;
+using CategoryMap.Implementations;
 
 namespace ScraperFunction
 {
     public class ScraperFunction
     {
+        // TODO: Mapper service, kuris grąžina Map'erį
+        // Azure cognitive service
+        //
+        // CategoryMap
+        // Suskaldyti krepšeliai (dvi pigiausios kategorijos)
+        // Atra pigiausia parduotuve
+
         private readonly ScraperDbContext _dbCtx;
         private readonly ICollection<IScraper> _scraperRepo;
 
-        public ScraperFunction(ScraperDbContext dbCtx, IScraper []scraperRepo)
+        // NOTE: Using static classes means that data is persisted each run
+        // thus `StaticCategoryTree.CategoryDict` must be copied
+        public Dictionary<string, Category> _categoryDict;
+
+        private IDictionary<string, ICategoryMap> _categoryMappers;
+
+        public ScraperFunction(
+            ScraperDbContext dbCtx
+            , IScraper[] scraperRepo
+            , IDictionary<string, ICategoryMap> categoryMap
+        )
         {
             _dbCtx = dbCtx;
             _scraperRepo = scraperRepo;
+            _categoryMappers = categoryMap;
+            _categoryDict = StaticCategoryTree.GetCategoryDict();
         }
 
         [FunctionName("ScraperFunction")]
         public async Task Run(
              // Use this tool to check if your
              // crontab expression is correct: https://crontab.cronhub.io
-            [TimerTrigger("0 0 * * * *", RunOnStartup = true)]TimerInfo myTimer,
+            [TimerTrigger("0 * * * *", RunOnStartup = true)]TimerInfo myTimer,
             ILogger log
         )
         {
             log.LogInformation($"`ScraperFunction` Timer trigger function began executing at: {DateTime.UtcNow}");
 
-            var tasks = new List<Task>();
-            foreach (var scraper in _scraperRepo)
+            try
             {
-                tasks.Add(Task.Run(async () =>
+                // Scraping
+                var tasks = new List<Task>();
+                foreach (var scraper in _scraperRepo)
                 {
-                    await scraper.Scrape();
-                    log.LogInformation(
-                        $"ITEM COUNT: {scraper.Items.Count} FROM {scraper.GetType().Name} AT: {DateTime.UtcNow}"
-                    );
-                }));
-            }
+                    tasks.Add(Task.Run(async () =>
+                    {
+                        log.LogInformation(scraper.GetType().Name + " started");
+                        await scraper.Scrape();
+                        log.LogInformation(
+                            $"ITEM COUNT: {scraper.Items.Count} FROM {scraper.GetType().Name} AT: {DateTime.UtcNow}"
+                        );
+                    }));
+                }
+                await Task.WhenAll(tasks);
+                log.LogInformation($"Scraping finished at: {DateTime.UtcNow}");
 
-            await Task.WhenAll(tasks);
-            log.LogInformation($"Scraping finished at: {DateTime.UtcNow}");
+                // Mapping
+                foreach (var scraper in _scraperRepo)
+                {
+                    var mapper = _categoryMappers[scraper.GetType().Name];
+                    mapper.Map(scraper.Categories, _categoryDict);
+                }
 
-            await _dbCtx.Items.ForEachAsync(i => { _dbCtx.Remove(i); });
-            await _dbCtx.Categories.ForEachAsync(i => { _dbCtx.Remove(i); });
+                log.LogInformation($"Category re-mapping finished at: {DateTime.UtcNow}");
 
-            foreach (var scraper in _scraperRepo)
+                // DB things
+                await _dbCtx.Items.ForEachAsync(i => { _dbCtx.Remove(i); });
+                await _dbCtx.Categories.ForEachAsync(i => { _dbCtx.Remove(i); });
+
+                var categories = _categoryDict.ToListOfValues();
+
+                categories.GetWithoutChildren().ToList().ForEach(
+                    c => _dbCtx.Items.AddRange(c.Items)
+                );
+                _dbCtx.Categories.AddRange(categories);
+
+                _dbCtx.SaveChanges();
+                log.LogInformation($"Scraping finshed. All items updated successfully to DB at: {DateTime.UtcNow}");
+
+            } catch (Exception e)
             {
-                _dbCtx.Items.AddRange(scraper.Items);
-                _dbCtx.Categories.AddRange(scraper.Categories);
+                log.LogError("An exception was thrown (aborting): " + e.ToString());
             }
-
-            _dbCtx.SaveChanges();
-            log.LogInformation($"Scraping finshed. All items updated successfully to DB at: {DateTime.UtcNow}");
         }
     }
 }
