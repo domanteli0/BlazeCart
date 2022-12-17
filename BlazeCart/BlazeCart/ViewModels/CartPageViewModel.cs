@@ -2,6 +2,7 @@
 using BlazeCart.Models;
 using BlazeCart.Services;
 using BlazeCart.Views;
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Microsoft.Extensions.Logging;
 
@@ -16,6 +17,8 @@ namespace BlazeCart.ViewModels
         public ObservableCollection<Item> CartItems { get; set; } = new();
 
         private ILogger<CartPageViewModel> _logger;
+
+        private bool flag = false;
 
         public CartPageViewModel(DataService dataService, ItemService itemService, ILogger<CartPageViewModel> logger)
         {
@@ -95,31 +98,64 @@ namespace BlazeCart.ViewModels
                 isBusy = true;
                 if (CartItems.Count > 0)
                 {
-                    var items = await _itemService.GetCheapestItems(CartItems);
+                    bool answer = false;
+                    string action = await Shell.Current.DisplayActionSheet("Krepšelio tipas:", "Atšaukti", null, "Iš visų parduotuvių", "Iš vienos parduotuvės");
+                    if (action.Equals("Iš visų parduotuvių"))
+                        answer = true;
+                    else
+                        answer = false;
+
+                    var items = await _itemService.GetCheapestItems(CartItems, answer);
+                    if (items == null)
+                    {
+                        items = CartItems;
+                        flag = true;
+                        
+                    }
+                    else
+                    {
+                        flag = false;
+                    }
+                    string percentDifference = _itemService.percentDifference.ToString() + " % pigiau nei kitur";
                     double totalPrice = 0;
                     foreach (var item in items)
                     {
-                        item.Price = item.Price / 100;
-                        item.PricePerUnitOfMeasure = item.PricePerUnitOfMeasure / 100;
+                        if (!flag)
+                        {
+                            item.Price = item.Price / 100;
+                            item.PricePerUnitOfMeasure = item.PricePerUnitOfMeasure / 100;
+                        }
+                        
                         totalPrice = item.Price * item.Quantity + totalPrice;
 
                     }
                     _itemService.OnCheapestCart(new CartUsedEventArgs(items));
 
                     string logo = null;
-                    if (items[0].Merch == 0)
+                    if (answer)
                     {
-                        logo = "iki_logo.png";
+                        logo = "mixed.png";
                     }
-                    if (items[0].Merch == 1)
+                    else
                     {
-                        logo = "maxima_logo.png";
+                        if (items[0].Merch == 0)
+                        {
+                            logo = "iki_logo.png";
+                        }
+                        if (items[0].Merch == 1)
+                        {
+                            logo = "maxima_logo.png";
+                        }
                     }
+
                     
                      await Shell.Current.GoToAsync(
                         $"{nameof(CheapestStorePage)}", new Dictionary<string, object> {
                         { "TotalPrice", totalPrice },
                         {"Logo", logo }
+                           
+                          //  {"PercentDifference", percentDifference }
+
                      });
                     
                 }
@@ -176,6 +212,8 @@ namespace BlazeCart.ViewModels
             if(item.Quantity > 1)
                 item.Quantity--;
         }
-      
+
+     
+       
     }
 }

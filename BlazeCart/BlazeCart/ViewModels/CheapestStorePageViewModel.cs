@@ -9,6 +9,7 @@ namespace BlazeCart.ViewModels
 {
     [QueryProperty(nameof(TotalPrice), "TotalPrice")]
     [QueryProperty(nameof(Logo), "Logo")]
+    [QueryProperty(nameof(percentDifference), "PercentDifference")]
     public partial class CheapestStorePageViewModel : BaseViewModel
     {
 
@@ -21,7 +22,7 @@ namespace BlazeCart.ViewModels
         [ObservableProperty]
         private static string logo;
         [ObservableProperty]
-        private static string percentDifference = "7.5";
+        public string percentDifference = "2,5% pigiau nei kitur";
 
 
         
@@ -38,8 +39,8 @@ namespace BlazeCart.ViewModels
             foreach (var item in e.Items)
             {
                 CartItems.Add(item);
-               
             }
+            
             
         }
 
@@ -53,7 +54,12 @@ namespace BlazeCart.ViewModels
         [RelayCommand]
         async void GoToMaps(object obj)
         {
-            String storeName = "Iki";
+            String storeName = null;
+            if (logo.Equals("maxima_logo.png"))
+                storeName = "Maxima";
+            else
+                storeName = "Iki";
+            
             try {
                 String coordinates = await GetCachedLocation();
                 if (coordinates != "none")

@@ -12,7 +12,7 @@ namespace BlazeCart.ViewModels
     [QueryProperty(nameof(Image), "Image")]
     [QueryProperty(nameof(Description), "Description")]
     [QueryProperty(nameof(Cat), "Cat")]
-    [QueryProperty(nameof(Merch), "Merch")]
+    [QueryProperty(nameof(MerchName), "MerchName")]
 
     public partial class ItemPageViewModel : BaseViewModel
     {
@@ -34,7 +34,7 @@ namespace BlazeCart.ViewModels
         public string description;
 
         [ObservableProperty]
-        public int merch;
+        public string merchName;
 
         private ItemService _itemService;
 

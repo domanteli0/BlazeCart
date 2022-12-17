@@ -18,7 +18,7 @@ public class ItemService
 
     public event EventHandler<CartUsedEventArgs> CheapestCart;
 
-
+    public double percentDifference;
     private HttpClient _client;
 
     public ItemService(string baseUrl)
@@ -49,13 +49,17 @@ public class ItemService
         
         return items;
     }
-    public async Task<ObservableCollection<Item>> GetCheapestItems(ObservableCollection<Item> items)
+    public async Task<ObservableCollection<Item>> GetCheapestItems(ObservableCollection<Item> items, bool mixed = false)
     {
         ObservableCollection<Item> cheapestItemsIKI = new ObservableCollection<Item>();
         ObservableCollection<Item> cheapestItemsBarbora = new ObservableCollection<Item>();
+        ObservableCollection<Item> cheapestItemsMixed = new ObservableCollection<Item>();
 
         double totalPriceIKI = 0;
         double totalPriceBarbora = 0;
+        Item itemIKI = new Item();
+        Item itemBarbora = new Item();
+        Item itemMixed = new Item();
 
         foreach (var item in items)
         {
@@ -64,40 +68,95 @@ public class ItemService
             double price = item.Price;
             int comparedMerch = item.Merch;
             double? amount = item.Ammount;
+            Uri image = item.Image;
+            if (amount == null)
+                amount = 0;
+            if (mixed)
+            {
+               
+                var json = await _client.GetStringAsync($"api/Item/{name}/{category}/{price}/{amount}/2/{comparedMerch}");
+                itemMixed = JsonConvert.DeserializeObject<Item>(json.ToString());
 
-            var jsonBarbora = await _client.GetStringAsync($"api/Item/{name}/{category}/{price}/{amount}/0/{comparedMerch}");
-            var jsonIKI = await _client.GetStringAsync($"api/Item/{name}/{category}/{price}/{amount}/1/{comparedMerch}");
-            var itemBarbora = JsonConvert.DeserializeObject<Item>(jsonBarbora.ToString());
-            var itemIKI = JsonConvert.DeserializeObject<Item>(jsonIKI.ToString());
+                if (itemMixed.NameLT == name)
+                    itemMixed.Image = image;
+                if (itemMixed.Merch == 0)
+                    itemMixed.MerchName = "IKI";
+                else
+                    itemMixed.MerchName = "MAXIMA";
 
-            itemBarbora.Quantity = item.Quantity;
-            //itemIKI.Quantity = item.Quantity;
+                itemMixed.Quantity = item.Quantity;
+                cheapestItemsMixed.Add(itemMixed);
+            }
+            else
+            {
+                var jsonIKI = await _client.GetStringAsync($"api/Item/{name}/{category}/{price}/{amount}/0/{comparedMerch}");
+                itemIKI = JsonConvert.DeserializeObject<Item>(jsonIKI.ToString());
+                itemIKI.Quantity = item.Quantity;
+                
+                if (itemIKI.Image == null)
+                    itemIKI.Image = image;
+                if (itemIKI.Merch != 1) {
+                    itemIKI.MerchName = "IKI";
+                    cheapestItemsIKI.Add(itemIKI);
 
-            if(itemBarbora.Merch == 0)
-                cheapestItemsBarbora.Add(itemBarbora);
-            if(itemBarbora.Merch == 1)
-                cheapestItemsIKI.Add(itemIKI);
-            //if (itemIKI.Merch == 0)
-            //    cheapestItemsBarbora.Add(itemIKI);
-            //if(itemIKI.Merch == 1)
-            //    cheapestItemsIKI.Add(itemIKI);
+                    var jsonBarbora = await _client.GetStringAsync($"api/Item/{name}/{category}/{price}/{amount}/1/{comparedMerch}");
+                    itemBarbora = JsonConvert.DeserializeObject<Item>(jsonBarbora.ToString());
+                    itemBarbora.Quantity = item.Quantity;
+                    itemBarbora.MerchName = "MAXIMA";
+                    if (itemBarbora.Image == null)
+                        itemBarbora.Image = image;
+                    if (itemBarbora.Merch != 0)
+                        cheapestItemsBarbora.Add(itemBarbora);
+                }
+                else
+                {
+                    itemIKI.MerchName = "MAXIMA";
+                    cheapestItemsBarbora.Add(itemIKI);
+                }
+                  
+            }
+          
+        }
+        if (cheapestItemsBarbora.Count > 0)
+        {
+            foreach (var i in cheapestItemsBarbora)
+            {
+                totalPriceBarbora += i.Price * i.Quantity;
+            }
         }
 
-        if(cheapestItemsBarbora.Count > 0)
-            foreach(var item in cheapestItemsBarbora)
+        if (cheapestItemsIKI.Count > 0)
+        {
+            foreach (var i in cheapestItemsIKI)
             {
-                totalPriceBarbora += item.Price * item.Quantity;
+                totalPriceIKI += i.Price * i.Quantity;
             }
-       
-        if(cheapestItemsIKI.Count > 0)
-            foreach(var item in cheapestItemsIKI)
-            {
-                totalPriceIKI += item.Price * item.Quantity;
-            }
-        //if (totalPriceIKI < totalPriceBarbora)
-        //    return cheapestItemsIKI;
-       // else
+        }
+        if (mixed)
+            return cheapestItemsMixed;
+
+        if (totalPriceIKI < totalPriceBarbora && cheapestItemsIKI.Count == items.Count)
+        {
+            percentDifference = (1 - totalPriceIKI / totalPriceBarbora) / 100;
+            return cheapestItemsIKI;
+
+        }
+        else if (totalPriceBarbora < totalPriceIKI && cheapestItemsBarbora.Count == items.Count)
+        {
+            percentDifference = (1 - totalPriceBarbora / totalPriceIKI) / 100;
             return cheapestItemsBarbora;
+        }
+        else if (totalPriceIKI >= totalPriceBarbora && cheapestItemsBarbora.Count != items.Count && cheapestItemsIKI.Count == items.Count)
+            return cheapestItemsIKI;
+        else if (totalPriceBarbora >= totalPriceIKI && cheapestItemsIKI.Count != items.Count && cheapestItemsBarbora.Count == items.Count)
+            return cheapestItemsBarbora;
+        else if (cheapestItemsIKI.Count != items.Count && cheapestItemsBarbora.Count != items.Count)
+        {
+            await Shell.Current.DisplayAlert("Ooops!", "Neįmanoma parinkti pigiausios parduotuvės!", "OK");
+            return null;
+        }
+        else
+            return null;
     }
     public async Task<ObservableCollection<Item>> GetItems(string fileName)
     {

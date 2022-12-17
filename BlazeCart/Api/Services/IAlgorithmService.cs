@@ -5,7 +5,7 @@ namespace Api.Services
     public interface IAlgorithmService
     {
         string refactorItemName(string? name);
-        Item GetCheapestItemAlgorithm(Item comparedItem, List<Item> itemList);
+        Item GetCheapestItemAlgorithm(Item comparedItem, List<Item> itemList, string oldName);
 
         string ThrowOutAllBrandNamesAndNumbers(string nameLT);
         string ThrowOutAllCommas(string name);
