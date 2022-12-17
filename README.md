@@ -40,6 +40,10 @@ If you have run into problems make consult with this checklist:
 * DB connection strings are added in configs (appsettings.json, secrets.json).
 * Dotnet and dependency versions match (Recomened version 6).
 
+### Api
+
+Api may take a few minutes to start up, it may send 503 response method while it does.
+
 ### ScraperFunction
 
 * You may need to fetch app-settings using [func](https://learn.microsoft.com/en-us/azure/azure-functions/functions-run-local?tabs=v4%2Cmacos%2Ccsharp%2Cportal%2Cbash#install-the-azure-functions-core-tools). 
