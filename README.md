@@ -19,6 +19,8 @@ This project is organized as such:
 * `Common` - contains various helper extention methods
 * `Tests` - it's... tests
 
+The client relies on a working instance of `Api`, which relies on `DB`, which is populated by `ScraperFunction`; see `Untitled Diagram.drawio` for clarity. 
+
 ### DB
 Updates to DB schema are done with `dotnet ef` cli tool.
 
@@ -40,10 +42,16 @@ If you have run into problems make consult with this checklist:
 * DB connection strings are added in configs (appsettings.json, secrets.json).
 * Dotnet and dependency versions match (Recomened version 6).
 
+### Api
+
+Api may take a few minutes to start up, it may send 503 response method while it does.
+
 ### ScraperFunction
 
 * You may need to fetch app-settings using [func](https://learn.microsoft.com/en-us/azure/azure-functions/functions-run-local?tabs=v4%2Cmacos%2Ccsharp%2Cportal%2Cbash#install-the-azure-functions-core-tools). 
-Run `func azure functionapp fetch-app-settings <function-name>`
+
+    Run `func azure functionapp fetch-app-settings <function-name>`
+
 * If you get this:
     ```
     [TIMESTAMP] Executed 'ScraperFunction' (Failed, Id=[...], Duration=80ms)

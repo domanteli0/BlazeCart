@@ -81,7 +81,7 @@ namespace Scraper
                     Items.AddAsSetByProperty(i, "InternalID");
                     cat.Items.AddAsSetByProperty(i, "InternalID");
                 }
-                break;
+                //break;
             }
         }
 

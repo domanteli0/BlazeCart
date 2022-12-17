@@ -7,6 +7,10 @@ using Models;
 using DB;
 using Common;
 
+// TODO: REMOVE
+using CategoryMap;
+using CategoryMap.Implementations;
+
 namespace Scraper
 {
     internal class Program
@@ -29,14 +33,18 @@ namespace Scraper
 
             var factory = LoggerFactory.Create(b => b.AddConsole());
             var logger = factory.CreateLogger<Scraper>();
+            logger.LogInformation("STARTING");
 
             var iScraper = new IKIScraper(new HttpClient(), logger);
+            logger.LogInformation("STARTING");
             var bScraper = new BarboraScraper(new HttpClient(), logger);
 
+            logger.LogInformation("STARTING");
 
             await dbCtx.Items.ForEachAsync(i => { dbCtx.Remove(i); });
             await dbCtx.Categories.ForEachAsync(i => { dbCtx.Remove(i); });
             dbCtx.SaveChanges();
+            logger.LogInformation("DELETED");
 
             List<Task> tasks = new();
             tasks.Add(Task.Run(async () =>
@@ -50,29 +58,21 @@ namespace Scraper
             }));
 
             await Task.WhenAll(tasks);
-            Console.WriteLine($"BARBORA: {bScraper.Items.Count}");
-            Console.WriteLine($"IKI: {iScraper.Items.Count}\n");
+            logger.LogInformation("SCRAPED");
 
-            Console.WriteLine($"BARBORA: {bScraper.Categories.Count}");
-            Console.WriteLine($"IKI: {iScraper.Categories.Count}\n");
+            var catMapDict = StaticCategoryTree.GetCategoryDict();
+            var iMap = new IkiCategoryMap(factory.CreateLogger<IkiCategoryMap>());
+            var bMap = new BarboraCategoryMap(factory.CreateLogger<BarboraCategoryMap>());
 
-            Console.WriteLine($"BARBORA: {bScraper.Categories.GetWithoutChildren(). SelectMany(cat => cat.Items).Count()}");
+            bMap.Map(bScraper.Categories, catMapDict);
+            iMap.Map(iScraper.Categories, catMapDict);
+            logger.LogInformation("MAPPED");
             
-            Console.WriteLine($"IKI: {iScraper.Categories.GetWithoutChildren(). SelectMany(cat => cat.Items).Count()}\n");
+            await dbCtx.Categories.AddRangeAsync(catMapDict.ToListOfValues());
 
-            //Console.WriteLine($"BARBORA_CATS: {bScraper.Categories.SelectR(c => c).Count()}");
-            //Console.WriteLine($"IKI_CATS: {iScraper.Categories.SelectR(c => c).Count()}");
-
-            await dbCtx.Categories.AddRangeAsync(bScraper.Categories);
-            //await dbCtx.Categories.AddRangeAsync(bScraper.Categories.GetWithoutChildren());
-
-            //dbCtx.Items.Add(new () { InternalID = "TEWST", NameLT = "TEST", Category = bScraper.Categories.First(), Merch = Merchendise.Merch.IKI});
-            //dbCtx.Items.Add(new () { InternalID = "TEST", NameLT = "TEwST", Category = bScraper.Categories.First(), Merch = Merchendise.Merch.BARBORA});
-
-            await dbCtx.Categories.AddRangeAsync(iScraper.Categories);
-            //await dbCtx.Items.AddRangeAsync(iScraper.Items);
-
-            //iScraper.Items.ForEach(i => logger.LogInformation(i.Merch.ToString()));
+            logger.LogInformation($"BARBORA, GOT: {bScraper.Items.Count}");
+            logger.LogInformation($"IKI, GOT: {iScraper.Items.Count}");
+            logger.LogInformation($"DB, GOT: {dbCtx.Items.Count()} [MAY BE INACCURATE]");
 
             dbCtx.SaveChanges();
         }

@@ -32,5 +32,6 @@
     <PackageReference Include="SQLitePCLRaw.provider.dynamic_cdecl" Version="2.1.2" />
     <ProjectReference Include="..\Common\Common.csproj" />
     <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="6.0.0" />
+    <ProjectReference Include="..\CategoryMap\CategoryMap.csproj" />
   </ItemGroup>
 </Project>

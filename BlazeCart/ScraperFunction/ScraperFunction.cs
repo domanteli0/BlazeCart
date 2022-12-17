@@ -49,7 +49,7 @@ namespace ScraperFunction
         public async Task Run(
              // Use this tool to check if your
              // crontab expression is correct: https://crontab.cronhub.io
-            [TimerTrigger("0 * * * *", RunOnStartup = true)]TimerInfo myTimer,
+            [TimerTrigger("0 0 * * *", RunOnStartup = true)]TimerInfo myTimer,
             ILogger log
         )
         {
@@ -82,16 +82,22 @@ namespace ScraperFunction
 
                 log.LogInformation($"Category re-mapping finished at: {DateTime.UtcNow}");
 
+                //throw new Exception("STOP");
+
                 // DB things
-                await _dbCtx.Items.ForEachAsync(i => { _dbCtx.Remove(i); });
+                // Remove old items
                 await _dbCtx.Categories.ForEachAsync(i => { _dbCtx.Remove(i); });
+                await _dbCtx.Items.ForEachAsync(i => { _dbCtx.Remove(i); });
 
-                var categories = _categoryDict.ToListOfValues();
 
-                categories.GetWithoutChildren().ToList().ForEach(
-                    c => _dbCtx.Items.AddRange(c.Items)
-                );
-                _dbCtx.Categories.AddRange(categories);
+                // Add new items
+                _categoryDict.Remove("UNMAPPED");
+                _categoryDict.ToListOfValues().ForEach(async cat =>
+                {
+                    _dbCtx.Categories.Add(cat);
+                    await Task.Delay(200);
+
+                });
 
                 _dbCtx.SaveChanges();
                 log.LogInformation($"Scraping finshed. All items updated successfully to DB at: {DateTime.UtcNow}");

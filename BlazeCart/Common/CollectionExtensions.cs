@@ -118,17 +118,15 @@ namespace Common
 
         }
 
-        public static IEnumerable<T> SelectR<T>(this IEnumerable<Category> list, Func<Category, T> func)
+        public static List<T> SelectR<T>(this IEnumerable<Category> list, Func<Category, IEnumerable<T>> func)
         {
             var newl = new List<T>();
             foreach (var sub in list)
             {
-                newl.Add(func(sub));
                 newl.AddRange(sub.SubCategories.SelectR(func));
             }
 
             return newl;
-
         }
     }
 }
