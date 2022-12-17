@@ -39,6 +39,13 @@ namespace Models
         public Merchendise.Merch Merch { get; set; }
         // TODO: public virtual ICollection<string>? Barcodes { get; set; }
 
+        public Item(string internalID, Category category)
+        {
+            if (category is null) throw new ArgumentException("`category` cannot be null");
+            InternalID = internalID;
+            Category = category;
+        }
+
         public Item(
             string internalID
         )

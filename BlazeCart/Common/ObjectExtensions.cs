@@ -14,6 +14,12 @@ namespace Common
         {
             if (obj is not null) { doIfNotNull(obj); };
         }
+
+        public static string? ToStringNullSafe<T>(this T obj) =>
+            (obj is null) ? "null" : obj!.ToString();
+
+        public static string Join(IEnumerable<String> strs, string sep) => String.Join(sep, strs);
+
     }
 }
 

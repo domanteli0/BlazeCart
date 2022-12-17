@@ -10,24 +10,20 @@ namespace CategoryMap.Implementations
         public ACategoryMap(ILogger logger) { _logger = logger;  }
 
 		public List<(string, List<(string, Category)>)> _map_store = new();
-        private Category _unmappedCat = null;
+        private Category? _unmappedCat = null;
 
         public void map_category(Category from, Category to)
 		{
-			foreach(var item in from.Items)
-			{
-				map_item(item, to);
-			}
+            from.Items.ForEach(item => map_item(item, to));
 		}
 
 		public void map_item(Item from, Category to)
 		{
 			from.Category = to;
 			to.Items.Add(from);
-			_logger
-				.LogInformation(
-					$"Mapped {from.NameLT} to {to.NameLT}"
-				);
+			_logger.LogInformation(
+				$"Mapped {from.NameLT} to {to.NameLT}"
+			);
 		}
 
 		// TODO: better, non-frantic documentation
@@ -38,23 +34,23 @@ namespace CategoryMap.Implementations
         /// <exception cref="NotImplementedException"></exception>
         /// <param name="pattern_into_pairs"> pair of item pattern and category TO which ampped</param>
         private protected void addMapper(
-			  string categoryName, List<(string, Category)> pattern_into_pairs
-		)
-		{
-			_map_store.Add((categoryName, pattern_into_pairs));
-		}
+			  string categoryName
+            , List<(string, Category)> pattern_into_pairs
+		) =>
+            _map_store.Add((categoryName, pattern_into_pairs));
 
         /// <summary>
         /// Adds a category for which no sutable category for an item was found
         /// </summary>
         /// <param name="unmapCat"></param>
-        private protected void addForUnmapped(Category unmapCat)
-        {
+        private protected void addForUnmapped(Category unmapCat) =>
             _unmappedCat = unmapCat;
-        }
 
         /// <summary>
-        /// Executes all rules in the order they were added
+        /// Executes all rules from `addMapper` in the order they were added
+        /// NOTE: This method will remove `Item`s from it's `Category`
+        /// Thus if one of your `Category`ies has a null assigned to field `Items`
+        /// it is very likely that a NullException will be thrown
         /// </summary>
         /// <param name="categories"> WARNING!: ASUMES THAT CATEGORIES DON'T CONTAIN CHILDREN</param>
         /// <exception cref="NotImplementedException"></exception>
@@ -63,41 +59,51 @@ namespace CategoryMap.Implementations
 		{
             if (_unmappedCat is null) throw new Exception("No category for unmatched items, use `addForUnmapped` (if you did, make sure `unmapCat` is not null)");
 
-			foreach (var (catName, item_pattern_pairs) in _map_store)
-			{
-				var unmapped = new List<Item>();
+            // assume unmapped
+            from
+                .GetWithoutChildren()
+                .SelectMany(c => c.Items)
+                .ToList()
+                .ForEach(i => {
+                    i.Category = _unmappedCat;
+                    _unmappedCat.Items.Add(i);
+                });
+
+            // then check if mapped
+            foreach (var (catName, item_pattern_to_pairs) in _map_store)
+            {
                 foreach (
                     var item in
-                    from.FindAll(c => c.NameLT!.Equals(catName)).SelectMany(c => c.Items))
+                    from
+                        .FindAll(c => c.NameLT!.Equals(catName))
+                        .SelectMany(c => c.Items))
                 {
-                    foreach (var (item_pattern, to) in item_pattern_pairs)
+                    foreach (var (item_pattern, to) in item_pattern_to_pairs)
                     {
                         if (item.NameLT.ToLower().ContainsPattern(item_pattern))
                         {
-							unmapped.Remove(item);
-                            item.Category = to;
-                            to.Items.Add(item);
+                            try
+                            {
+                                _unmappedCat.Items.Remove(item);
+                                item.Category = to;
+                                to.Items.Add(item);
 
-                            _logger
-                                .LogInformation(
-                                    $"Mapped {item.NameLT} to {to.NameLT}"
-                                );
-                        } else { unmapped.Add(item); }
+                                _logger
+                                    .LogInformation(
+                                        $"Mapped {item.NameLT} to {to.NameLT}"
+                                    );
+
+                            }
+                            catch (Exception)
+                            {
+                                _logger.LogError($"Exception was thrown; '{item}' in '{item.Category.ToStringNullSafe()}'");
+                                throw;
+                            }
+                        }
                     }
-
-                }
-
-				foreach (var item in unmapped)
-                {
-                    _logger
-                        .LogInformation(
-                            $"Mapped {item.NameLT} wasn't mapped"
-                        );
-                    item.Category = _unmappedCat;
-                    _unmappedCat.Items.Add(item);
                 }
             }
-		}
+        }
 	}
 }
 

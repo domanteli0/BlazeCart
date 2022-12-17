@@ -653,6 +653,7 @@ namespace CategoryMap
 
 			// This category contains items, for which no appropiate category was found
 			{ "UNMAPPED", new() { NameLT = "UNMAPPED" } },
+			//{ "TEST", new() { NameLT = "THIS IS A MAPPED CATEGORY TREE" } },
 
             // TODO: Refactor these, i've added these in a rush
             { "Antienos", new() { NameLT = "Antienos" } },

@@ -21,29 +21,26 @@ namespace Scraper
         public override async Task Scrape()
         {
             clean();
-            var noOfCons = 10;
 
             foreach (var cat in GetFetchableCategories())
             {
                 var c = await cat();
                 Categories.Add(c);
-                break;
+                //break;
             }
 
-            var semaphore = new SemaphoreSlim(noOfCons, noOfCons);
+            var wait_between_cats = 500; // in milis 
             var tasks = new List<Task>();
             foreach (var cat in Categories.GetWithoutChildren())
             {
                 tasks.Add(Task.Run(async () =>
                 {
-                    semaphore.Wait();
-
                     // TODO: refactor this mess
                     // probably with Polly <https://github.com/App-vNext/Polly>
                     IEnumerable<Item>? items = null;
                     try
                     {
-                        items = await GetFetchableItems(cat.Uri!);
+                        items = await GetFetchableItems(cat);
                     }
                     catch (EmptyGetExcepsion ex)
                     {
@@ -52,7 +49,7 @@ namespace Scraper
                             var tries = 3;
                             while (tries > 0)
                             {
-                                items = await GetFetchableItems(ex.Uri!);
+                                items = await GetFetchableItems(cat);
                                 if (items is null)
                                     _logger.LogError(
                                         $"Failed to retrieve {ex.Uri}" +
@@ -63,19 +60,30 @@ namespace Scraper
                             }
                         }
                         catch (EmptyGetExcepsion) { }
-
                     } finally
                     {
                         if (items is not null)
                         {
+                            if (cat is null) throw new Exception("This shouldn't happen");
+
+                            items.ToList().ForEach(item =>
+                                _logger.LogInformation($"IT:{item} [{item.Category}]")
+                            );
+                            _logger.LogInformation($"CAT:{cat.ToStringNullSafe()}");
+
+                            items = items
+                                .Select(item => { item.Category = cat; return item; });
                             cat.Items.AddRange(items);
-                            this.Items.AddRange(items);
+                            //lock (this.Items)
+                            //{
+                                this.Items.AddRange(items);
+                            //}
+
                             _logger.LogInformation($"Successfully retrieved from {cat.Uri} with {items.Count()} items");
                         }
                     }
-                    semaphore.Release();
                 }));
-
+                await Task.Delay(wait_between_cats);
             }
             await Task.WhenAll(tasks);
 
@@ -166,10 +174,10 @@ namespace Scraper
         /// <summary>
         /// This request might fail, in that case `null` is returned
         /// </summary>
-        private async Task<IEnumerable<Item>?> GetFetchableItems(Uri category)
+        private async Task<IEnumerable<Item>?> GetFetchableItems(Category category)
         {
             HttpResponseMessage response;
-            using (var request = new HttpRequestMessage(new HttpMethod("GET"), category))
+            using (var request = new HttpRequestMessage(new HttpMethod("GET"), category.Uri))
             {
                 response = await _httpClient.SendAsync(request);
                 _logger.LogInformation($"Sent request to {request.RequestUri}");
@@ -187,13 +195,14 @@ namespace Scraper
                     .SelectNodes("/html/body/div[1]/div/div[3]/div/div[3]/div[2]/script")
                     .First().InnerText
                     .FindFirstRegexMatch("(?<=var products = ).*(?=;)");
-
-                return ProccesItems(itemJSON);
+                var ret = ProccesItems(itemJSON);
+                ret.Select(i => { i.Category = category; return i; } );
+                return ret;
             }
             catch (ArgumentNullException)
             {
                 _logger.LogInformation($"Barbora probably responded with 500");
-                throw new EmptyGetExcepsion(category);
+                throw new EmptyGetExcepsion(category.Uri!);
             }
         }
 
