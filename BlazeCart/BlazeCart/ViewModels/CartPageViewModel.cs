@@ -2,7 +2,6 @@
 using BlazeCart.Models;
 using BlazeCart.Services;
 using BlazeCart.Views;
-using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Microsoft.Extensions.Logging;
 
@@ -109,6 +108,7 @@ namespace BlazeCart.ViewModels
                     if (items == null)
                     {
                         items = CartItems;
+                        await Shell.Current.DisplayAlert("Ooops!", "Neįmanoma parinkti pigiausios parduotuvės!", "OK");
                         flag = true;
                         
                     }

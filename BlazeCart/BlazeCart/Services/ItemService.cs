@@ -152,7 +152,6 @@ public class ItemService
             return cheapestItemsBarbora;
         else if (cheapestItemsIKI.Count != items.Count && cheapestItemsBarbora.Count != items.Count)
         {
-            await Shell.Current.DisplayAlert("Ooops!", "Neįmanoma parinkti pigiausios parduotuvės!", "OK");
             return null;
         }
         else
