@@ -21,7 +21,7 @@ public partial class CategoryViewModel : BaseViewModel
     private int _startIndex = 0;
 
     private bool flag = true;
-    private int count;
+   
 
     [ObservableProperty]
     public bool isRefreshing;
@@ -30,7 +30,7 @@ public partial class CategoryViewModel : BaseViewModel
     {
         _categoryService = categoryService;
         _itemService = itemService;
-     //   Barrel.Current.EmptyAll();
+       Barrel.Current.EmptyAll();
 
     }
 
@@ -44,20 +44,54 @@ public partial class CategoryViewModel : BaseViewModel
         try
         {
             isBusy = true;
-           
-            var categories = await _categoryService.GetCategories(_startIndex, 30);
-            _startIndex += 30;
+            int count = await _categoryService.GetCategoriesCount();
             
-            foreach (var cat in categories)
+            if (_startIndex + 30 <= count)
             {
-                var items = await _categoryService.GetItemsByCategoryId(cat.Id);
-                cat.Count = items.Count();
-                cat.Image = items[3].Image;
+                var categories = await _categoryService.GetCategories(_startIndex, 30);
+                _startIndex += 30;
+
+                foreach (var cat in categories)
+                {
+                    var items = await _categoryService.GetItemsByCategoryId(cat.Id);
+                    cat.Count = items.Count();
+                    if(cat.Count > 0)
+                        cat.Image = items[0].Image;
+                    
+                }
+
+                foreach (var category in categories)
+                {
+                    if (category.Count > 0)
+                    {
+                        Categories.Add(category);
+                    }
+                }
             }
+            else if(_startIndex < count)
+            {
+                var categories = await _categoryService.GetCategories(_startIndex, count - _startIndex);
+
+                foreach (var cat in categories)
+                {
+                    var items = await _categoryService.GetItemsByCategoryId(cat.Id);
+                    cat.Count = items.Count();
+                    if(cat.Count > 0)
+                        cat.Image = items[0].Image;
+                   
+                }
 
 
-            foreach (var category in categories)
-                Categories.Add(category);
+                foreach (var category in categories)
+                {
+                    if (category.Count > 0)
+                    {
+                        Categories.Add(category);
+                    }
+                }
+                _startIndex = count;
+                    
+            }
         }
 
         catch (Exception ex)

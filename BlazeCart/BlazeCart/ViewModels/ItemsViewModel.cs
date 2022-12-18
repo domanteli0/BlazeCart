@@ -88,6 +88,10 @@ public partial class ItemsViewModel : BaseViewModel
                     item.Category = nameLT;
                     item.Price = item.Price / 100;
                     item.PricePerUnitOfMeasure = item.PricePerUnitOfMeasure / 100;
+                    if (item.Merch == 0)
+                        item.MerchName = "IKI";
+                    if (item.Merch == 1)
+                        item.MerchName = "MAXIMA";
                     if (item.DiscountPrice == null && item.LoyaltyPrice == null)
                     {
                         item.LowerPrice = "";
@@ -288,7 +292,7 @@ public partial class ItemsViewModel : BaseViewModel
                        {"Image", item.Image},
                       {"Description", item.Description},
                       {"Cat", item.Category },
-                      {"Merch", item.Merch }
+                      {"MerchName", item.MerchName }
                   });
             
         }

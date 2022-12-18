@@ -29,7 +29,7 @@ namespace Api.Services
             return -1;
         }
 
-        public Item GetCheapestItemAlgorithm(Item comparedItem, List<Item> itemList)
+        public Item GetCheapestItemAlgorithm(Item comparedItem, List<Item> itemList, string oldName)
         {
             List<Item> potentialCollection = new();
             foreach (var item in itemList)
@@ -47,6 +47,7 @@ namespace Api.Services
             }
             if(potentialCollection.Count == 0)
             {
+                comparedItem.NameLT = oldName;
                 return comparedItem;
             }
             else
@@ -61,6 +62,7 @@ namespace Api.Services
                         minItem.Image = item.Image;
                         minItem.Ammount = item.Ammount;
                         minItem.Price = item.Price;
+                        minItem.Merch = item.Merch;
                         min = item.Price;
                     }
                 }

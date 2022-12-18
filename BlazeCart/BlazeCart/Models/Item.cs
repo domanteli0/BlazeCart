@@ -43,6 +43,7 @@ namespace BlazeCart.Models
             public bool IsFavorite { get; set; }
             public string? Components { get; set; }
             public int Merch { get; set; }
+            public string? MerchName { get; set; }
             public bool? Availability { get; set; }
 
     }

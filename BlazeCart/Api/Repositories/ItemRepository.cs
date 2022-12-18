@@ -38,28 +38,36 @@ namespace Api.Repositories
         {
             double min = price;
             Item cheapestItem = new();
+            List <Item> records = new();
 
-            var records = await _context.Items.Where(i => i.Category.NameLT == category && i.Merch == (Merchendise.Merch)merch).ToListAsync();
-            for (int i = 0; i < records.Count; i++)
-            {
-                if (IsInvalidItemFilter(records[i]))
-                {
+       
+           if (merch == 2)
+           {
+                records = await _context.Items.Where(i => i.Category.NameLT == category).ToListAsync();
+           }
+           else
+           {
+                records = await _context.Items.Where(i => i.Category.NameLT == category && i.Merch == (Merchendise.Merch)merch).ToListAsync();
+           }
+           for (int i = 0; i < records.Count; i++)
+           {
+               if (IsInvalidItemFilter(records[i]))
+               {
                     records.Remove(records[i]);
                     i--;
-                }
-            }
+               }
+           }
 
             List<Item> sortedList = records.OrderBy(x => x.NameLT).ToList();
-
+            string oldName = name;
             Item comparedItem = new();
             comparedItem.NameLT = name;
             comparedItem.Price = (int)(price * 100);
             comparedItem.Ammount = (float?)amount;
             comparedItem.Merch = (Merchendise.Merch)comparedMerch;
      
-
             comparedItem.NameLT = _algorithmService.refactorItemName(comparedItem.NameLT).ToLower();
-            cheapestItem = _algorithmService.GetCheapestItemAlgorithm(comparedItem, sortedList);
+            cheapestItem = _algorithmService.GetCheapestItemAlgorithm(comparedItem, sortedList, oldName);
             return cheapestItem;
         }
 

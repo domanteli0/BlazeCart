@@ -93,13 +93,7 @@
                                Text="{Binding PercentDifference}"
                                TextColor="{StaticResource White}"
                                VerticalOptions="Center" />
-                            <Label Style="{StaticResource CheapestStoreHeaderPoppins}"
-                               HorizontalOptions="Center"
-                               HorizontalTextAlignment="Center"
-                               Margin="0, 60, 0, 5"
-                               Text="% pigiau nei kitur"
-                               TextColor="{StaticResource White}"
-                               VerticalOptions="Center" />
+                            
                         </HorizontalStackLayout>
                     </AbsoluteLayout>
                     <ImageButton Source="show_map_button.png"
@@ -177,17 +171,28 @@
                                                Text="€"
                                                TextColor="{StaticResource PrimaryTextColor}" />
                                         </HorizontalStackLayout>
-                                        <HorizontalStackLayout Grid.Column="1"
+                                        <VerticalStackLayout Grid.Column="1"
                                                            Grid.Row="1">
-                                            <Label HorizontalTextAlignment="Start"
+                                            <HorizontalStackLayout>
+                                                <Label HorizontalTextAlignment="Start"
                                                Margin="0,  0,2, 0"
                                                Style="{StaticResource ItemPricePoppins}"
                                                Text="Kiekis: " />
-                                            <Label HorizontalTextAlignment="Start"
+                                                <Label HorizontalTextAlignment="Start"
                                                Margin="0,  0,2, 0"
                                                Style="{StaticResource ItemPricePoppins}"
                                                Text="{Binding Quantity}" />
-                                        </HorizontalStackLayout>
+                                            </HorizontalStackLayout>
+                                            
+                                            <Label HorizontalTextAlignment="Start"
+                                               Margin="0,  0, 0, 0"
+                                               Style="{StaticResource ItemPricePoppins}"
+                                               Text="{Binding MerchName}" />
+                                        </VerticalStackLayout>
+                                        
+                                           
+                                            
+                                      
                                     </Grid>
                                 </Border>
                             </DataTemplate>
