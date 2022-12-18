@@ -59,7 +59,7 @@ namespace BlazeCart.Services
         {
             await Init();
 
-            Item item = await _db.Table<Item>().Where(x => x.Name == favoriteItem.Name && x.Store == favoriteItem.Store).FirstOrDefaultAsync();
+            Item item = await _db.Table<Item>().Where(x => x.NameLT == favoriteItem.NameLT && x.Merch == favoriteItem.Merch).FirstOrDefaultAsync();
             if (item != null)
             {
                 item.IsFavorite = true;

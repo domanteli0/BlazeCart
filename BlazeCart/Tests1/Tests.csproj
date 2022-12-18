@@ -1,0 +1,55 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+	 
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Api\Repositories\**" />
+    <EmbeddedResource Remove="Api\Repositories\**" />
+    <None Remove="Api\Repositories\**" />
+    <None Remove="CategoryMap\" />
+    <None Remove="CategoryMap\Implementations\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="FakeItEasy" Version="7.3.1" />
+    <PackageReference Include="FluentAssertions" Version="6.8.0" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.1.0" />
+    <PackageReference Include="xunit" Version="2.4.1" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.4.3">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+    <PackageReference Include="coverlet.collector" Version="3.1.2">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Models\Models.csproj" />
+    <ProjectReference Include="..\Scraper\Scraper.csproj" />
+    <ProjectReference Include="..\Common\Common.csproj" />
+    <ProjectReference Include="..\CategoryMap\CategoryMap.csproj" />
+    <ProjectReference Include="..\DB\DB.csproj" />
+    <ProjectReference Include="..\ScraperFunction\ScraperFunction.csproj" />
+    <ProjectReference Include="..\Api\Api.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Scraper\" />
+    <Folder Include="Common\" />
+    <Folder Include="CategoryMap\" />
+    <Folder Include="CategoryMap\Implementations\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="Common\" />
+  </ItemGroup>
+
+</Project>

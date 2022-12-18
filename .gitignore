@@ -3,6 +3,7 @@
 ##
 ## Get latest from https://github.com/github/gitignore/blob/main/VisualStudio.gitignore
 
+appsettings.json
 # User-specific files
 *.rsuser
 *.suo
@@ -396,3 +397,5 @@ FodyWeavers.xsd
 
 # JetBrains Rider
 *.sln.iml
+BlazeCart/BlazeCart/Services/AuthService.cs
+BlazeCart/BlazeCart/appsettings.json

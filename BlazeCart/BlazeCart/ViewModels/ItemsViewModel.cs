@@ -9,13 +9,17 @@ using Debug = System.Diagnostics.Debug;
 
 namespace BlazeCart.ViewModels;
 
-
+[QueryProperty(nameof(NameLT), "NameLT")]
+[QueryProperty(nameof(Id), "Id")]
+[QueryProperty(nameof(Count), "Count")]
 public partial class ItemsViewModel : BaseViewModel
 {
     [ObservableProperty] public bool isRefreshing;
-    public ObservableCollection<Item> Items { get; set; } = new();
 
-    [ObservableProperty] private ObservableCollection<Item> cartItems = new();
+    [ObservableProperty] public string nameLT;
+    [ObservableProperty] public Guid id;
+    [ObservableProperty] public int count;
+    public ObservableCollection<Item> Items { get; set; } = new();
 
     [ObservableProperty]  double maximum;
     [ObservableProperty]  double minimum;
@@ -28,15 +32,18 @@ public partial class ItemsViewModel : BaseViewModel
     [ObservableProperty] string selectedCommand;
 
     private readonly ItemService _itemService;
+    private readonly CategoryService _categoryService;
     private readonly ItemSearchBarService _itemSearchBarService;
     private readonly SliderService _sliderService;
     private ItemFilterService _itemFilterService;
     private readonly DataService _dataService;
+    private int _startIndex = 0;
+    private bool flag = true;
 
     [ObservableProperty] public ObservableCollection<Item> searchResults = new();
 
     private readonly ILogger<ItemsViewModel> _logger;
-    public ItemsViewModel(ItemService itemService, ItemSearchBarService itemSearchBarService, SliderService sliderService, ItemFilterService itemFilterService, DataService dataService, ILogger<ItemsViewModel> logger)
+    public ItemsViewModel(ItemService itemService, CategoryService categoryService, ItemSearchBarService itemSearchBarService, SliderService sliderService, ItemFilterService itemFilterService, DataService dataService, ILogger<ItemsViewModel> logger)
     {
         ComboBoxCommands = new ObservableCollection<string>
         {
@@ -49,17 +56,17 @@ public partial class ItemsViewModel : BaseViewModel
         };
 
         _itemService = itemService;
+        _categoryService = categoryService;
         _itemSearchBarService = itemSearchBarService;
         _sliderService = sliderService;
         _itemFilterService = itemFilterService;
         _logger = logger;
         _dataService = dataService;
-        GetItemsAsync();
         SearchResults = Items;
         LoadSlider();
 
     }
-
+    [RelayCommand]
     async void GetItemsAsync()
     {
 
@@ -70,16 +77,49 @@ public partial class ItemsViewModel : BaseViewModel
         try
         {
             isBusy = true;
-            var items = await _itemService.GetItems();
 
-            if (Items.Count != 0)
+            if (flag)
             {
-                Items.Clear();
+                
+                var items = await _categoryService.GetRangeOfItemsByCategoryId(id, 0, count);
+               
+                foreach (var item in items)
+                {
+                    item.Category = nameLT;
+                    item.Price = item.Price / 100;
+                    item.PricePerUnitOfMeasure = item.PricePerUnitOfMeasure / 100;
+                    if (item.Merch == 0)
+                        item.MerchName = "IKI";
+                    if (item.Merch == 1)
+                        item.MerchName = "MAXIMA";
+                    if (item.DiscountPrice == null && item.LoyaltyPrice == null)
+                    {
+                        item.LowerPrice = "";
+                    }
+                    else if (item.DiscountPrice > item.LoyaltyPrice && (item.DiscountPrice != null && item.LoyaltyPrice != null))
+                    {
+                        item.LowerPrice = "Akcija: " + (item.LoyaltyPrice / 100).ToString() + "€";
+                    }
+                    else if (item.LoyaltyPrice > item.DiscountPrice && (item.DiscountPrice != null && item.LoyaltyPrice != null))
+                    {
+                        item.LowerPrice = "Akcija: " + (item.DiscountPrice / 100).ToString() + "€";
+                    }
+                    else if (item.DiscountPrice == null && item.LoyaltyPrice != null)
+                    {
+                        item.LowerPrice = "Akcija: " + (item.LoyaltyPrice / 100).ToString() + "€";
+                    }
+                    else if (item.LoyaltyPrice == null && item.DiscountPrice != null)
+                    {
+                        item.LowerPrice = "Akcija: " + (item.DiscountPrice / 100).ToString() + "€";
+                    }
+                    if (item.Price != 0)
+                        Items.Add(item);
+                }
+                _logger.LogInformation("Successfully retrieved items from API");
+                flag = false;
             }
-
-            foreach (var item in items)
-                Items.Add(item);
-            _logger.LogInformation("Successfully retrieved items from .json");
+    
+            
         }
 
         catch (Exception ex)
@@ -95,9 +135,10 @@ public partial class ItemsViewModel : BaseViewModel
         }
 
     }
+    
 
     [RelayCommand]
-    void SelectionChanged()
+    async void SelectionChanged()
     {
         throw new NotImplementedException();
     }
@@ -111,7 +152,7 @@ public partial class ItemsViewModel : BaseViewModel
             await Shell.Current.DisplayAlert("Prekės pridėjimas sėkmingas", "Sėkmingai pažymėjote prekę kaip mėgstamiausią", "OK");
             await _dataService.AddFavoriteItemToDb(item);
             _itemService.OnFavTbUpdated(EventArgs.Empty);
-            _logger.LogInformation($"Item {item.Name} added to favorites");
+            _logger.LogInformation($"Item {item.NameLT} added to favorites");
         }
         catch (Exception ex)
         {
@@ -226,7 +267,7 @@ public partial class ItemsViewModel : BaseViewModel
         try
         {
             _itemService.AddToCart(item);
-            _logger.LogInformation($"Item {item.Name} added to cart");
+            _logger.LogInformation($"Item {item.NameLT} added to cart");
             await Shell.Current.DisplayAlert("Įdėta į krepšelį!", "Prekė sėkmingai įdėta į krepšelį!", "OK");
         }
         catch (Exception ex)
@@ -246,10 +287,12 @@ public partial class ItemsViewModel : BaseViewModel
                   $"{nameof(ItemPage)}", new Dictionary<string, object>
                   { 
                       {"Item", item},
-                      {"Name", item.Name},
+                      {"NameLT", item.NameLT},
                        {"Price", item.Price},
                        {"Image", item.Image},
-                      {"Description", item.Description}
+                      {"Description", item.Description},
+                      {"Cat", item.Category },
+                      {"MerchName", item.MerchName }
                   });
             
         }

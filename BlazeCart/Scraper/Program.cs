@@ -2,8 +2,14 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Console;
+using Microsoft.EntityFrameworkCore;
 using Models;
 using DB;
+using Common;
+
+// TODO: REMOVE
+using CategoryMap;
+using CategoryMap.Implementations;
 
 namespace Scraper
 {
@@ -25,30 +31,48 @@ namespace Scraper
 
             var dbCtx = dbCtxFac.CreateDbContext(null);
 
-            Console.WriteLine(dbCtx);
-
             var factory = LoggerFactory.Create(b => b.AddConsole());
             var logger = factory.CreateLogger<Scraper>();
+            logger.LogInformation("STARTING");
 
             var iScraper = new IKIScraper(new HttpClient(), logger);
+            logger.LogInformation("STARTING");
             var bScraper = new BarboraScraper(new HttpClient(), logger);
+
+            logger.LogInformation("STARTING");
+
+            await dbCtx.Items.ForEachAsync(i => { dbCtx.Remove(i); });
+            await dbCtx.Categories.ForEachAsync(i => { dbCtx.Remove(i); });
+            dbCtx.SaveChanges();
+            logger.LogInformation("DELETED");
 
             List<Task> tasks = new();
             tasks.Add(Task.Run(async () =>
             {
                 await bScraper.Scrape();
-                await dbCtx.Items.AddRangeAsync(bScraper.Items);
-                await dbCtx.Categories.AddRangeAsync(bScraper.Categories);
             }));
 
             tasks.Add(Task.Run(async () =>
             {
                 await iScraper.Scrape();
-                await dbCtx.Items.AddRangeAsync(iScraper.Items);
-                await dbCtx.Categories.AddRangeAsync(iScraper.Categories);
             }));
 
             await Task.WhenAll(tasks);
+            logger.LogInformation("SCRAPED");
+
+            var catMapDict = StaticCategoryTree.GetCategoryDict();
+            var iMap = new IkiCategoryMap(factory.CreateLogger<IkiCategoryMap>());
+            var bMap = new BarboraCategoryMap(factory.CreateLogger<BarboraCategoryMap>());
+
+            bMap.Map(bScraper.Categories, catMapDict);
+            iMap.Map(iScraper.Categories, catMapDict);
+            logger.LogInformation("MAPPED");
+            
+            await dbCtx.Categories.AddRangeAsync(catMapDict.ToListOfValues());
+
+            logger.LogInformation($"BARBORA, GOT: {bScraper.Items.Count}");
+            logger.LogInformation($"IKI, GOT: {iScraper.Items.Count}");
+            logger.LogInformation($"DB, GOT: {dbCtx.Items.Count()} [MAY BE INACCURATE]");
 
             dbCtx.SaveChanges();
         }

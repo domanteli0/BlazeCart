@@ -23,6 +23,11 @@ namespace Common
             return (new Regex(pattern)).Matches(str);
         }
 
+        public static bool ContainsPattern(this string str, string pattern)
+        {
+            return (new Regex(pattern)).IsMatch(str);
+        }
+
         /// <summary>
         /// Returns a string repeated itself `count` ammount of times
         /// </summary>

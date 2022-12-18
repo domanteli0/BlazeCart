@@ -7,10 +7,12 @@ using Microsoft.Extensions.Logging;
 namespace BlazeCart.ViewModels
 {
     [QueryProperty(nameof(Item), "Item")]
-    [QueryProperty(nameof(Name), "Name")]
+    [QueryProperty(nameof(Name), "NameLT")]
     [QueryProperty(nameof(Price), "Price")]
     [QueryProperty(nameof(Image), "Image")]
     [QueryProperty(nameof(Description), "Description")]
+    [QueryProperty(nameof(Cat), "Cat")]
+    [QueryProperty(nameof(MerchName), "MerchName")]
 
     public partial class ItemPageViewModel : BaseViewModel
     {
@@ -26,7 +28,13 @@ namespace BlazeCart.ViewModels
         public Uri image;
 
         [ObservableProperty]
+        public string cat;
+
+        [ObservableProperty]
         public string description;
+
+        [ObservableProperty]
+        public string merchName;
 
         private ItemService _itemService;
 
@@ -57,7 +65,7 @@ namespace BlazeCart.ViewModels
                 await Shell.Current.DisplayAlert("Prekės pridėjimas sėkmingas", "Sėkmingai pažymėjote prekę kaip mėgstamiausią", "OK");
                 await _dataService.AddFavoriteItemToDb(item);
                 _itemService.OnFavTbUpdated(EventArgs.Empty);
-                _logger.LogInformation($"Item {item.Name} added to favorites");
+                _logger.LogInformation($"Item {item.NameLT} added to favorites");
             }
             catch (Exception ex)
             {

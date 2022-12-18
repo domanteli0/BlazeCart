@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="BlazeCart.Views.EmptyStorePage"
+             Title="EmptyStorePage"
+             BackgroundColor="{StaticResource PageBackgroundColor}"
+             Shell.NavBarIsVisible="False">
+    <ContentPage.Content>
+        <StackLayout VerticalOptions="Center"
+                     HorizontalOptions="Center">
+            <HorizontalStackLayout HorizontalOptions="Center"
+                                   Margin="0, 0, 10 ,100">
+                <ImageButton Margin="0, 0, 10, 0"
+                             Source="back_button.png"
+                             Command="{Binding BackToCartCommand}"
+                             VerticalOptions="Center" />
+                <Label Text="Pigiausia parduotuvė"
+                       FontSize="20"
+                       Style="{StaticResource PageNamePoppins}"
+                       VerticalOptions="Center"
+                       HorizontalOptions="Center" />
+            </HorizontalStackLayout>
+            <Image Source="vector_4.png"
+                   MaximumHeightRequest="532"
+                   MaximumWidthRequest="514" />
+            <Label HorizontalTextAlignment="Center"
+                   Margin="5, 0, 5, 10"
+                   Style="{StaticResource WelcomePageHeadingPoppins}"
+                   Text="Klaida!"
+                   TextColor="{StaticResource TextColorPrimary}" />
+            <Label HorizontalTextAlignment="Center"
+                   Margin="0, 0, 0, 40"
+                   Style="{StaticResource WelcomePageSubHeadingRoboto}"
+                   Text="Jūsų krepšelis tuščias"
+                   TextColor="{StaticResource TextColorSecondary}" />
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

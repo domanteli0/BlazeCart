@@ -15,7 +15,7 @@ public class ItemFilterService
     internal ObservableCollection<Item> FilterAlphaAsc()
     {
         var searchResults = from I in FetchedItems
-            orderby I.Name
+            orderby I.NameLT
             select I;
         return new ObservableCollection<Item>(searchResults.ToList());
     }
@@ -23,7 +23,7 @@ public class ItemFilterService
     internal ObservableCollection<Item> FilterAlphaDesc()
     {
         var searchResults = from I in FetchedItems
-            orderby I.Name descending 
+            orderby I.NameLT descending 
             select I;
         return new ObservableCollection<Item>(searchResults.ToList());
     }
@@ -47,14 +47,14 @@ public class ItemFilterService
     internal ObservableCollection<Item> FilterUnitPriceAsc()
     {
         var searchResults = from I in FetchedItems
-            orderby I.PricePerUnit
+            orderby I.PricePerUnitOfMeasure
             select I;
         return new ObservableCollection<Item>(searchResults.ToList());
     }
     internal ObservableCollection<Item> FilterUnitPriceDesc()
     {
         var searchResults = from I in FetchedItems
-            orderby I.PricePerUnit descending
+            orderby I.PricePerUnitOfMeasure descending
             select I;
         return new ObservableCollection<Item>(searchResults.ToList());
     }

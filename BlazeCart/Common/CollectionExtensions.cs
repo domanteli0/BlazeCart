@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Reflection.Emit;
 using Models;
 using static Common.ObjectExtensions;
 namespace Common
@@ -89,6 +90,43 @@ namespace Common
                 str += tree(sub, level + 1);
 
             return str;
+        }
+
+        /// <summary>
+        /// Converts a dictionary to a list without the keys
+        /// </summary>
+        public static List<V> ToListOfValues<K, V>(this IDictionary<K, V> dic)
+        {
+            return dic.ToList().ConvertAll((kvp) => kvp.Value);
+
+        }
+
+        public static Dictionary<K, V> Clone<K, V>(this IDictionary<K,V> dic)
+            where K : ICloneable
+            where V : ICloneable =>
+            dic.ToDictionary(
+                c => (K) c.Key.Clone(), c => (V) c.Value.Clone()
+            );
+
+        public static void ForEachR(this IEnumerable<Category> list, Action<Category> act)
+        {
+            foreach (var sub in list)
+            {
+                sub.SubCategories.ForEach(act);
+                act(sub);
+            }
+
+        }
+
+        public static List<T> SelectR<T>(this IEnumerable<Category> list, Func<Category, IEnumerable<T>> func)
+        {
+            var newl = new List<T>();
+            foreach (var sub in list)
+            {
+                newl.AddRange(sub.SubCategories.SelectR(func));
+            }
+
+            return newl;
         }
     }
 }

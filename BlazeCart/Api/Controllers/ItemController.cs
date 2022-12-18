@@ -1,10 +1,6 @@
 ﻿using Api.Repositories;
-using DB;
 using Microsoft.AspNetCore.Mvc;
 using Models;
-using Scraper;
-
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace Api.Controllers
 {
@@ -20,11 +16,11 @@ namespace Api.Controllers
         }
       
 
-        [HttpGet]
+        [HttpGet("{index}/{count}")]
         [ProducesResponseType(200, Type = typeof(IEnumerable<Item>))]
-        public async Task<IActionResult> GetAllItems()
+        public async Task<IActionResult> GetRangeOfItems(int index, int count)
         {
-            var items = await _itemRepository.GetAllItemsAsync();
+            var items = await _itemRepository.GetRangeOfItemsAsync(index, count);
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
             return Ok(items);
@@ -44,16 +40,27 @@ namespace Api.Controllers
             return Ok(item);
         }
 
-        [HttpGet("{index}/{count}")]
-        [ProducesResponseType(200, Type = typeof(IEnumerable<Item>))]
-        public async Task<IActionResult> GetRangeOfItems(int index, int count)
+        [HttpGet("{index}/{count}/cats")]
+        [ProducesResponseType(200, Type = typeof(IEnumerable<String>))]
+        public async Task<IActionResult> GetItemsCat(int index, int count)
         {
-            var items = await _itemRepository.GetRangeOfItemsAsync(index, count);
+            var cats = await _itemRepository.GetItemsCat(index, count);
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
-            return Ok(items);
+            return Ok(cats);
 
         }
+
+        [HttpGet("{name}/{category}/{price}/{amount}/{merch}/{comparedMerch}")]
+        [ProducesResponseType(200, Type = typeof(Item))]
+        public async Task<IActionResult> GetCheapestItem(string name, string category, double price, double amount, int merch, int comparedMerch)
+        {
+            var item = await _itemRepository.GetCheapestItem(name, category, price, amount, merch, comparedMerch);
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+            return Ok(item);
+        }
+       
 
 
     }

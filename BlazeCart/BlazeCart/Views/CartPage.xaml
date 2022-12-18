@@ -7,6 +7,7 @@
              BackgroundColor="{StaticResource PageBackgroundColor}"
              xmlns:model="clr-namespace:BlazeCart.Models"
              xmlns:viewmodel="clr-namespace:BlazeCart.ViewModels"
+             xmlns:dxcv="clr-namespace:DevExpress.Maui.CollectionView;assembly=DevExpress.Maui.CollectionView"
              x:DataType="viewmodel:CartPageViewModel">
     <ScrollView>
         <StackLayout>
@@ -28,20 +29,20 @@
                          Command="{Binding CheapestStoreCommand}"
                          HorizontalOptions="Center"
                          Margin="10" />
-            <CollectionView ItemsSource="{Binding CartItems}">
-                <CollectionView.ItemTemplate>
+            <dxcv:DXCollectionView ItemsSource="{Binding CartItems}">
+                <dxcv:DXCollectionView.ItemTemplate>
                     <DataTemplate x:DataType="model:Item">
-                        <SwipeView>
-                            <SwipeView.RightItems>
-                                <SwipeItems>
-                                    <SwipeItem IconImageSource="trash.png"
-                                               BackgroundColor="{StaticResource BinColor}"
-                                               Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:CartPageViewModel}}, Path=RemoveCommand}"
-                                               CommandParameter="{Binding .}" />
-                                </SwipeItems>
-                            </SwipeView.RightItems>
+                        <Border Padding="5"
+                                BackgroundColor="{StaticResource White}"
+                                Margin="10, 5, 10, 5">
+                            <Border.StrokeShape>
+                                <RoundRectangle CornerRadius="20, 20, 20, 20" />
+                            </Border.StrokeShape>
                             <Grid x:Name="ItemCard"
-                                  MaximumHeightRequest="200">
+                                  MaximumHeightRequest="220"
+                                  BackgroundColor="White"
+                                  Margin="10"
+                                  Padding="3">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="0.8*" />
                                     <ColumnDefinition Width="1*" />
@@ -50,6 +51,7 @@
                                     <RowDefinition Height="auto" />
                                     <RowDefinition Height="2*" />
                                     <RowDefinition Height="3*" />
+                                    <RowDefinition Height="4*" />
                                     <RowDefinition Height="auto" />
                                 </Grid.RowDefinitions>
                                 <Image Grid.Column="0"
@@ -65,15 +67,33 @@
                                        HorizontalTextAlignment="Start"
                                        Margin="0, 0, 15, 0"
                                        Style="{StaticResource ItemNamePoppins}"
-                                       Text="{Binding Name}"
+                                       Text="{Binding NameLT}"
                                        TextColor="{StaticResource PrimaryTextColor}"
                                        LineBreakMode="CharacterWrap" />
                                 <HorizontalStackLayout Grid.Column="1"
                                                        Grid.Row="1">
                                     <Label HorizontalTextAlignment="Start"
-                                           Margin="0, 0, 2, 0"
+                                           Margin="0, 4, 2, 0"
+                                           Style="{StaticResource ItemNumberPricePoppins}"
+                                           Text="Kaina: "
+                                           TextColor="{StaticResource PrimaryTextColor}" />
+                                    <Label HorizontalTextAlignment="Start"
+                                           Margin="0, 4, 2, 0"
                                            Style="{StaticResource ItemNumberPricePoppins}"
                                            Text="{Binding Price}"
+                                           TextColor="{StaticResource PrimaryTextColor}" />
+                                    <Label HorizontalTextAlignment="Start"
+                                           Margin="0, 4, 15, 0"
+                                           Style="{StaticResource ItemPricePoppins}"
+                                           Text="€" />
+                                </HorizontalStackLayout>
+                                <HorizontalStackLayout Grid.Column="1"
+                                                       Grid.Row="2"
+                                                       Margin="0, 4, 0, 4">
+                                    <Label HorizontalTextAlignment="Start"
+                                           Margin="0, 0, 2, 0"
+                                           Style="{StaticResource ItemNumberPricePoppins}"
+                                           Text="{Binding PricePerUnitOfMeasure}"
                                            TextColor="{StaticResource PrimaryTextColor}" />
                                     <Label HorizontalTextAlignment="Start"
                                            Margin="0, 0, 15, 0"
@@ -82,10 +102,10 @@
                                     <Label HorizontalTextAlignment="Start"
                                            Margin="0, 0, 1, 0"
                                            Style="{StaticResource ItemPricePoppins}"
-                                           Text="{Binding Units}" />
+                                           Text="{Binding MeasureUnit}" />
                                 </HorizontalStackLayout>
                                 <HorizontalStackLayout Grid.Column="1"
-                                                       Grid.Row="2">
+                                                       Grid.Row="3">
                                     <Label HorizontalTextAlignment="Start"
                                            Margin="0, 0, 1, 0"
                                            VerticalOptions="Center"
@@ -97,8 +117,7 @@
                                                  CommandParameter="{Binding .}"
                                                  VerticalOptions="Center"
                                                  HorizontalOptions="Center"
-                                                 HeightRequest="40">
-                                    </ImageButton>
+                                                 HeightRequest="40" />
                                     <Label HorizontalTextAlignment="Start"
                                            VerticalOptions="Center"
                                            Style="{StaticResource ItemPricePoppins}"
@@ -109,12 +128,10 @@
                                                  CommandParameter="{Binding .}"
                                                  VerticalOptions="Center"
                                                  HorizontalOptions="Center"
-                                                 HeightRequest="40">
-                                    </ImageButton>
-
+                                                 HeightRequest="40" />
                                 </HorizontalStackLayout>
                                 <HorizontalStackLayout Grid.Column="1"
-                                                       Grid.Row="3"
+                                                       Grid.Row="4"
                                                        Margin="0">
                                     <ImageButton Source="heart_button"
                                                  HorizontalOptions="Start" />
@@ -124,10 +141,10 @@
                                                  HorizontalOptions="Start" />
                                 </HorizontalStackLayout>
                             </Grid>
-                        </SwipeView>
+                        </Border>
                     </DataTemplate>
-                </CollectionView.ItemTemplate>
-            </CollectionView>
+                </dxcv:DXCollectionView.ItemTemplate>
+            </dxcv:DXCollectionView>
         </StackLayout>
     </ScrollView>
 </ContentPage>

@@ -1,0 +1,11 @@
+{
+  "dependencies": {
+    "compute.appService1": {
+      "secretStore": null,
+      "group": "connections",
+      "resourceId": "/subscriptions/[parameters('subscriptionId')]/resourceGroups/[parameters('resourceGroupName')]/providers/Microsoft.Web/sites/BlazeCartApi",
+      "type": "compute.appService.windows",
+      "connectionId": null
+    }
+  }
+}

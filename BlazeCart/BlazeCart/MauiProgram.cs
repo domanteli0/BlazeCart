@@ -4,9 +4,15 @@ using BlazeCart.ViewModels;
 using Syncfusion.Maui.Core.Hosting;
 using Syncfusion.Maui.ListView.Hosting;
 using CommunityToolkit.Maui;
-using MetroLog.Maui;
+#if ANDROID
+using DevExpress.Maui;
+#endif
 using MetroLog.MicrosoftExtensions;
 using SkiaSharp.Views.Maui.Controls.Hosting;
+using System.Reflection;
+using Microsoft.Extensions.Configuration;
+using BlazeCart.Models;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace BlazeCart;
 
@@ -14,11 +20,14 @@ public static class MauiProgram
 {
 	public static MauiApp CreateMauiApp()
 	{
-		var builder = MauiApp.CreateBuilder();
+        var builder = MauiApp.CreateBuilder();
         builder.UseMauiApp<App>().UseMauiCommunityToolkit();
         builder
-			.UseMauiApp<App>()
+            .UseMauiApp<App>()
             .UseSkiaSharp()
+#if ANDROID
+            .UseDevExpress()
+#endif
             .ConfigureSyncfusionCore()
             .ConfigureSyncfusionListView()
             .ConfigureFonts(fonts =>
@@ -46,9 +55,21 @@ public static class MauiProgram
                 fonts.AddFont("fa-v4compatibility.ttf", "fa-v4");
             });
 
-        builder.Services.AddSingleton<ItemCatalogPage>();
-        builder.Services.AddSingleton<ItemService>();
-        builder.Services.AddSingleton<ItemsViewModel>();
+        string strAppConfigStreamName = string.Empty;
+        strAppConfigStreamName = "BlazeCart.appsettings.json";
+
+        var assembly = IntrospectionExtensions.GetTypeInfo(typeof(MauiProgram)).Assembly;
+        var stream = assembly.GetManifestResourceStream(strAppConfigStreamName);
+        builder.Configuration.AddJsonStream(stream);
+
+        string firebaseKey = builder.Configuration["FirebaseKey"];
+        string baseUrl = builder.Configuration["BaseUrl"];
+
+
+        builder.Services.AddTransient<ItemCatalogPage>();
+        builder.Services.AddSingleton<ItemService>(new ItemService(baseUrl));
+        builder.Services.AddTransient<ItemsViewModel>();
+        builder.Services.AddSingleton<AuthService>( new AuthService(firebaseKey));
 
         builder.Services.AddSingleton<RegisterPage>();
         builder.Services.AddSingleton<RegisterPageViewModel>();
@@ -73,6 +94,8 @@ public static class MauiProgram
         builder.Services.AddSingleton<ErrorPageViewModel>();
 
         builder.Services.AddSingleton<CategoryPage>();
+        builder.Services.AddSingleton<CategoryViewModel>();
+        builder.Services.AddSingleton<CategoryService>(new CategoryService(baseUrl));
 
         builder.Services.AddSingleton<CheapestStorePage>();
         builder.Services.AddSingleton<CheapestStorePageViewModel>();
@@ -89,6 +112,12 @@ public static class MauiProgram
 
         builder.Services.AddSingleton<FavoriteItemPage>();
         builder.Services.AddSingleton<FavoriteItemViewModel>();
+
+        builder.Services.AddSingleton<EmptyStorePage>();
+        builder.Services.AddSingleton<EmptyStorePageViewModel>();
+
+        builder.Services.AddTransient<GoogleMaps>();
+        builder.Services.AddTransient<GoogleMapsViewModel>();
 
         builder.Logging
             .AddStreamingFileLogger(options =>

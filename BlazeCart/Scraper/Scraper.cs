@@ -1,7 +1,6 @@
-﻿using System;
-using System.Net;
-using Models;
+﻿using Models;
 using Microsoft.Extensions.Logging;
+using Common;
 
 namespace Scraper
 {
@@ -25,9 +24,17 @@ namespace Scraper
 
         private protected void setMerch()
         {
-            Categories.ForEach(el => el.Merch = _merch);
+            Categories.ForEachR(el => el.Merch = _merch);
             Stores.ForEach(el => el.Merch = _merch);
             Items.ForEach(el => el.Merch = _merch);
+
+            // In theory, not necessery, in practive - don't remove
+            Categories
+                .GetWithoutChildren()
+                .ToList()
+                .ForEach(cat =>
+                    cat.Items.ForEach(i => i.Merch = cat.Merch)
+                );
         }
 
         private protected void clean()

@@ -68,12 +68,12 @@ public partial class FavoriteItemViewModel : ObservableObject
         try
         {
             _itemService.AddToCart(item);
-            _logger.LogInformation($"Successfully added item to cart: {item.ItemId}, {item.Name}");
+            _logger.LogInformation($"Successfully added item to cart: {item.ItemId}, {item.NameLT}");
             await Shell.Current.DisplayAlert("Įdėta į krepšelį!", "Prekė sėkmingai įdėta į krepšelį!", "OK");
         }
         catch (Exception ex)
         {
-            _logger.LogError($"Failed to add favorite item to cart: {item.ItemId}, {item.Name} | {ex.Message}");
+            _logger.LogError($"Failed to add favorite item to cart: {item.ItemId}, {item.NameLT} | {ex.Message}");
             throw;
         }
 
@@ -92,11 +92,11 @@ public partial class FavoriteItemViewModel : ObservableObject
         {
             await _dataService.RemoveFavoriteItemFromDb(item.ItemId);
             await Refresh();
-            _logger.LogInformation($"Successfully removed favorite item  from DB: {item.ItemId}, {item.Name}");
+            _logger.LogInformation($"Successfully removed favorite item  from DB: {item.ItemId}, {item.NameLT}");
         }
         catch (Exception ex)
         {
-            _logger.LogError($"Failed to remove favorite item from DB: {item.ItemId}, {item.Name} | {ex.Message}");
+            _logger.LogError($"Failed to remove favorite item from DB: {item.ItemId}, {item.NameLT} | {ex.Message}");
             throw;
         }
     }

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8"?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="BlazeCart.Views.RegisterPage"
@@ -11,116 +11,104 @@
     <ContentPage.Content>
         <ScrollView>
             <Grid>
-            <Grid HorizontalOptions="Center" VerticalOptions="Center" x:Name="RegistrationForm">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="auto"/>
-                    <RowDefinition Height="auto"/>
-                    <RowDefinition Height="auto"/>
-                    <RowDefinition Height="auto"/>
-                    <RowDefinition Height="auto"/>
-                    <RowDefinition Height="auto"/>
-                    <RowDefinition Height="auto"/>
-                    <RowDefinition Height="auto"/>
-                    <RowDefinition Height="auto"/>
-                    <RowDefinition Height="auto"/>
-                    <RowDefinition Height="auto"/>
-                    <RowDefinition Height="auto"/>
-                </Grid.RowDefinitions>
-                <Label
-                    Text="Registracija"
-                    Margin="0, 0, 0, 40"
-                    Style="{StaticResource LoginRegisterPoppinsBold}"
-                    Grid.Row="0"></Label>
-                <Label
-                    Grid.Row="1"
-                    Grid.Column="0"
-                    Text="Vardas: "
-                    Style="{StaticResource LoginRegisterRobotoLight}"/>
-                <Frame
-                    Grid.Row="2"
-                    Grid.Column="0"
-                    HeightRequest="50">
-                        <Entry
-                        Text="{Binding Name}"
-                        Style="{StaticResource LoginRegisterFieldRobotoLight}"
-                        BackgroundColor="White"
-                        HeightRequest="48"
-                        WidthRequest="200"/>
+                <Grid HorizontalOptions="Center"
+                      VerticalOptions="Center"
+                      x:Name="RegistrationForm">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto" />
+                        <RowDefinition Height="auto" />
+                        <RowDefinition Height="auto" />
+                        <RowDefinition Height="auto" />
+                        <RowDefinition Height="auto" />
+                        <RowDefinition Height="auto" />
+                        <RowDefinition Height="auto" />
+                        <RowDefinition Height="auto" />
+                        <RowDefinition Height="auto" />
+                        <RowDefinition Height="auto" />
+                        <RowDefinition Height="auto" />
+                        <RowDefinition Height="auto" />
+                    </Grid.RowDefinitions>
+                    <Label Text="Registracija"
+                           Margin="0, 0, 0, 40"
+                           Style="{StaticResource LoginRegisterPoppinsBold}"
+                           Grid.Row="0" />
+                    <Label Grid.Row="1"
+                           Grid.Column="0"
+                           Text="Vardas: "
+                           Style="{StaticResource LoginRegisterRobotoLight}" />
+                    <Frame Grid.Row="2"
+                           Grid.Column="0"
+                           HeightRequest="50">
+                        <Entry Text="{Binding Name}"
+                               Style="{StaticResource LoginRegisterFieldRobotoLight}"
+                               BackgroundColor="White"
+                               HeightRequest="48"
+                               WidthRequest="200" />
                     </Frame>
-                <Label
-                    Grid.Row="3"
-                    Grid.Column="0"
-                    Text="Pavarde: "
-                    Style="{StaticResource LoginRegisterRobotoLight}"/>
-                <Frame
-                    Grid.Row="4"
-                    Grid.Column="0"
-                    HeightRequest="50">
-                    <Entry
-                        Text="{Binding Surname}"
-                        Style="{StaticResource LoginRegisterFieldRobotoLight}"
-                        BackgroundColor="White"
-                        HeightRequest="48"
-                        WidthRequest="200"/>
-                </Frame>
-                <Label Grid.Row="5"
-                       Text="El. pašto adresas: "
-                       Padding="0,20,0,0"
-                       Style="{StaticResource LoginRegisterRobotoLight}"/>
-
-                <Frame Grid.Row="6"
-                       HeightRequest="50">
-                    <Entry
-                        Text="{Binding Email}"
-                        Style="{StaticResource LoginRegisterFieldRobotoLight}"
-                        BackgroundColor="White"
-                        HeightRequest="48"
-                        WidthRequest="200"/>
-                </Frame>
-
-                <Label Grid.Row="7"
-                       Text="Slaptažodis: "
-                       Padding="0,20,0,0"
-                       Style="{StaticResource LoginRegisterRobotoLight}"/>
-
-                <Frame Grid.Row="8"
-                       HeightRequest="50">
-                    <Entry
-                        Text="{Binding Password}"
-                        Style="{StaticResource LoginRegisterFieldRobotoLight}"
-                        IsPassword="True" BackgroundColor="White"
-                        HeightRequest="48"
-                        WidthRequest="200"/>
-                </Frame>
-                <Label Grid.Row="9"
-                       Text="Pakartokite slaptažodį: "
-                       Padding="0,20,0,0"
-                       Style="{StaticResource LoginRegisterRobotoLight}"/>
-
-                <Frame Grid.Row="10"
-                       HeightRequest="50">
-                    <Entry
-                        Text="{Binding ConfirmPassword}"
-                        Style="{StaticResource LoginRegisterFieldRobotoLight}"
-                        IsPassword="True" BackgroundColor="White"
-                        HeightRequest="48"
-                        WidthRequest="200"/>
-                </Frame>
-                <Grid
-                    Grid.Row="11"
-                    Padding="0,40,0,0">
-                    <VerticalStackLayout>
-                        <Button
-                            Text="Registruotis"
-                            TextColor="{StaticResource ButtonTextColor}"
-                            Command="{Binding ValidateEntryFieldsCommand}"        
-                            Style="{StaticResource PrimaryButton}"
-                            HeightRequest="40"
-                            WidthRequest="250"/>
-                    </VerticalStackLayout>
+                    <Label Grid.Row="3"
+                           Grid.Column="0"
+                           Text="Pavarde: "
+                           Style="{StaticResource LoginRegisterRobotoLight}" />
+                    <Frame Grid.Row="4"
+                           Grid.Column="0"
+                           HeightRequest="50">
+                        <Entry Text="{Binding Surname}"
+                               Style="{StaticResource LoginRegisterFieldRobotoLight}"
+                               BackgroundColor="White"
+                               HeightRequest="48"
+                               WidthRequest="200" />
+                    </Frame>
+                    <Label Grid.Row="5"
+                           Text="El. pašto adresas: "
+                           Padding="0,20,0,0"
+                           Style="{StaticResource LoginRegisterRobotoLight}" />
+                    <Frame Grid.Row="6"
+                           HeightRequest="50">
+                        <Entry Text="{Binding Email}"
+                               Style="{StaticResource LoginRegisterFieldRobotoLight}"
+                               BackgroundColor="White"
+                               HeightRequest="48"
+                               WidthRequest="200" />
+                    </Frame>
+                    <Label Grid.Row="7"
+                           Text="Slaptažodis: "
+                           Padding="0,20,0,0"
+                           Style="{StaticResource LoginRegisterRobotoLight}" />
+                    <Frame Grid.Row="8"
+                           HeightRequest="50">
+                        <Entry Text="{Binding Password}"
+                               Style="{StaticResource LoginRegisterFieldRobotoLight}"
+                               IsPassword="True"
+                               BackgroundColor="White"
+                               HeightRequest="48"
+                               WidthRequest="200" />
+                    </Frame>
+                    <Label Grid.Row="9"
+                           Text="Pakartokite slaptažodį: "
+                           Padding="0,20,0,0"
+                           Style="{StaticResource LoginRegisterRobotoLight}" />
+                    <Frame Grid.Row="10"
+                           HeightRequest="50">
+                        <Entry Text="{Binding ConfirmPassword}"
+                               Style="{StaticResource LoginRegisterFieldRobotoLight}"
+                               IsPassword="True"
+                               BackgroundColor="White"
+                               HeightRequest="48"
+                               WidthRequest="200" />
+                    </Frame>
+                    <Grid Grid.Row="11"
+                          Padding="0,40,0,0">
+                        <VerticalStackLayout>
+                            <Button Text="Registruotis"
+                                    TextColor="{StaticResource ButtonTextColor}"
+                                    Command="{Binding ValidateEntryFieldsCommand}"
+                                    Style="{StaticResource PrimaryButton}"
+                                    HeightRequest="40"
+                                    WidthRequest="250" />
+                        </VerticalStackLayout>
+                    </Grid>
                 </Grid>
             </Grid>
-        </Grid>
         </ScrollView>
     </ContentPage.Content>
 </ContentPage>

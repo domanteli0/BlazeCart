@@ -14,7 +14,8 @@
                    Padding="10">
                 <HorizontalStackLayout HorizontalOptions="Center">
                     <ImageButton Source="back_button.png"
-                                 VerticalOptions="Start" />
+                                 VerticalOptions="Start"
+                                 Command="{Binding BackCommand}" />
                     <Label Text="Krepšelių istorija"
                            Style="{StaticResource PageNamePoppins}"
                            VerticalOptions="Center"
@@ -50,8 +51,8 @@
                                 </SwipeItems>
                             </SwipeView.RightItems>
                             <Frame Padding="10"
-                                   MaximumHeightRequest="120"
-                                   HeightRequest="120"
+                                   MaximumHeightRequest="180"
+                                   HeightRequest="180"
                                    Margin="15">
                                 <VerticalStackLayout>
                                     <HorizontalStackLayout>
@@ -80,15 +81,6 @@
                                                Text=")"
                                                TextColor="{StaticResource PrimaryTextColor}"
                                                LineBreakMode="CharacterWrap" />
-                                        <Button x:Name="UseButton"
-                                                BackgroundColor="{StaticResource PrimaryColor}"
-                                                TextColor="{StaticResource White}"
-                                                Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:CartHistoryPageViewModel}}, Path=UseCartCommand}"
-                                                CommandParameter="{Binding .}"
-                                                Text="Taikyti"
-                                                Margin="90, 0, 0,0"
-                                                VerticalOptions="Center">
-                                        </Button>
                                     </HorizontalStackLayout>
                                     <HorizontalStackLayout Spacing="0">
                                         <Label HorizontalTextAlignment="Start"
@@ -103,6 +95,16 @@
                                                Text="€"
                                                TextColor="{StaticResource PrimaryTextColor}" />
                                     </HorizontalStackLayout>
+                                    <Button x:Name="UseButton"
+                                            BackgroundColor="{StaticResource PrimaryColor}"
+                                            TextColor="{StaticResource White}"
+                                            Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:CartHistoryPageViewModel}}, Path=UseCartCommand}"
+                                            CommandParameter="{Binding .}"
+                                            HeightRequest="40"
+                                            WidthRequest="80"
+                                            Text="Taikyti"
+                                            Margin="10, 10, 0,0"
+                                            HorizontalOptions="Start" />
                                     <ImageButton HeightRequest="14.34"
                                                  WidthRequest="20.99"
                                                  Source="additional_cart_info.png"

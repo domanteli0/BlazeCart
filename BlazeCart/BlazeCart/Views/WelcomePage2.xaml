@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8"?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="BlazeCart.Views.WelcomePage2"
@@ -10,37 +10,33 @@
              Shell.NavBarIsVisible="False"
              BackgroundColor="{StaticResource PageBackgroundColor}">
     <ContentPage.Content>
-        <StackLayout VerticalOptions="Center" HorizontalOptions="Center">
-            <skia:SKLottieView
-                Source="animation2.json"
-                HorizontalOptions="Center" 
-                RepeatCount="-1"
-	            RepeatMode="Restart"
-                HeightRequest="275"
-                WidthRequest="275"
-                MaximumHeightRequest="300"
-                Margin="20"/>
-            <Label
-                HorizontalTextAlignment="Center"
-                Margin="5, 0, 5, 10"
-                Style="{StaticResource WelcomePageHeadingPoppins}"
-                Text="Mes rasime pigiausią parduotuvę"
-                TextColor="{StaticResource TextColorPrimary}"></Label>
-            <Label
-                HorizontalTextAlignment="Center"
-                Margin="0, 0, 0, 10"
-                Style="{StaticResource WelcomePageSubHeadingRoboto}"
-                Text="Įvertinsime krepšelio kainas įvairiose parduotuvėse"
-                TextColor="{StaticResource TextColorSecondary}"></Label>
-            <ImageButton
-                Aspect="AspectFit"
-                Source="welcome_button.png"
-                Command="{Binding NextCommand}"
-                HorizontalOptions="Center"></ImageButton>
-            <Image
-                Aspect="AspectFit"
-                Source="selection_dots.png"
-                HorizontalOptions="Center"></Image>
+        <StackLayout VerticalOptions="Center"
+                     HorizontalOptions="Center">
+            <skia:SKLottieView Source="animation2.json"
+                               HorizontalOptions="Center"
+                               RepeatCount="-1"
+                               RepeatMode="Restart"
+                               HeightRequest="275"
+                               WidthRequest="275"
+                               MaximumHeightRequest="300"
+                               Margin="20" />
+            <Label HorizontalTextAlignment="Center"
+                   Margin="5, 0, 5, 10"
+                   Style="{StaticResource WelcomePageHeadingPoppins}"
+                   Text="Mes rasime pigiausią parduotuvę"
+                   TextColor="{StaticResource TextColorPrimary}" />
+            <Label HorizontalTextAlignment="Center"
+                   Margin="0, 0, 0, 10"
+                   Style="{StaticResource WelcomePageSubHeadingRoboto}"
+                   Text="Įvertinsime krepšelio kainas įvairiose parduotuvėse"
+                   TextColor="{StaticResource TextColorSecondary}" />
+            <ImageButton Aspect="AspectFit"
+                         Source="welcome_button.png"
+                         Command="{Binding NextCommand}"
+                         HorizontalOptions="Center" />
+            <Image Aspect="AspectFit"
+                   Source="selection_dots.png"
+                   HorizontalOptions="Center" />
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

@@ -1,25 +1,28 @@
 ﻿using DB;
 using Microsoft.EntityFrameworkCore;
 using Models;
-using System.Xml.Linq;
-
+using Api.Services;
 namespace Api.Repositories
 {
     public class ItemRepository : IItemRepository
     {
         private readonly ScraperDbContext _context;
+        private readonly IAlgorithmService _algorithmService;
 
-        public ItemRepository(ScraperDbContext context)
+        public ItemRepository(ScraperDbContext context, IAlgorithmService algorithmService)
         {
             _context = context;
+            _algorithmService = algorithmService;
+            
         }
-        public async Task<List<Item>> GetAllItemsAsync()
+        public async Task <IEnumerable<Item>> GetRangeOfItemsAsync(int index, int count)
         {
-            var records = await _context.Items.ToListAsync();
+            var res = await _context.Items.ToListAsync();
+            var records = res.GetRange(index, count);
             return records;
         }
 
-        public async Task<Item> GetItemByIdAsync(Guid id)
+        public async Task <Item> GetItemByIdAsync(Guid id)
         {
             var records =  await _context.Items.Where(i => i.Id == id).FirstOrDefaultAsync();
             return records;
@@ -28,13 +31,67 @@ namespace Api.Repositories
         public async Task<List<Item>> GetItemsByNameAsync(string name)
         {
             var records = await _context.Items.Where(i => i.NameLT == name).ToListAsync();
+            
             return records;
         }
-        public async Task<IEnumerable<Item>> GetRangeOfItemsAsync(int index, int count)
+        public async Task<Item> GetCheapestItem(string name, string category, double price, double amount, int merch, int comparedMerch)
         {
-            var res = await _context.Items.ToListAsync();
-            var records = res.GetRange(index, count);
-            return records;
+            double min = price;
+            Item cheapestItem = new();
+            List <Item> records = new();
+
+       
+           if (merch == 2)
+           {
+                records = await _context.Items.Where(i => i.Category.NameLT == category).ToListAsync();
+           }
+           else
+           {
+                records = await _context.Items.Where(i => i.Category.NameLT == category && i.Merch == (Merchendise.Merch)merch).ToListAsync();
+           }
+           for (int i = 0; i < records.Count; i++)
+           {
+               if (IsInvalidItemFilter(records[i]))
+               {
+                    records.Remove(records[i]);
+                    i--;
+               }
+           }
+
+            List<Item> sortedList = records.OrderBy(x => x.NameLT).ToList();
+            string oldName = name;
+            Item comparedItem = new();
+            comparedItem.NameLT = name;
+            comparedItem.Price = (int)(price * 100);
+            comparedItem.Ammount = (float?)amount;
+            comparedItem.Merch = (Merchendise.Merch)comparedMerch;
+     
+            comparedItem.NameLT = _algorithmService.refactorItemName(comparedItem.NameLT).ToLower();
+            cheapestItem = _algorithmService.GetCheapestItemAlgorithm(comparedItem, sortedList, oldName);
+            return cheapestItem;
+        }
+
+        private bool IsInvalidItemFilter(Item item)
+        {
+            if(item.Price == 0 || item.NameLT == null || item.NameLT.Length < 4)
+            {
+                return true;
+            }
+            return false;
+        }
+
+        public async Task<IEnumerable<String>> GetItemsCat(int index, int count)
+        {
+            var resWithCat = await _context.Items.Include(e => e.Category).ToListAsync();
+            var res = resWithCat.GetRange(index, count);
+            List<String> categories = new List<String>();
+            foreach(var item in res)
+            {
+                if(item.Category.NameLT != null)
+                    categories.Add(item.Category.NameLT);
+            }
+           
+            return categories;
         }
 
         public bool IsItemActiveAsync(Guid id)
