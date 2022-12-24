@@ -1,11 +1,10 @@
 [![Coverage Status](https://coveralls.io/repos/github/domanteli0/BlazeCart/badge.svg?branch=main)](https://coveralls.io/github/domanteli0/BlazeCart?branch=main)
 
-# BlazeCart .NET MAUI App
-
-## App design in Figma
-Click [here](https://www.figma.com/file/I7gXX51ld8kFgJUxB7puwP/App-Design?node-id=23%3A475) to see the design.
+# BlazeCart
 
 ## Overview
+
+NOTE: the most current progress is on `Ats2` branch.
 
 This project is organized as such:
 
@@ -33,14 +32,33 @@ Migrations are needed then properties of classes `Entity`, `Category`, `Item` ha
 ### Tests
 
 To run all tests: `dotnet test` to test.
+
 To run a specific test use `--filter`, example: `dotnet test --filter "FullyQualifiedName=Tests1.Scraper.BarboraScarperTest.DuplicateTest"`
+
+NOTE: `CategoryMap/Implementations` tests may be incorrect thus may not pass even if the code is correct.
+
+### UI
+
+In theory iOS is supported, but hasn't been tested since it was primarily developed on Android.
+
+#### App design in Figma
+
+Click [here](https://www.figma.com/file/I7gXX51ld8kFgJUxB7puwP/App-Design?node-id=23%3A475) to see the design.
+
+#### Dependencies
+
+This project uses [DevExpress](https://nuget.devexpress.com), you'll need to obtain feed url from them and add it to your Nuget sources.
+
+#### Running
+
+Use Visual Studio or [cli](https://mauiman.dev/maui_cli_commandlineinterface.html) and either: connect a physical device via `adb` or use an emulator.
 
 ## Troubleshooting
 
 If you have run into problems make consult with this checklist:
 
 * DB connection strings are added in configs (appsettings.json, secrets.json).
-* Dotnet and dependency versions match (Recomened version 6).
+* Dotnet and dependency versions match (this project targets `net6.0`).
 
 ### Api
 
@@ -57,4 +75,8 @@ Api may take a few minutes to start up, it may send 503 response method while it
     [TIMESTAMP] Executed 'ScraperFunction' (Failed, Id=[...], Duration=80ms)
     [TIMESTAMP] System.Private.Uri: Value cannot be null. (Parameter 'uriString').
     ```
-    This _may_ mean that (Consult Google first for most common causes) `Uri` field is `null` in some `Category`.
+    This _may_ mean that (Consult Google first for most common causes) `Uri` field is `null` in some `Category`, because some part of code will try to deep clone it. [NOTE: MAY BE OUTDATED INFO]
+
+## A short post-mortem
+
+As many student projects and assignments, this one was done in quick spirts before a deadline and then almost abandomed for weeks. As a result many features were left half-baked, code quality may have suffered.
