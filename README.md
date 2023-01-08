@@ -57,11 +57,12 @@ Use Visual Studio or [cli](https://mauiman.dev/maui_cli_commandlineinterface.htm
 
 #### Useful links
 
-<https://github.com/Redth/dotnet-maui-check>
-
-<https://learn.microsoft.com/en-us/dotnet/maui/xaml/fundamentals/mvvm?view=net-maui-7.0>
-
-<https://www.youtube.com/watch?v=a37qBMt0V9w>
+* [MAUI check](https://github.com/Redth/dotnet-maui-check)
+* [MVVM and MAUI](https://learn.microsoft.com/en-us/dotnet/maui/xaml/fundamentals/mvvm?view=net-maui-7.0)
+* [Data Caching](https://www.youtube.com/watch?v=a37qBMt0V9w)
+* [JSON to C# classes](https://quicktype.io)
+* [Curl to C# code converter](https://curl.olsh.me)
+* [Cron expression generator](https://crontab.cronhub.io)
 
 ## Troubleshooting
 
