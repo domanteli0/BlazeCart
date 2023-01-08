@@ -4,6 +4,8 @@
 
 ## Overview
 
+To get the general idea, you can [take a look at our presentation for this project](https://www.canva.com/design/DAFVBYjb4c8/JMEdZXMOcKCG3mo3Hxnpgw/view#1).
+
 NOTE: the most current progress is on `Ats2` branch.
 
 This project is organized as such:
@@ -39,7 +41,7 @@ NOTE: `CategoryMap/Implementations` tests may be incorrect thus may not pass eve
 
 ### UI
 
-In theory iOS is supported, but hasn't been tested since it was primarily developed on Android.
+In theory iOS is supported, but hasn't been tested since it was primarily developed on Android. The app is based on [mvvm](https://learn.microsoft.com/en-us/dotnet/architecture/maui/mvvm) .
 
 #### App design in Figma
 
@@ -51,7 +53,15 @@ This project uses [DevExpress](https://nuget.devexpress.com), you'll need to obt
 
 #### Running
 
-Use Visual Studio or [cli](https://mauiman.dev/maui_cli_commandlineinterface.html) and either: connect a physical device via `adb` or use an emulator.
+Use Visual Studio or [cli](https://mauiman.dev/maui_cli_commandlineinterface.html) and then either: connect a physical device via `adb` or use an emulator.
+
+#### Useful links
+
+<https://github.com/Redth/dotnet-maui-check>
+
+<https://learn.microsoft.com/en-us/dotnet/maui/xaml/fundamentals/mvvm?view=net-maui-7.0>
+
+<https://www.youtube.com/watch?v=a37qBMt0V9w>
 
 ## Troubleshooting
 
@@ -75,7 +85,7 @@ Api may take a few minutes to start up, it may send 503 response method while it
     [TIMESTAMP] Executed 'ScraperFunction' (Failed, Id=[...], Duration=80ms)
     [TIMESTAMP] System.Private.Uri: Value cannot be null. (Parameter 'uriString').
     ```
-    This _may_ mean that (Consult Google first for most common causes) `Uri` field is `null` in some `Category`, because some part of code will try to deep clone it. [NOTE: MAY BE OUTDATED INFO]
+    This _may_ mean that (Consult Google first for most common causes) `Uri` field is `null` in some `Category` or `Item`, because some part of code will try to deep clone it. [NOTE: MAY BE OUTDATED INFO]
 
 ## A short post-mortem
 
