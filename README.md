@@ -55,7 +55,7 @@ This project uses [DevExpress](https://nuget.devexpress.com), you'll need to obt
 
 Use Visual Studio or [cli](https://mauiman.dev/maui_cli_commandlineinterface.html) and then either: connect a physical device via `adb` or use an emulator.
 
-#### Useful links
+## Useful links
 
 * [MAUI check](https://github.com/Redth/dotnet-maui-check)
 * [MVVM and MAUI](https://learn.microsoft.com/en-us/dotnet/maui/xaml/fundamentals/mvvm?view=net-maui-7.0)
