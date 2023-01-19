@@ -10,6 +10,8 @@ using System.Threading.Tasks;
 using System.Net.Http;
 using System.Linq;
 using Polly;
+using Polly.Retry;
+using Polly.Wrap;
 
 namespace Scraper
 {
@@ -19,45 +21,50 @@ namespace Scraper
             { get { return Merchendise.Merch.BARBORA; } }
 
         private HttpSender<HtmlNode> _httpSender;
+        private AsyncPolicyWrap _policy;
 
         public BarboraScraper(HttpClient httpClient, ILogger<Scraper> logger) :
-            base(httpClient, logger) { 
-                _httpSender = new HttpSender<HtmlNode>(
-                    _httpClient,
-                    (res) => {
-                        var reader_ = new StreamReader(res.Content.ReadAsStream());
-
-                        var itemDoc_ = new HtmlDocument();
-                        itemDoc_.LoadHtml(reader_.ReadToEnd());
-                        return itemDoc_.DocumentNode;
-                    }
-                );
-            }
-
-        public override async Task Scrape()
+            base(httpClient, logger) 
         {
-            clean();
+            _httpSender = new HttpSender<HtmlNode>(
+                _httpClient,
+                (res) => {
+                    var reader_ = new StreamReader(res.Content.ReadAsStream());
+
+                    var itemDoc_ = new HtmlDocument();
+                    itemDoc_.LoadHtml(reader_.ReadToEnd());
+                    return itemDoc_.DocumentNode;
+                }
+            );
+
             var retryPolicy = Policy
                 .Handle<ArgumentNullException>()
-                .Or<System.InvalidOperationException>()
-                // .Or<Exception>()
-                .WaitAndRetry(
+                .WaitAndRetryAsync(
                     5, 
-                    retryAttempt => TimeSpan.FromSeconds(Math.Pow(2, retryAttempt)),
+                    retryAttempt => TimeSpan.FromSeconds(2),
+                    // retryAttempt => TimeSpan.FromSeconds(Math.Pow(2, retryAttempt)),
                     onRetry: (exception, sleepDuration, attemptNumber, context) => 
-                        _logger.LogInformation($"Failed to get items from {context["category"]}; Retrying")
+                        _logger.LogInformation($"Failed to get items from {context["category"]}; Retrying attempt #{attemptNumber} after {sleepDuration}")
                 );
             
             var fallbackPolicy = Policy
                 .Handle<ArgumentNullException>()
                 .Or<System.InvalidOperationException>()
-                .Fallback(() => _logger.LogInformation("Failed to obtain data."));
+                .FallbackAsync(async (_) => {
+                    await Task.Delay(0);
+                    _logger.LogInformation("Failed to obtain data.");
+                });
 
-            var policy = Policy.Wrap(retryPolicy, fallbackPolicy);
+            _policy = Policy.WrapAsync(retryPolicy, fallbackPolicy);
+        }
+
+        public override async Task Scrape()
+        {
+            clean();
 
             Categories.AddRange(GetCategories());
-                
-            var wait_between_cats = 500; // in milis 
+            
+            var wait_between_cats = 100; // in milis 
             
             await Parallel.ForEachAsync(
                 Categories.GetWithoutChildren(), 
@@ -66,9 +73,9 @@ namespace Scraper
                     var context = new Context();
                     context["category"] = cat;
                     
-                    await policy.Execute(async (_) => 
+                    await _policy.ExecuteAsync(async (_) => 
                         {
-                            items = (await GetItems(cat)).ToList();
+                            items = (await GetItems(category: cat))?.ToList();
 
                             if (items is not null)
                             {
@@ -85,8 +92,7 @@ namespace Scraper
                         }, 
                         context
                     );
-
-                    await Task.Delay(wait_between_cats);
+                    // await Task.Delay(wait_between_cats);
                 }
             );
 
@@ -107,9 +113,11 @@ namespace Scraper
             );
 
             // Category loop
-            var ret = doc
+            var root = doc
                 .CssSelect("li.b-categories-root-category")
-                .Take(1)
+                #if DEBUG
+                    .Take(1)
+                #endif
                 .Select((HtmlNode catHtml) => {
                     var url = "https://barbora.lt" + catHtml.CssSelect("a").First().GetAttributeValue("href");
 
@@ -124,22 +132,23 @@ namespace Scraper
                     var catDoc = _httpSender.Send(
                         new HttpRequestMessage(new HttpMethod("GET"), url)
                     );
-                    return new {cat, catDoc};
-                    // return ret.cat;
-                });
+                    return (cat, catDoc);
+                })
+                // `ToList` is needed to execute all requests and get all data
+                // since iterators are lazy by default
+                .ToList();
             
-            ret
+            root
                 // Child category loop
                 .SelectMany(t => {
-                    return t.catDoc
+                    var (cat, catDoc) = t;
+                    return catDoc
                         .CssSelect("div.b-single-category--box")
-                        .Select(catDoc => new {t.cat, catDoc});
+                        .Select(catDoc => (cat, catDoc));
                 })
                 .SelectMany(t => {
-                    var cat = t.cat;
-                    var i = t.catDoc;
+                    var (cat, i) = t;
                     
-                    _logger.LogInformation("LOGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG");
                     Category catChild = null;
                     try {
                         catChild = new Category()
@@ -149,30 +158,34 @@ namespace Scraper
                             Merch = _merch,
                         };
                         cat.SubCategories.Add(catChild);
-                    } catch (Exception) { }
+                    } catch (Exception) { 
+                        _logger.LogInformation("`Exception` caught");
+                    }
+                    
+                    cat.SubCategories.ForEach(Console.WriteLine);
 
                     return i
                         .CssSelect("a.b-single-category--grandchild")
-                        .Select(ii => new {catChild, ii})
+                        .Select(ii => (catChild, ii))
                         .Where(t => t.catChild is not null);
                 })
-                // Grandchild category loop
                 .ToList()
+                // Grandchild category loop
                 .ForEach(t => {
-
-                    var catChild = t.catChild;
                     var ii = t.ii;
 
-                    var catGrandChild = new Category() {
-                        NameLT = ii.InnerText.Trim(),
-                        Uri = new Uri("https://barbora.lt" + ii.GetAttributeValue("href")),
-                        Merch = _merch,
-                    };
+                    // var catGrandChild = 
 
-                    catChild.SubCategories.Add(catGrandChild);
+                    t.catChild!.SubCategories.Add(
+                        new Category() {
+                            NameLT = ii.InnerText.Trim(),
+                            Uri = new Uri("https://barbora.lt" + ii.GetAttributeValue("href")),
+                            Merch = _merch,
+                        }
+                    );
                 });
-
-            return ret.Select((t) => t.cat);
+            
+            return root.Select((t) => t.cat);
         }
 
         /// <summary>
