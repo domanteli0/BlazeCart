@@ -11,13 +11,6 @@ namespace Common
         // / Inspired by: https://stackoverflow.com/a/2537897
         // / </summary>
         // / <param name="commonKey"></param>
-        // public static IEnumerable<T> DistictBy<T, U>(
-        //     this IEnumerable<T> iter,
-        //     Func<T, U> commonKey
-        // ) => iter
-        //         .GroupBy(commonKey)
-        //         .Select((i) => i.First());
-
         public static T FindFirstOr<T> (
             this IEnumerable<T> iter,
             Func<T, bool> pred,
