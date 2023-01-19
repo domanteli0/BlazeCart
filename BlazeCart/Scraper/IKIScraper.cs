@@ -86,13 +86,11 @@ namespace Scraper
  
         private async Task UpdateItemsBy(Category? category = null, string? storeID = null)
         {
-            var new_items = (await GetItemsBy(category, storeID))
+            Items = (await GetItemsBy(category, storeID))
                 .Concat(Items)
                 .Where((Item item) => !item.Price.Equals(0))
-                .GroupBy((Item item) => item.InternalID)
-                .Select(grp => grp.First());
-
-            Items = new_items.ToList();
+                .DistinctBy(item => item.InternalID)
+                .ToList();
         }
 
         /// <summary>
@@ -138,7 +136,7 @@ namespace Scraper
         {
             // Not all stores are described in chains/stores JSON list
             // thus IDs of other stores must be collected at this step
-            var new_stores = data
+            Stores = data
                 .SelectMany(cat => cat["storeIds"]!)
                 .Select(storeId => new Store() { InternalID = storeId.ToString() })
                 .Concat(Stores)
@@ -146,8 +144,8 @@ namespace Scraper
                 .Select(grp => {
                     var fst = grp.First();
                     return grp.FindFirstOr((s) => s.Name is not null, fst);
-                });
-            Stores = new_stores.ToList();
+                })
+                .ToList();
 
             // Parses category data
             foreach (var cat in data) 
