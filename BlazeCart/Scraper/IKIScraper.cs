@@ -2,6 +2,7 @@
 using System.Net.Http.Headers;
 using Models;
 using Common;
+using static Common.CollectionExtensions;
 using static System.Net.Mime.MediaTypeNames;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json.Linq;
@@ -19,15 +20,21 @@ namespace Scraper
         // If a field is thought to be able to be null,
         // then are marked with null-conditional operator (?)
 
-        // TODO: Sometimes there are duplicate products.
-        // However some of them a price of 0,
-        // therefore if a duplicate with a price of non-zero is found
-        // the price should be updated
         // TODO:
         // * Referencing items with `Store`, `Category` instances and vice versa (Back-referencing)
-        // Units of measurement and available ammounts
+        // * Units of measurement and available ammounts
 
-        public IKIScraper(HttpClient httpClient, ILogger<Scraper> logger) : base(httpClient, logger) { }
+        private HttpSender<JObject> _httpSender;
+
+        public IKIScraper(HttpClient httpClient, ILogger<Scraper> logger) : base(httpClient, logger) 
+        {
+            _httpSender = new (_httpClient, (response) => {
+                StreamReader readerInit = new StreamReader(response.Content.ReadAsStream());
+                var str = readerInit.ReadToEnd();
+
+                return JObject.Parse(str);
+            }); 
+         }
 
         /// <summary>
         /// Gets all data
@@ -37,60 +44,55 @@ namespace Scraper
         // TODO: Scrape Store data
         public override async Task Scrape()
         {
-            await GetCategories();
-            await RefetchAllItems();
+            clean();
+            Categories.AddRange(await GetCategories());
+            Items.AddRange(RefetchAllItems(Categories).ToList());
             setMerch();
         }
 
-        public async Task GetCategories()
+        public async Task<IEnumerable<Category>> GetCategories()
         {
-            HttpResponseMessage response;
-            using (var request = new HttpRequestMessage(new HttpMethod("POST"), "https://eparduotuve.iki.lt/api/search/categories"))
-            {
-                request.Content = new StringContent("{\"params\":{\"type\":\"categories\",\"show\":true},\"slim\":true}");
-                request.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json");
-
-                response = await _httpClient.SendAsync(request);
-            }
+            var request = new HttpRequestMessage(new HttpMethod("POST"), "https://eparduotuve.iki.lt/api/search/categories");
+            request.Content = new StringContent("{\"params\":{\"type\":\"categories\",\"show\":true},\"slim\":true}");
+            request.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json");
             
-            StreamReader readerInit = new StreamReader(response.Content.ReadAsStream());
-            var str = readerInit.ReadToEnd();
+            var JSONresponseInit = await _httpSender.SendAsync(request);
 
-            var JSONresponseInit = JObject.Parse(str);
-
-            //_logger.LogInformation(JSONresponseInit.GetValue("data")!.ToString());
-
-            Categories = ParseCategoriesJSON(JSONresponseInit.GetValue("data")!).ToList();
+            return ParseCategoriesJSON(JSONresponseInit.GetValue("data")!);
         }
 
         /// <summary>
         /// Refetches all item data
-        /// 
-        /// WARNING: init() must be executed at least once before calling RefetchAllItems()
-        /// NOTE: This method rebuilds Items list
         /// </summary>
-        private async Task RefetchAllItems()
+        // TODO: Convert to PLINQ and remove blocking `.Result` call
+        private List<Item> RefetchAllItems(IEnumerable<Category> categories)
         {
-            Items = new List<Item>();
-            foreach (var cat in Categories.GetWithoutChildren())
-            {
-                _logger.LogInformation(cat.ToString());
-                foreach (var i in await GetItemsBy(category: cat))
-                {
-                    _logger.LogInformation(i.ToString());
-                    Items.AddAsSetByProperty(i, "InternalID");
-                    cat.Items.AddAsSetByProperty(i, "InternalID");
-                }
-                //break;
-            }
+            return categories
+                .GetWithoutChildren()
+                // #if DEBUG
+                // .Take(1)
+                // #endif
+                .SelectMany(cat => {
+                    _logger.LogInformation(cat.ToString());
+                    
+                    var cat_items = GetItemsBy(category: cat).Result.ToList();
+                    cat.Items.AddRange(cat_items);
+                    return cat_items;
+                })
+                .Where((Item item) => !item.Price.Equals(0))
+                .DistinctBy((Item item) => { return item.InternalID; })
+                .ToList(); // ToList forces evaluation of a lazy iterator
         }
-
+ 
         private async Task UpdateItemsBy(Category? category = null, string? storeID = null)
         {
-            foreach (var item in await GetItemsBy(category, storeID))
-            {
-                Items.UpdateOrAddByProperty(item, "InternalID");
-            } 
+            var new_items = (await GetItemsBy(category, storeID))
+                .Concat(Items)
+                .Where((Item item) => !item.Price.Equals(0))
+                .GroupBy((Item item) => item.InternalID)
+                .Select(grp => grp.First());
+
+            Items = new_items.ToList();
         }
 
         /// <summary>
@@ -105,7 +107,6 @@ namespace Scraper
                 new HttpMethod("POST")
                 , "https://eparduotuve.iki.lt/api/search/view_products"
             );
-
 
             request.Headers.TryAddWithoutValidation("Accept", "application/json, text/plain, */*");
             request.Headers.TryAddWithoutValidation("Host", "eparduotuve.iki.lt");
@@ -124,15 +125,10 @@ namespace Scraper
                 throw new ArgumentException("Either categoryID or storeID must be not null");
 
             request.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json");
-            var response = await _httpClient.SendAsync(request);
 
-            _logger.LogInformation($"Sent request to {request.RequestUri}");
+            JObject JSONresponse = await _httpSender.SendAsync(request);
 
-            StreamReader reader = new StreamReader(response.Content.ReadAsStream());
-            JObject JSONresponse = JObject.Parse(reader.ReadToEnd());
-
-            var ret = ParseItemsJSON(JSONresponse, category);
-            return ret;
+            return ParseItemsJSON(JSONresponse, category);
         }
 
         /// <summary>
@@ -140,7 +136,21 @@ namespace Scraper
         /// </summary>
         private IEnumerable<Category> ParseCategoriesJSON(JToken data, Category? parent = null)
         {
-            foreach (var cat in data)
+            // Not all stores are described in chains/stores JSON list
+            // thus IDs of other stores must be collected at this step
+            var new_stores = data
+                .SelectMany(cat => cat["storeIds"]!)
+                .Select(storeId => new Store() { InternalID = storeId.ToString() })
+                .Concat(Stores)
+                .GroupBy(store => store.InternalID)
+                .Select(grp => {
+                    var fst = grp.First();
+                    return grp.FindFirstOr((s) => s.Name is not null, fst);
+                });
+            Stores = new_stores.ToList();
+
+            // Parses category data
+            foreach (var cat in data) 
             {
                 var listing = new Category() {
                     NameEN = cat["name"]!["en"]!.ToString(),
@@ -148,21 +158,11 @@ namespace Scraper
                     NameLT = cat["name"]!["lt"]!.ToString(),
                 };
 
+                // Check for categories recursively
                 var cat_ = cat["subcategories"]!;
                 if (cat_.Count() > 0)
                     listing.SubCategories = ParseCategoriesJSON(cat_, listing).ToList();
-
-
-                // Not all stores are described in chains/stores JSON list
-                // thus IDs of other stores must be collected at this step
-                foreach (var storeId in cat["storeIds"]!)
-                {
-                    Stores.AddAsSetByProperty(
-                        new Store() { InternalID = storeId.ToString() },
-                        "InternalID"
-                    );
-                }
-
+                
                 yield return listing;
             }
         }
@@ -185,44 +185,14 @@ namespace Scraper
 
         private IEnumerable<Item> ParseItemsJSON(JObject data, Category category)
         {
-            List<Item> ret = new();
-            foreach (var jtoken in data["data"]!)
-            {
-                if (
-                    jtoken["prc"] is null
-                    || jtoken["conversionValue"] is null
-                    || jtoken["name"] is null
-                    || jtoken["id"] is null
-                    || jtoken["description"] is null
-                    || jtoken["description"]!["lt"] is null
-                )
-                {
-                    continue;
-                }
-
-                Uri? photo = null;
-                try
-                {
-                    photo = jtoken["photoUrl"]?.ToObject<Uri>();
-                }
-                catch (System.UriFormatException) { }
-
-                if (photo is null)
-                {
-                    try
-                    {
-                        photo = jtoken["thumbUrl"]?.ToObject<Uri>();
-                    }
-                    catch (System.UriFormatException) { }
-                }
-
-                try
-                {
+            return data["data"]!
+                .Where(IsValidToken)
+                .TrySelect<Exception, JToken, Item>(jtoken => {
                     var newItem = new Item(internalID: jtoken["id"]!.ToString())
                     {
                         NameLT = jtoken["name"]!["lt"]!.ToString(),
                         Price = (int)(jtoken["prc"]!["p"]!.ToObject<float>() * 100),
-                        Image = photo,
+                        Image = jtoken["photoUrl"]?.ToObject<Uri>(),
                         MeasureUnit = Item.ParseUnitOfMeasurement(jtoken["conversionMeasure"]!.ToString()),
                         NameEN = jtoken["name"]!["en"]!.ToString(),
                         Description = jtoken["description"]?["lt"]?.ToString(),
@@ -230,21 +200,37 @@ namespace Scraper
                         LoyaltyPrice = (int?)(jtoken["prc"]!["l"]?.ToObject<decimal?>() * 100),
                         Ammount = jtoken["conversionValue"]!.ToObject<float>(),
                         Category = category,
-
                         //barcodes: jtoken["barcodes"]!.ToObject<List<String>>()
                     };
 
                     newItem.FillPerUnitOfMeasureByAmmount();
+                    return newItem;
+                });
+        }
 
-                    ret.Add(newItem);
-                }
-                catch (System.ArgumentException) { }
-                catch (System.InvalidOperationException) { }
-                catch (System.NullReferenceException) { }
-
+        private bool IsValidToken(JToken jtoken)
+        {
+            if (
+                jtoken["prc"] is null
+                || jtoken["conversionValue"] is null
+                || jtoken["name"] is null
+                || jtoken["id"] is null
+                || jtoken["description"] is null
+                || jtoken["description"]!["lt"] is null
+                || jtoken["name"] is null
+            )
+            {
+                return false;
             }
 
-            return ret;
+            try
+            {
+                jtoken["thumbUrl"]?.ToObject<Uri>();
+                jtoken["photoUrl"]?.ToObject<Uri>();
+            }
+            catch (System.UriFormatException) { return false; }
+
+            return true;
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System.Linq;
-//using Common;
+// using static Common.StringExtensions;
+using Common;
 
 namespace Models
 {
@@ -41,6 +42,63 @@ namespace Models
                 SubCategories = SubCategories.ConvertAll(i => (Category) i.Clone()),
                 Merch = this.Merch,
             };
+        }
+    }
+
+    public static class IEnumerableCategoryExtensions {
+        public static void ForEachR(this IEnumerable<Category> list, Action<Category> act)
+        {
+            foreach (var sub in list)
+            {
+                sub.SubCategories.ForEach(act);
+                act(sub);
+            }
+        }
+
+        public static IEnumerable<Category> GetWithoutChildren(this IEnumerable<Category> categories)
+        {
+            foreach (var cat in categories)
+            {
+                if (cat.SubCategories.Count() > 0)
+                    foreach (var child in cat.SubCategories.GetWithoutChildren())
+                    {
+                        yield return child;
+                    }
+                else
+                {
+                    yield return cat;
+                }
+            }
+
+        }
+
+        public static string Tree(this IEnumerable<Category> categories)
+        {
+            return (categoryTree(categories, 0));
+
+            string categoryTree(IEnumerable<Category> categories, int level)
+            {
+                var str = "";
+                foreach (var cat in categories!)
+                {
+                    str += "\t".Times(level) + cat.ToString() + "\n";
+                    str += categoryTree(cat.SubCategories, level + 1);
+                }
+
+                return str;
+            }
+        }
+
+        public static string Tree(this Category category) 
+            => tree(category, 0);
+
+        private static string tree(Category category,int level)
+        {
+            var str = "\t".Times(level) + category.ToString() + "\n";
+            foreach (var sub in category.SubCategories)
+                str += tree(sub, level + 1);
+
+            return str;
         }
     }
 }

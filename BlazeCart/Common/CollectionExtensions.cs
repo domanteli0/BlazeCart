@@ -1,105 +1,38 @@
 ﻿using System;
 using System.Reflection.Emit;
-using Models;
 using static Common.ObjectExtensions;
+
 namespace Common
 {
 	public static class CollectionExtensions
 	{
-        /// <summary>
-        /// Checks if an object with the equal property (Determined by Equals() method) exists,
-        /// if not elem is added, otherthise it is not added
-        /// NOTE: This method does not check if specified property is valid and exists
-        /// if it does not an exception will be thrown
-        /// NOTE: elem should not be null otherwise an exeption will be thrown
-        /// </summary>
-        public static void AddAsSetByProperty<T>(this ICollection<T> col, T elem, string property)
+        // / <summary>
+        // / Selects first element from grouping genereted by `commonKey`
+        // / Inspired by: https://stackoverflow.com/a/2537897
+        // / </summary>
+        // / <param name="commonKey"></param>
+        // public static IEnumerable<T> DistictBy<T, U>(
+        //     this IEnumerable<T> iter,
+        //     Func<T, U> commonKey
+        // ) => iter
+        //         .GroupBy(commonKey)
+        //         .Select((i) => i.First());
+
+        public static T FindFirstOr<T> (
+            this IEnumerable<T> iter,
+            Func<T, bool> pred,
+            T source
+        )
         {
-            if (!col.Any(e => {
-                return e!.EqualPropertyValue(elem!, property);
-            })
-            )
-                col.Add(elem);
-        }
-
-        // Iterate on collections with collections
-
-        /// <summary>
-        /// Finds the first element with matching property (Determined by Equals() method)
-        /// and replaces it with elem.
-        /// If no property mathcing element is found then it is just added to the collection.
-        /// </summary>
-        public static void UpdateOrAddByProperty<T>(this List<T> col, T elem, string property)
-        {
-            var temp = col.Find(e =>
-            {
-                return e!.EqualPropertyValue(elem!, property);
-            });
-
-            if (temp is not null)
-            {
-                col.Remove(temp);
-            }
-
-            col.Add(elem);
-        }
-
-        public static IEnumerable<Category> GetWithoutChildren(this IEnumerable<Category> categories)
-        {
-            foreach (var cat in categories)
-            {
-                if (cat.SubCategories.Count() > 0)
-                    foreach (var child in cat.SubCategories.GetWithoutChildren())
-                    {
-                        yield return child;
-                    }
-                else
-                {
-                    yield return cat;
-                }
-            }
-
-        }
-
-        public static string Tree(this IEnumerable<Category> categories)
-        {
-            return (categoryTree(categories, 0));
-
-            string categoryTree(IEnumerable<Category> categories, int level)
-            {
-                var str = "";
-                foreach (var cat in categories!)
-                {
-                    str += "\t".Times(level) + cat.ToString() + "\n";
-                    str += categoryTree(cat.SubCategories, level + 1);
-                }
-
-                return str;
-            }
-        }
-
-        public static string Tree(this Category category)
-        {
-            return tree(category, 0);
-        }
-
-        private static string tree(Category category,int level)
-        {
-            var str = "\t".Times(level) + category.ToString() + "\n";
-            foreach (var sub in category.SubCategories)
-                str += tree(sub, level + 1);
-
-            return str;
+            var filtered = iter.Where(pred);
+            return filtered.Count() == 0 ? source : filtered.First(); 
         }
 
         /// <summary>
         /// Converts a dictionary to a list without the keys
         /// </summary>
         public static List<V> ToListOfValues<K, V>(this IDictionary<K, V> dic)
-        {
-            return dic.ToList().ConvertAll((kvp) => kvp.Value);
-
-        }
+            => dic.ToList().ConvertAll((kvp) => kvp.Value);
 
         public static Dictionary<K, V> Clone<K, V>(this IDictionary<K,V> dic)
             where K : ICloneable
@@ -108,26 +41,28 @@ namespace Common
                 c => (K) c.Key.Clone(), c => (V) c.Value.Clone()
             );
 
-        public static void ForEachR(this IEnumerable<Category> list, Action<Category> act)
+        public static IEnumerable<T> ConcatOrEmpty<T>(this IEnumerable<T> fst, IEnumerable<T>? snd)
+            => (snd is null) ? fst : fst.Concat(snd);
+
+        public static IEnumerable<U> TrySelect<E, T, U>(this IEnumerable<T> iter, Func<T, U> map)
+            where E : Exception
         {
-            foreach (var sub in list)
-            {
-                sub.SubCategories.ForEach(act);
-                act(sub);
+            var list = new List<U>();
+            foreach (T el in iter) {
+                try {
+                    if (el is not null)
+                    {
+                        var mapped = map(el);
+                        if (mapped is not null)
+                            list.Add(mapped);
+                    }
+                } catch (E) { }
             }
+            return list;
+        } 
 
-        }
-
-        public static List<T> SelectR<T>(this IEnumerable<Category> list, Func<Category, IEnumerable<T>> func)
-        {
-            var newl = new List<T>();
-            foreach (var sub in list)
-            {
-                newl.AddRange(sub.SubCategories.SelectR(func));
-            }
-
-            return newl;
-        }
+        public static IEnumerable<T> EmptyIfNull<T>(this IEnumerable<T>? iter)
+            => (iter is null) ? new List<T>() : iter!;
     }
 }
 

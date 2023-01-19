@@ -162,8 +162,6 @@ namespace Scraper
                         _logger.LogInformation("`Exception` caught");
                     }
                     
-                    cat.SubCategories.ForEach(Console.WriteLine);
-
                     return i
                         .CssSelect("a.b-single-category--grandchild")
                         .Select(ii => (catChild, ii))

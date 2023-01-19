@@ -47,18 +47,18 @@ namespace Scraper
             // logger.LogInformation("DELETED");
 
             List<Task> tasks = new();
-            tasks.Add(Task.Run(async () =>
-            {
-                await bScraper.Scrape();
-            }));
-
             // tasks.Add(Task.Run(async () =>
             // {
-            //     await iScraper.Scrape();
+            //     await bScraper.Scrape();
             // }));
 
+            tasks.Add(Task.Run(async () =>
+            {
+                await iScraper.Scrape();
+            }));
+
             await Task.WhenAll(tasks);
-            logger.LogInformation($"Barbora count: {bScraper.Items.Count}");
+            logger.LogInformation($"Iki count: {iScraper.Items.Count}");
             logger.LogInformation("SCRAPED");
 
             // var catMapDict = StaticCategoryTree.GetCategoryDict();
